@@ -1,55 +1,59 @@
-# Project: [Next.js App Name]
+# Project: AllConvos — Next.js Template
 
 ## Overview
 
-[Describe the app]
+AllConvos is an AI-powered SaaS platform for SMEs, built around conversational AI agents,
+mission control dashboards, and multi-channel communication (SMS, voice, messaging).
 
 ## Tech Stack
 
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 15 (App Router)
 - **Language:** TypeScript (strict mode)
-- **Styling:** Tailwind CSS
-- **Database:** [e.g. PostgreSQL via Prisma]
-- **Auth:** [e.g. NextAuth.js / Clerk]
-- **Deployment:** Vercel
+- **Styling:** Tailwind CSS v4 + clsx + tailwind-merge
+- **Icons:** Lucide React
+- **Animations:** Framer Motion (use sparingly — only for meaningful motion)
+- **Database:** PostgreSQL via Prisma (migrate away from Firebase)
+- **Auth:** NextAuth v5
+- **AI:** Vercel AI SDK → Anthropic Claude (primary), OpenAI (fallback)
+- **SMS/Voice:** Twilio (wrapped in service layer — never call SDK directly from routes)
+- **Email:** Resend
+- **Hosting:** Vercel
+- **Agent Orchestration:** OpenClaw
 
 ## Project Structure
 
-```
 src/
-├── app/              # App router — pages, layouts, API routes
-│   ├── (auth)/       # Auth-related pages
-│   ├── api/          # API route handlers
-│   └── layout.tsx    # Root layout
-├── components/       
-│   ├── ui/           # Primitive UI components
-│   └── features/     # Feature-specific components
-├── lib/              
-│   ├── db.ts         # Database client
-│   ├── auth.ts       # Auth utilities
-│   └── utils.ts      # General utilities
-├── types/            # Shared TypeScript types
-└── hooks/            # Custom React hooks
-```
+├── app/                    # App Router
+│   ├── (auth)/             # Auth pages (login, signup)
+│   ├── (dashboard)/        # Protected app pages
+│   ├── api/                # Route handlers — keep thin, logic lives in services
+│   └── layout.tsx
+├── components/
+│   ├── ui/                 # Primitive components (Button, Input, Modal)
+│   └── features/           # Feature-specific components
+├── lib/
+│   ├── db.ts               # Prisma client singleton
+│   ├── auth.ts             # Auth config and helpers
+│   ├── ai.ts               # Vercel AI SDK setup
+│   ├── twilio.ts           # Twilio service layer (all Twilio calls go through here)
+│   └── utils.ts
+├── services/               # Business logic — imported by API routes and server components
+├── hooks/                  # Custom React hooks (client-side only)
+└── types/                  # Shared TypeScript types and Zod schemas
 
-## Next.js Conventions
+## Key Architecture Rules
 
-- Use Server Components by default — only add `'use client'` when you need interactivity or browser APIs
-- Prefer `fetch` with `cache` options over third-party data fetching in server components
-- Use `loading.tsx` and `error.tsx` at the route level
-- Keep API routes thin — move logic to service functions in `lib/`
-- Use `next/image` for all images, `next/font` for fonts
-
-## TypeScript Rules
-
-- Strict mode is on — no `any` without a comment explaining why
-- Prefer `type` over `interface` for simple types; use `interface` for extensible shapes
-- Always type function return values explicitly
-- Use Zod for runtime validation of external data
+- **API routes are thin** — validate input (Zod), call a service, return a response. No business logic in routes.
+- **Server Components by default** — only add use client when you need hooks or browser APIs
+- **Twilio goes through lib/twilio.ts** — never import the Twilio SDK directly in routes or components
+- **AI calls go through lib/ai.ts** — use Vercel AI SDK, never call Anthropic/OpenAI SDK directly in routes
+- **OpenClaw is for agent orchestration** — do not replicate its functionality in Next.js API routes
 
 ## Active Skills
 
-- `code-quality`
-- `git-conventions`
-- `testing-practices`
-- `frontend-design`
+Install these from ~/Projects/Claude/skills/ into .claude/skills/:
+- code-quality
+- git-conventions
+- testing-practices
+- frontend-design
+- code-review
