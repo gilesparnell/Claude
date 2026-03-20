@@ -37,3 +37,4 @@ Based on Anthropic's own lessons from building Claude Code:
 - Use **progressive disclosure** — split detail into subfiles Claude reads on demand
 - The **description field** is for the model, not humans — write it as a trigger condition
 # test
+# test
