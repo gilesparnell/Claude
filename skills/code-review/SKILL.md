@@ -1,5 +1,6 @@
 ---
 title: PR Code Review
+scope: global
 category: code
 icon: &#128065;
 description: Adversarial fresh-eyes PR review. Catches what the author missed. Uses blocking, suggestion, and nit labels.

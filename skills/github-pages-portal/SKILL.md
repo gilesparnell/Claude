@@ -1,5 +1,6 @@
 ---
 title: GitHub Pages Portal
+scope: project
 category: tooling
 icon: &#127760;
 description: Self-updating GitHub Pages knowledge portal. Folders become pages, markdown frontmatter becomes cards, GitHub Actions regenerate HTML on every push.

@@ -15,6 +15,13 @@ Every skill has two files serving different purposes:
 
 The files in **this folder** are portal stubs. The runtime content lives elsewhere (see below).
 
+Each portal stub includes a `scope` field that identifies whether the runtime version is global or project-specific:
+
+```yaml
+scope: global   # runtime lives in ~/.claude/skills/ — loads in every session
+scope: project  # runtime lives in [project]/.claude/skills/ — loads only in that repo
+```
+
 ---
 
 ## Two Scopes

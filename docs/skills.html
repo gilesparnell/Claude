@@ -46,12 +46,15 @@
 
 <div class="page-nav">
   <div class="page-nav-inner">
-    <a href="#" class="active" onclick="filter('all',this);return false">All</a>
-    <a href="#" onclick="filter('code',this);return false">Code Quality</a>
-    <a href="#" onclick="filter('frontend',this);return false">Frontend</a>
-    <a href="#" onclick="filter('workflow',this);return false">Workflow</a>
-    <a href="#" onclick="filter('saas',this);return false">SaaS</a>
-    <a href="#" onclick="filter('engagement',this);return false">Engagement</a>
+    <a href="#" class="active" onclick="filter('all','all',this);return false">All</a>
+    <a href="#" onclick="filter('scope','global',this);return false">&#127775; Global</a>
+    <a href="#" onclick="filter('scope','project',this);return false">&#128230; Project</a>
+    <span style="width:1px;background:var(--border);margin:10px 4px;flex-shrink:0"></span>
+    <a href="#" onclick="filter('category','code',this);return false">Code Quality</a>
+    <a href="#" onclick="filter('category','frontend',this);return false">Frontend</a>
+    <a href="#" onclick="filter('category','workflow',this);return false">Workflow</a>
+    <a href="#" onclick="filter('category','saas',this);return false">SaaS</a>
+    <a href="#" onclick="filter('category','engagement',this);return false">Engagement</a>
   </div>
 </div>
 
@@ -60,7 +63,7 @@
     <!-- AUTO-GENERATED SKILLS START -->
 
     <!-- CODE QUALITY REVIEW -->
-    <div class="skill-card" data-category="code">
+    <div class="skill-card" data-category="code" data-scope="global">
       <div class="skill-band" style="background:var(--blue-bg)">
         <div>
           <div class="skill-name">Code Quality Review</div>
@@ -68,6 +71,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128269;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
           <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
         </div>
       </div>
@@ -96,7 +100,7 @@
     </div>
 
     <!-- PR CODE REVIEW -->
-    <div class="skill-card" data-category="code">
+    <div class="skill-card" data-category="code" data-scope="global">
       <div class="skill-band" style="background:var(--blue-bg)">
         <div>
           <div class="skill-name">PR Code Review</div>
@@ -104,6 +108,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128065;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
           <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
         </div>
       </div>
@@ -132,7 +137,7 @@
     </div>
 
     <!-- FRONTEND DESIGN -->
-    <div class="skill-card" data-category="frontend">
+    <div class="skill-card" data-category="frontend" data-scope="global">
       <div class="skill-band" style="background:var(--coral-bg)">
         <div>
           <div class="skill-name">Frontend Design</div>
@@ -140,6 +145,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#127912;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
           <span class="cat-badge" style="background:var(--coral-bg);color:var(--coral-text);border-color:var(--coral-border)">frontend</span>
         </div>
       </div>
@@ -167,7 +173,7 @@
     </div>
 
     <!-- GIT CONVENTIONS -->
-    <div class="skill-card" data-category="workflow">
+    <div class="skill-card" data-category="workflow" data-scope="global">
       <div class="skill-band" style="background:var(--amber-bg)">
         <div>
           <div class="skill-name">Git Conventions</div>
@@ -175,6 +181,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#127809;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
           <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
         </div>
       </div>
@@ -203,7 +210,7 @@
     </div>
 
     <!-- GITHUB PAGES PORTAL -->
-    <div class="skill-card" data-category="tooling">
+    <div class="skill-card" data-category="tooling" data-scope="project">
       <div class="skill-band" style="background:var(--purple-bg)">
         <div>
           <div class="skill-name">GitHub Pages Portal</div>
@@ -211,6 +218,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#127760;</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">project</span>
           <span class="cat-badge" style="background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)">tooling</span>
         </div>
       </div>
@@ -238,7 +246,7 @@
     </div>
 
     <!-- SAAS AUTOMATION ENGAGEMENT -->
-    <div class="skill-card" data-category="engagement">
+    <div class="skill-card" data-category="engagement" data-scope="project">
       <div class="skill-band" style="background:var(--navy-bg)">
         <div>
           <div class="skill-name">SaaS Automation Engagement</div>
@@ -246,6 +254,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128196;</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">project</span>
           <span class="cat-badge" style="background:var(--navy-bg);color:var(--navy-text);border-color:var(--navy-border)">engagement</span>
         </div>
       </div>
@@ -273,7 +282,7 @@
     </div>
 
     <!-- SAAS PATTERNS -->
-    <div class="skill-card" data-category="saas">
+    <div class="skill-card" data-category="saas" data-scope="project">
       <div class="skill-band" style="background:var(--green-bg)">
         <div>
           <div class="skill-name">SaaS Patterns</div>
@@ -281,6 +290,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128640;</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">project</span>
           <span class="cat-badge" style="background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)">saas</span>
         </div>
       </div>
@@ -308,7 +318,7 @@
     </div>
 
     <!-- SKILL PUBLISHER -->
-    <div class="skill-card" data-category="workflow">
+    <div class="skill-card" data-category="workflow" data-scope="global">
       <div class="skill-band" style="background:var(--amber-bg)">
         <div>
           <div class="skill-name">Skill Publisher</div>
@@ -316,6 +326,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128640;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
           <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
         </div>
       </div>
@@ -344,7 +355,7 @@
     </div>
 
     <!-- TESTING PRACTICES -->
-    <div class="skill-card" data-category="code">
+    <div class="skill-card" data-category="code" data-scope="global">
       <div class="skill-band" style="background:var(--blue-bg)">
         <div>
           <div class="skill-name">Testing Practices</div>
@@ -352,6 +363,7 @@
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#9989;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
           <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
         </div>
       </div>
@@ -387,11 +399,13 @@
 </footer>
 
 <script>
-function filter(cat, el) {
+function filter(type, val, el) {
   document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
   document.querySelectorAll('.skill-card').forEach(card => {
-    card.classList.toggle('hidden', cat !== 'all' && card.dataset.category !== cat);
+    if (type === 'all') { card.classList.remove('hidden'); return; }
+    const match = type === 'scope' ? card.dataset.scope === val : card.dataset.category === val;
+    card.classList.toggle('hidden', !match);
   });
   const visible = document.querySelectorAll('.skill-card:not(.hidden)').length;
   document.getElementById('skill-count').textContent = visible;

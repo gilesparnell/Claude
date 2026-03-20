@@ -1,5 +1,6 @@
 ---
 title: Git Conventions
+scope: global
 category: workflow
 icon: &#127809;
 description: Conventional Commits format, branch naming, and PR description template. Keeps history clean and meaningful.

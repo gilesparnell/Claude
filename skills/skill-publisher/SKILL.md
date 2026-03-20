@@ -1,5 +1,6 @@
 ---
 title: Skill Publisher
+scope: global
 category: workflow
 icon: &#128640;
 description: Codify a reusable pattern as a skill — write the runtime SKILL.md and the portal stub, decide scope (global vs project), and publish to the portal.

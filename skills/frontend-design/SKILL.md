@@ -1,5 +1,6 @@
 ---
 title: Frontend Design
+scope: global
 category: frontend
 icon: &#127912;
 description: Opinionated UI design rules that avoid generic AI aesthetics. Whitespace, typography, colour intentionality. Tailwind patterns and component guidance.

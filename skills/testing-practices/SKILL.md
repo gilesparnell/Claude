@@ -1,5 +1,6 @@
 ---
 title: Testing Practices
+scope: global
 category: code
 icon: &#9989;
 description: Testing philosophy, naming conventions, and structure patterns. DAMP over DRY. Arrange / Act / Assert. Behaviour not implementation.

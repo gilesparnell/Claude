@@ -1,5 +1,6 @@
 ---
 title: SaaS Patterns
+scope: project
 category: saas
 icon: &#128640;
 description: Production-grade SaaS patterns. Tenant isolation, plan gating, usage tracking, idempotent ops, soft deletes, and onboarding principles.

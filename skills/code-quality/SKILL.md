@@ -1,5 +1,6 @@
 ---
 title: Code Quality Review
+scope: global
 category: code
 icon: &#128269;
 description: Systematic checklist for auditing code before it ships. Covers correctness, readability, performance, security, and maintainability.

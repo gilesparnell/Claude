@@ -1,5 +1,6 @@
 ---
 title: SaaS Automation Engagement
+scope: project
 category: engagement
 icon: &#128196;
 description: End-to-end playbook for new client automation engagements — from feasibility through discovery, architecture, technical spec, proposal, and Claude Code handoff.

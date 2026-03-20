@@ -111,6 +111,10 @@ function skillCard(skill) {
   const cat   = skill.category || 'code';
   const color = colorForCategory(cat);
   const icon  = skill.icon || '&#128196;';
+  const scope = skill.scope || 'global';
+  const scopeStyle = scope === 'global'
+    ? 'background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)'
+    : 'background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)';
 
   const triggers = (Array.isArray(skill.triggers) ? skill.triggers : [])
     .map(t => `            <span class="trigger">${t}</span>`)
@@ -123,7 +127,7 @@ function skillCard(skill) {
 
   return `
     <!-- ${skill.title.toUpperCase()} -->
-    <div class="skill-card" data-category="${cat}">
+    <div class="skill-card" data-category="${cat}" data-scope="${scope}">
       <div class="skill-band" style="background:${color.band}">
         <div>
           <div class="skill-name">${skill.title}</div>
@@ -131,6 +135,7 @@ function skillCard(skill) {
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">${icon}</span>
+          <span class="cat-badge" style="${scopeStyle}">${scope}</span>
           <span class="cat-badge" style="background:${color.badge};color:${color.text};border-color:${color.border}">${cat}</span>
         </div>
       </div>
