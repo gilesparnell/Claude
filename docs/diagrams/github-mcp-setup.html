@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub MCP Server Setup</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eeede9;
+  --text:#1a1a18;--text2:#5f5e5a;--text3:#888780;
+  --border:rgba(0,0,0,0.10);
+  --coral-bg:#FAECE7;--coral-text:#712B13;--coral-border:#F0997B;
+  --purple-bg:#EEEDFE;--purple-text:#3C3489;--purple-border:#AFA9EC;
+  --green-bg:#EAF3DE;--green-text:#27500A;--green-border:#97C459;
+  --blue-bg:#E6F1FB;--blue-text:#0C447C;--blue-border:#85B7EB;
+  --amber-bg:#FAEEDA;--amber-text:#633806;--amber-border:#FAC775;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:'SF Mono','Fira Code',monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1a1a18;--bg2:#242422;--bg3:#2c2c2a;
+    --text:#e8e6de;--text2:#9c9a92;--text3:#5f5e5a;
+    --border:rgba(255,255,255,0.08);
+    --coral-bg:#4A1B0C;--coral-text:#F5C4B3;--coral-border:#D85A30;
+    --purple-bg:#26215C;--purple-text:#CECBF6;--purple-border:#534AB7;
+    --green-bg:#173404;--green-text:#C0DD97;--green-border:#3B6D11;
+    --blue-bg:#042C53;--blue-text:#B5D4F4;--blue-border:#185FA5;
+    --amber-bg:#412402;--amber-text:#FAC775;--amber-border:#854F0B;
+  }
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);padding:40px 24px 80px;max-width:860px;margin:0 auto}
+.back{font-size:13px;color:var(--text3);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:32px}
+.back:hover{color:var(--text)}
+h1{font-size:24px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+.subtitle{font-size:14px;color:var(--text2);margin-bottom:40px;line-height:1.6}
+.diagram{display:flex;flex-direction:column;gap:0;align-items:center;margin:0 auto 48px;max-width:600px}
+.node{border-radius:12px;padding:18px 24px;width:100%;border:1.5px solid;position:relative}
+.node-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.node-sub{font-size:12px;opacity:0.75;line-height:1.5}
+.node.purple{background:var(--purple-bg);border-color:var(--purple-border);color:var(--purple-text)}
+.node.coral{background:var(--coral-bg);border-color:var(--coral-border);color:var(--coral-text)}
+.node.green{background:var(--green-bg);border-color:var(--green-border);color:var(--green-text)}
+.node.blue{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue-text)}
+.node.amber{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber-text)}
+.arrow{display:flex;flex-direction:column;align-items:center;gap:0;padding:4px 0}
+.arrow-line{width:2px;height:24px;background:var(--border);opacity:0.6}
+.arrow-label{font-size:11px;font-family:var(--font-mono);color:var(--text3);background:var(--bg2);padding:2px 10px;border-radius:20px;border:1px solid var(--border);margin:2px 0}
+.arrow-tip{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--text3);opacity:0.4}
+.badge{display:inline-block;font-size:10px;font-family:var(--font-mono);font-weight:600;padding:2px 8px;border-radius:20px;margin-top:6px;border:1px solid}
+.badge.ok{background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)}
+.badge.warn{background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.section{margin-bottom:36px}
+.section h2{font-size:13px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.cmd{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:var(--font-mono);font-size:12px;color:var(--text);line-height:1.7;overflow-x:auto}
+.cmd .comment{color:var(--text3)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pill{font-size:11px;font-family:var(--font-mono);padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--text3);padding:8px 12px;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+td:first-child{color:var(--text);font-family:var(--font-mono);font-size:12px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--text3);display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back">&#8592; Reference Library</a>
+
+<h1>GitHub MCP Server Setup</h1>
+<p class="subtitle">How Claude Code connects to GitHub via the Model Context Protocol &mdash; auth flow, what gets unlocked, and how it fits into your daily workflow.</p>
+
+<!-- DIAGRAM -->
+<div class="diagram">
+
+  <div class="node purple">
+    <div class="node-title">&#128187; Claude Code CLI</div>
+    <div class="node-sub">Your terminal AI agent &mdash; reads files, runs commands, calls tools<br>Version: 2.1.72 &nbsp;&middot;&nbsp; User scope (all projects)</div>
+  </div>
+
+  <div class="arrow">
+    <div class="arrow-line"></div>
+    <div class="arrow-label">MCP protocol (HTTP transport)</div>
+    <div class="arrow-line"></div>
+    <div class="arrow-tip"></div>
+  </div>
+
+  <div class="node coral">
+    <div class="node-title">&#127758; GitHub MCP Server</div>
+    <div class="node-sub">api.githubcopilot.com/mcp &nbsp;&middot;&nbsp; GitHub&apos;s official remote server<br>Registered as: <code>github</code> &nbsp;&middot;&nbsp; Status: &#10003; Connected</div>
+    <div><span class="badge ok">&#10003; Connected</span></div>
+  </div>
+
+  <div class="arrow">
+    <div class="arrow-line"></div>
+    <div class="arrow-label">Bearer token (gh auth token)</div>
+    <div class="arrow-line"></div>
+    <div class="arrow-tip"></div>
+  </div>
+
+  <div class="node blue">
+    <div class="node-title">&#128274; GitHub API</div>
+    <div class="node-sub">Authenticated as: gilesparnell &nbsp;&middot;&nbsp; Protocol: HTTPS<br>Token scopes: gist &middot; read:org &middot; repo</div>
+  </div>
+
+  <div class="arrow">
+    <div class="arrow-line"></div>
+    <div class="arrow-label">repo scope</div>
+    <div class="arrow-line"></div>
+    <div class="arrow-tip"></div>
+  </div>
+
+  <div class="two-col">
+    <div class="node green">
+      <div class="node-title">&#128230; gilesparnell/Claude</div>
+      <div class="node-sub">Your AI workspace repo<br>Skills, CLAUDE.md, docs</div>
+    </div>
+    <div class="node green">
+      <div class="node-title">&#128230; Other Repos</div>
+      <div class="node-sub">allconvos-main + any<br>repo you have access to</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WHAT YOU CAN DO -->
+<div class="section">
+  <h2>What You Can Do Once Connected</h2>
+  <table>
+    <tr><th>Category</th><th>Example prompt in Claude Code</th></tr>
+    <tr><td>Issues</td><td>List open issues in gilesparnell/Claude</td></tr>
+    <tr><td>PRs</td><td>Create a PR for this branch targeting main</td></tr>
+    <tr><td>Files</td><td>Show me the contents of global/CLAUDE.md in my Claude repo</td></tr>
+    <tr><td>Search</td><td>Search for any file referencing Twilio across my repos</td></tr>
+    <tr><td>Actions</td><td>What was the result of the last workflow run?</td></tr>
+    <tr><td>Commits</td><td>What changed in the last 5 commits on main?</td></tr>
+  </table>
+</div>
+
+<!-- SETUP COMMANDS -->
+<div class="section">
+  <h2>How It Was Set Up</h2>
+  <div class="cmd">
+<span class="comment"># 1. Get your token from gh CLI</span>
+gh auth token
+
+<span class="comment"># 2. Register the GitHub MCP server (user scope = all projects)</span>
+claude mcp add-json github '{"type":"http","url":"https://api.githubcopilot.com/mcp","headers":{"Authorization":"Bearer &lt;token&gt;"}}' --scope user
+
+<span class="comment"># 3. Verify</span>
+claude mcp list
+claude mcp get github
+
+<span class="comment"># 4. Inside a Claude Code session</span>
+/mcp</div>
+</div>
+
+<!-- SCOPES EXPLAINED -->
+<div class="section">
+  <h2>MCP Server Scopes</h2>
+  <table>
+    <tr><th>Scope</th><th>Where config lives</th><th>Visible to</th></tr>
+    <tr><td>local (default)</td><td>.mcp.json in project</td><td>You only, current project</td></tr>
+    <tr><td>project</td><td>.mcp.json (committed)</td><td>Everyone on the project</td></tr>
+    <tr><td>user &#10003;</td><td>~/.claude/ user config</td><td>You, across all projects</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--text3);margin-top:10px">&#10003; This is the scope used for the GitHub server &mdash; register once, available everywhere.</p>
+</div>
+
+<div class="footer">
+  <span>gilesparnell &middot; Claude Reference Library</span>
+  <span>Added March 2026</span>
+</div>
+
+</body>
+</html>

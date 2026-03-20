@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Reference Library — gilesparnell</title>
+  <title>Claude Reference Library � gilesparnell</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg: #ffffff; --bg2: #f5f5f3; --bg3: #eeede9;
       --text: #1a1a18; --text2: #5f5e5a; --text3: #888780;
@@ -14,301 +13,258 @@
       --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-mono: 'SF Mono', 'Fira Code', monospace;
       --radius: 12px;
-      --blue-bg: #E6F1FB; --blue-text: #0C447C; --blue-border: #85B7EB;
-      --green-bg: #EAF3DE; --green-text: #27500A; --green-border: #97C459;
-      --amber-bg: #FAEEDA; --amber-text: #633806; --amber-border: #FAC775;
+      --blue-bg: #E6F1FB;   --blue-text: #0C447C;   --blue-border: #85B7EB;
+      --green-bg: #EAF3DE;  --green-text: #27500A;  --green-border: #97C459;
+      --amber-bg: #FAEEDA;  --amber-text: #633806;  --amber-border: #FAC775;
       --purple-bg: #EEEDFE; --purple-text: #3C3489; --purple-border: #AFA9EC;
-      --teal-bg: #E1F5EE; --teal-text: #085041; --teal-border: #5DCAA5;
-      --coral-bg: #FAECE7; --coral-text: #712B13; --coral-border: #F0997B;
+      --teal-bg: #E1F5EE;   --teal-text: #085041;   --teal-border: #5DCAA5;
+      --coral-bg: #FAECE7;  --coral-text: #712B13;  --coral-border: #F0997B;
+      --rose-bg: #FDE8EF;   --rose-text: #7B1032;   --rose-border: #F4A0BE;
     }
-
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #1a1a18; --bg2: #242422; --bg3: #2c2c2a;
         --text: #e8e6de; --text2: #9c9a92; --text3: #5f5e5a;
         --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.16);
-        --blue-bg: #042C53; --blue-text: #B5D4F4; --blue-border: #185FA5;
-        --green-bg: #173404; --green-text: #C0DD97; --green-border: #3B6D11;
-        --amber-bg: #412402; --amber-text: #FAC775; --amber-border: #854F0B;
+        --blue-bg: #042C53;   --blue-text: #B5D4F4;   --blue-border: #185FA5;
+        --green-bg: #173404;  --green-text: #C0DD97;  --green-border: #3B6D11;
+        --amber-bg: #412402;  --amber-text: #FAC775;  --amber-border: #854F0B;
         --purple-bg: #26215C; --purple-text: #CECBF6; --purple-border: #534AB7;
-        --teal-bg: #04342C; --teal-text: #9FE1CB; --teal-border: #0F6E56;
-        --coral-bg: #4A1B0C; --coral-text: #F5C4B3; --coral-border: #D85A30;
+        --teal-bg: #04342C;   --teal-text: #9FE1CB;   --teal-border: #0F6E56;
+        --coral-bg: #4A1B0C;  --coral-text: #F5C4B3;  --coral-border: #D85A30;
+        --rose-bg: #4A0A1E;   --rose-text: #F9AECB;   --rose-border: #C03060;
       }
     }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      min-height: 100vh;
-      padding: 0 0 80px;
-    }
-
-    /* Header */
-    .site-header {
-      border-bottom: 1px solid var(--border);
-      padding: 28px 40px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); min-height: 100vh; padding: 0 0 80px; }
+    .site-header { border-bottom: 1px solid var(--border); padding: 28px 40px 24px; max-width: 1100px; margin: 0 auto; }
     @media (max-width: 600px) { .site-header { padding: 24px 20px; } }
-
-    .site-title {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-
-    .site-sub {
-      font-size: 14px;
-      color: var(--text2);
-      line-height: 1.5;
-    }
-
-    .site-sub a {
-      color: var(--text2);
-      text-decoration: none;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      background: var(--bg2);
-      padding: 2px 7px;
-      border-radius: 4px;
-      border: 1px solid var(--border2);
-    }
+    .site-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 6px; }
+    .site-sub { font-size: 14px; color: var(--text2); line-height: 1.5; }
+    .site-sub a { color: var(--text2); text-decoration: none; font-family: var(--font-mono); font-size: 12px; background: var(--bg2); padding: 2px 7px; border-radius: 4px; border: 1px solid var(--border2); }
     .site-sub a:hover { color: var(--text); }
+    .site-intro { max-width: 1100px; margin: 24px auto 0; padding: 0 40px; font-size: 14px; color: var(--text2); line-height: 1.7; max-width: 680px; padding-left: 40px; }
+    @media (max-width: 600px) { .site-intro { padding: 0 20px; } }
 
     /* Filter bar */
-    .filter-bar {
-      max-width: 1100px;
-      margin: 28px auto 0;
-      padding: 0 40px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
+    .filter-bar { max-width: 1100px; margin: 28px auto 0; padding: 0 40px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
     @media (max-width: 600px) { .filter-bar { padding: 0 20px; } }
-
     .filter-label { font-size: 12px; color: var(--text3); margin-right: 4px; }
-
-    .filter-btn {
-      font-size: 11px;
-      font-weight: 500;
-      padding: 4px 12px;
-      border-radius: 20px;
-      border: 1px solid var(--border2);
-      background: var(--bg2);
-      color: var(--text2);
-      cursor: pointer;
-      font-family: var(--font-sans);
-      transition: all 0.15s;
-    }
-
+    .filter-btn { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border2); background: var(--bg2); color: var(--text2); cursor: pointer; font-family: var(--font-sans); transition: all 0.15s; }
     .filter-btn:hover { border-color: var(--text3); color: var(--text); }
     .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
+    /* Theme sections */
+    .theme-section { max-width: 1100px; margin: 40px auto 0; padding: 0 40px; }
+    @media (max-width: 600px) { .theme-section { padding: 0 20px; } }
+    .theme-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .theme-title { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+    .theme-desc { font-size: 13px; color: var(--text3); }
+    .theme-section.hidden { display: none; }
+
     /* Grid */
-    .grid {
-      max-width: 1100px;
-      margin: 28px auto 0;
-      padding: 0 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 18px;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
 
-    @media (max-width: 600px) { .grid { padding: 0 20px; grid-template-columns: 1fr; } }
-
-    .card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .card:hover {
-      border-color: var(--border2);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-
-    .card-preview {
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-
+    /* Cards */
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, box-shadow 0.15s; }
+    .card:hover { border-color: var(--border2); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .card-preview { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 48px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
     .card-preview.blue   { background: var(--blue-bg); }
     .card-preview.green  { background: var(--green-bg); }
     .card-preview.amber  { background: var(--amber-bg); }
     .card-preview.purple { background: var(--purple-bg); }
     .card-preview.teal   { background: var(--teal-bg); }
     .card-preview.coral  { background: var(--coral-bg); }
-
-    .card-preview .mini-tree {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      line-height: 1.8;
-      text-align: left;
-      padding: 12px 16px;
-      width: 100%;
-    }
-
-    .card-body {
-      padding: 16px 18px 18px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.3;
-    }
-
-    .card-desc {
-      font-size: 12px;
-      color: var(--text2);
-      line-height: 1.55;
-      flex: 1;
-    }
-
-    .card-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-
-    .tag {
-      font-size: 10px;
-      font-weight: 500;
-      padding: 2px 8px;
-      border-radius: 20px;
-      border: 1px solid;
-      font-family: var(--font-mono);
-    }
-    .tag.structure { background: var(--blue-bg);   color: var(--blue-text);   border-color: var(--blue-border); }
-    .tag.workflow  { background: var(--green-bg);  color: var(--green-text);  border-color: var(--green-border); }
-    .tag.concept   { background: var(--purple-bg); color: var(--purple-text); border-color: var(--purple-border); }
-    .tag.tooling   { background: var(--amber-bg);  color: var(--amber-text);  border-color: var(--amber-border); }
+    .card-preview.rose   { background: var(--rose-bg); }
+    .card-preview .mini-tree { font-family: var(--font-mono); font-size: 10px; line-height: 1.8; text-align: left; padding: 12px 16px; width: 100%; }
+    .card-preview .icon-large { font-size: 52px; }
+    .card-body { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .card-desc { font-size: 12px; color: var(--text2); line-height: 1.55; flex: 1; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .tag { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; border: 1px solid; font-family: var(--font-mono); }
+    .tag.technical  { background: var(--blue-bg);   color: var(--blue-text);   border-color: var(--blue-border); }
+    .tag.saas       { background: var(--green-bg);  color: var(--green-text);  border-color: var(--green-border); }
+    .tag.claude     { background: var(--purple-bg); color: var(--purple-text); border-color: var(--purple-border); }
+    .tag.workflow   { background: var(--amber-bg);  color: var(--amber-text);  border-color: var(--amber-border); }
+    .tag.allconvos  { background: var(--teal-bg);   color: var(--teal-text);   border-color: var(--teal-border); }
+    .tag.tooling    { background: var(--coral-bg);  color: var(--coral-text);  border-color: var(--coral-border); }
 
     /* Empty state */
-    .empty {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 40px;
-      text-align: center;
-      color: var(--text3);
-      font-size: 14px;
-      display: none;
-    }
+    .empty { text-align: center; color: var(--text3); font-size: 14px; padding: 40px 0; display: none; }
 
     /* Footer */
-    .site-footer {
-      max-width: 1100px;
-      margin: 60px auto 0;
-      padding: 0 40px;
-      border-top: 1px solid var(--border);
-      padding-top: 24px;
-      font-size: 12px;
-      color: var(--text3);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .site-footer { max-width: 1100px; margin: 60px auto 0; padding: 24px 40px 0; border-top: 1px solid var(--border); font-size: 12px; color: var(--text3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
   </style>
 </head>
 <body>
-
   <div class="site-header">
     <div class="site-title">Claude Reference Library</div>
     <div class="site-sub">
-      Visual diagrams, workflow maps and reference guides &nbsp;·&nbsp;
-      <a href="https://github.com/gilesparnell/Claude" target="_blank">gilesparnell/Claude ↗</a>
+      Visual diagrams, workflow maps and reference guides &nbsp;&middot;&nbsp;
+      <a href="https://github.com/gilesparnell/Claude" target="_blank">gilesparnell/Claude &#8599;</a>
     </div>
   </div>
 
+  <p class="site-intro">
+    A living knowledge base that grows with every project. Each diagram captures something
+    worth remembering &mdash; an architecture decision, a mental model for working with Claude,
+    a SaaS pattern that saved time. When Claude explains a concept visually, it ends up here.
+  </p>
+
   <div class="filter-bar">
-    <span class="filter-label">Filter:</span>
+    <span class="filter-label">Theme:</span>
     <button class="filter-btn active" onclick="filter('all', this)">All</button>
-    <button class="filter-btn" onclick="filter('structure', this)">Structure</button>
-    <button class="filter-btn" onclick="filter('workflow', this)">Workflow</button>
-    <button class="filter-btn" onclick="filter('concept', this)">Concept</button>
-    <button class="filter-btn" onclick="filter('tooling', this)">Tooling</button>
+    <button class="filter-btn" onclick="filter('technical', this)">&#128295; Technical</button>
+    <button class="filter-btn" onclick="filter('saas', this)">&#128640; SaaS</button>
+    <button class="filter-btn" onclick="filter('claude', this)">&#129504; Claude</button>
+    <button class="filter-btn" onclick="filter('workflow', this)">&#9881; Workflow</button>
+    <button class="filter-btn" onclick="filter('allconvos', this)">&#128172; AllConvos</button>
+    <button class="filter-btn" onclick="filter('tooling', this)">&#128736; Tooling</button>
   </div>
 
-  <div class="grid" id="grid">
-
-    <!-- CARD: Repo Structure -->
-    <a href="diagrams/repo-structure.html" class="card" data-tags="structure workflow">
-      <div class="card-preview blue">
-        <div class="mini-tree" style="color:#0C447C">
-          📦 gilesparnell/Claude<br>
-          &nbsp;&nbsp;📁 skills/ <span style="opacity:0.6">← reusable</span><br>
-          &nbsp;&nbsp;📁 project-templates/<br>
-          &nbsp;&nbsp;📁 global/<br>
-          &nbsp;&nbsp;📁 docs/ <span style="opacity:0.6">← pages</span><br>
-          <br>
-          📦 client-acme/<br>
-          &nbsp;&nbsp;📁 src/<br>
-          &nbsp;&nbsp;📁 docs/<br>
-          &nbsp;&nbsp;📁 .claude/
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-title">Project vs Workspace Repo Structure</div>
-        <div class="card-desc">How to organise your AI workspace repo vs individual client project repos. What lives where and why.</div>
-        <div class="card-tags">
-          <span class="tag structure">structure</span>
-          <span class="tag workflow">workflow</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- PLACEHOLDER: add more diagrams here -->
-
+  <!-- THEME: Technical -->
+  <div class="theme-section" id="section-technical" data-theme="technical">
+    <div class="theme-header">
+      <span class="theme-title">&#128295; Technical</span>
+      <span class="theme-desc">Architecture, code patterns, system design</span>
+    </div>
+    <div class="grid" id="grid-technical">
+      <div class="empty" id="empty-technical">No technical diagrams yet &mdash; they'll appear here as you build.</div>
+    </div>
   </div>
 
-  <div class="empty" id="empty">No diagrams in this category yet.</div>
+  <!-- THEME: SaaS -->
+  <div class="theme-section" id="section-saas" data-theme="saas">
+    <div class="theme-header">
+      <span class="theme-title">&#128640; SaaS</span>
+      <span class="theme-desc">Product patterns, multi-tenancy, billing, onboarding</span>
+    </div>
+    <div class="grid" id="grid-saas">
+      <div class="empty" id="empty-saas">No SaaS diagrams yet &mdash; add one when a pattern is worth visualising.</div>
+    </div>
+  </div>
 
+  <!-- THEME: Claude -->
+  <div class="theme-section" id="section-claude" data-theme="claude">
+    <div class="theme-header">
+      <span class="theme-title">&#129504; Claude</span>
+      <span class="theme-desc">How Claude works, prompting models, MCP, skills system</span>
+    </div>
+    <div class="grid" id="grid-claude">
+
+      <!-- CARD: Repo Structure -->
+      <a href="diagrams/repo-structure.html" class="card" data-tags="claude workflow">
+        <div class="card-preview blue">
+          <div class="mini-tree" style="color:#0C447C">
+            &#128230; gilesparnell/Claude<br>
+            &nbsp;&nbsp;&#128193; skills/ <span style="opacity:0.6">&larr; reusable</span><br>
+            &nbsp;&nbsp;&#128193; project-templates/<br>
+            &nbsp;&nbsp;&#128193; global/<br>
+            &nbsp;&nbsp;&#128193; docs/ <span style="opacity:0.6">&larr; pages</span><br>
+            <br>
+            &#128230; client-acme/<br>
+            &nbsp;&nbsp;&#128193; src/<br>
+            &nbsp;&nbsp;&#128193; .claude/
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Project vs Workspace Repo Structure</div>
+          <div class="card-desc">How to organise your AI workspace repo vs individual client project repos. What lives where and why.</div>
+          <div class="card-tags">
+            <span class="tag claude">claude</span>
+            <span class="tag workflow">workflow</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- THEME: Workflow -->
+  <div class="theme-section" id="section-workflow" data-theme="workflow">
+    <div class="theme-header">
+      <span class="theme-title">&#9881; Workflow</span>
+      <span class="theme-desc">Dev process, git conventions, review flows, skill lifecycle</span>
+    </div>
+    <div class="grid" id="grid-workflow">
+      <div class="empty" id="empty-workflow">No workflow diagrams yet.</div>
+    </div>
+  </div>
+
+  <!-- THEME: AllConvos -->
+  <div class="theme-section" id="section-allconvos" data-theme="allconvos">
+    <div class="theme-header">
+      <span class="theme-title">&#128172; AllConvos</span>
+      <span class="theme-desc">AllConvos platform architecture, agent flows, integrations</span>
+    </div>
+    <div class="grid" id="grid-allconvos">
+      <div class="empty" id="empty-allconvos">No AllConvos diagrams yet &mdash; architecture diagrams go here as the platform grows.</div>
+    </div>
+  </div>
+
+
+  <div class="theme-section" id="section-tooling" data-theme="tooling">
+    <div class="theme-header">
+      <span class="theme-title">&#128736; Tooling</span>
+      <span class="theme-desc">MCP servers, Claude Code setup, IDE config, dev environment</span>
+    </div>
+    <div class="grid" id="grid-tooling">
+      <a href="diagrams/github-mcp-setup.html" class="card" data-tags="tooling claude">
+        <div class="card-preview coral">
+          <div class="mini-tree" style="color:#712B13">
+            Claude Code CLI<br>
+            &nbsp;&nbsp;&#8595; MCP protocol<br>
+            GitHub API<br>
+            &nbsp;&nbsp;&#8595; Bearer token<br>
+            gilesparnell/Claude &#10003;
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">GitHub MCP Server Setup</div>
+          <div class="card-desc">How the GitHub MCP server connects Claude Code to your repos. Auth flow, scopes, and what you unlock once connected.</div>
+          <div class="card-tags"><span class="tag tooling">tooling</span><span class="tag claude">claude</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
   <div class="site-footer">
-    <span>gilesparnell · Claude Reference Library</span>
+    <span>gilesparnell &middot; Claude Reference Library</span>
     <span>Add diagrams to <code>docs/diagrams/</code> and link them in <code>docs/index.html</code></span>
   </div>
 
   <script>
-    function filter(tag, btn) {
+    // On load, show empty states where grids have no real cards
+    document.querySelectorAll('.grid').forEach(grid => {
+      const realCards = grid.querySelectorAll('.card');
+      const empty = grid.querySelector('.empty');
+      if (empty) empty.style.display = realCards.length === 0 ? 'block' : 'none';
+    });
+
+    function filter(theme, btn) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const cards = document.querySelectorAll('.card');
-      let visible = 0;
-      cards.forEach(c => {
-        const tags = c.dataset.tags || '';
-        const show = tag === 'all' || tags.includes(tag);
-        c.style.display = show ? 'flex' : 'none';
-        if (show) visible++;
+      document.querySelectorAll('.theme-section').forEach(section => {
+        if (theme === 'all') {
+          section.classList.remove('hidden');
+        } else {
+          const sectionTheme = section.dataset.theme;
+          section.classList.toggle('hidden', sectionTheme !== theme);
+        }
       });
-      document.getElementById('empty').style.display = visible === 0 ? 'block' : 'none';
+      // Also filter individual cards within visible sections
+      document.querySelectorAll('.card').forEach(card => {
+        if (theme === 'all') { card.style.display = 'flex'; return; }
+        const tags = card.dataset.tags || '';
+        card.style.display = tags.includes(theme) ? 'flex' : 'none';
+      });
+      // Refresh empty states
+      document.querySelectorAll('.grid').forEach(grid => {
+        const visibleCards = [...grid.querySelectorAll('.card')].filter(c => c.style.display !== 'none');
+        const empty = grid.querySelector('.empty');
+        if (empty) empty.style.display = visibleCards.length === 0 ? 'block' : 'none';
+      });
     }
   </script>
-
 </body>
 </html>
