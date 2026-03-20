@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Architecture — gilesparnell / allconvos.ai</title>
+<link rel="stylesheet" href="portal.css">
+<style>
+/* ── LOCAL OVERRIDES ── */
+.code-block{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px 18px;font-family:var(--mono);font-size:12px;color:var(--text);line-height:1.9;overflow-x:auto;margin-top:8px}
+.code-block .dim{color:var(--text3)}
+.code-block .key{color:var(--blue-text)}
+
+/* Three-location grid */
+.loc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px}
+@media(max-width:760px){.loc-grid{grid-template-columns:1fr}}
+.loc-card{border:1.5px solid var(--border2);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.loc-path{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text);word-break:break-all}
+.loc-label{font-size:10px;font-weight:600;font-family:var(--mono);padding:2px 9px;border-radius:20px;border:1px solid;display:inline-block}
+.loc-global{background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)}
+.loc-project{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)}
+.loc-portal{background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)}
+.loc-desc{font-size:12px;color:var(--text2);line-height:1.65}
+.loc-example{font-family:var(--mono);font-size:11px;color:var(--text3);background:var(--bg3);padding:6px 10px;border-radius:5px;border:1px solid var(--border);line-height:1.7}
+
+/* Decision table */
+.dtable{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.dtable th{text-align:left;font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);padding:8px 14px;border-bottom:1.5px solid var(--border2)}
+.dtable td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.5}
+.dtable td:first-child{color:var(--text);font-size:13px;line-height:1.5}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tr:hover td{background:var(--bg2)}
+.ans-global{color:var(--teal-text);font-weight:600;font-family:var(--mono);font-size:12px}
+.ans-project{color:var(--blue-text);font-weight:600;font-family:var(--mono);font-size:12px}
+
+/* 7-section template */
+.tmpl-stack{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.tmpl-row{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.tmpl-head{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.tmpl-n{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--text3);min-width:20px}
+.tmpl-name{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.tmpl-badge{font-size:10px;font-weight:600;font-family:var(--mono);padding:2px 8px;border-radius:20px;border:1px solid}
+.tmpl-req{background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)}
+.tmpl-rec{background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)}
+.tmpl-opt{background:var(--bg3);color:var(--text3);border-color:var(--border2)}
+.tmpl-body{padding:13px 16px;font-size:12px;color:var(--text2);line-height:1.7}
+
+/* Step-by-step */
+.steps{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.step{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;transition:border-color 0.15s}
+.step:hover{border-color:var(--border2)}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--text);color:var(--bg);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-body{flex:1}
+.step-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.step-desc{font-size:12px;color:var(--text2);line-height:1.65}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">ac</div>
+      <span class="header-name">allconvos.ai</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="skills.html" class="active">Skills</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="decisions.html">Decisions</a>
+      <a href="templates.html">Templates</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://github.com/gilesparnell/Claude/tree/main/skills" target="_blank" class="gh-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Skills Architecture</div>
+    <div class="hero-title">How skills work,<br><em>where they live</em></div>
+    <div class="hero-sub">A complete reference for the three-location model, the scope decision, the 7-section skill template, and how to write a new skill from scratch.</div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n">3</span><span class="stat-l">Locations</span></div>
+      <div class="stat"><span class="stat-n">7</span><span class="stat-l">Template sections</span></div>
+      <div class="stat"><span class="stat-n">7</span><span class="stat-l">Steps to publish</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-inner">
+    <a href="#locations" class="active">Where skills live</a>
+    <a href="#scope">Global vs project</a>
+    <a href="#template">The template</a>
+    <a href="#writing">Writing from scratch</a>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:44px;padding-bottom:80px">
+
+  <!-- ── SECTION 1: WHERE SKILLS LIVE ── -->
+  <div class="section-label" id="locations">Where skills live</div>
+
+  <div class="adr-grid" style="margin-bottom:32px">
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128218;</div>
+      <div class="adr-body">
+        <div class="adr-title">Two formats, three locations</div>
+        <div class="adr-desc">Every skill exists in two forms serving different purposes: a <strong>runtime file</strong> that Claude Code reads when the skill is invoked, and a <strong>portal stub</strong> that the GitHub Pages site renders as a card. These are not duplicates — they're different formats with different jobs.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loc-grid" style="margin-bottom:44px">
+
+    <div class="loc-card">
+      <span class="loc-label loc-global">global runtime</span>
+      <div class="loc-path">~/.claude/skills/&lt;slug&gt;/SKILL.md</div>
+      <div class="loc-desc">Loaded automatically in <em>every</em> Claude Code session, regardless of which project you're in. Use for craft skills that apply universally — code review, git conventions, testing practices.</div>
+      <div class="loc-example">code-review/<br>git-conventions/<br>testing-practices/<br>frontend-design/<br>skill-publisher/</div>
+    </div>
+
+    <div class="loc-card">
+      <span class="loc-label loc-project">project runtime</span>
+      <div class="loc-path">[project]/.claude/skills/&lt;slug&gt;/SKILL.md</div>
+      <div class="loc-desc">Loaded only when Claude Code is opened inside that specific project. Use for skills that reference a particular stack, client system, or domain — things that would trigger incorrectly elsewhere.</div>
+      <div class="loc-example">fsca/.claude/skills/<br>&nbsp;&nbsp;frontend-design/<br>allconvos/.claude/skills/<br>&nbsp;&nbsp;saas-patterns/</div>
+    </div>
+
+    <div class="loc-card">
+      <span class="loc-label loc-portal">portal stub</span>
+      <div class="loc-path">~/Claude/skills/&lt;slug&gt;/SKILL.md</div>
+      <div class="loc-desc">Frontmatter-only. Rendered as a card on this GitHub Pages portal. Not read by Claude Code at runtime — this is purely the display layer. All skills (global and project-scoped) get a portal stub here.</div>
+      <div class="loc-example">code-review/<br>saas-patterns/<br>github-pages-portal/<br>skill-publisher/</div>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION 2: GLOBAL VS PROJECT ── -->
+  <div class="section-label" id="scope">Global vs project-scoped</div>
+
+  <div class="adr-grid" style="margin-bottom:20px">
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#9874;</div>
+      <div class="adr-body">
+        <div class="adr-title">The one-question test</div>
+        <div class="adr-desc">Ask: <em>"Would this skill give correct, useful guidance on a completely unrelated project?"</em> If yes — global. If no — project-scoped. When in doubt, start project-scoped. A skill that triggers on the wrong project is worse than one that doesn't trigger automatically.</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="dtable" style="margin-bottom:44px">
+    <tr>
+      <th>Signal</th>
+      <th>Scope</th>
+      <th>Reason</th>
+    </tr>
+    <tr>
+      <td>It's a craft skill — review, git, testing, design principles</td>
+      <td><span class="ans-global">~/.claude/skills/</span></td>
+      <td>These apply to every project. Universal quality bars benefit from being always-on.</td>
+    </tr>
+    <tr>
+      <td>It references a specific library, API, or file path</td>
+      <td><span class="ans-project">[project]/.claude/skills/</span></td>
+      <td>e.g. <code>lib/ai.ts</code>, Twilio webhooks, Stripe plan IDs. Would be noise — or wrong — anywhere else.</td>
+    </tr>
+    <tr>
+      <td>It contains a client's brand colours, domain rules, or business logic</td>
+      <td><span class="ans-project">[project]/.claude/skills/</span></td>
+      <td>Client-specific context must stay in the client repo, not leak into all sessions.</td>
+    </tr>
+    <tr>
+      <td>Its trigger phrases are generic ("add a feature", "design this API")</td>
+      <td><span class="ans-project">[project]/.claude/skills/</span></td>
+      <td>Broad triggers cause false positives on unrelated work. Keep scoped to where the context is valid.</td>
+    </tr>
+    <tr>
+      <td>It encodes a process you run on every engagement</td>
+      <td><span class="ans-global">~/.claude/skills/</span></td>
+      <td>e.g. PR review process, commit message format. These should be consistent everywhere.</td>
+    </tr>
+    <tr>
+      <td>It was built for one client but proved useful on others</td>
+      <td><span class="ans-global">~/.claude/skills/</span></td>
+      <td>Graduate it. Remove or neutralise the client-specific parts first.</td>
+    </tr>
+  </table>
+
+  <!-- ── SECTION 3: THE TEMPLATE ── -->
+  <div class="section-label" id="template">The 7-section skill template</div>
+
+  <div class="adr-grid" style="margin-bottom:20px">
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128196;</div>
+      <div class="adr-body">
+        <div class="adr-title">Runtime SKILL.md structure</div>
+        <div class="adr-desc">The runtime file is what Claude Code reads when a skill is invoked. It should be written as direct instructions to Claude — not documentation for humans. Sections 1–4 are required. Sections 5–7 add precision and robustness.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-block" style="margin-bottom:20px">
+<span class="dim">---</span>
+<span class="key">name</span>: your-skill-slug
+<span class="key">description</span>: Use this skill when [trigger condition]. Triggers on '[phrase 1]', '[phrase 2]'.
+<span class="dim">---</span>
+
+<span class="dim"># Skill Title</span>
+
+<span class="dim">## When to Use
+## Context
+## Process
+## Output Format
+## Guardrails
+## Standalone Mode</span>
+  </div>
+
+  <div class="tmpl-stack" style="margin-bottom:44px">
+
+    <div class="tmpl-row">
+      <div class="tmpl-head">
+        <span class="tmpl-n">0</span>
+        <span class="tmpl-name">Frontmatter — <code>name</code> and <code>description</code></span>
+        <span class="tmpl-badge tmpl-req">required</span>
+      </div>
+      <div class="tmpl-body">
+        <code>name</code> is the slug — lowercase, hyphenated, matches the folder name. <code>description</code> is the most important field: it's what Claude Code uses for trigger matching. Write it as a sentence starting with "Use this skill when…" and include 2–4 example trigger phrases in single quotes. Specific phrases beat vague ones — <code>'review this PR'</code> is better than <code>'review'</code>.
+      </div>
+    </div>
+
+    <div class="tmpl-row">
+      <div class="tmpl-head">
+        <span class="tmpl-n">1</span>
+        <span class="tmpl-name">When to Use</span>
+        <span class="tmpl-badge tmpl-req">required</span>
+      </div>
+      <div class="tmpl-body">
+        List exact trigger conditions and explicit exclusions. This helps Claude decide when <em>not</em> to apply the skill as much as when to use it. Include: trigger phrases, the kind of request this handles, and 1–2 "do NOT trigger when" cases to prevent false positives. Example: <em>"Do NOT trigger for general code questions unrelated to shipping."</em>
+      </div>
+    </div>
+
+    <div class="tmpl-row">
+      <div class="tmpl-head">
+        <span class="tmpl-n">2</span>
+        <span class="tmpl-name">Context</span>
+        <span class="tmpl-badge tmpl-rec">recommended</span>
+      </div>
+      <div class="tmpl-body">
+        Why this skill exists. What problem or failure mode prompted it — a correction, a repeated mistake, a hard-won rule. This section isn't instruction; it's background. It helps Claude understand the <em>intent</em> behind the rules, which matters when edge cases arise. A few sentences is enough. Example: <em>"This skill exists because early PRs shipped without test coverage. The review process now enforces it."</em>
+      </div>
+    </div>
+
+    <div class="tmpl-row">
+      <div class="tmpl-head">
+        <span class="tmpl-n">3</span>
+        <span class="tmpl-name">Process</span>
+        <span class="tmpl-badge tmpl-req">required</span>
+      </div>
+      <div class="tmpl-body">
+        The actual instructions. What Claude should do, in what order, with what rules. Be specific and directive — write in imperative form (<em>"Check X before Y"</em>, <em>"Always include Z"</em>). Use numbered steps for sequential processes, bullet lists for checklists or rules. This is the heart of the skill.
+      </div>
+    </div>
+
+    <div class="tmpl-row">
+      <div class="tmpl-head">
+        <span class="tmpl-n">4</span>
+        <span class="tmpl-name">Output Format</span>
+        <span class="tmpl-badge tmpl-rec">recommended</span>
+      </div>
+      <div class="tmpl-body">
+        How the response should be structured. Markdown format, section headers, length guidance, tone. Example: <em>"Return findings as a markdown checklist grouped by severity (blocking / suggestion / nit). Keep explanations to one sentence per item."</em> Without this, Claude will choose a format — with it, the output is consistent and scannable.
+      </div>
+    </div>
+
+    <div class="tmpl-row">
+      <div class="tmpl-head">
+        <span class="tmpl-n">5</span>
+        <span class="tmpl-name">Guardrails</span>
+        <span class="tmpl-badge tmpl-rec">recommended</span>
+      </div>
+      <div class="tmpl-body">
+        What NOT to do. Explicit prohibitions that prevent common failure modes. Example: <em>"Do not refactor code that wasn't part of the PR. Do not suggest architectural changes unless the PR introduces an obvious structural problem."</em> Guardrails are especially valuable for skills that touch sensitive areas — code review, design feedback, security analysis.
+      </div>
+    </div>
+
+    <div class="tmpl-row">
+      <div class="tmpl-head">
+        <span class="tmpl-n">6</span>
+        <span class="tmpl-name">Standalone Mode</span>
+        <span class="tmpl-badge tmpl-opt">optional</span>
+      </div>
+      <div class="tmpl-body">
+        How to invoke this skill explicitly when it hasn't been triggered automatically, or when working outside the normal project context. Useful for skills that are occasionally needed in isolation — include a minimal invocation prompt. Example: <em>"To use outside of a PR context: paste the diff and say 'apply code-review skill to this'."</em>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION 4: WRITING FROM SCRATCH ── -->
+  <div class="section-label" id="writing">Writing a skill from scratch</div>
+
+  <div class="steps" style="margin-bottom:44px">
+
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify the pattern</div>
+        <div class="step-desc">A skill worth writing is a correction you've made twice, a rule you've explained to Claude more than once, or a process that should be consistent every time. If you're typing the same instructions into a session, that's a skill. If Claude keeps getting something wrong in a specific context, that's a skill.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <div class="step-title">Decide scope</div>
+        <div class="step-desc">Apply the one-question test: would this give correct guidance on an unrelated project? Global goes to <code>~/.claude/skills/</code>. Project-specific goes to <code>[project]/.claude/skills/</code>. Default to project-scoped when unsure — you can always promote it later.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <div class="step-title">Choose a slug</div>
+        <div class="step-desc">Lowercase, hyphenated, descriptive. The slug becomes the folder name, the portal card identifier, and part of the trigger surface. <code>payment-webhooks</code> is better than <code>payments</code>. Avoid generic slugs like <code>coding</code> or <code>api</code> — they'll conflict with everything.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-body">
+        <div class="step-title">Write the runtime SKILL.md</div>
+        <div class="step-desc">Start with the frontmatter — nail the <code>description</code> field first, as it drives trigger matching. Then write the 7 sections. Focus on Process and Guardrails — these are what determine whether the skill actually works. Save to the correct scope location under the slug folder.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">5</div>
+      <div class="step-body">
+        <div class="step-title">Test the trigger</div>
+        <div class="step-desc">Open a new Claude Code session in the right directory. Say one of your trigger phrases. Check the session context to confirm the skill loaded. Refine the <code>description</code> trigger phrases if it doesn't fire — this is the most common failure mode.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">6</div>
+      <div class="step-body">
+        <div class="step-title">Write the portal stub</div>
+        <div class="step-desc">Create a frontmatter-only <code>SKILL.md</code> in <code>~/Claude/skills/&lt;slug&gt;/</code>. Include: <code>title</code>, <code>category</code>, <code>icon</code>, <code>description</code> (one sentence), <code>triggers</code> (2–4 phrases), <code>checks-label</code>, <code>checks</code> (4 maximum — curate ruthlessly), <code>version</code>. This is the portal display card.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">7</div>
+      <div class="step-body">
+        <div class="step-title">Commit and verify the portal</div>
+        <div class="step-desc">Add the portal stub to git, commit with <code>feat: add &lt;slug&gt; skill</code>, push to <code>gilesparnell/Claude</code>. The GitHub Action regenerates the portal pages automatically. Check the Actions tab to confirm the run succeeded, then verify the card appears on the Skills page.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── GOTCHAS ── -->
+  <div class="section-label">Common mistakes</div>
+
+  <div class="adr-grid" style="margin-bottom:44px">
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:16px;padding-top:1px;min-width:28px">&#128683;</div>
+      <div class="adr-body">
+        <div class="adr-title">Vague trigger phrases</div>
+        <div class="adr-desc">The <code>description</code> field drives trigger matching. <em>"Use when coding"</em> is useless. <em>"Use when the user says 'review this PR', 'adversarial review', or 'prepare for review'"</em> is precise. If a skill never fires, the description is why.</div>
+      </div>
+    </div>
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:16px;padding-top:1px;min-width:28px">&#128683;</div>
+      <div class="adr-body">
+        <div class="adr-title">Putting project skills in global</div>
+        <div class="adr-desc">A skill with trigger phrases like <em>"add a new feature"</em> or <em>"design this API"</em> will fire on every project if placed in <code>~/.claude/skills/</code>. SaaS-specific patterns, client brand rules, and stack-specific skills must stay in the project repo.</div>
+      </div>
+    </div>
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:16px;padding-top:1px;min-width:28px">&#128683;</div>
+      <div class="adr-body">
+        <div class="adr-title">Confusing portal stubs with runtime files</div>
+        <div class="adr-desc">The files in <code>~/Claude/skills/</code> are portal display stubs — frontmatter only. Claude Code does not read them at runtime. If a skill isn't working, check that the runtime SKILL.md exists in the correct scope location, not just the portal stub.</div>
+      </div>
+    </div>
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:16px;padding-top:1px;min-width:28px">&#128683;</div>
+      <div class="adr-body">
+        <div class="adr-title">Too many checks in the portal stub</div>
+        <div class="adr-desc">Portal stubs allow up to 4 check items. More than 4 clutters the card and dilutes the signal. Force yourself to pick the 4 most important points — this constraint is a feature, not a limitation.</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills Architecture</span>
+  <span><a href="skills.html" style="color:var(--text3)">&#8592; Back to Skills Library</a> &middot; <a href="walkthroughs.html" style="color:var(--text3)">All walkthroughs</a></span>
+</footer>
+
+<script>
+// Highlight active page-nav item on scroll
+const sections = ['locations','scope','template','writing'];
+const navLinks = document.querySelectorAll('.page-nav a');
+function onScroll(){
+  let current = sections[0];
+  sections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 80) current = id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href')==='#'+current);
+  });
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+</script>
+
+</body>
+</html>
