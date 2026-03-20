@@ -1,0 +1,44 @@
+name: Build & Deploy Knowledge Portal
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd scripts
+          npm install gray-matter glob 2>/dev/null || npm init -y && npm install gray-matter glob
+
+      - name: Generate portal stats
+        run: node scripts/generate-stats.js
+
+      - name: Configure git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Commit updated pages
+        run: |
+          git add docs/
+          git diff --staged --quiet || git commit -m "chore: auto-update portal stats [skip ci]"
+          git push

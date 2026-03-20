@@ -3,163 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skills Library — gilesparnell/Claude</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eeede9;
-  --text:#1a1a18;--text2:#5f5e5a;--text3:#888780;
-  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.18);
-  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --font-mono:'SF Mono','Fira Code',monospace;
-  --radius:12px;
-  --blue-bg:#E6F1FB;--blue-text:#0C447C;--blue-border:#85B7EB;
-  --green-bg:#EAF3DE;--green-text:#27500A;--green-border:#97C459;
-  --amber-bg:#FAEEDA;--amber-text:#633806;--amber-border:#FAC775;
-  --purple-bg:#EEEDFE;--purple-text:#3C3489;--purple-border:#AFA9EC;
-  --teal-bg:#E1F5EE;--teal-text:#085041;--teal-border:#5DCAA5;
-  --coral-bg:#FAECE7;--coral-text:#712B13;--coral-border:#F0997B;
-  --rose-bg:#FDE8EF;--rose-text:#7B1032;--rose-border:#F4A0BE;
-}
-@media(prefers-color-scheme:dark){
-  :root{
-    --bg:#1a1a18;--bg2:#242422;--bg3:#2c2c2a;
-    --text:#e8e6de;--text2:#9c9a92;--text3:#5f5e5a;
-    --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.16);
-    --blue-bg:#042C53;--blue-text:#B5D4F4;--blue-border:#185FA5;
-    --green-bg:#173404;--green-text:#C0DD97;--green-border:#3B6D11;
-    --amber-bg:#412402;--amber-text:#FAC775;--amber-border:#854F0B;
-    --purple-bg:#26215C;--purple-text:#CECBF6;--purple-border:#534AB7;
-    --teal-bg:#04342C;--teal-text:#9FE1CB;--teal-border:#0F6E56;
-    --coral-bg:#4A1B0C;--coral-text:#F5C4B3;--coral-border:#D85A30;
-    --rose-bg:#4A0A1E;--rose-text:#F9AECB;--rose-border:#C03060;
-  }
-}
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);padding:0 0 80px;min-height:100vh}
-a{color:inherit;text-decoration:none}
-
-/* Header */
-.site-header{border-bottom:1px solid var(--border);padding:28px 40px 24px;max-width:1100px;margin:0 auto}
-@media(max-width:600px){.site-header{padding:24px 20px}}
-.header-row{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.site-title{font-size:22px;font-weight:700;letter-spacing:-0.02em}
-.back-link{font-size:13px;color:var(--text3);display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--bg2);transition:color 0.15s}
-.back-link:hover{color:var(--text)}
-.site-sub{font-size:14px;color:var(--text2);margin-top:6px;line-height:1.5}
-
-/* Intro */
-.intro{max-width:680px;margin:24px auto 0;padding:0 40px;font-size:14px;color:var(--text2);line-height:1.7}
-@media(max-width:600px){.intro{padding:0 20px}}
-
-/* Stats bar */
-.stats-bar{max-width:1100px;margin:28px auto 0;padding:0 40px;display:flex;gap:24px;flex-wrap:wrap}
-@media(max-width:600px){.stats-bar{padding:0 20px}}
-.stat{display:flex;flex-direction:column;gap:2px}
-.stat-num{font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--text)}
-.stat-label{font-size:12px;color:var(--text3)}
-
-/* Filter */
-.filter-bar{max-width:1100px;margin:28px auto 0;padding:0 40px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-@media(max-width:600px){.filter-bar{padding:0 20px}}
-.filter-label{font-size:12px;color:var(--text3);margin-right:4px}
-.filter-btn{font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);cursor:pointer;font-family:var(--font-sans);transition:all 0.15s}
-.filter-btn:hover{border-color:var(--text3);color:var(--text)}
-.filter-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
-
-/* Skills grid */
-.skills-section{max-width:1100px;margin:36px auto 0;padding:0 40px}
-@media(max-width:600px){.skills-section{padding:0 20px}}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
-@media(max-width:600px){.skills-grid{grid-template-columns:1fr}}
-
-/* Skill card */
-.skill-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.15s,box-shadow 0.15s;cursor:default}
-.skill-card:hover{border-color:var(--border2);box-shadow:0 4px 20px rgba(0,0,0,0.07)}
-.skill-card.hidden{display:none}
-
-/* Card header band */
-.card-band{padding:20px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.card-band.blue{background:var(--blue-bg)}
-.card-band.green{background:var(--green-bg)}
-.card-band.amber{background:var(--amber-bg)}
-.card-band.purple{background:var(--purple-bg)}
-.card-band.teal{background:var(--teal-bg)}
-.card-band.coral{background:var(--coral-bg)}
-.card-band.rose{background:var(--rose-bg)}
-.skill-icon{font-size:28px;line-height:1;flex-shrink:0}
-.skill-name{font-size:15px;font-weight:700;letter-spacing:-0.01em;line-height:1.2}
-.skill-name-mono{font-family:var(--font-mono);font-size:11px;opacity:0.6;margin-top:3px}
-.category-badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;border:1px solid;font-family:var(--font-mono);white-space:nowrap;flex-shrink:0;margin-top:2px}
-.badge-blue{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)}
-.badge-green{background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)}
-.badge-amber{background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)}
-.badge-purple{background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)}
-.badge-teal{background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)}
-.badge-coral{background:var(--coral-bg);color:var(--coral-text);border-color:var(--coral-border)}
-.badge-rose{background:var(--rose-bg);color:var(--rose-text);border-color:var(--rose-border)}
-
-/* Card body */
-.card-body{padding:16px 22px 20px;flex:1;display:flex;flex-direction:column;gap:14px}
-.card-desc{font-size:13px;color:var(--text2);line-height:1.6}
-
-/* Triggers */
-.triggers-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);margin-bottom:7px}
-.triggers{display:flex;flex-wrap:wrap;gap:5px}
-.trigger{font-size:11px;font-family:var(--font-mono);padding:3px 9px;border-radius:6px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2)}
-
-/* Checklist preview */
-.checks{display:flex;flex-direction:column;gap:4px}
-.check-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:var(--text2);line-height:1.45}
-.check-dot{width:5px;height:5px;border-radius:50%;background:var(--text3);flex-shrink:0;margin-top:5px}
-
-/* Footer */
-.site-footer{max-width:1100px;margin:60px auto 0;padding:24px 40px 0;border-top:1px solid var(--border);font-size:12px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-</style>
+<title>Skills Library — gilesparnell / allconvos.ai</title>
+<link rel="stylesheet" href="portal.css">
 </head>
 <body>
 
-<div class="site-header">
-  <div class="header-row">
-    <div class="site-title">Skills Library</div>
-    <a href="index.html" class="back-link">&#8592; Reference Library</a>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">ac</div>
+      <span class="header-name">allconvos.ai</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="skills.html" class="active">Skills</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="decisions.html">Decisions</a>
+      <a href="templates.html">Templates</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://github.com/gilesparnell/Claude/tree/main/skills" target="_blank" class="gh-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
   </div>
-  <div class="site-sub">Reusable instructions that make Claude better on every project &nbsp;&middot;&nbsp; <a href="https://github.com/gilesparnell/Claude/tree/main/skills" target="_blank" style="font-family:var(--font-mono);font-size:12px;background:var(--bg2);padding:2px 7px;border-radius:4px;border:1px solid var(--border2);color:var(--text2)">gilesparnell/Claude/skills &#8599;</a></div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Skills Library</div>
+    <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
+    <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n" id="skill-count">7</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="cat-count">4</span><span class="stat-l">Categories</span></div>
+      <div class="stat"><span class="stat-n">25+</span><span class="stat-l">Trigger phrases</span></div>
+    </div>
+  </div>
 </div>
 
-<p class="intro">Each skill is a folder of instructions Claude Code loads when triggered. They encode hard-won patterns &mdash; things corrected, patterns that worked, rules that should apply everywhere. The library grows with every project.</p>
-
-<div class="stats-bar">
-  <div class="stat"><span class="stat-num">6</span><span class="stat-label">skills</span></div>
-  <div class="stat"><span class="stat-num">3</span><span class="stat-label">categories</span></div>
-  <div class="stat"><span class="stat-num">20+</span><span class="stat-label">trigger phrases</span></div>
+<div class="page-nav">
+  <div class="page-nav-inner">
+    <a href="#" class="active" onclick="filter('all',this);return false">All</a>
+    <a href="#" onclick="filter('code',this);return false">Code Quality</a>
+    <a href="#" onclick="filter('frontend',this);return false">Frontend</a>
+    <a href="#" onclick="filter('workflow',this);return false">Workflow</a>
+    <a href="#" onclick="filter('saas',this);return false">SaaS</a>
+    <a href="#" onclick="filter('engagement',this);return false">Engagement</a>
+  </div>
 </div>
 
-<div class="filter-bar">
-  <span class="filter-label">Category:</span>
-  <button class="filter-btn active" onclick="filter('all',this)">All</button>
-  <button class="filter-btn" onclick="filter('code',this)">&#128196; Code Quality</button>
-  <button class="filter-btn" onclick="filter('frontend',this)">&#127912; Frontend</button>
-  <button class="filter-btn" onclick="filter('workflow',this)">&#9881; Workflow</button>
-  <button class="filter-btn" onclick="filter('saas',this)">&#128640; SaaS</button>
-</div>
-
-<div class="skills-section">
+<div class="wrap" style="padding-top:36px;padding-bottom:60px">
   <div class="skills-grid" id="skills-grid">
 
     <!-- CODE QUALITY -->
     <div class="skill-card" data-category="code">
-      <div class="card-band blue">
+      <div class="skill-band" style="background:var(--blue-bg)">
         <div>
           <div class="skill-name">Code Quality Review</div>
-          <div class="skill-name-mono">code-quality</div>
+          <div class="skill-slug">code-quality</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128269;</span>
-          <span class="category-badge badge-blue">code</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-desc">Systematic checklist for auditing code before it ships. Covers correctness, readability, performance, security, and maintainability with structured output format.</div>
+      <div class="skill-body">
+        <div class="skill-desc">Systematic checklist for auditing code before it ships. Covers correctness, readability, performance, security, and maintainability with structured output format.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -184,18 +96,18 @@ a{color:inherit;text-decoration:none}
 
     <!-- CODE REVIEW -->
     <div class="skill-card" data-category="code">
-      <div class="card-band purple">
+      <div class="skill-band" style="background:var(--purple-bg)">
         <div>
           <div class="skill-name">PR Code Review</div>
-          <div class="skill-name-mono">code-review</div>
+          <div class="skill-slug">code-review</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128065;</span>
-          <span class="category-badge badge-purple">code</span>
+          <span class="cat-badge" style="background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)">code</span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-desc">Adversarial &ldquo;fresh eyes&rdquo; PR review. Pretends it has never seen the codebase. Catches what the author missed. Uses <code style="font-family:var(--font-mono);font-size:11px">blocking</code> / <code style="font-family:var(--font-mono);font-size:11px">suggestion</code> / <code style="font-family:var(--font-mono);font-size:11px">nit</code> labels.</div>
+      <div class="skill-body">
+        <div class="skill-desc">Adversarial &ldquo;fresh eyes&rdquo; PR review. Pretends it has never seen the codebase. Catches what the author missed. Uses <code>blocking</code> / <code>suggestion</code> / <code>nit</code> labels.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -209,7 +121,7 @@ a{color:inherit;text-decoration:none}
           <div class="triggers-label">Checks</div>
           <div class="checks">
             <div class="check-item"><span class="check-dot"></span>PR description quality</div>
-            <div class="check-item"><span class="check-dot"></span>Runtime error &amp; edge cases</div>
+            <div class="check-item"><span class="check-dot"></span>Runtime errors &amp; edge cases</div>
             <div class="check-item"><span class="check-dot"></span>Test coverage &amp; meaning</div>
             <div class="check-item"><span class="check-dot"></span>Security checks</div>
             <div class="check-item"><span class="check-dot"></span>6-month maintainability</div>
@@ -220,18 +132,18 @@ a{color:inherit;text-decoration:none}
 
     <!-- TESTING -->
     <div class="skill-card" data-category="code">
-      <div class="card-band teal">
+      <div class="skill-band" style="background:var(--teal-bg)">
         <div>
           <div class="skill-name">Testing Practices</div>
-          <div class="skill-name-mono">testing-practices</div>
+          <div class="skill-slug">testing-practices</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#9989;</span>
-          <span class="category-badge badge-teal">code</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">code</span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-desc">Testing philosophy, naming conventions, and structure patterns. Tests as documentation &mdash; DAMP over DRY. Arrange / Act / Assert. Behaviour not implementation.</div>
+      <div class="skill-body">
+        <div class="skill-desc">Testing philosophy, naming conventions, and structure patterns. Tests as documentation &mdash; DAMP over DRY. Arrange / Act / Assert. Behaviour not implementation.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -255,18 +167,18 @@ a{color:inherit;text-decoration:none}
 
     <!-- FRONTEND DESIGN -->
     <div class="skill-card" data-category="frontend">
-      <div class="card-band coral">
+      <div class="skill-band" style="background:var(--coral-bg)">
         <div>
           <div class="skill-name">Frontend Design</div>
-          <div class="skill-name-mono">frontend-design</div>
+          <div class="skill-slug">frontend-design</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#127912;</span>
-          <span class="category-badge badge-coral">frontend</span>
+          <span class="cat-badge" style="background:var(--coral-bg);color:var(--coral-text);border-color:var(--coral-border)">frontend</span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-desc">Opinionated UI design rules that avoid generic AI aesthetics. Whitespace, typography, colour intentionality. Explicit list of clich&eacute;s to avoid. Tailwind patterns and component guidance.</div>
+      <div class="skill-body">
+        <div class="skill-desc">Opinionated UI design rules that avoid generic AI aesthetics. Whitespace, typography, colour intentionality. Explicit list of clich&eacute;s to avoid. Tailwind patterns and component guidance.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -290,18 +202,18 @@ a{color:inherit;text-decoration:none}
 
     <!-- GIT CONVENTIONS -->
     <div class="skill-card" data-category="workflow">
-      <div class="card-band amber">
+      <div class="skill-band" style="background:var(--amber-bg)">
         <div>
           <div class="skill-name">Git Conventions</div>
-          <div class="skill-name-mono">git-conventions</div>
+          <div class="skill-slug">git-conventions</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#127809;</span>
-          <span class="category-badge badge-amber">workflow</span>
+          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-desc">Conventional Commits format, branch naming, and PR description template. Keeps history clean and meaningful. Imperative mood, 72 char limit, <em>why</em> not <em>what</em>.</div>
+      <div class="skill-body">
+        <div class="skill-desc">Conventional Commits format, branch naming, and PR description template. Keeps history clean and meaningful. Imperative mood, 72 char limit, <em>why</em> not <em>what</em>.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -314,14 +226,9 @@ a{color:inherit;text-decoration:none}
         <div>
           <div class="triggers-label">Types</div>
           <div class="triggers">
-            <span class="trigger">feat</span>
-            <span class="trigger">fix</span>
-            <span class="trigger">chore</span>
-            <span class="trigger">docs</span>
-            <span class="trigger">refactor</span>
-            <span class="trigger">test</span>
-            <span class="trigger">perf</span>
-            <span class="trigger">ci</span>
+            <span class="trigger">feat</span><span class="trigger">fix</span><span class="trigger">chore</span>
+            <span class="trigger">docs</span><span class="trigger">refactor</span><span class="trigger">test</span>
+            <span class="trigger">perf</span><span class="trigger">ci</span>
           </div>
         </div>
       </div>
@@ -329,18 +236,18 @@ a{color:inherit;text-decoration:none}
 
     <!-- SAAS PATTERNS -->
     <div class="skill-card" data-category="saas">
-      <div class="card-band green">
+      <div class="skill-band" style="background:var(--green-bg)">
         <div>
           <div class="skill-name">SaaS Patterns</div>
-          <div class="skill-name-mono">saas-patterns</div>
+          <div class="skill-slug">saas-patterns</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128640;</span>
-          <span class="category-badge badge-green">saas</span>
+          <span class="cat-badge" style="background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)">saas</span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-desc">Production-grade SaaS patterns for AllConvos. Tenant isolation, plan gating, usage tracking, idempotent ops, API route structure, soft deletes, and onboarding principles.</div>
+      <div class="skill-body">
+        <div class="skill-desc">Production-grade SaaS patterns for AllConvos. Tenant isolation, plan gating, usage tracking, idempotent ops, API route structure, soft deletes, and onboarding principles.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -348,7 +255,6 @@ a{color:inherit;text-decoration:none}
             <span class="trigger">design this API</span>
             <span class="trigger">build the onboarding flow</span>
             <span class="trigger">add usage limits</span>
-            <span class="trigger">set up billing</span>
           </div>
         </div>
         <div>
@@ -358,7 +264,41 @@ a{color:inherit;text-decoration:none}
             <div class="check-item"><span class="check-dot"></span>Feature flags from day one</div>
             <div class="check-item"><span class="check-dot"></span>Idempotent webhooks &amp; jobs</div>
             <div class="check-item"><span class="check-dot"></span>Soft delete &mdash; never hard delete</div>
-            <div class="check-item"><span class="check-dot"></span>AI &amp; Twilio via helper libs only</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAAS AUTOMATION ENGAGEMENT -->
+    <div class="skill-card" data-category="engagement">
+      <div class="skill-band" style="background:var(--navy-bg)">
+        <div>
+          <div class="skill-name">SaaS Automation Engagement</div>
+          <div class="skill-slug">saas-automation-engagement</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">&#128196;</span>
+          <span class="cat-badge" style="background:var(--navy-bg);color:var(--navy-text);border-color:var(--navy-border)">engagement</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">End-to-end playbook for new client automation engagements. From feasibility check through discovery, architecture, technical spec, scope of work, proposal, and Claude Code handoff.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">new client engagement</span>
+            <span class="trigger">build a proposal</span>
+            <span class="trigger">automation project</span>
+            <span class="trigger">scope this work</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Phases</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>Feasibility &amp; API check</div>
+            <div class="check-item"><span class="check-dot"></span>Discovery &amp; requirements</div>
+            <div class="check-item"><span class="check-dot"></span>Technical spec + SOW + Proposal</div>
+            <div class="check-item"><span class="check-dot"></span>Testing framework &amp; Claude Code handoff</div>
           </div>
         </div>
       </div>
@@ -367,19 +307,20 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<div class="site-footer">
+<footer class="site-footer">
   <span>gilesparnell &middot; Skills Library</span>
   <span>Add skills to <code>skills/</code> &mdash; see <a href="https://github.com/gilesparnell/Claude/blob/main/CONTRIBUTING.md" style="color:var(--text3)">CONTRIBUTING.md</a></span>
-</div>
+</footer>
 
 <script>
-function filter(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+function filter(cat, el) {
+  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
   document.querySelectorAll('.skill-card').forEach(card => {
-    if (cat === 'all') { card.classList.remove('hidden'); return; }
-    card.classList.toggle('hidden', card.dataset.category !== cat);
+    card.classList.toggle('hidden', cat !== 'all' && card.dataset.category !== cat);
   });
+  const visible = document.querySelectorAll('.skill-card:not(.hidden)').length;
+  document.getElementById('skill-count').textContent = visible;
 }
 </script>
 </body>

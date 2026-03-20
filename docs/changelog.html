@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — gilesparnell / allconvos.ai</title>
+<link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">ac</div>
+      <span class="header-name">allconvos.ai</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="skills.html">Skills</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="decisions.html">Decisions</a>
+      <a href="templates.html">Templates</a>
+      <a href="changelog.html" class="active">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://github.com/gilesparnell/Claude/commits/main" target="_blank" class="gh-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        All commits &#8599;
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Changelog</div>
+    <div class="hero-title">Every change,<br><em>always current</em></div>
+    <div class="hero-sub">Auto-generated from git history on every push. Never written manually. Shows exactly what changed, when, and why — straight from commit messages.</div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n" id="total-commits">...</span><span class="stat-l">Commits</span></div>
+      <div class="stat"><span class="stat-n" id="this-week">...</span><span class="stat-l">This week</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:36px;padding-bottom:60px">
+  <div id="changelog-content">
+    <div style="color:var(--text3);font-size:13px;text-align:center;padding:40px 0">Loading changelog from GitHub...</div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Changelog</span>
+  <span>Auto-generated from git history &middot; <a href="https://github.com/gilesparnell/Claude/commits/main" style="color:var(--text3)">View all commits &#8599;</a></span>
+</footer>
+
+<script>
+const BADGE_MAP = {feat:'cl-feat',fix:'cl-fix',chore:'cl-chore',docs:'cl-docs',refactor:'cl-chore',test:'cl-chore',perf:'cl-feat',ci:'cl-chore'};
+const LABEL_MAP = {feat:'feat',fix:'fix',chore:'chore',docs:'docs',refactor:'refactor',test:'test',perf:'perf',ci:'ci'};
+
+function getType(msg) {
+  for(const key of Object.keys(BADGE_MAP)) {
+    if(msg.toLowerCase().startsWith(key)) return key;
+  }
+  return 'chore';
+}
+
+function groupByDate(commits) {
+  const groups = {};
+  commits.forEach(c => {
+    const d = new Date(c.commit.author.date);
+    const key = d.toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    if(!groups[key]) groups[key]=[];
+    groups[key].push(c);
+  });
+  return groups;
+}
+
+function timeAgo(d){
+  const s=Math.floor((Date.now()-new Date(d))/1000);
+  if(s<60)return'just now';
+  if(s<3600)return Math.floor(s/60)+'m ago';
+  if(s<86400)return Math.floor(s/3600)+'h ago';
+  return Math.floor(s/86400)+'d ago';
+}
+
+fetch('https://api.github.com/repos/gilesparnell/Claude/commits?per_page=50')
+  .then(r=>r.json())
+  .then(commits => {
+    document.getElementById('total-commits').textContent = commits.length < 50 ? commits.length : '50+';
+    const weekAgo = Date.now() - 7*24*60*60*1000;
+    const thisWeek = commits.filter(c => new Date(c.commit.author.date) > weekAgo).length;
+    document.getElementById('this-week').textContent = thisWeek;
+
+    const groups = groupByDate(commits);
+    let html = '<div class="changelog-list">';
+    for(const [date, cs] of Object.entries(groups)) {
+      html += `<div class="cl-group"><div class="cl-date">${date}</div>`;
+      cs.forEach(c => {
+        const msg = c.commit.message.split('\n')[0];
+        const type = getType(msg);
+        const cleanMsg = msg.replace(/^(feat|fix|chore|docs|refactor|test|perf|ci)(\(.*?\))?:\s*/i,'');
+        const hash = c.sha.substring(0,7);
+        html += `<div class="cl-item">
+          <span class="cl-badge ${BADGE_MAP[type]}">${LABEL_MAP[type]}</span>
+          <span class="cl-text">${cleanMsg}</span>
+          <a href="${c.html_url}" target="_blank" class="cl-hash">${hash} &#8599;</a>
+        </div>`;
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    document.getElementById('changelog-content').innerHTML = html;
+  })
+  .catch(() => {
+    document.getElementById('changelog-content').innerHTML =
+      '<div style="color:var(--text3);font-size:13px;text-align:center;padding:40px 0">Could not load changelog. <a href="https://github.com/gilesparnell/Claude/commits/main" style="color:var(--blue)">View on GitHub &#8599;</a></div>';
+  });
+</script>
+</body>
+</html>

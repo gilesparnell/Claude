@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Templates &amp; Scripts — gilesparnell / allconvos.ai</title>
+<link rel="stylesheet" href="portal.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">ac</div>
+      <span class="header-name">allconvos.ai</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="skills.html">Skills</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="decisions.html">Decisions</a>
+      <a href="templates.html" class="active">Templates</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://github.com/gilesparnell/Claude/tree/main/project-template" target="_blank" class="gh-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Templates &amp; Scripts</div>
+    <div class="hero-title">Reusable files that<br><em>bootstrap every project</em></div>
+    <div class="hero-sub">Shell scripts, config templates, and project scaffolds. Copy, customise, ship. The new-client.sh script creates a full project structure in under 60 seconds.</div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n">3</span><span class="stat-l">Templates</span></div>
+      <div class="stat"><span class="stat-n">1</span><span class="stat-l">Scripts</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-inner">
+    <a href="#" class="active" onclick="filter('all',this);return false">All</a>
+    <a href="#" onclick="filter('script',this);return false">Scripts</a>
+    <a href="#" onclick="filter('config',this);return false">Config</a>
+    <a href="#" onclick="filter('template',this);return false">Templates</a>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:36px;padding-bottom:60px">
+
+  <div class="template-grid" id="template-grid">
+
+    <div class="template-card" data-category="script">
+      <div class="template-type" style="color:var(--teal-text)">shell script</div>
+      <div class="template-name">new-client.sh</div>
+      <div class="template-desc">Creates a full client project folder structure from the template. Prompts for client details, copies all template files, symlinks skills, and initialises a git repo. Run once, start building immediately.</div>
+      <div class="template-path">scripts/new-client.sh</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="https://github.com/gilesparnell/Claude/blob/main/scripts/new-client.sh" target="_blank" style="font-size:12px;font-weight:600;color:var(--blue)">View on GitHub &#8599;</a>
+        <button class="copy-btn" onclick="copyCmd(this,'./scripts/new-client.sh fsca')">Copy usage</button>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="template">
+      <div class="template-type" style="color:var(--blue-text)">markdown template</div>
+      <div class="template-name">CLAUDE.md</div>
+      <div class="template-desc">The evolving project instructions file that Claude Code reads at the start of every session. Pre-populated with architecture principles, lessons learned from all past engagements, and project-specific context.</div>
+      <div class="template-path">project-template/CLAUDE.md</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="https://github.com/gilesparnell/Claude/blob/main/project-template/CLAUDE.md" target="_blank" style="font-size:12px;font-weight:600;color:var(--blue)">View on GitHub &#8599;</a>
+        <button class="copy-btn" onclick="copyCmd(this,'cp ~/Projects/Claude/project-template/CLAUDE.md ./CLAUDE.md')">Copy usage</button>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="config">
+      <div class="template-type" style="color:var(--amber-text)">config template</div>
+      <div class="template-name">.env.example</div>
+      <div class="template-desc">Documents all required environment variables for a standard automation project. Platform API credentials, database URL, Anthropic key, dashboard auth, and Phase 2 email config — all with clear comments.</div>
+      <div class="template-path">project-template/infra/.env.example</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="https://github.com/gilesparnell/Claude/blob/main/project-template/infra/.env.example" target="_blank" style="font-size:12px;font-weight:600;color:var(--blue)">View on GitHub &#8599;</a>
+        <button class="copy-btn" onclick="copyCmd(this,'cp ~/Projects/Claude/project-template/infra/.env.example ./infra/.env.example')">Copy usage</button>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="template">
+      <div class="template-type" style="color:var(--purple-text)">markdown template</div>
+      <div class="template-name">README.md</div>
+      <div class="template-desc">Standard project README with quick-start commands, project overview table, document index, key decisions log, and next actions. Keeps every project navigable from day one.</div>
+      <div class="template-path">project-template/README.md</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="https://github.com/gilesparnell/Claude/blob/main/project-template/README.md" target="_blank" style="font-size:12px;font-weight:600;color:var(--blue)">View on GitHub &#8599;</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:40px;padding:20px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg)">
+    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px">Starting a new client project?</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Run the setup script and you'll have a fully structured project folder in under a minute.</div>
+    <div style="font-family:var(--mono);font-size:12px;background:var(--bg);border:1px solid var(--border2);border-radius:7px;padding:10px 14px;color:var(--text)">
+      cd ~/Documents/VSStudio/Claude &amp;&amp; ./scripts/new-client.sh &lt;client-slug&gt;
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Templates &amp; Scripts</span>
+  <span>Add templates to <code>project-template/</code> &mdash; auto-updated on push</span>
+</footer>
+
+<script>
+function filter(cat, el) {
+  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.template-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+  });
+}
+function copyCmd(btn, cmd) {
+  navigator.clipboard.writeText(cmd).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+</script>
+</body>
+</html>
