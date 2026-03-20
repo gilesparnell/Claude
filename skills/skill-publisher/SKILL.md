@@ -2,7 +2,7 @@
 title: Skill Publisher
 category: workflow
 icon: &#128640;
-description: Use this skill whenever you have identified a new reusable skill and need to add it to the Claude repo, publish it to the portal, and make it available for future projects. Covers the complete end-to-end process: writing the SKILL.md with correct frontmatter, pushing to the repo, and verifying the portal updates.
+description: Codify a reusable pattern as a skill — write the runtime SKILL.md and the portal stub, decide scope (global vs project), and publish to the portal.
 triggers:
   - add this as a skill
   - save this as a skill
@@ -11,9 +11,9 @@ triggers:
   - create a skill for this
 checks-label: Steps
 checks:
-  - Write SKILL.md with correct frontmatter schema
-  - Create skill folder in skills/ with correct slug
-  - Push to gilesparnell/Claude repo
+  - Decide scope: global (~/.claude/skills/) or project-specific
+  - Write runtime SKILL.md → correct scope location
+  - Write portal stub → skills/ and push to repo
   - Verify portal auto-updates via GitHub Action
 version: 1.0
 ---
