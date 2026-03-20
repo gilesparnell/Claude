@@ -214,3 +214,39 @@ The human is monitoring you in an IDE. They can see everything. They will catch 
 You have unlimited stamina. The human does not. Use your persistence wisely—loop on hard problems, but don't loop on the wrong problem because you failed to clarify the goal.
 </meta>
 </system_prompt>
+
+---
+
+## Lessons Learned — March 2026
+
+### Tooling and Workflow
+- Claude Chat vs Claude Code: This chat is for planning, designing, and generating. Claude Code (terminal) is for building, executing, committing, pushing. The repo is the handoff — never the clipboard.
+- Control your Mac connector works for simple shell commands. Hits quoting limits with large files. For complex file writes use Claude Code directly or base64-encode content.
+- GitHub MCP is connected in settings but tools are not loading in chat sessions. Until resolved use Control your Mac for git operations.
+- osascript quoting: single quotes cannot appear inside single-quoted do shell script strings. Double quotes conflict with Python triple-quotes. For large file writes, base64-encode and decode with Python.
+
+### Portal Architecture
+- The repo IS the database. Folders become pages, frontmatter becomes cards, GitHub Actions regenerate HTML on every push. Never edit HTML manually.
+- Frontmatter drives everything. Every SKILL.md must have title, category, icon, description, triggers, and checks arrays. Without frontmatter the skill exists but does not appear on the portal.
+- Auto-generation markers (HTML comments AUTO-GENERATED SKILLS START/END) must exist in HTML for generate-stats.js to inject cards.
+- generate-stats.js lives in scripts/ — run with full path: /opt/homebrew/bin/node scripts/generate-stats.js from repo root.
+- portal.css is shared — imported by all pages. Subdirectory pages (diagrams/) use href=../portal.css.
+
+### Git Workflow
+- Always pull before push across sessions. Use git pull --rebase origin main.
+- Add [skip ci] to auto-commits to prevent infinite GitHub Action loops.
+- Merge conflicts on HTML files happen when generate-stats.js and GitHub Action both patch the same files. Resolve by taking --theirs then re-running generate-stats.js locally.
+
+### Client Engagement — FSCA
+- Monthly queues are non-trivial. Never assume flat state-to-queue mapping. FSCA has NSW01-NSW12 and VIC01-VIC12 = 24 queues minimum.
+- Year boundary edge case: December + 1 month must route to January of next year. Always test this explicitly (TF-012 pattern).
+- FIP queue structure TBC — monthly or flat. Confirm in discovery, document before coding.
+- Business rules must be written down. The automation has no reflex. If not documented it will not be handled.
+- Test account needs monthly queues for 3 consecutive months before E2E testing.
+- Phase 2 modules scaffold in Phase 1. Define interfaces for PaymentCheckModule, DiaryCheckModule, EmailModule. Stubs return safe defaults. Phase 2 swaps stubs for real implementation — zero engine changes.
+
+### Document Generation
+- No emoji in professional documents except the warning symbol for risks and critical dependencies.
+- DXA units only for Word tables. WidthType.PERCENTAGE breaks Word rendering. Use WidthType.DXA with columnWidths summing to 9026 for A4 with 1 inch margins.
+- Combine Proposal and SOW into one document. Client signs once and agrees to both.
+- Three-tier pricing works well. Option 1 no-code, Option 2 MVP with UI recommended, Option 3 full custom.
