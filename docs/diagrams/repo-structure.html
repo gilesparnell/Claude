@@ -302,7 +302,7 @@
         <div class="tooltip-area">
           <div class="tip" id="t1">Source code — nothing AI-specific, just your normal project structure.</div>
           <div class="tip" id="t2">All project artefacts: proposals, SOWs, technical specs. Committed alongside the code.</div>
-          <div class="tip" id="t3"><strong>project.md</strong> tells Claude the domain, stack, conventions, and decisions for this engagement. Any skills here are project-specific — generic ones stay in your workspace repo.</div>
+          <div class="tip" id="t3"><strong>project.md</strong> tells Claude the domain, stack, conventions, and decisions for this engagement. Skills here are project-specific runtime versions — generic skills live in <code>~/.claude/skills/</code> and are available in every session automatically.</div>
           <div class="tip visible" id="t-default-client" style="color:var(--text3)">Click a folder to learn more</div>
         </div>
       </div>
@@ -320,13 +320,13 @@
           <span class="badge reuse">reusable</span>
         </div>
         <div class="entry" style="padding-left:20px">
-          <span class="icon" style="color:var(--text3)">├</span><span class="name dim">docx/</span>
+          <span class="icon" style="color:var(--text3)">├</span><span class="name dim">code-review/ <span style="color:var(--text3);font-size:11px">(global)</span></span>
         </div>
         <div class="entry" style="padding-left:20px">
-          <span class="icon" style="color:var(--text3)">├</span><span class="name dim">pptx/</span>
+          <span class="icon" style="color:var(--text3)">├</span><span class="name dim">git-conventions/ <span style="color:var(--text3);font-size:11px">(global)</span></span>
         </div>
         <div class="entry" style="padding-left:20px">
-          <span class="icon" style="color:var(--text3)">└</span><span class="name dim">sow-generator/</span>
+          <span class="icon" style="color:var(--text3)">└</span><span class="name dim">saas-patterns/ <span style="color:var(--text3);font-size:11px">(repo-scoped)</span></span>
         </div>
         <div class="entry clickable" onclick="tip(this,'w2')">
           <span class="icon">📁</span><span class="name dir">project-templates/</span>
@@ -353,7 +353,7 @@
         </div>
         <div class="entry"><span class="icon">📄</span><span class="name dim">README.md</span></div>
         <div class="tooltip-area">
-          <div class="tip" id="w1">Your reusable skill library — refined once, benefits every project. A skill built for one client becomes an asset for all future ones.</div>
+          <div class="tip" id="w1">Portal stubs for all skills — both global and repo-scoped. These are the display layer rendered on the GitHub Pages portal. Runtime versions that Claude actually reads live in <code>~/.claude/skills/</code> (global, every session) or the client repo's <code>.claude/skills/</code> (project-specific).</div>
           <div class="tip" id="w2">Starter templates for new client repos. Copy <em>project.md</em> into each new engagement and fill it in.</div>
           <div class="tip" id="w3">Your top-level CLAUDE.md — working style, preferred tools, naming conventions that apply across all projects.</div>
           <div class="tip" id="w4">GitHub Pages root. Everything here is served as a public website at gilesparnell.github.io/Claude/ — your bookmarkable visual reference library.</div>
@@ -386,8 +386,8 @@
       <p>Drop a <code>.claude/project.md</code> in every client repo. It tells Claude the domain, stack, decisions made, and where things live. No re-briefing at the start of every session.</p>
     </div>
     <div class="card">
-      <div class="card-title">Skills flow one way</div>
-      <p>Generic skills live in your workspace and benefit all clients. Project-specific skills (parsing a client's legacy format) live in the client repo. Never duplicate a generic skill into a project.</p>
+      <div class="card-title">Skills have three locations</div>
+      <p><code>~/.claude/skills/</code> — global runtime skills, loaded in every session. <code>[client-repo]/.claude/skills/</code> — project-specific runtime skills. <code>gilesparnell/Claude/skills/</code> — portal stubs only (display layer, not read by Claude Code at runtime).</p>
     </div>
   </div>
 

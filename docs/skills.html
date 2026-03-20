@@ -320,7 +320,7 @@
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Use this skill whenever you have identified a new reusable skill and need to add it to the Claude repo, publish it to the portal, and make it available for future projects. Covers the complete end-to-end process: writing the SKILL.md with correct frontmatter, pushing to the repo, and verifying the portal updates.</div>
+        <div class="skill-desc">Codify a reusable pattern as a skill. Writes both the runtime SKILL.md (full content, placed in <code>~/.claude/skills/</code> for global skills or <code>[project]/.claude/skills/</code> for project-specific) and the portal stub (frontmatter-only, pushed to <code>skills/</code> to appear here). Covers scope decision, file placement, and portal verification.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -334,9 +334,9 @@
         <div>
           <div class="triggers-label">Steps</div>
           <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Write SKILL.md with correct frontmatter schema</div>
-            <div class="check-item"><span class="check-dot"></span>Create skill folder in skills/ with correct slug</div>
-            <div class="check-item"><span class="check-dot"></span>Push to gilesparnell/Claude repo</div>
+            <div class="check-item"><span class="check-dot"></span>Decide scope: global (~/.claude/skills/) or project-specific</div>
+            <div class="check-item"><span class="check-dot"></span>Write runtime SKILL.md → correct scope location</div>
+            <div class="check-item"><span class="check-dot"></span>Write portal stub → skills/ and push to repo</div>
             <div class="check-item"><span class="check-dot"></span>Verify portal auto-updates via GitHub Action</div>
           </div>
         </div>
@@ -383,7 +383,7 @@
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills Library</span>
-  <span>Add a <code>SKILL.md</code> with frontmatter to <code>skills/</code> &mdash; portal updates automatically on push</span>
+  <span>Portal stubs in <code>skills/</code> &middot; runtime versions in <code>~/.claude/skills/</code> or <code>[project]/.claude/skills/</code></span>
 </footer>
 
 <script>
