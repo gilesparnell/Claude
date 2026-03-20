@@ -1,33 +1,61 @@
-# Skills Index
+# Skills — Global vs Repo-Scoped
 
-Skills are folders that give Claude Code reusable instructions, scripts, and context for specific tasks.
+Skills exist in **two formats** and **two scopes**. Understanding both is important.
 
-## Available Skills
+---
 
-| Skill | Trigger Conditions | Description |
-|-------|-------------------|-------------|
-| `code-quality` | "review this code", "audit this", "make production-ready" | Systematic code quality review checklist |
-| `git-conventions` | "commit this", "write commit message", "create a PR" | Conventional commits, branch naming, PR templates |
-| `testing-practices` | "write tests", "add coverage", "how to test" | Testing philosophy, patterns, naming conventions |
-| `frontend-design` | "build this UI", "style this", "make this look good" | Anti-cliché design principles, Tailwind patterns |
-| `code-review` | "review this PR", "adversarial review", "fresh eyes" | PR review checklist, feedback tone guidelines |
+## Two Formats
 
-## Installing a Skill in a Project
+Every skill has two files serving different purposes:
 
-Option 1 — Symlink (stays in sync with this repo):
-```bash
-ln -sf ~/Projects/Claude/skills/<skill-name> .claude/skills/<skill-name>
-```
+| Format | Location | Purpose |
+|---|---|---|
+| **Portal stub** | `~/Documents/VSStudio/Claude/skills/<slug>/SKILL.md` | Frontmatter-only. Rendered as a card on the GitHub Pages portal. |
+| **Runtime content** | `~/.claude/skills/<slug>/SKILL.md` or `<project>/.claude/skills/<slug>/SKILL.md` | Full markdown. What Claude reads when the skill is invoked. |
 
-Option 2 — Copy (project-specific, won't auto-update):
-```bash
-cp -r ~/Projects/Claude/skills/<skill-name> .claude/skills/<skill-name>
-```
+The files in **this folder** are portal stubs. The runtime content lives elsewhere (see below).
+
+---
+
+## Two Scopes
+
+### GLOBAL skills → `~/.claude/skills/`
+Generic enough to apply on any project. Loaded in every Claude Code session regardless of which repo you're in.
+
+| Skill | Why global |
+|---|---|
+| `code-quality` | Applies to any codebase |
+| `code-review` | Applies to any PR |
+| `frontend-design` | Generic UI principles (lean version) |
+| `git-conventions` | Conventional Commits applies everywhere |
+| `testing-practices` | Testing philosophy is language/framework agnostic |
+| `skill-publisher` | Meta-skill for managing skills — useful globally |
+
+### REPO-SCOPED skills → `<project>/.claude/skills/`
+Reference a specific tech stack, client, workflow, or internal system. Should NOT be in `~/.claude/skills/` — they'd trigger incorrectly on unrelated projects.
+
+| Skill | Scope | Reason |
+|---|---|---|
+| `github-pages-portal` | This repo (`Claude`) | Specific to the Claude portal infrastructure |
+| `saas-automation-engagement` | AllConvos / client projects | Engagement playbook for AllConvos SaaS clients |
+| `saas-patterns` | AllConvos | AllConvos platform architecture patterns |
+| `frontend-design` (rich) | `fsca/.claude/skills/` | FSCA brand standards and component conventions |
+
+---
+
+## Decision Rule
+
+Ask: *"Would this skill give correct, useful guidance on a completely unrelated project?"*
+
+- **Yes** → Global (`~/.claude/skills/`)
+- **No** → Repo-scoped (`<project>/.claude/skills/`)
+
+When in doubt, start repo-scoped. Promote to global only when you've confirmed it's truly project-agnostic.
+
+---
 
 ## Adding a New Skill
 
-1. Create a new folder: `skills/<skill-name>/`
-2. Add a `SKILL.md` with frontmatter (`name`, `description`)
-3. Add subfolders as needed: `references/`, `scripts/`, `assets/`
-4. Update this README table
-5. Commit with: `chore(skills): add <skill-name> skill`
+Use the `skill-publisher` skill. It walks through writing both the runtime version and the portal stub, deciding scope, and pushing to this repo.
+
+Trigger: `add this as a skill` / `save this as a skill` / `publish this skill`
