@@ -3,40 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Chat vs Claude Code Workflow</title>
+<title>Claude Chat vs Claude Code Workflow — gilesparnell / allconvos.ai</title>
 <link rel="stylesheet" href="../portal.css">
 </head>
 <body>
+
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-brand"><div class="header-logo">ac</div><span class="header-name">allconvos.ai</span></div>
+    <div class="header-brand">
+      <div class="header-logo">ac</div>
+      <span class="header-name">allconvos.ai</span>
+    </div>
     <nav class="header-nav">
-      <a href="../index.html">Home</a><a href="../skills.html">Skills</a>
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
       <a href="../walkthroughs.html" class="active">Walkthroughs</a>
-      <a href="../decisions.html">Decisions</a><a href="../templates.html">Templates</a><a href="../changelog.html">Changelog</a>
+      <a href="../decisions.html">Decisions</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
     </nav>
-    <div class="header-right"><a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a></div>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
   </div>
 </header>
+
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Waklthrough &mdash; Workflow</div>
+    <div class="hero-eyebrow">Walkthrough &mdash; Workflow</div>
     <div class="hero-title">Claude Chat vs<br><em>Claude Code</em></div>
-    <div class="hero-sub">Two tools, one workflow. This chat is for planning, designing, and generating. Claude Code is for building, executing, and pushing.</div>
+    <div class="hero-sub">Two tools, one workflow. This chat is for planning, designing, and generating. Claude Code is for building, executing, and pushing. The repo is the handoff point between them.</div>
   </div>
 </div>
-<div class="wrap" style="padding-top:36px;padding-bottom:60px">
-  <p style="font-size:13px;line-height:1.6;color:var(--text2);margin-bottom:24px">This chat (claude.ai) is your thinking and planning environment. Claude Code (in your terminal) is your execution environment. The repo is the handoff point. This walkthrough shows how they work together.</p>
-  <p style="font-size:13px;line-height:1.6;color:var(--text2);margin-bottom:24px"><b>Key principles:</b><br>
-  &nbsp;&nbsp;&ndash; Never copy-paste between the two — the repo is the handoff<br>
-  &nbsp;&nbsp;&ndash; The tech spec is the contract — Claude Code reads it and builds to it<br>
-  &nbsp;&nbsp;&ndash; The portal updates itself — push a skill, it appears automatically<br>
-  &nbsp;&nbsp;&ndash; CLAUDE.md is the memory — lessons learned travel with the codebase
-  </p>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <!-- SVG DIAGRAM -->
+  <svg viewBox="0 0 760 596" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Claude Chat vs Claude Code workflow diagram">
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+    </defs>
+
+    <!-- Column background fills -->
+    <rect x="10" y="10" width="355" height="558" rx="12" fill="#EEEDFE" opacity="0.32"/>
+    <rect x="395" y="10" width="355" height="558" rx="12" fill="#E1F5EE" opacity="0.32"/>
+
+    <!-- Column header: This Chat (purple) -->
+    <rect x="10" y="10" width="355" height="46" rx="10" fill="#534AB7"/>
+    <text x="187" y="36" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#ffffff">This Chat</text>
+    <text x="187" y="51" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#CECBF6">claude.ai</text>
+
+    <!-- Column header: Claude Code (teal) -->
+    <rect x="395" y="10" width="355" height="46" rx="10" fill="#1D9E75"/>
+    <text x="572" y="36" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#ffffff">Claude Code</text>
+    <text x="572" y="51" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#9FE1CB">terminal</text>
+
+    <!-- ── ROW 1: Plan (left / purple) ── -->
+    <rect x="68" y="90" width="240" height="78" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+    <circle cx="88" cy="107" r="10" fill="#534AB7"/>
+    <text x="88" y="111" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#ffffff">1</text>
+    <text x="200" y="118" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#3C3489">Plan</text>
+    <text x="188" y="137" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#534AB7">Define task &middot; write tech spec</text>
+    <text x="188" y="154" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#534AB7">Set success criteria</text>
+
+    <!-- Arrow 1: Plan right-edge → Generate top -->
+    <path d="M 308,129 C 450,129 572,162 572,200" fill="none" stroke="#999890" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+
+    <!-- ── ROW 2: Generate (right / teal) ── -->
+    <rect x="452" y="200" width="240" height="78" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <circle cx="472" cy="217" r="10" fill="#1D9E75"/>
+    <text x="472" y="221" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#ffffff">2</text>
+    <text x="584" y="228" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#085041">Generate</text>
+    <text x="572" y="247" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#1D9E75">Build from spec &middot; execute code</text>
+    <text x="572" y="264" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#1D9E75">Run tests &middot; fix errors</text>
+
+    <!-- Arrow 2: Generate left-edge → Review right-edge -->
+    <path d="M 452,239 C 355,239 308,293 308,349" fill="none" stroke="#999890" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+
+    <!-- ── ROW 3: Review (left / purple) ── -->
+    <rect x="68" y="310" width="240" height="78" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+    <circle cx="88" cy="327" r="10" fill="#534AB7"/>
+    <text x="88" y="331" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#ffffff">3</text>
+    <text x="200" y="338" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#3C3489">Review</text>
+    <text x="188" y="357" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#534AB7">Review output &middot; approve or iterate</text>
+    <text x="188" y="374" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#534AB7">Refine the spec if needed</text>
+
+    <!-- Arrow 3: Review right-edge → Add skill left-edge -->
+    <path d="M 308,349 C 385,349 452,413 452,459" fill="none" stroke="#999890" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+
+    <!-- ── ROW 4: Add skill (right / teal) ── -->
+    <rect x="452" y="420" width="240" height="78" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <circle cx="472" cy="437" r="10" fill="#1D9E75"/>
+    <text x="472" y="441" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#ffffff">4</text>
+    <text x="584" y="448" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#085041">Add skill</text>
+    <text x="572" y="467" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#1D9E75">Commit &middot; push to repo</text>
+    <text x="572" y="484" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#1D9E75">Portal auto-updates</text>
+
+    <!-- Arrow 4: Add skill bottom → Result top -->
+    <path d="M 572,498 L 572,526" fill="none" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- ── Result node (amber, centered) ── -->
+    <rect x="160" y="528" width="440" height="52" rx="10" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.5"/>
+    <text x="380" y="549" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#633806">&#10003; Portal updated &#8212; skill live</text>
+    <text x="380" y="567" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#BA7517">Pushed to gilesparnell/Claude &middot; reflected in docs/ automatically</text>
+  </svg>
+
+  <!-- LEGEND -->
+  <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-bottom:40px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:10px">
+    <span style="font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-right:4px">Legend</span>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:14px;height:14px;border-radius:4px;background:#534AB7;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text2)">This Chat (claude.ai) &mdash; plan &amp; review</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:14px;height:14px;border-radius:4px;background:#1D9E75;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text2)">Claude Code (terminal) &mdash; build &amp; push</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:14px;height:14px;border-radius:4px;background:#BA7517;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text2)">Result / output</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <svg width="32" height="10" viewBox="0 0 32 10" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr-leg" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+            <path d="M0,0 L6,2.5 L0,5 Z" fill="#999890"/>
+          </marker>
+        </defs>
+        <path d="M0,5 L24,5" stroke="#999890" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr-leg)" fill="none"/>
+      </svg>
+      <span style="font-size:13px;color:var(--text2)">Handoff between tools</span>
+    </div>
+  </div>
+
+  <!-- KEY PRINCIPLES -->
+  <div class="section-label">Key Principles</div>
+  <div class="adr-grid">
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128683;</div>
+      <div class="adr-body">
+        <div class="adr-title">Never copy-paste between the two</div>
+        <div class="adr-desc">The repo is the handoff point. This chat generates code and specs; Claude Code reads them from disk. Pasting between windows breaks the audit trail and creates drift.</div>
+      </div>
+    </div>
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128196;</div>
+      <div class="adr-body">
+        <div class="adr-title">The tech spec is the contract</div>
+        <div class="adr-desc">Write a clear spec in this chat, save it to the repo, then tell Claude Code to build to it. The spec is what both tools agree on &mdash; vague specs produce vague results.</div>
+      </div>
+    </div>
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#9889;</div>
+      <div class="adr-body">
+        <div class="adr-title">The portal updates itself</div>
+        <div class="adr-desc">Push a skill to <code>skills/</code> and it appears in the portal automatically via the GitHub Action. You never need to manually edit the portal pages.</div>
+      </div>
+    </div>
+
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#129504;</div>
+      <div class="adr-body">
+        <div class="adr-title">CLAUDE.md is the memory</div>
+        <div class="adr-desc">Lessons learned, stack rules, and conventions live in <code>CLAUDE.md</code>. Both tools read it on every session. Update it whenever you discover something worth keeping.</div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
+
 <footer class="site-footer">
   <span>gilesparnell &middot; Walkthroughs</span>
   <span>Generated March 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
 </footer>
+
 </body>
 </html>
