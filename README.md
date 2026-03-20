@@ -36,3 +36,4 @@ Based on Anthropic's own lessons from building Claude Code:
 - The **Gotchas section** is the highest-signal content — keep it updated
 - Use **progressive disclosure** — split detail into subfiles Claude reads on demand
 - The **description field** is for the model, not humans — write it as a trigger condition
+# test
