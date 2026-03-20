@@ -38,8 +38,8 @@
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
       <div class="stat"><span class="stat-n" id="skill-count">8</span><span class="stat-l">Skills</span></div>
-      <div class="stat"><span class="stat-n" id="cat-count">4</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">25+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
+      <div class="stat"><span class="stat-n">32+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -57,8 +57,9 @@
 
 <div class="wrap" style="padding-top:36px;padding-bottom:60px">
   <div class="skills-grid" id="skills-grid">
+    <!-- AUTO-GENERATED SKILLS START -->
 
-    <!-- CODE QUALITY -->
+    <!-- CODE QUALITY REVIEW -->
     <div class="skill-card" data-category="code">
       <div class="skill-band" style="background:var(--blue-bg)">
         <div>
@@ -71,7 +72,7 @@
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Systematic checklist for auditing code before it ships. Covers correctness, readability, performance, security, and maintainability with structured output format.</div>
+        <div class="skill-desc">Systematic checklist for auditing code before it ships. Covers correctness, readability, performance, security, and maintainability.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -84,30 +85,30 @@
         <div>
           <div class="triggers-label">Checks</div>
           <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Correctness &amp; edge cases</div>
-            <div class="check-item"><span class="check-dot"></span>Readability &amp; naming</div>
+            <div class="check-item"><span class="check-dot"></span>Correctness and edge cases</div>
+            <div class="check-item"><span class="check-dot"></span>Readability and naming</div>
             <div class="check-item"><span class="check-dot"></span>Performance hotspots</div>
-            <div class="check-item"><span class="check-dot"></span>Security &amp; input validation</div>
-            <div class="check-item"><span class="check-dot"></span>Maintainability &amp; testability</div>
+            <div class="check-item"><span class="check-dot"></span>Security and input validation</div>
+            <div class="check-item"><span class="check-dot"></span>Maintainability and testability</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- CODE REVIEW -->
+    <!-- PR CODE REVIEW -->
     <div class="skill-card" data-category="code">
-      <div class="skill-band" style="background:var(--purple-bg)">
+      <div class="skill-band" style="background:var(--blue-bg)">
         <div>
           <div class="skill-name">PR Code Review</div>
           <div class="skill-slug">code-review</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128065;</span>
-          <span class="cat-badge" style="background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)">code</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Adversarial &ldquo;fresh eyes&rdquo; PR review. Pretends it has never seen the codebase. Catches what the author missed. Uses <code>blocking</code> / <code>suggestion</code> / <code>nit</code> labels.</div>
+        <div class="skill-desc">Adversarial fresh-eyes PR review. Catches what the author missed. Uses blocking, suggestion, and nit labels.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -121,45 +122,10 @@
           <div class="triggers-label">Checks</div>
           <div class="checks">
             <div class="check-item"><span class="check-dot"></span>PR description quality</div>
-            <div class="check-item"><span class="check-dot"></span>Runtime errors &amp; edge cases</div>
-            <div class="check-item"><span class="check-dot"></span>Test coverage &amp; meaning</div>
+            <div class="check-item"><span class="check-dot"></span>Runtime errors and edge cases</div>
+            <div class="check-item"><span class="check-dot"></span>Test coverage and meaning</div>
             <div class="check-item"><span class="check-dot"></span>Security checks</div>
             <div class="check-item"><span class="check-dot"></span>6-month maintainability</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TESTING -->
-    <div class="skill-card" data-category="code">
-      <div class="skill-band" style="background:var(--teal-bg)">
-        <div>
-          <div class="skill-name">Testing Practices</div>
-          <div class="skill-slug">testing-practices</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#9989;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">code</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Testing philosophy, naming conventions, and structure patterns. Tests as documentation &mdash; DAMP over DRY. Arrange / Act / Assert. Behaviour not implementation.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">write tests for this</span>
-            <span class="trigger">add test coverage</span>
-            <span class="trigger">how do I test this</span>
-            <span class="trigger">set up testing</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Principles</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Test behaviour, not implementation</div>
-            <div class="check-item"><span class="check-dot"></span>DAMP naming: <em>does X when Y</em></div>
-            <div class="check-item"><span class="check-dot"></span>Arrange / Act / Assert structure</div>
-            <div class="check-item"><span class="check-dot"></span>Unit &rarr; Integration &rarr; E2E pyramid</div>
           </div>
         </div>
       </div>
@@ -178,7 +144,7 @@
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Opinionated UI design rules that avoid generic AI aesthetics. Whitespace, typography, colour intentionality. Explicit list of clich&eacute;s to avoid. Tailwind patterns and component guidance.</div>
+        <div class="skill-desc">Opinionated UI design rules that avoid generic AI aesthetics. Whitespace, typography, colour intentionality. Tailwind patterns and component guidance.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -191,10 +157,10 @@
         <div>
           <div class="triggers-label">Key rules</div>
           <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>No Inter/purple/gradient hero clich&eacute;s</div>
-            <div class="check-item"><span class="check-dot"></span>Typography &amp; whitespace first</div>
-            <div class="check-item"><span class="check-dot"></span>Mobile-first, test at 375/768/1280px</div>
-            <div class="check-item"><span class="check-dot"></span>Design empty states &mdash; first thing users see</div>
+            <div class="check-item"><span class="check-dot"></span>No Inter/purple/gradient hero cliches</div>
+            <div class="check-item"><span class="check-dot"></span>Typography and whitespace first</div>
+            <div class="check-item"><span class="check-dot"></span>Mobile-first test at 375/768/1280px</div>
+            <div class="check-item"><span class="check-dot"></span>Design empty states — first thing users see</div>
           </div>
         </div>
       </div>
@@ -213,7 +179,7 @@
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Conventional Commits format, branch naming, and PR description template. Keeps history clean and meaningful. Imperative mood, 72 char limit, <em>why</em> not <em>what</em>.</div>
+        <div class="skill-desc">Conventional Commits format, branch naming, and PR description template. Keeps history clean and meaningful.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -225,45 +191,47 @@
         </div>
         <div>
           <div class="triggers-label">Types</div>
-          <div class="triggers">
-            <span class="trigger">feat</span><span class="trigger">fix</span><span class="trigger">chore</span>
-            <span class="trigger">docs</span><span class="trigger">refactor</span><span class="trigger">test</span>
-            <span class="trigger">perf</span><span class="trigger">ci</span>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>feat — new feature</div>
+            <div class="check-item"><span class="check-dot"></span>fix — bug fix</div>
+            <div class="check-item"><span class="check-dot"></span>chore — maintenance</div>
+            <div class="check-item"><span class="check-dot"></span>docs — documentation</div>
+            <div class="check-item"><span class="check-dot"></span>refactor — no behaviour change</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SAAS PATTERNS -->
-    <div class="skill-card" data-category="saas">
-      <div class="skill-band" style="background:var(--green-bg)">
+    <!-- GITHUB PAGES PORTAL -->
+    <div class="skill-card" data-category="tooling">
+      <div class="skill-band" style="background:var(--purple-bg)">
         <div>
-          <div class="skill-name">SaaS Patterns</div>
-          <div class="skill-slug">saas-patterns</div>
+          <div class="skill-name">GitHub Pages Portal</div>
+          <div class="skill-slug">github-pages-portal</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128640;</span>
-          <span class="cat-badge" style="background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)">saas</span>
+          <span class="skill-icon">&#127760;</span>
+          <span class="cat-badge" style="background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)">tooling</span>
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Production-grade SaaS patterns for AllConvos. Tenant isolation, plan gating, usage tracking, idempotent ops, API route structure, soft deletes, and onboarding principles.</div>
+        <div class="skill-desc">Self-updating GitHub Pages knowledge portal. Folders become pages, markdown frontmatter becomes cards, GitHub Actions regenerate HTML on every push.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
-            <span class="trigger">add a new feature</span>
-            <span class="trigger">design this API</span>
-            <span class="trigger">build the onboarding flow</span>
-            <span class="trigger">add usage limits</span>
+            <span class="trigger">add this to the portal</span>
+            <span class="trigger">update the portal</span>
+            <span class="trigger">make pages update automatically</span>
+            <span class="trigger">new portal section</span>
           </div>
         </div>
         <div>
-          <div class="triggers-label">Core rules</div>
+          <div class="triggers-label">Key patterns</div>
           <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Every query scoped to orgId</div>
-            <div class="check-item"><span class="check-dot"></span>Feature flags from day one</div>
-            <div class="check-item"><span class="check-dot"></span>Idempotent webhooks &amp; jobs</div>
-            <div class="check-item"><span class="check-dot"></span>Soft delete &mdash; never hard delete</div>
+            <div class="check-item"><span class="check-dot"></span>Shared portal.css design system</div>
+            <div class="check-item"><span class="check-dot"></span>Frontmatter-driven card generation</div>
+            <div class="check-item"><span class="check-dot"></span>GitHub Action regenerates on every push</div>
+            <div class="check-item"><span class="check-dot"></span>Changelog live from GitHub API</div>
           </div>
         </div>
       </div>
@@ -282,7 +250,7 @@
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">End-to-end playbook for new client automation engagements. From feasibility check through discovery, architecture, technical spec, scope of work, proposal, and Claude Code handoff.</div>
+        <div class="skill-desc">End-to-end playbook for new client automation engagements — from feasibility through discovery, architecture, technical spec, proposal, and Claude Code handoff.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -295,21 +263,91 @@
         <div>
           <div class="triggers-label">Phases</div>
           <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Feasibility &amp; API check</div>
-            <div class="check-item"><span class="check-dot"></span>Discovery &amp; requirements</div>
+            <div class="check-item"><span class="check-dot"></span>Feasibility and API check</div>
+            <div class="check-item"><span class="check-dot"></span>Discovery and requirements</div>
             <div class="check-item"><span class="check-dot"></span>Technical spec + SOW + Proposal</div>
-            <div class="check-item"><span class="check-dot"></span>Testing framework &amp; Claude Code handoff</div>
+            <div class="check-item"><span class="check-dot"></span>Testing framework and Claude Code handoff</div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- SAAS PATTERNS -->
+    <div class="skill-card" data-category="saas">
+      <div class="skill-band" style="background:var(--green-bg)">
+        <div>
+          <div class="skill-name">SaaS Patterns</div>
+          <div class="skill-slug">saas-patterns</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">&#128640;</span>
+          <span class="cat-badge" style="background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)">saas</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Production-grade SaaS patterns. Tenant isolation, plan gating, usage tracking, idempotent ops, soft deletes, and onboarding principles.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">add a new feature</span>
+            <span class="trigger">design this API</span>
+            <span class="trigger">build the onboarding flow</span>
+            <span class="trigger">add usage limits</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Core rules</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>Every query scoped to orgId</div>
+            <div class="check-item"><span class="check-dot"></span>Feature flags from day one</div>
+            <div class="check-item"><span class="check-dot"></span>Idempotent webhooks and jobs</div>
+            <div class="check-item"><span class="check-dot"></span>Soft delete — never hard delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTING PRACTICES -->
+    <div class="skill-card" data-category="code">
+      <div class="skill-band" style="background:var(--blue-bg)">
+        <div>
+          <div class="skill-name">Testing Practices</div>
+          <div class="skill-slug">testing-practices</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">&#9989;</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Testing philosophy, naming conventions, and structure patterns. DAMP over DRY. Arrange / Act / Assert. Behaviour not implementation.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">write tests for this</span>
+            <span class="trigger">add test coverage</span>
+            <span class="trigger">how do I test this</span>
+            <span class="trigger">set up testing</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Principles</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>Test behaviour not implementation</div>
+            <div class="check-item"><span class="check-dot"></span>DAMP naming — does X when Y</div>
+            <div class="check-item"><span class="check-dot"></span>Arrange / Act / Assert structure</div>
+            <div class="check-item"><span class="check-dot"></span>Unit to Integration to E2E pyramid</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- AUTO-GENERATED SKILLS END -->
   </div>
 </div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills Library</span>
-  <span>Add skills to <code>skills/</code> &mdash; see <a href="https://github.com/gilesparnell/Claude/blob/main/CONTRIBUTING.md" style="color:var(--text3)">CONTRIBUTING.md</a></span>
+  <span>Add a <code>SKILL.md</code> with frontmatter to <code>skills/</code> &mdash; portal updates automatically on push</span>
 </footer>
 
 <script>
