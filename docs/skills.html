@@ -37,9 +37,9 @@
     <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="skill-count">8</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="skill-count">9</span><span class="stat-l">Skills</span></div>
       <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">32+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n">37+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -302,6 +302,42 @@
             <div class="check-item"><span class="check-dot"></span>Feature flags from day one</div>
             <div class="check-item"><span class="check-dot"></span>Idempotent webhooks and jobs</div>
             <div class="check-item"><span class="check-dot"></span>Soft delete — never hard delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILL PUBLISHER -->
+    <div class="skill-card" data-category="workflow">
+      <div class="skill-band" style="background:var(--amber-bg)">
+        <div>
+          <div class="skill-name">Skill Publisher</div>
+          <div class="skill-slug">skill-publisher</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">&#128640;</span>
+          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Use this skill whenever you have identified a new reusable skill and need to add it to the Claude repo, publish it to the portal, and make it available for future projects. Covers the complete end-to-end process: writing the SKILL.md with correct frontmatter, pushing to the repo, and verifying the portal updates.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">add this as a skill</span>
+            <span class="trigger">save this as a skill</span>
+            <span class="trigger">publish this skill</span>
+            <span class="trigger">add to the portal</span>
+            <span class="trigger">create a skill for this</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Steps</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>Write SKILL.md with correct frontmatter schema</div>
+            <div class="check-item"><span class="check-dot"></span>Create skill folder in skills/ with correct slug</div>
+            <div class="check-item"><span class="check-dot"></span>Push to gilesparnell/Claude repo</div>
+            <div class="check-item"><span class="check-dot"></span>Verify portal auto-updates via GitHub Action</div>
           </div>
         </div>
       </div>
