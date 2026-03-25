@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The mvanhorn Workflow</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 48px;
+  }
+
+  .diagram {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ── TOP ROW: INPUT LAYER ── */
+  .layer-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #475569;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 0;
+    align-items: stretch;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    border-radius: 12px;
+    padding: 20px 22px;
+    border: 1px solid;
+    position: relative;
+    flex: 1;
+  }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .card-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .card-role {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .card-desc {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #94a3b8;
+  }
+  .card-desc code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: 'SF Mono', Menlo, monospace;
+  }
+
+  /* colours per tool */
+  .monologue  { background: #1a1035; border-color: #6d28d9; }
+  .monologue .card-role { color: #a78bfa; }
+
+  .ghostty    { background: #0f1f1a; border-color: #059669; }
+  .ghostty .card-role { color: #34d399; }
+
+  .compound   { background: #1a1524; border-color: #9333ea; }
+  .compound .card-role { color: #c084fc; }
+
+  .zed        { background: #1a1a2e; border-color: #3b82f6; }
+  .zed .card-role { color: #60a5fa; }
+
+  .filesystem { background: #1a1512; border-color: #d97706; }
+  .filesystem .card-role { color: #fbbf24; }
+
+  .plans      { background: #0f1a14; border-color: #16a34a; }
+  .plans .card-role { color: #4ade80; }
+
+  /* ── ARROWS ── */
+  .arrows-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin: 6px 0;
+  }
+  .arrow-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .arrow-line {
+    width: 2px;
+    height: 28px;
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid currentColor;
+  }
+  .arrow-label {
+    font-size: 10px;
+    color: #475569;
+    text-align: center;
+    font-family: 'SF Mono', Menlo, monospace;
+    white-space: nowrap;
+  }
+
+  .arrow-voice   { background: #6d28d9; color: #6d28d9; }
+  .arrow-cmd     { background: #059669; color: #059669; }
+  .arrow-plugin  { background: #9333ea; color: #9333ea; }
+  .arrow-watch   { background: #3b82f6; color: #3b82f6; }
+
+  /* ── MIDDLE HUB ── */
+  .hub-row {
+    display: flex;
+    gap: 16px;
+    margin: 6px 0;
+  }
+
+  /* ── FILESYSTEM ROW ── */
+  .fs-row {
+    display: flex;
+    gap: 16px;
+    margin: 6px 0;
+  }
+
+  /* ── BIDIRECTIONAL ARROW ── */
+  .bidir {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 0;
+  }
+  .bidir-line {
+    height: 2px;
+    flex: 1;
+  }
+  .bidir-label {
+    font-size: 10px;
+    color: #475569;
+    font-family: 'SF Mono', Menlo, monospace;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .bidir-arrow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+  }
+  .bidir-arrow::before {
+    content: '◀';
+    font-size: 8px;
+    color: #fbbf24;
+  }
+  .bidir-arrow::after {
+    content: '▶';
+    font-size: 8px;
+    color: #fbbf24;
+  }
+
+  /* ── FLOW STEPS ── */
+  .flow-section {
+    margin-top: 52px;
+    border-top: 1px solid #1e293b;
+    padding-top: 36px;
+  }
+  .flow-title {
+    text-align: center;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #475569;
+    margin-bottom: 24px;
+  }
+  .steps {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    padding: 0 8px;
+    position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 20px;
+    color: #334155;
+    font-size: 18px;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 1px solid #334155;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    margin: 0 auto 10px;
+  }
+  .step-tool {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .step-action {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+  .step-action code {
+    background: rgba(255,255,255,0.06);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: 'SF Mono', Menlo, monospace;
+    color: #94a3b8;
+  }
+
+  .col-2 { flex: 2; }
+
+  /* vertical connector between rows */
+  .v-connectors {
+    display: flex;
+    gap: 16px;
+    height: 32px;
+    align-items: center;
+    padding: 0 1px;
+  }
+  .v-conn {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .v-line {
+    width: 2px;
+    flex: 1;
+  }
+  .v-arrow {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid;
+  }
+  .v-label {
+    font-size: 9px;
+    color: #334155;
+    font-family: 'SF Mono', Menlo, monospace;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<h1>The mvanhorn Workflow</h1>
+<p class="subtitle">"No IDE. Just plan.md files and voice."</p>
+
+<div class="diagram">
+
+  <!-- ═══════════════════════════════════ ROW 1: INPUT -->
+  <div class="layer-label">① Input</div>
+  <div class="row">
+
+    <div class="card monologue" style="flex:1.2">
+      <span class="card-icon">🎙️</span>
+      <div class="card-name">Monologue</div>
+      <div class="card-role">Voice Layer</div>
+      <div class="card-desc">
+        You speak. It transcribes and types directly into whatever app is focused — usually Ghostty running Claude Code. Transcription doesn't need to be perfect; Claude fills in the gaps.
+      </div>
+    </div>
+
+    <div class="card ghostty" style="flex:2">
+      <span class="card-icon">👻</span>
+      <div class="card-name">Ghostty</div>
+      <div class="card-role">Terminal — runs Claude Code</div>
+      <div class="card-desc">
+        4–6 windows open at once. Each is an independent Claude Code session. One plans. One builds. One researches. One debugs. GPU-accelerated so parallel output doesn't lag.<br><br>
+        <code>bypass permissions</code> must be on so sessions run autonomously.
+        Sound hook plays when a session finishes.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- connector row 1→2 -->
+  <div class="v-connectors">
+    <div class="v-conn" style="flex:1.2">
+      <div class="v-line" style="background:#6d28d9"></div>
+      <div class="v-arrow" style="border-top-color:#6d28d9"></div>
+      <div class="v-label">speech → keystrokes</div>
+    </div>
+    <div class="v-conn" style="flex:2">
+      <div class="v-line" style="background:#059669"></div>
+      <div class="v-arrow" style="border-top-color:#059669"></div>
+      <div class="v-label">Claude Code session</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ ROW 2: BRAIN -->
+  <div class="layer-label">② Brain</div>
+  <div class="row">
+
+    <div class="card compound" style="flex:3.2">
+      <span class="card-icon">⚡</span>
+      <div class="card-name">Compound Engineering Plugin</div>
+      <div class="card-role">The Planning & Execution Engine</div>
+      <div class="card-desc">
+        Installed into Claude Code. Adds three commands:<br><br>
+        <code>/ce:plan</code> — Spins up parallel research agents. Reads your codebase, checks past bugs in <code>plans/</code>, optionally pulls framework docs. Writes a structured <code>plan.md</code>: problem, approach, files to touch, acceptance criteria with checkboxes.<br><br>
+        <code>/ce:work</code> — Takes a <code>plan.md</code> and executes it. Breaks into tasks, implements each one, runs tests, checks off criteria. Context lost? Point a new session at the plan and continue.<br><br>
+        <code>/ce:brainstorm</code> — Explore an idea before committing to a plan.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- connector row 2→3 -->
+  <div class="v-connectors">
+    <div class="v-conn" style="flex:3.2">
+      <div class="v-line" style="background:#9333ea"></div>
+      <div class="v-arrow" style="border-top-color:#9333ea"></div>
+      <div class="v-label">reads &amp; writes files on disk</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ ROW 3: SHARED DISK -->
+  <div class="layer-label">③ Shared Layer (the glue)</div>
+  <div class="row">
+
+    <div class="card filesystem" style="flex:1.8">
+      <span class="card-icon">💾</span>
+      <div class="card-name">Filesystem</div>
+      <div class="card-role">The Shared Truth</div>
+      <div class="card-desc">
+        Both Claude Code and Zed read and write the same files on disk. There's no plugin or bridge between them — the filesystem <em>is</em> the integration. When Claude edits a file, it lands on disk. Zed watches disk. Changes appear instantly.
+      </div>
+    </div>
+
+    <div class="card plans" style="flex:1.4">
+      <span class="card-icon">📋</span>
+      <div class="card-name">plans/</div>
+      <div class="card-role">Persistent Memory</div>
+      <div class="card-desc">
+        <code>plans/features/</code><br>
+        <code>plans/bugs/</code><br>
+        <code>plans/research/</code><br>
+        <code>plans/strategy/</code><br>
+        <code>plans/archive/</code><br><br>
+        Survives context loss. Survives session restarts. The plan is the checkpoint.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- connector row 3→4 -->
+  <div class="v-connectors">
+    <div class="v-conn" style="flex:1.8">
+      <div class="v-line" style="background:#d97706"></div>
+      <div class="v-arrow" style="border-top-color:#d97706"></div>
+      <div class="v-label">autosave every 500ms ↕ live file watch</div>
+    </div>
+    <div class="v-conn" style="flex:1.4">
+      <div class="v-line" style="background:#16a34a"></div>
+      <div class="v-arrow" style="border-top-color:#16a34a"></div>
+      <div class="v-label">open in editor</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ ROW 4: OUTPUT -->
+  <div class="layer-label">④ Output — what you see</div>
+  <div class="row">
+
+    <div class="card zed" style="flex:3.2">
+      <span class="card-icon">⚡</span>
+      <div class="card-name">Zed</div>
+      <div class="card-role">Editor — side by side with Ghostty</div>
+      <div class="card-desc">
+        Sits on the left half of your screen. Ghostty on the right. Both pointing at the same folder.<br><br>
+        Autosave set to <code>500ms</code> — so when Claude edits a file, you see it appear in Zed line by line in real time. When you type in Zed, Claude sees it within half a second.<br><br>
+        No plugin needed. No connection to set up. It's just two apps watching the same files. That's the Google Docs trick.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════ FLOW SECTION -->
+  <div class="flow-section">
+    <div class="flow-title">A single task, start to finish</div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-tool" style="color:#a78bfa">Monologue</div>
+        <div class="step-action">You speak the idea or bug aloud</div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-tool" style="color:#34d399">Ghostty</div>
+        <div class="step-action">Speech lands in Claude Code as text. You run <code>/ce:plan</code></div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-tool" style="color:#c084fc">Compound Eng.</div>
+        <div class="step-action">Parallel agents research codebase + past plans. Writes <code>plan.md</code> to <code>plans/features/</code></div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-tool" style="color:#60a5fa">Zed</div>
+        <div class="step-action">Plan appears instantly. You review, edit if needed. Zed saves in 500ms.</div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-tool" style="color:#34d399">Ghostty</div>
+        <div class="step-action">You run <code>/ce:work</code> — or switch windows and start the next plan</div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-tool" style="color:#60a5fa">Zed</div>
+        <div class="step-action">Watch Claude write code live. Hear the sound. Review changes. Done.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
