@@ -1,11 +1,12 @@
 ---
 name: tdd-first
 description: >
-  Enforces test-first development for all non-trivial code. Write failing tests (happy + sad paths),
-  verify they fail, implement code, verify they pass. Triggers automatically when writing new functions,
-  classes, endpoints, services, or modules. Supports TypeScript (Vitest/Jest), Python (pytest), and
-  Node.js (Jest/Mocha). Triggers on 'write', 'implement', 'build', 'add', 'create' when followed by
-  code-producing intent. Also triggers on 'TDD', 'test first', 'test-first', 'tests first'.
+  MANDATORY test-first development for ALL non-trivial code — no trigger words needed.
+  Any time Claude or Codex produces a function, class, endpoint, service, or module,
+  tests MUST be written and confirmed failing BEFORE implementation code exists.
+  Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Mocha), and Go.
+  This skill is always active. It does not require the user to say 'TDD' or 'test first' —
+  it applies automatically whenever code is being produced.
 ---
 
 # Test-First Development (TDD) Skill
@@ -14,7 +15,7 @@ description: >
 
 **Never write implementation code before its tests exist and have been confirmed to fail.**
 
-This is not a suggestion. This is the workflow. Every non-trivial piece of code follows this cycle:
+This is not a suggestion. This is not opt-in. This is the mandatory workflow for every piece of non-trivial code produced in any session — whether the user asks for TDD or not.
 
 ```
 1. Write tests (happy + sad paths)  →  2. Run tests (confirm RED)  →  3. Write code  →  4. Run tests (confirm GREEN)  →  5. Refactor (tests stay GREEN)
@@ -22,26 +23,30 @@ This is not a suggestion. This is the workflow. Every non-trivial piece of code 
 
 If you catch yourself writing implementation first, STOP. Delete or stash it. Write the test. Then implement.
 
+**This skill is ALWAYS ACTIVE.** It does not require the user to say "TDD", "test first", or any specific trigger phrase. Any time you are about to write a function, class, endpoint, service, or module — this skill applies. The user should never need to remind you to write tests first. If they do, you have failed to follow this skill.
+
 ---
 
 ## When This Skill Applies
 
-**ALWAYS applies when:**
+**ALWAYS applies when producing code that contains logic — no exceptions, no trigger words needed:**
 - Writing a new function, method, class, or module
 - Adding a new API endpoint or route handler
 - Writing business logic, data transformations, or validation
 - Adding error handling for specific failure modes
 - Implementing a feature from a plan or spec
 - Fixing a bug (write the test that reproduces it FIRST)
+- Modifying existing logic (write tests covering current behavior FIRST, then modify)
 
-**SKIP this workflow for:**
-- Pure configuration files (env vars, tailwind config, tsconfig)
+**The ONLY exceptions — skip TDD for these and ONLY these:**
+- Pure configuration files (env vars, tailwind config, tsconfig, pyproject.toml)
 - CSS/styling-only changes with no logic
 - Import rewiring or re-exports with no behavior
 - README or documentation edits
 - One-line type alias additions
 - Renaming files with no logic change
 - Adding dependencies (package.json, requirements.txt)
+- React component JSX-only changes with zero conditional logic
 
 **When in doubt, write the test.** The cost of an unnecessary test is near zero. The cost of untested code compounds.
 
@@ -143,16 +148,120 @@ class TestCalculateDiscount:
     def test_handles_zero_amount_without_raising(self): ...
 ```
 
-### Test File Placement
+### Test File Placement — Standardised Convention
 
-Follow the project's existing convention. If none exists:
+**Every project MUST have a consistent test file structure. Apply these conventions every time — do not improvise.**
 
-| Runtime | Convention |
-|---|---|
-| TypeScript/JS (Vitest) | `src/path/to/module.test.ts` (colocated) |
-| TypeScript/JS (Jest) | `__tests__/module.test.ts` or colocated |
-| Python (pytest) | `tests/test_module.py` |
-| Go | `path/to/module_test.go` (colocated, required by Go) |
+Before writing the first test in a project, check if a test structure already exists:
+
+```bash
+# TypeScript/JS
+find . -name "*.test.ts" -o -name "*.test.js" -o -name "*.spec.ts" -o -name "*.spec.js" | head -5
+
+# Python
+find . -name "test_*.py" -o -name "*_test.py" | head -5
+
+# Go
+find . -name "*_test.go" | head -5
+```
+
+**If tests already exist:** Follow the existing convention exactly. Do not mix colocated and separated styles in the same project.
+
+**If no tests exist yet:** Apply these standards and create the directory structure before writing the first test:
+
+#### TypeScript / JavaScript — Colocated (Industry Standard)
+
+```
+src/
+  utils/
+    calculateDiscount.ts          ← implementation
+    calculateDiscount.test.ts     ← test (same directory, .test.ts suffix)
+  services/
+    userService.ts
+    userService.test.ts
+  api/
+    routes/
+      orders.ts
+      orders.test.ts
+```
+
+**Rules:**
+- Test file lives next to the implementation file, same directory
+- Naming: `{filename}.test.ts` (not `.spec.ts` unless project already uses `.spec.ts`)
+- This is the default for Vitest, Jest, and Mocha with minimal config
+- For React components with logic: `ComponentName.test.tsx`
+- No `__tests__/` directories unless the project already uses them
+
+#### Python — Separate `tests/` Directory (pytest Standard)
+
+```
+project_root/
+  src/                            ← or package_name/
+    utils/
+      calculate_discount.py
+    services/
+      user_service.py
+  tests/                          ← mirrors src/ structure
+    utils/
+      test_calculate_discount.py
+    services/
+      test_user_service.py
+    conftest.py                   ← shared fixtures
+```
+
+**Rules:**
+- Test directory mirrors the source directory structure
+- Naming: `test_{module_name}.py` (pytest discovery convention)
+- `conftest.py` at `tests/` root for shared fixtures
+- Create `tests/__init__.py` if needed for imports (usually not with pytest)
+- Create subdirectories to mirror source structure — do not dump all tests in flat `tests/`
+
+#### Node.js (non-TypeScript) — Colocated
+
+Same as TypeScript but with `.test.js` suffix.
+
+#### Go — Colocated (Language Requirement)
+
+```
+pkg/
+  discount/
+    calculator.go
+    calculator_test.go            ← Go requires colocated test files
+```
+
+**Rules:**
+- Go enforces colocated tests — this is not a choice
+- Test file: `{filename}_test.go`
+- Test package: same package or `{package}_test` for black-box testing
+
+#### API Route Handlers / Serverless Functions
+
+```
+api/                              ← Vercel serverless or similar
+  demo-token.ts
+  demo-token.test.ts              ← colocated
+  health/
+    demos.ts
+    demos.test.ts
+```
+
+**Rules:**
+- API route tests are colocated with the route handler
+- Test the handler function directly (import and call it), not via HTTP
+
+### Directory Creation
+
+**If the test directory structure does not exist, create it before writing tests:**
+
+```bash
+# Python — create tests/ mirror structure
+mkdir -p tests/utils tests/services
+
+# TypeScript/JS — no action needed (colocated, directories already exist)
+# Go — no action needed (colocated, directories already exist)
+```
+
+**Never skip writing tests because the directory doesn't exist. Create it.**
 
 ---
 
