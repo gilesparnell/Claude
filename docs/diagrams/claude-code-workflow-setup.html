@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Workflow Setup — gilesparnell / allconvos.ai</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">ac</div>
+      <span class="header-name">allconvos.ai</span>
+    </div>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../decisions.html">Decisions</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Tooling</div>
+    <div class="hero-title">Structured Claude Code<br><em>Dev Environment</em></div>
+    <div class="hero-sub">Replace chaotic terminal tabs with named tmux windows, isolated git worktrees, and coordinated Agent Teams. Three layers that turn parallel sessions from confusion into flow.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <!-- ── DIAGRAM 1: THE PROBLEM ── -->
+  <div class="section-label">The Problem</div>
+
+  <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Random tabs problem diagram">
+    <!-- Background -->
+    <rect x="10" y="10" width="740" height="200" rx="12" fill="#FAECE7" opacity="0.3"/>
+
+    <!-- Tab bar -->
+    <rect x="30" y="30" width="700" height="32" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"/>
+    <text x="80" y="50" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#993C1D">Tab 1</text>
+    <text x="180" y="50" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#993C1D">Tab 2</text>
+    <text x="280" y="50" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#993C1D">Tab 3</text>
+    <text x="380" y="50" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#993C1D">Tab 4</text>
+    <text x="480" y="50" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#993C1D">Tab 5</text>
+    <text x="580" y="50" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#993C1D" opacity="0.5">Tab 6</text>
+    <text x="660" y="50" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#993C1D" opacity="0.3">...</text>
+
+    <!-- Question marks -->
+    <text x="80" y="90" font-family="-apple-system,sans-serif" font-size="18" fill="#993C1D" opacity="0.6">???</text>
+    <text x="180" y="90" font-family="-apple-system,sans-serif" font-size="18" fill="#993C1D" opacity="0.5">???</text>
+    <text x="280" y="90" font-family="-apple-system,sans-serif" font-size="18" fill="#993C1D" opacity="0.4">???</text>
+    <text x="380" y="90" font-family="-apple-system,sans-serif" font-size="18" fill="#993C1D" opacity="0.3">???</text>
+    <text x="480" y="90" font-family="-apple-system,sans-serif" font-size="18" fill="#993C1D" opacity="0.2">???</text>
+
+    <!-- Problem labels -->
+    <text x="380" y="130" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#712B13">No labels &#8226; No isolation &#8226; Context bleed &#8226; File conflicts</text>
+
+    <!-- Conflict arrows -->
+    <rect x="120" y="148" width="520" height="44" rx="8" fill="#FAECE7" stroke="#F0997B" stroke-width="1"/>
+    <text x="380" y="166" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#712B13">Agent A editing src/pages/Index.tsx</text>
+    <text x="380" y="182" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#993C1D">Agent B editing src/pages/Index.tsx &#8594; CONFLICT</text>
+  </svg>
+
+  <!-- ── DIAGRAM 2: THE THREE LAYERS ── -->
+  <div class="section-label">The Solution &mdash; Three Layers</div>
+
+  <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Three-layer solution diagram">
+    <defs>
+      <marker id="a1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+    </defs>
+
+    <!-- Layer 1: tmux -->
+    <rect x="10" y="10" width="740" height="80" rx="12" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+    <circle cx="50" cy="50" r="16" fill="#534AB7"/>
+    <text x="50" y="54" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">1</text>
+    <text x="80" y="40" font-family="-apple-system,sans-serif" font-size="15" font-weight="700" fill="#3C3489">tmux</text>
+    <text x="80" y="58" font-family="-apple-system,sans-serif" font-size="12" fill="#534AB7">Named windows &#8226; Persistent sessions &#8226; Split panes</text>
+    <text x="80" y="76" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#534AB7" opacity="0.7">brew install tmux &nbsp;&#8226;&nbsp; Ctrl+B to navigate</text>
+
+    <path d="M 380,90 L 380,120" fill="none" stroke="#999890" stroke-width="1.5" marker-end="url(#a1)"/>
+
+    <!-- Layer 2: Worktrees -->
+    <rect x="10" y="125" width="740" height="80" rx="12" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <circle cx="50" cy="165" r="16" fill="#1D9E75"/>
+    <text x="50" y="169" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">2</text>
+    <text x="80" y="155" font-family="-apple-system,sans-serif" font-size="15" font-weight="700" fill="#085041">Git Worktrees</text>
+    <text x="80" y="173" font-family="-apple-system,sans-serif" font-size="12" fill="#1D9E75">Isolated file systems per agent &#8226; Separate branches &#8226; No conflicts</text>
+    <text x="80" y="191" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#1D9E75" opacity="0.7">claude --worktree &nbsp;&#8226;&nbsp; built into Claude Code</text>
+
+    <path d="M 380,205 L 380,235" fill="none" stroke="#999890" stroke-width="1.5" marker-end="url(#a1)"/>
+
+    <!-- Layer 3: Agent Teams -->
+    <rect x="10" y="240" width="740" height="88" rx="12" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+    <circle cx="50" cy="284" r="16" fill="#378ADD"/>
+    <text x="50" y="288" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">3</text>
+    <text x="80" y="270" font-family="-apple-system,sans-serif" font-size="15" font-weight="700" fill="#0C447C">Agent Teams</text>
+    <text x="80" y="288" font-family="-apple-system,sans-serif" font-size="12" fill="#378ADD">Coordinated multi-agent work &#8226; Shared task list &#8226; Lead + specialists</text>
+    <text x="80" y="306" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#378ADD" opacity="0.7">CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 &nbsp;&#8226;&nbsp; experimental</text>
+  </svg>
+
+  <!-- ── DIAGRAM 3: TMUX SESSION LAYOUT ── -->
+  <div class="section-label">Layer 1 &mdash; tmux Session Layout</div>
+
+  <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="tmux session layout diagram">
+    <!-- tmux frame -->
+    <rect x="10" y="10" width="740" height="340" rx="12" fill="var(--bg2,#f7f7f5)" stroke="var(--border2,rgba(0,0,0,0.15))" stroke-width="1.5"/>
+
+    <!-- Status bar top -->
+    <rect x="10" y="10" width="740" height="32" rx="12" fill="#3B6D11"/>
+    <rect x="10" y="30" width="740" height="12" fill="#3B6D11"/>
+    <text x="30" y="30" font-family="'SF Mono','Fira Code',monospace" font-size="11" font-weight="600" fill="#C0DD97">[parnell]</text>
+    <rect x="110" y="18" width="60" height="18" rx="4" fill="#27500A" stroke="#97C459" stroke-width="0.5"/>
+    <text x="140" y="31" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#C0DD97">1:dev*</text>
+    <text x="200" y="31" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459" opacity="0.7">2:claude</text>
+    <text x="290" y="31" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459" opacity="0.7">3:agent2</text>
+
+    <!-- Window 1 left pane: dev server -->
+    <rect x="20" y="52" width="350" height="240" rx="8" fill="#1a1a18"/>
+    <text x="35" y="72" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459" opacity="0.5">~ npm run dev</text>
+    <text x="35" y="100" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#378ADD">VITE v6.0.0</text>
+    <text x="130" y="100" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#5DCAA5"> ready in 312ms</text>
+    <text x="35" y="120" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459"> &#10095; Local: </text>
+    <text x="120" y="120" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#e8e6de" opacity="0.7">http://localhost:8080/</text>
+    <text x="35" y="140" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459"> &#10095; Network: </text>
+    <text x="140" y="140" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#e8e6de" opacity="0.7">http://192.168.1.42:8080/</text>
+    <text x="35" y="170" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#5f5e5a">press h + enter to show help</text>
+
+    <!-- Window 1 right pane: terminal -->
+    <rect x="380" y="52" width="360" height="240" rx="8" fill="#222220"/>
+    <text x="395" y="72" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#5f5e5a">~/parnellsystems</text>
+    <text x="395" y="96" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459">$</text>
+    <text x="410" y="96" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#e8e6de"> git status</text>
+    <text x="395" y="114" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459">On branch main</text>
+    <text x="395" y="130" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#5f5e5a">nothing to commit</text>
+    <text x="395" y="155" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#97C459">$</text>
+    <rect x="407" y="146" width="6" height="13" fill="#97C459" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.1;0.7" dur="1.2s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Pane divider -->
+    <line x1="375" y1="52" x2="375" y2="292" stroke="#5f5e5a" stroke-width="1"/>
+
+    <!-- Status bar bottom -->
+    <rect x="20" y="298" width="720" height="24" rx="4" fill="#27500A" opacity="0.5"/>
+    <text x="35" y="314" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#97C459" opacity="0.7">Ctrl+B then 1/2/3 to switch windows</text>
+    <text x="700" y="314" text-anchor="end" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#97C459" opacity="0.7">13:42</text>
+
+    <!-- Labels below -->
+    <text x="195" y="340" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="var(--text3,#999890)">Window 1: dev server</text>
+    <text x="560" y="340" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="var(--text3,#999890)">Window 1: general terminal</text>
+  </svg>
+
+  <!-- ── DIAGRAM 4: WORKTREE ISOLATION ── -->
+  <div class="section-label">Layer 2 &mdash; Worktree Isolation</div>
+
+  <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Worktree isolation diagram">
+    <!-- Main repo -->
+    <rect x="30" y="20" width="310" height="100" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <circle cx="56" cy="44" r="8" fill="#1D9E75"/>
+    <text x="56" y="47" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" font-weight="700" fill="#fff">A</text>
+    <text x="72" y="48" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#085041">Main Repo</text>
+    <text x="50" y="68" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#1D9E75">~/parnellsystems/</text>
+    <text x="50" y="84" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#1D9E75" opacity="0.7">branch: main</text>
+    <text x="50" y="104" font-family="-apple-system,sans-serif" font-size="10" fill="#085041" opacity="0.6">Session: &quot;landing-page&quot;</text>
+
+    <!-- Worktree -->
+    <rect x="420" y="20" width="310" height="100" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+    <circle cx="446" cy="44" r="8" fill="#534AB7"/>
+    <text x="446" y="47" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" font-weight="700" fill="#fff">B</text>
+    <text x="462" y="48" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#3C3489">Worktree</text>
+    <text x="440" y="68" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#534AB7">~/parnellsystems-wt-a3f/</text>
+    <text x="440" y="84" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#534AB7" opacity="0.7">branch: feature/auth-flow</text>
+    <text x="440" y="104" font-family="-apple-system,sans-serif" font-size="10" fill="#3C3489" opacity="0.6">Session: &quot;feature-auth&quot;</text>
+
+    <!-- Command between them -->
+    <text x="380" y="60" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="var(--text3,#999890)">claude</text>
+    <text x="380" y="74" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="var(--text3,#999890)">--worktree</text>
+    <line x1="340" y1="70" x2="360" y2="70" stroke="#999890" stroke-width="1" stroke-dasharray="3,2"/>
+    <line x1="400" y1="70" x2="420" y2="70" stroke="#999890" stroke-width="1" stroke-dasharray="3,2"/>
+
+    <!-- Result box -->
+    <rect x="120" y="150" width="520" height="52" rx="10" fill="#EAF3DE" stroke="#97C459" stroke-width="1.5"/>
+    <text x="380" y="172" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#27500A">&#10003; Completely isolated file systems</text>
+    <text x="380" y="190" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#3B6D11">Both agents edit freely &#8212; zero file conflicts, separate branches</text>
+
+    <!-- Arrows down -->
+    <line x1="185" y1="120" x2="250" y2="150" stroke="#999890" stroke-width="1" stroke-dasharray="3,2"/>
+    <line x1="575" y1="120" x2="510" y2="150" stroke="#999890" stroke-width="1" stroke-dasharray="3,2"/>
+
+    <!-- When to use -->
+    <rect x="30" y="220" width="310" height="28" rx="6" fill="#E1F5EE"/>
+    <text x="185" y="238" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#085041">&#10003; Features &#8226; Bug fixes &#8226; Refactors &#8226; PRs</text>
+    <rect x="420" y="220" width="310" height="28" rx="6" fill="#EEEDFE"/>
+    <text x="575" y="238" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#3C3489">&#8212; Quick edits &#8226; Commands &#8226; Research &#8226; Ops</text>
+  </svg>
+
+  <!-- ── DIAGRAM 5: AGENT TEAMS ── -->
+  <div class="section-label">Layer 3 &mdash; Agent Teams</div>
+
+  <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Agent Teams coordination diagram">
+    <defs>
+      <marker id="a2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+    </defs>
+
+    <!-- Lead agent -->
+    <rect x="260" y="20" width="240" height="60" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+    <text x="380" y="46" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="14" font-weight="700" fill="#0C447C">Lead Agent</text>
+    <text x="380" y="66" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#378ADD">Plans, delegates, coordinates</text>
+
+    <!-- Connector lines -->
+    <line x1="310" y1="80" x2="140" y2="130" stroke="#999890" stroke-width="1.5" marker-end="url(#a2)"/>
+    <line x1="380" y1="80" x2="380" y2="130" stroke="#999890" stroke-width="1.5" marker-end="url(#a2)"/>
+    <line x1="450" y1="80" x2="620" y2="130" stroke="#999890" stroke-width="1.5" marker-end="url(#a2)"/>
+
+    <!-- Frontend agent -->
+    <rect x="30" y="135" width="220" height="70" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+    <text x="140" y="160" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#0C447C">Frontend Agent</text>
+    <text x="140" y="178" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#378ADD">Components, styling, layout</text>
+    <text x="140" y="194" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#85B7EB">[tmux pane 1]</text>
+
+    <!-- Content agent -->
+    <rect x="270" y="135" width="220" height="70" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <text x="380" y="160" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#085041">Content Agent</text>
+    <text x="380" y="178" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#1D9E75">Copy, training, marketing</text>
+    <text x="380" y="194" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#5DCAA5">[tmux pane 2]</text>
+
+    <!-- Infra agent -->
+    <rect x="510" y="135" width="220" height="70" rx="10" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.5"/>
+    <text x="620" y="160" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#633806">Infra Agent</text>
+    <text x="620" y="178" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#BA7517">Build, deploy, config</text>
+    <text x="620" y="194" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#FAC775">[tmux pane 3]</text>
+
+    <!-- Shared task list -->
+    <rect x="160" y="230" width="440" height="36" rx="8" fill="var(--bg2,#f7f7f5)" stroke="var(--border2,rgba(0,0,0,0.15))" stroke-width="1"/>
+    <text x="380" y="252" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="var(--text2,#5f5e5a)">&#9889; Shared task list &#8212; agents communicate progress and flag dependencies</text>
+  </svg>
+
+  <!-- ── KEY BINDINGS ── -->
+  <div class="section-label">tmux Key Bindings</div>
+
+  <div class="adr-grid" style="margin-bottom:32px">
+    <div class="adr-card">
+      <div class="adr-num"><code style="background:none;border:none;padding:0;font-size:12px">Ctrl+B &#8594; 1</code></div>
+      <div class="adr-body">
+        <div class="adr-title">Switch to dev server</div>
+        <div class="adr-desc">Your Vite dev server and general terminal pane. Check build output, run commands.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num"><code style="background:none;border:none;padding:0;font-size:12px">Ctrl+B &#8594; 2</code></div>
+      <div class="adr-body">
+        <div class="adr-title">Switch to primary Claude session</div>
+        <div class="adr-desc">Your main coding session. One task, full context.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num"><code style="background:none;border:none;padding:0;font-size:12px">Ctrl+B &#8594; 3</code></div>
+      <div class="adr-body">
+        <div class="adr-title">Switch to parallel agent (worktree)</div>
+        <div class="adr-desc">Isolated second session. Run <code>claude --worktree</code> here for conflict-free parallel work.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num"><code style="background:none;border:none;padding:0;font-size:12px">Ctrl+B &#8594; d</code></div>
+      <div class="adr-body">
+        <div class="adr-title">Detach &mdash; session stays alive</div>
+        <div class="adr-desc">Close Ghostty, go get coffee. Come back with <code>tmux attach -t parnell</code>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SESSION SCOPING RULES ── -->
+  <div class="section-label">Session Scoping Rules</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:32px">
+    <div style="padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--purple-text);font-weight:600;margin-bottom:6px">feature-[name]</div>
+      <div style="font-size:12px;color:var(--text2)">New feature dev</div>
+      <div style="font-size:10px;margin-top:6px;padding:2px 8px;display:inline-block;border-radius:4px;background:var(--purple-bg);color:var(--purple-text);font-weight:600">worktree</div>
+    </div>
+    <div style="padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--purple-text);font-weight:600;margin-bottom:6px">bugfix-[name]</div>
+      <div style="font-size:12px;color:var(--text2)">Single bug fix</div>
+      <div style="font-size:10px;margin-top:6px;padding:2px 8px;display:inline-block;border-radius:4px;background:var(--purple-bg);color:var(--purple-text);font-weight:600">worktree</div>
+    </div>
+    <div style="padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--teal-text);font-weight:600;margin-bottom:6px">landing-page</div>
+      <div style="font-size:12px;color:var(--text2)">Marketing site edits</div>
+      <div style="font-size:10px;margin-top:6px;padding:2px 8px;display:inline-block;border-radius:4px;background:var(--bg3);color:var(--text3);font-weight:600">direct</div>
+    </div>
+    <div style="padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--teal-text);font-weight:600;margin-bottom:6px">training</div>
+      <div style="font-size:12px;color:var(--text2)">Course content</div>
+      <div style="font-size:10px;margin-top:6px;padding:2px 8px;display:inline-block;border-radius:4px;background:var(--bg3);color:var(--text3);font-weight:600">direct</div>
+    </div>
+    <div style="padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--teal-text);font-weight:600;margin-bottom:6px">ops</div>
+      <div style="font-size:12px;color:var(--text2)">Business operations</div>
+      <div style="font-size:10px;margin-top:6px;padding:2px 8px;display:inline-block;border-radius:4px;background:var(--bg3);color:var(--text3);font-weight:600">direct &middot; ai-os/</div>
+    </div>
+    <div style="padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-family:var(--mono);font-size:12px;color:var(--purple-text);font-weight:600;margin-bottom:6px">refactor-[scope]</div>
+      <div style="font-size:12px;color:var(--text2)">Code cleanup</div>
+      <div style="font-size:10px;margin-top:6px;padding:2px 8px;display:inline-block;border-radius:4px;background:var(--purple-bg);color:var(--purple-text);font-weight:600">worktree</div>
+    </div>
+  </div>
+
+  <!-- ── THE THREE RULES ── -->
+  <div class="section-label">The Three Rules</div>
+
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#9889;</div>
+      <div class="adr-body">
+        <div class="adr-title">Max 2 parallel coding sessions</div>
+        <div class="adr-desc">Parallel enough to multitask, conservative enough to avoid constant rate-limit throttling on Max plan.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128683;</div>
+      <div class="adr-body">
+        <div class="adr-title">Never edit the same file in two sessions</div>
+        <div class="adr-desc">If two agents need the same file, finish one first or use worktrees so they have separate copies.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#127919;</div>
+      <div class="adr-body">
+        <div class="adr-title">One session = one task</div>
+        <div class="adr-desc">Don't reuse a session for a different task. Stale context from the previous task confuses Claude. Start fresh.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DAILY FLOW ── -->
+  <div class="section-label" style="margin-top:44px">Daily Flow &mdash; Quick Reference</div>
+
+  <div style="background:#1a1a18;border-radius:10px;padding:24px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;line-height:2;color:#e8e6de;border:1px solid rgba(255,255,255,0.07);margin-bottom:32px;overflow-x:auto">
+    <span style="color:#5f5e5a"># Start your structured workspace</span><br>
+    <span style="color:#97C459">$</span> cd ~/Documents/VSStudio/parnellsystems<br>
+    <span style="color:#97C459">$</span> ./scripts/tmux-dev.sh<br>
+    <br>
+    <span style="color:#5f5e5a"># Window 2: start your main task</span><br>
+    <span style="color:#97C459">$</span> claude<br>
+    <span style="color:#AFA9EC">&gt; Update the hero section copy on the landing page</span><br>
+    <br>
+    <span style="color:#5f5e5a"># Ctrl+B &#8594; 3: start parallel work in a worktree</span><br>
+    <span style="color:#97C459">$</span> claude --worktree<br>
+    <span style="color:#AFA9EC">&gt; Add authentication flow to the dashboard</span><br>
+    <br>
+    <span style="color:#5f5e5a"># Switch between them</span><br>
+    <span style="color:#97C459">Ctrl+B &#8594; 2</span> &nbsp;<span style="color:#5f5e5a">or</span>&nbsp; <span style="color:#97C459">Ctrl+B &#8594; 3</span><br>
+    <br>
+    <span style="color:#5f5e5a"># Detach when done, come back later</span><br>
+    <span style="color:#97C459">Ctrl+B &#8594; d</span><br>
+    <span style="color:#97C459">$</span> tmux attach -t parnell
+  </div>
+
+  <!-- ── TOOLS COMPARISON ── -->
+  <div class="section-label">Tools Worth Knowing</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+    <div style="padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">tmux</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:6px">Terminal multiplexer. Named windows, persistent sessions, split panes.</div>
+      <code style="font-size:10px">brew install tmux</code>
+    </div>
+    <div style="padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">muxtree</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:6px">Dead-simple bash script pairing worktrees with tmux. Minimal dependencies.</div>
+      <code style="font-size:10px">Single bash script</code>
+    </div>
+    <div style="padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">dmux</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:6px">Full dev agent multiplexer. 11+ agents, hooks, CI/CD. Most feature-rich.</div>
+      <code style="font-size:10px">GitHub / npm</code>
+    </div>
+    <div style="padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px">
+      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">claude-esp</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:6px">TUI to monitor Claude's hidden thinking across sessions.</div>
+      <code style="font-size:10px">GitHub</code>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span>Generated March 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
+</footer>
+
+</body>
+</html>
