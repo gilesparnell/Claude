@@ -37,9 +37,9 @@
     <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="skill-count">10</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="skill-count">11</span><span class="stat-l">Skills</span></div>
       <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">40+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n">44+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -348,6 +348,42 @@
             <div class="check-item"><span class="check-dot"></span>Feature flags from day one</div>
             <div class="check-item"><span class="check-dot"></span>Idempotent webhooks and jobs</div>
             <div class="check-item"><span class="check-dot"></span>Soft delete — never hard delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILL PUBLISHER -->
+    <div class="skill-card" data-category="workflow" data-scope="global">
+      <div class="skill-band" style="background:var(--amber-bg)">
+        <div>
+          <div class="skill-name">Skill Publisher</div>
+          <div class="skill-slug">skill-publisher</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">&#128230;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
+          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Mandatory workflow for publishing skills, walkthroughs, decisions, and templates to the GitHub Pages knowledge portal with correct structure, cards, and git push.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">publish this skill</span>
+            <span class="trigger">create a walkthrough</span>
+            <span class="trigger">add to the portal</span>
+            <span class="trigger">publish this walkthrough</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Rules</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>Every skill needs runtime SKILL.md + portal stub + git push</div>
+            <div class="check-item"><span class="check-dot"></span>Walkthroughs need detail page + card in walkthroughs.html + stat update</div>
+            <div class="check-item"><span class="check-dot"></span>All portal content uses docs/portal.css — no custom CSS</div>
+            <div class="check-item"><span class="check-dot"></span>Nothing is done until committed and pushed to gilesparnell/Claude</div>
           </div>
         </div>
       </div>
