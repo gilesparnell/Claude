@@ -39,7 +39,7 @@
     <div class="hero-stats">
       <div class="stat"><span class="stat-n" id="skill-count">9</span><span class="stat-l">Skills</span></div>
       <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">37+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n">36+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -317,38 +317,37 @@
       </div>
     </div>
 
-    <!-- SKILL PUBLISHER -->
-    <div class="skill-card" data-category="workflow" data-scope="global">
-      <div class="skill-band" style="background:var(--amber-bg)">
+    <!-- TDD-FIRST ENFORCEMENT -->
+    <div class="skill-card" data-category="code" data-scope="global">
+      <div class="skill-band" style="background:var(--blue-bg)">
         <div>
-          <div class="skill-name">Skill Publisher</div>
-          <div class="skill-slug">skill-publisher</div>
+          <div class="skill-name">TDD-First Enforcement</div>
+          <div class="skill-slug">tdd-first</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128640;</span>
+          <span class="skill-icon">&#128308;</span>
           <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Codify a reusable pattern as a skill — write the runtime SKILL.md and the portal stub, decide scope (global vs project), and publish to the portal.</div>
+        <div class="skill-desc">Mandatory test-first development for all non-trivial code. No trigger words needed — always active. RED-GREEN-REFACTOR cycle enforced for TypeScript, Python, Node.js, and Go.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
-            <span class="trigger">add this as a skill</span>
-            <span class="trigger">save this as a skill</span>
-            <span class="trigger">publish this skill</span>
-            <span class="trigger">add to the portal</span>
-            <span class="trigger">create a skill for this</span>
+            <span class="trigger">always active — no trigger needed</span>
+            <span class="trigger">write tests first</span>
+            <span class="trigger">TDD</span>
+            <span class="trigger">test first</span>
           </div>
         </div>
         <div>
-          <div class="triggers-label">Steps</div>
+          <div class="triggers-label">Rules</div>
           <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Decide scope: global (~/.claude/skills/) or project-specific</div>
-            <div class="check-item"><span class="check-dot"></span>Write runtime SKILL.md → correct scope location</div>
-            <div class="check-item"><span class="check-dot"></span>Write portal stub → skills/ and push to repo</div>
-            <div class="check-item"><span class="check-dot"></span>Verify portal auto-updates via GitHub Action</div>
+            <div class="check-item"><span class="check-dot"></span>Always active — no trigger words needed</div>
+            <div class="check-item"><span class="check-dot"></span>Tests written BEFORE implementation (happy + sad + edge)</div>
+            <div class="check-item"><span class="check-dot"></span>RED confirmed before code, GREEN confirmed after</div>
+            <div class="check-item"><span class="check-dot"></span>Standardised test file placement per runtime</div>
           </div>
         </div>
       </div>
