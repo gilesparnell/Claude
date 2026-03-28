@@ -217,6 +217,36 @@ You have unlimited stamina. The human does not. Use your persistence wisely—lo
 
 ---
 
+## TDD Enforcement — Always Active
+
+**This is a hard rule, not a suggestion.** The TDD-first skill (v3.0) applies to ALL non-trivial code changes across every project. No trigger words needed.
+
+### What is required
+
+1. **Write tests BEFORE implementation** — happy path, sad path, edge cases
+2. **Confirm RED** (tests fail) before writing implementation code
+3. **Confirm GREEN** (tests pass) after implementation
+4. **Three test layers enforced:**
+   - **Unit tests** — pure logic, no I/O, fast
+   - **Integration tests** — API routes, server actions, service pipelines, database queries
+   - **System/E2E tests** — full page renders, user workflows, empty states
+5. **Run the FULL test suite before declaring anything "done"** — if the suite hasn't been run and passed, it is not done
+
+### Completion gate
+
+You MUST NOT tell the user something is "done", "ready", "complete", or "working" unless:
+- All three test layers have been written (where applicable)
+- The full test suite has been executed
+- All tests pass
+
+If a test layer doesn't apply (e.g., pure utility function doesn't need E2E), explicitly state which layers you're skipping and why.
+
+### Bug fixes
+
+Every bug fix starts with a **reproduction test** that fails before the fix and passes after.
+
+---
+
 ## Lessons Learned — March 2026
 
 ### Tooling and Workflow
