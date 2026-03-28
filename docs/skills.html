@@ -394,7 +394,7 @@
       <div class="skill-band" style="background:var(--blue-bg)">
         <div>
           <div class="skill-name">TDD-First Enforcement</div>
-          <div class="skill-slug">tdd-first</div>
+          <div class="skill-slug">tdd-first &middot; v3.0</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
           <span class="skill-icon">&#128308;</span>
@@ -403,7 +403,7 @@
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Mandatory test-first development for all non-trivial code. No trigger words needed — always active. RED-GREEN-REFACTOR cycle enforced for TypeScript, Python, Node.js, and Go.</div>
+        <div class="skill-desc">Mandatory test-first development for all non-trivial code. No trigger words needed — always active. Enforces the <strong>full test pyramid</strong> — unit, integration, and system/E2E tests. RED-GREEN-REFACTOR cycle for TypeScript, Python, Node.js, and Go. Nothing is "done" until the complete test suite passes.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -411,15 +411,21 @@
             <span class="trigger">write tests first</span>
             <span class="trigger">TDD</span>
             <span class="trigger">test first</span>
+            <span class="trigger">run the tests</span>
+            <span class="trigger">is this tested</span>
           </div>
         </div>
         <div>
           <div class="triggers-label">Rules</div>
           <div class="checks">
             <div class="check-item"><span class="check-dot"></span>Always active — no trigger words needed</div>
+            <div class="check-item"><span class="check-dot"></span>Three test layers enforced — unit + integration + system/E2E</div>
             <div class="check-item"><span class="check-dot"></span>Tests written BEFORE implementation (happy + sad + edge)</div>
             <div class="check-item"><span class="check-dot"></span>RED confirmed before code, GREEN confirmed after</div>
-            <div class="check-item"><span class="check-dot"></span>Standardised test file placement per runtime</div>
+            <div class="check-item"><span class="check-dot"></span>Full test suite MUST pass before declaring anything "done"</div>
+            <div class="check-item"><span class="check-dot"></span>Standardised test file placement per runtime and layer</div>
+            <div class="check-item"><span class="check-dot"></span>Bug fixes start with a reproduction test</div>
+            <div class="check-item"><span class="check-dot"></span>No mocking internal modules — mock only external boundaries</div>
           </div>
         </div>
       </div>
