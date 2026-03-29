@@ -37,9 +37,9 @@
     <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="skill-count">13</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="skill-count">14</span><span class="stat-l">Skills</span></div>
       <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">60+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n">68+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -348,6 +348,53 @@
             <div class="check-item"><span class="check-dot"></span>Feature flags from day one</div>
             <div class="check-item"><span class="check-dot"></span>Idempotent webhooks and jobs</div>
             <div class="check-item"><span class="check-dot"></span>Soft delete — never hard delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECURITY REVIEW -->
+    <div class="skill-card" data-category="code" data-scope="global">
+      <div class="skill-band" style="background:var(--blue-bg)">
+        <div>
+          <div class="skill-name">Security Review</div>
+          <div class="skill-slug">security-review</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">🔒</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Comprehensive security review for web applications. Use when implementing auth, handling user input, working with secrets, creating API endpoints, or touching sensitive features. Covers OWASP Top 10, secrets management, input validation, SQL injection, XSS, CSRF, and rate limiting. Adapted from everything-claude-code.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">security review</span>
+            <span class="trigger">is this secure</span>
+            <span class="trigger">authentication</span>
+            <span class="trigger">handling user input</span>
+            <span class="trigger">API endpoint</span>
+            <span class="trigger">secrets</span>
+            <span class="trigger">vulnerability</span>
+            <span class="trigger">OWASP</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Rules</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>No hardcoded secrets — all in environment variables</div>
+            <div class="check-item"><span class="check-dot"></span>All user inputs validated with schemas (whitelist, not blacklist)</div>
+            <div class="check-item"><span class="check-dot"></span>All database queries use parameterised queries — no string concatenation</div>
+            <div class="check-item"><span class="check-dot"></span>Tokens stored in httpOnly cookies, not localStorage</div>
+            <div class="check-item"><span class="check-dot"></span>Authorisation checks before every sensitive operation</div>
+            <div class="check-item"><span class="check-dot"></span>User-provided HTML sanitised before rendering</div>
+            <div class="check-item"><span class="check-dot"></span>CSRF tokens on state-changing operations</div>
+            <div class="check-item"><span class="check-dot"></span>Rate limiting on all API endpoints</div>
+            <div class="check-item"><span class="check-dot"></span>Error messages never expose internal details</div>
+            <div class="check-item"><span class="check-dot"></span>No secrets or sensitive data in logs</div>
+            <div class="check-item"><span class="check-dot"></span>Dependencies checked for known vulnerabilities</div>
           </div>
         </div>
       </div>
