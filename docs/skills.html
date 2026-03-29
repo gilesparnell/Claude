@@ -37,9 +37,9 @@
     <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="skill-count">11</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="skill-count">13</span><span class="stat-l">Skills</span></div>
       <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">46+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n">60+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -389,6 +389,49 @@
       </div>
     </div>
 
+    <!-- SYSTEMATIC DEBUGGING -->
+    <div class="skill-card" data-category="code" data-scope="global">
+      <div class="skill-band" style="background:var(--blue-bg)">
+        <div>
+          <div class="skill-name">Systematic Debugging</div>
+          <div class="skill-slug">systematic-debugging</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">🔍</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour — before proposing fixes. Enforces evidence gathering, pattern analysis, hypothesis testing, and defence-in-depth validation. Adapted from obra/superpowers.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">bug</span>
+            <span class="trigger">test failure</span>
+            <span class="trigger">unexpected behaviour</span>
+            <span class="trigger">debugging</span>
+            <span class="trigger">why is this broken</span>
+            <span class="trigger">it doesn't work</span>
+            <span class="trigger">fix this</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Rules</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>No fixes without root cause investigation first</div>
+            <div class="check-item"><span class="check-dot"></span>Read error messages completely before acting</div>
+            <div class="check-item"><span class="check-dot"></span>Reproduce consistently before hypothesising</div>
+            <div class="check-item"><span class="check-dot"></span>One hypothesis at a time — smallest possible change</div>
+            <div class="check-item"><span class="check-dot"></span>Create a failing test before implementing a fix</div>
+            <div class="check-item"><span class="check-dot"></span>If 3+ fixes fail, question the architecture</div>
+            <div class="check-item"><span class="check-dot"></span>Trace bugs backward through the call stack to find the source</div>
+            <div class="check-item"><span class="check-dot"></span>Add defence-in-depth validation at every layer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- TDD-FIRST ENFORCEMENT -->
     <div class="skill-card" data-category="code" data-scope="global">
       <div class="skill-band" style="background:var(--blue-bg)">
@@ -462,6 +505,48 @@
             <div class="check-item"><span class="check-dot"></span>DAMP naming — does X when Y</div>
             <div class="check-item"><span class="check-dot"></span>Arrange / Act / Assert structure</div>
             <div class="check-item"><span class="check-dot"></span>Unit to Integration to E2E pyramid</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERIFICATION BEFORE COMPLETION -->
+    <div class="skill-card" data-category="code" data-scope="global">
+      <div class="skill-band" style="background:var(--blue-bg)">
+        <div>
+          <div class="skill-name">Verification Before Completion</div>
+          <div class="skill-slug">verification-before-completion</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">✅</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
+          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success assertions. Evidence before claims, always. Adapted from obra/superpowers.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">done</span>
+            <span class="trigger">fixed</span>
+            <span class="trigger">tests pass</span>
+            <span class="trigger">it works</span>
+            <span class="trigger">ready for review</span>
+            <span class="trigger">complete</span>
+            <span class="trigger">all good</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Rules</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>No completion claims without fresh verification evidence</div>
+            <div class="check-item"><span class="check-dot"></span>Run the actual verification command in this message before claiming success</div>
+            <div class="check-item"><span class="check-dot"></span>Read full output and check exit code</div>
+            <div class="check-item"><span class="check-dot"></span>Never use "should", "probably", or "seems to" for status claims</div>
+            <div class="check-item"><span class="check-dot"></span>No expressing satisfaction before verification</div>
+            <div class="check-item"><span class="check-dot"></span>Verify agent-delegated work independently</div>
+            <div class="check-item"><span class="check-dot"></span>Check requirements line-by-line, not just test results</div>
           </div>
         </div>
       </div>
