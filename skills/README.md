@@ -35,7 +35,9 @@ Generic enough to apply on any project. Loaded in every Claude Code session rega
 | `code-review` | Applies to any PR |
 | `frontend-design` | Generic UI principles (lean version) |
 | `git-conventions` | Conventional Commits applies everywhere |
+| `systematic-debugging` | Root-cause-first debugging applies to any bug in any project |
 | `testing-practices` | Testing philosophy is language/framework agnostic |
+| `verification-before-completion` | Evidence-before-claims applies to any completion claim |
 | `skill-publisher` | Meta-skill for managing skills — useful globally |
 
 ### REPO-SCOPED skills → `<project>/.claude/skills/`
