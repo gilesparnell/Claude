@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wave Execute Workflow — gilesparnell / allconvos.ai</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">ac</div>
+      <span class="header-name">allconvos.ai</span>
+    </div>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../decisions.html">Decisions</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Workflow</div>
+    <div class="hero-title">Wave Execute<br><em>Parallel Plan Execution</em></div>
+    <div class="hero-sub">Go from idea to shipped feature using brainstorm &rarr; plan &rarr; wave-execute. Tasks grouped by dependency, dispatched to fresh agents in parallel. No context rot.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <!-- ── DIAGRAM 1: THE PIPELINE ── -->
+  <div class="section-label">The Pipeline</div>
+
+  <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Three-stage pipeline diagram">
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+    </defs>
+
+    <!-- Stage 1: Brainstorm -->
+    <rect x="20" y="20" width="200" height="80" rx="12" fill="#F3EFFA" stroke="#C9B8E8" stroke-width="1.5"/>
+    <text x="120" y="50" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" fill="#5B3E96">ce-brainstorm</text>
+    <text x="120" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#7B5EAD">What to build + spec</text>
+
+    <!-- Arrow 1 -->
+    <line x1="224" y1="60" x2="276" y2="60" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Stage 2: Plan -->
+    <rect x="280" y="20" width="200" height="80" rx="12" fill="#E8F5F3" stroke="#9DD0C5" stroke-width="1.5"/>
+    <text x="380" y="50" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" fill="#2D6A5A">ce-plan</text>
+    <text x="380" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#3D8A7A">Numbered tasks + deps</text>
+
+    <!-- Arrow 2 -->
+    <line x1="484" y1="60" x2="536" y2="60" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Stage 3: Wave Execute -->
+    <rect x="540" y="20" width="200" height="80" rx="12" fill="#E8F0FA" stroke="#9DB8D0" stroke-width="1.5"/>
+    <text x="640" y="50" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" fill="#2D4A6A">/wave-execute</text>
+    <text x="640" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#3D6A8A">Parallel fresh agents</text>
+  </svg>
+
+  <!-- ── DIAGRAM 2: THE PROBLEM ── -->
+  <div class="section-label">The Problem: Context Rot</div>
+
+  <svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Context rot problem diagram">
+    <!-- Single agent bar -->
+    <rect x="30" y="20" width="700" height="50" rx="8" fill="#FAECE7" stroke="#F0997B" stroke-width="1"/>
+
+    <!-- Progressive fill showing degradation -->
+    <rect x="30" y="20" width="100" height="50" rx="8" fill="#C8E6C9" opacity="0.6"/>
+    <rect x="130" y="20" width="100" height="50" fill="#E8F5E9" opacity="0.5"/>
+    <rect x="230" y="20" width="100" height="50" fill="#FFF8E1" opacity="0.5"/>
+    <rect x="330" y="20" width="100" height="50" fill="#FFF3E0" opacity="0.5"/>
+    <rect x="430" y="20" width="100" height="50" fill="#FFEBEE" opacity="0.5"/>
+    <rect x="530" y="20" width="100" height="50" fill="#FFCDD2" opacity="0.5"/>
+    <rect x="630" y="20" width="100" height="50" rx="8" fill="#EF9A9A" opacity="0.6"/>
+
+    <!-- Task labels -->
+    <text x="80" y="50" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#2E7D32">T1</text>
+    <text x="180" y="50" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#33691E">T2</text>
+    <text x="280" y="50" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#F57F17">T3</text>
+    <text x="380" y="50" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#E65100">T4</text>
+    <text x="480" y="50" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#BF360C">T5</text>
+    <text x="580" y="50" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#B71C1C">T6</text>
+    <text x="680" y="50" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#B71C1C">T7</text>
+
+    <text x="80" y="95" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#2E7D32" font-weight="500">Fresh</text>
+    <text x="680" y="95" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#B71C1C" font-weight="500">Degraded</text>
+    <line x1="130" y1="90" x2="630" y2="90" stroke="#999890" stroke-width="1" stroke-dasharray="4,3"/>
+
+    <text x="380" y="130" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#712B13">Sequential execution: one agent accumulates 200K of context</text>
+    <text x="380" y="148" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#993C1D">Quality degrades as context fills up</text>
+  </svg>
+
+  <!-- ── DIAGRAM 3: THE SOLUTION - WAVES ── -->
+  <div class="section-label">The Solution: Wave-Based Execution</div>
+
+  <svg viewBox="0 0 760 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Wave-based parallel execution diagram">
+    <defs>
+      <marker id="arr2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+    </defs>
+
+    <!-- Wave 1 -->
+    <text x="30" y="20" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#5B3E96">Wave 1 &mdash; No dependencies (parallel)</text>
+    <rect x="30" y="30" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="140" y="60" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent A: Schema</text>
+    <rect x="270" y="30" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="380" y="60" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent B: Stripe sync</text>
+    <rect x="510" y="30" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="620" y="60" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent C: Auth middleware</text>
+
+    <!-- Fresh badges -->
+    <text x="140" y="48" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+    <text x="380" y="48" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+    <text x="620" y="48" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+
+    <!-- Arrows down -->
+    <line x1="140" y1="84" x2="140" y2="116" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="380" y1="84" x2="380" y2="116" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="620" y1="84" x2="620" y2="116" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+    <!-- Wave 2 -->
+    <text x="30" y="115" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#2D6A5A">Wave 2 &mdash; Depends on Wave 1 (parallel)</text>
+    <rect x="30" y="125" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="140" y="155" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent D: Invoice API</text>
+    <rect x="270" y="125" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="380" y="155" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent E: PDF reports</text>
+    <rect x="510" y="125" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="620" y="155" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent F: Billing API</text>
+
+    <text x="140" y="143" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+    <text x="380" y="143" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+    <text x="620" y="143" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+
+    <!-- Arrows down -->
+    <line x1="140" y1="179" x2="140" y2="211" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="380" y1="179" x2="380" y2="211" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="620" y1="179" x2="620" y2="211" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+    <!-- Wave 3 -->
+    <text x="30" y="210" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#2D4A6A">Wave 3 &mdash; Depends on Wave 2 (parallel)</text>
+    <rect x="30" y="220" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="140" y="250" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent G: Dashboard</text>
+    <rect x="270" y="220" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="380" y="250" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent H: Invoice page</text>
+    <rect x="510" y="220" width="220" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="620" y="250" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent I: Billing page</text>
+
+    <text x="140" y="238" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+    <text x="380" y="238" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+    <text x="620" y="238" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+
+    <!-- Arrow down to Wave 4 -->
+    <line x1="380" y1="274" x2="380" y2="306" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+    <!-- Wave 4 -->
+    <text x="30" y="305" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#4A4A4A">Wave 4 &mdash; Depends on all (sequential)</text>
+    <rect x="200" y="315" width="360" height="50" rx="8" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <text x="380" y="345" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="11" fill="#1B5E20">Agent J: Integration tests</text>
+    <text x="380" y="333" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#2E7D32" opacity="0.7">FRESH CONTEXT</text>
+  </svg>
+
+  <!-- ── SECTION: WHEN TO USE ── -->
+  <div class="section-label">When to Use Which Flow</div>
+
+  <div style="max-width:640px;margin:0 auto 40px;font-family:-apple-system,sans-serif;font-size:14px;line-height:1.8;color:var(--text2)">
+    <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border)">
+          <th style="text-align:left;padding:8px 12px;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text3)">Task Size</th>
+          <th style="text-align:left;padding:8px 12px;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text3)">Flow</th>
+          <th style="text-align:left;padding:8px 12px;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text3)">Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:8px 12px;font-weight:500">Trivial</td>
+          <td style="padding:8px 12px;font-family:'SF Mono','Fira Code',monospace;font-size:12px">Just do it</td>
+          <td style="padding:8px 12px;color:var(--text3);font-size:13px">No plan needed</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:8px 12px;font-weight:500">Small (1&ndash;4 tasks)</td>
+          <td style="padding:8px 12px;font-family:'SF Mono','Fira Code',monospace;font-size:12px">ce-work</td>
+          <td style="padding:8px 12px;color:var(--text3);font-size:13px">Wave overhead not worth it</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:8px 12px;font-weight:600;color:var(--text1)">Medium&ndash;Large (5+)</td>
+          <td style="padding:8px 12px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;color:var(--text1)">brainstorm &rarr; plan &rarr; /wave-execute</td>
+          <td style="padding:8px 12px;color:var(--text3);font-size:13px">Parallel agents, fresh contexts, no rot</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── SECTION: EXAMPLE WALKTHROUGH ── -->
+  <div class="section-label">Example: Building a Client Portal</div>
+
+  <div style="max-width:640px;margin:0 auto 40px;font-family:-apple-system,sans-serif;font-size:14px;line-height:1.8;color:var(--text2)">
+
+    <h3 style="font-size:16px;font-weight:600;margin:24px 0 8px;color:var(--text1)">Step 1: Brainstorm</h3>
+    <p>Describe your idea. Claude asks questions one at a time &mdash; auth model, data source, scope, constraints. Produces a spec document.</p>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;line-height:1.6;margin:12px 0 24px;color:var(--text2)">
+      <div style="color:var(--text3);margin-bottom:4px">&gt; I want to add a client portal. Customers view invoices, download PDFs, update billing.</div>
+      <div style="color:var(--text3);margin-bottom:4px">What authentication do customers use? &rarr; NextAuth email/password</div>
+      <div style="color:var(--text3);margin-bottom:4px">Where does invoice data live? &rarr; Stripe</div>
+      <div style="color:var(--text3)">Separate app or existing? &rarr; Part of the Next.js app under /portal</div>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:600;margin:24px 0 8px;color:var(--text1)">Step 2: Plan</h3>
+    <p>Claude produces a structured plan with 10 numbered tasks, file paths, and explicit dependencies between them.</p>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;line-height:1.6;margin:12px 0 24px;color:var(--text2)">
+      <div>Task 1: Database schema</div>
+      <div>Task 2: Stripe sync service</div>
+      <div>Task 3: Auth middleware</div>
+      <div>Task 4: Invoice API &nbsp;&nbsp;<span style="color:var(--text3)">&larr; depends on 1, 2</span></div>
+      <div>Task 5: PDF reports &nbsp;&nbsp;<span style="color:var(--text3)">&larr; depends on 2</span></div>
+      <div>Task 6: Billing API &nbsp;&nbsp;<span style="color:var(--text3)">&larr; depends on 1, 3</span></div>
+      <div>Task 7: Dashboard page &nbsp;&nbsp;<span style="color:var(--text3)">&larr; depends on 3, 4</span></div>
+      <div>Task 8: Invoice page &nbsp;&nbsp;<span style="color:var(--text3)">&larr; depends on 4, 5</span></div>
+      <div>Task 9: Billing page &nbsp;&nbsp;<span style="color:var(--text3)">&larr; depends on 6</span></div>
+      <div>Task 10: Integration tests &nbsp;&nbsp;<span style="color:var(--text3)">&larr; depends on 7, 8, 9</span></div>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:600;margin:24px 0 8px;color:var(--text1)">Step 3: Wave Execute</h3>
+    <p>Type <code style="background:var(--bg2);padding:2px 6px;border-radius:4px;font-size:12px">/wave-execute plan.md</code>. Claude analyses dependencies and presents wave groupings. You approve, and parallel agents execute each wave with fresh contexts.</p>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;line-height:1.8;margin:12px 0 24px;color:var(--text2)">
+      <div style="font-weight:600;color:var(--text1);margin-bottom:8px">Wave Execution Plan</div>
+      <div>Wave 1: Tasks 1, 2, 3 &nbsp;<span style="color:var(--text3)">&mdash; 3 parallel agents</span></div>
+      <div>Wave 2: Tasks 4, 5, 6 &nbsp;<span style="color:var(--text3)">&mdash; 3 parallel agents</span></div>
+      <div>Wave 3: Tasks 7, 8, 9 &nbsp;<span style="color:var(--text3)">&mdash; 3 parallel agents</span></div>
+      <div>Wave 4: Task 10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--text3)">&mdash; sequential</span></div>
+      <div style="margin-top:8px;color:var(--text3)">10 tasks across 4 waves. Proceed? (yes / adjust / sequential)</div>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:600;margin:24px 0 8px;color:var(--text1)">Result</h3>
+    <p>10 atomic commits, each from a fresh agent. Clean git history, no context rot, and your global skills (TDD, security review, verification) enforced on every task.</p>
+  </div>
+
+  <!-- ── SECTION: SKILLS INHERITANCE ── -->
+  <div class="section-label">Skills That Carry Through</div>
+
+  <div style="max-width:640px;margin:0 auto 40px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+    <span style="font-size:11px;font-family:'SF Mono','Fira Code',monospace;padding:4px 10px;border-radius:6px;background:#C8E6C9;color:#1B5E20">tdd-first</span>
+    <span style="font-size:11px;font-family:'SF Mono','Fira Code',monospace;padding:4px 10px;border-radius:6px;background:#E8F0FA;color:#2D4A6A">systematic-debugging</span>
+    <span style="font-size:11px;font-family:'SF Mono','Fira Code',monospace;padding:4px 10px;border-radius:6px;background:#F3EFFA;color:#5B3E96">verification-before-completion</span>
+    <span style="font-size:11px;font-family:'SF Mono','Fira Code',monospace;padding:4px 10px;border-radius:6px;background:#FFF3E0;color:#E65100">security-review</span>
+    <span style="font-size:11px;font-family:'SF Mono','Fira Code',monospace;padding:4px 10px;border-radius:6px;background:#E8F5F3;color:#2D6A5A">git-conventions</span>
+    <span style="font-size:11px;font-family:'SF Mono','Fira Code',monospace;padding:4px 10px;border-radius:6px;background:#E3F2FD;color:#1565C0">code-quality</span>
+  </div>
+
+  <div style="max-width:640px;margin:0 auto;font-family:-apple-system,sans-serif;font-size:13px;line-height:1.6;color:var(--text3);text-align:center">
+    Every agent spawned by <code style="background:var(--bg2);padding:2px 6px;border-radius:4px;font-size:11px">/wave-execute</code> inherits your global skills. They don't just execute tasks &mdash; they execute them to your standards.
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span>Adapted from <a href="https://github.com/gsd-build/get-shit-done" style="color:var(--text3)">GSD</a> wave execution pattern</span>
+</footer>
+
+</body>
+</html>
