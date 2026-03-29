@@ -37,7 +37,7 @@
     <div class="hero-title">Architecture diagrams &amp;<br><em>visual explainers</em></div>
     <div class="hero-sub">Generated when you ask Claude to show something worth keeping. Each walkthrough captures a decision, a mental model, or a system worth understanding at a glance.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n">7</span><span class="stat-l">Walkthroughs</span></div>
+      <div class="stat"><span class="stat-n">8</span><span class="stat-l">Walkthroughs</span></div>
       <div class="stat"><span class="stat-n">3</span><span class="stat-l">Categories</span></div>
     </div>
   </div>
@@ -213,6 +213,30 @@
       </div>
       <div class="wt-footer">
         <a href="diagrams/claude-code-workflow-setup.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- WAVE EXECUTE WORKFLOW -->
+    <div class="wt-card" data-category="workflow">
+      <div class="wt-thumb" style="background:var(--blue-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start">
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--blue-text);opacity:0.6;margin-bottom:4px">parallel execution pipeline</div>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-family:var(--mono);color:var(--blue-text)">
+          <div>&#9312; plan &#8594; dependency graph</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.5">&#8595;</div>
+          <div>&#9313; group into waves</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.5">&#8595;</div>
+          <div>&#9314; spawn fresh agents</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.5">&#8595;</div>
+          <div>&#9315; verify &amp; report</div>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Wave-Based Parallel Execution</div>
+        <div class="wt-desc">How /wave-execute fights context rot by splitting plans into dependency waves and dispatching each task to a fresh 200K-context agent. The full pipeline from ce:brainstorm to deployed code.</div>
+        <div class="wt-tags"><span class="tag">workflow</span><span class="tag">claude-code</span><span class="tag">parallel</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/wave-execute-workflow.html" class="wt-link">Open walkthrough &#8594;</a>
       </div>
     </div>
 
