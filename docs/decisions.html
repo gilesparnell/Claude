@@ -51,6 +51,9 @@
     <a href="#" onclick="filter('architecture',this);return false">Architecture</a>
     <a href="#" onclick="filter('tooling',this);return false">Tooling</a>
     <a href="#" onclick="filter('process',this);return false">Process</a>
+    <div style="margin-left:auto">
+      <input type="text" id="search" placeholder="Search decisions..." oninput="searchADRs(this.value)" style="font-size:13px;font-family:var(--font);padding:7px 14px;border:1px solid var(--border2);border-radius:20px;background:var(--bg2);color:var(--text);width:220px;outline:none">
+    </div>
   </div>
 </div>
 
@@ -122,9 +125,20 @@
 function filter(cat, el) {
   document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
+  document.getElementById('search').value = '';
   document.querySelectorAll('.adr-card').forEach(card => {
     if(cat === 'all' || card.dataset.category === 'placeholder'){card.style.display='';return;}
     card.style.display = card.dataset.category === cat ? '' : 'none';
+  });
+}
+function searchADRs(q) {
+  const term = q.toLowerCase().trim();
+  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
+  if(!term) { document.querySelector('.page-nav a').classList.add('active'); }
+  document.querySelectorAll('.adr-card').forEach(card => {
+    if(card.dataset.category === 'placeholder') { card.style.display = term ? 'none' : ''; return; }
+    const text = card.textContent.toLowerCase();
+    card.style.display = (!term || text.includes(term)) ? '' : 'none';
   });
 }
 </script>

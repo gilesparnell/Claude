@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Development Lifecycle — Parnell Systems Knowledge Portal</title>
+<link rel="stylesheet" href="../portal.css">
+<style>
+.phase{margin-bottom:48px}
+.phase-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.phase-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.phase-name{font-size:18px;font-weight:600;letter-spacing:-0.02em}
+.phase-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.flow-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:12px}
+.flow-box code{font-size:12px}
+.flow-title{font-size:13px;font-weight:600;margin-bottom:8px}
+.flow-desc{font-size:12px;color:var(--text2);line-height:1.6}
+.skill-pill{display:inline-block;font-size:11px;font-family:var(--mono);padding:3px 10px;border-radius:5px;font-weight:600;margin:2px 2px}
+.pill-mandatory{background:var(--coral-bg);color:var(--coral-text);border:1px solid var(--coral-border)}
+.pill-optional{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
+.pill-hook{background:var(--purple-bg);color:var(--purple-text);border:1px solid var(--purple-border)}
+.connector{display:flex;justify-content:center;padding:8px 0}
+.connector svg{width:20px;height:24px}
+.enforcement-box{background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px}
+.enforcement-title{font-size:13px;font-weight:700;color:var(--purple-text);margin-bottom:6px}
+.enforcement-desc{font-size:12px;color:var(--purple-text);line-height:1.6;opacity:0.85}
+.ref-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+.ref-table th{text-align:left;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);padding:8px 12px;border-bottom:2px solid var(--border)}
+.ref-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.ref-table td:first-child{font-family:var(--mono);font-size:12px;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </div>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../decisions.html">Decisions</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Workflow</div>
+    <div class="hero-title">Development Lifecycle<br><em>Idea to Verified Feature</em></div>
+    <div class="hero-sub">The complete skill pipeline: how every feature moves from brainstorm through TDD to browser-verified, shipped code. Enforced by hooks, not honour system.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <!-- ── PIPELINE OVERVIEW ── -->
+  <div class="section-label">The Pipeline</div>
+
+  <svg viewBox="0 0 900 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:900px;display:block;margin:0 auto 16px" aria-label="Five-stage development pipeline">
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+    </defs>
+
+    <!-- Hook bar -->
+    <rect x="10" y="0" width="880" height="28" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"/>
+    <text x="450" y="18" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#3C3489" letter-spacing="0.08em">USERPROMPTSUBMIT HOOK — FIRES EVERY PROMPT — ENFORCES TDD + VERIFICATION</text>
+
+    <!-- Stage 1: Ideate -->
+    <rect x="10" y="40" width="150" height="54" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+    <text x="85" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#3C3489">IDEATE</text>
+    <text x="85" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#534AB7">/ce-brainstorm</text>
+
+    <line x1="164" y1="67" x2="192" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Stage 2: Plan -->
+    <rect x="196" y="40" width="150" height="54" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <text x="271" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#085041">PLAN</text>
+    <text x="271" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#1D9E75">/ce-plan</text>
+
+    <line x1="350" y1="67" x2="378" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Stage 3: Build -->
+    <rect x="382" y="40" width="150" height="54" rx="10" fill="#FAECE7" stroke="#F0997B" stroke-width="1.5"/>
+    <text x="457" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#712B13">BUILD (TDD)</text>
+    <text x="457" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#993C1D">/tdd-first + /ce-work</text>
+
+    <line x1="536" y1="67" x2="564" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Stage 4: Verify -->
+    <rect x="568" y="40" width="150" height="54" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+    <text x="643" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C">VERIFY</text>
+    <text x="643" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#378ADD">/e2e-feature-test</text>
+
+    <line x1="722" y1="67" x2="750" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Stage 5: Ship -->
+    <rect x="754" y="40" width="136" height="54" rx="10" fill="#EAF3DE" stroke="#97C459" stroke-width="1.5"/>
+    <text x="822" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#27500A">SHIP</text>
+    <text x="822" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#3B6D11">git push + PR</text>
+  </svg>
+
+  <div class="enforcement-box">
+    <div class="enforcement-title">Enforcement Layer</div>
+    <div class="enforcement-desc">The <code>UserPromptSubmit</code> hook in <code>~/.claude/settings.json</code> injects mandatory instructions on every prompt. CLAUDE.md is advisory (can be forgotten). Hooks are deterministic (always fire). The hook hardcodes <code>tdd-first</code> and <code>verification-before-completion</code> as always-active when code is being produced.</div>
+  </div>
+
+  <!-- ── PHASE 1 ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--purple-bg);color:var(--purple-text)">1</div>
+      <div class="phase-name">Ideate</div>
+    </div>
+    <div class="phase-sub">You have a vague idea, problem, or opportunity. Explore before committing.</div>
+
+    <div class="flow-box">
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-optional">/ce-brainstorm</span>
+        <span class="skill-pill pill-optional">/last30days</span>
+      </div>
+      <div class="flow-desc">
+        <strong>/ce-brainstorm</strong> — collaborative dialogue to explore requirements, approaches, trade-offs, and scope before writing any code.<br>
+        <strong>/last30days</strong> — (optional) research what the community is doing across Reddit, X, HN, YouTube. Grounds the brainstorm in real-world patterns.
+      </div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Output</div>
+      <div class="flow-desc">A requirements document or clear feature description, right-sized for the feature.</div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 2 ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--teal-bg);color:var(--teal-text)">2</div>
+      <div class="phase-name">Plan</div>
+    </div>
+    <div class="phase-sub">Requirements are clear. Break work into structured, ordered units with acceptance criteria.</div>
+
+    <div class="flow-box">
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-optional">/ce-plan</span>
+      </div>
+      <div class="flow-desc">
+        Transforms requirements into ordered implementation units with dependencies mapped, acceptance criteria per unit, and TDD flags on code units.
+      </div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Output</div>
+      <div class="flow-desc">A structured plan document (<code>docs/plans/YYYY-MM-DD-NNN-*.md</code>) with numbered units ready for execution.</div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 3 ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--coral-bg);color:var(--coral-text)">3</div>
+      <div class="phase-name">Build (TDD)</div>
+    </div>
+    <div class="phase-sub">Plan exists. Time to write code. The enforcement hook ensures TDD cannot be skipped.</div>
+
+    <div class="enforcement-box">
+      <div class="enforcement-title">Hook enforces: tdd-first ACTIVATED</div>
+      <div class="enforcement-desc">Every prompt that produces code triggers mandatory TDD activation. Tests must be written and confirmed failing BEFORE implementation code exists.</div>
+    </div>
+
+    <div class="flow-box">
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-mandatory">/tdd-first (MANDATORY)</span>
+        <span class="skill-pill pill-optional">/ce-work</span>
+        <span class="skill-pill pill-optional">/security-review</span>
+      </div>
+    </div>
+
+    <!-- TDD Cycle SVG -->
+    <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:20px auto" aria-label="TDD red-green-refactor cycle">
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+        </marker>
+      </defs>
+
+      <!-- Step 1: Write tests -->
+      <rect x="10" y="10" width="160" height="70" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+      <text x="90" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#0C447C">1. Write Tests</text>
+      <text x="90" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">Unit + Integration + E2E</text>
+
+      <line x1="174" y1="45" x2="206" y2="45" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <!-- Step 2: Confirm RED -->
+      <rect x="210" y="10" width="130" height="70" rx="10" fill="#FAECE7" stroke="#F0997B" stroke-width="1.5"/>
+      <text x="275" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#712B13">2. Confirm RED</text>
+      <text x="275" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#993C1D">Tests MUST fail</text>
+
+      <line x1="344" y1="45" x2="376" y2="45" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <!-- Step 3: Implement -->
+      <rect x="380" y="10" width="130" height="70" rx="10" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.5"/>
+      <text x="445" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#633806">3. Implement</text>
+      <text x="445" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#BA7517">Minimum to pass</text>
+
+      <line x1="514" y1="45" x2="546" y2="45" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <!-- Step 4: Confirm GREEN -->
+      <rect x="550" y="10" width="140" height="70" rx="10" fill="#EAF3DE" stroke="#97C459" stroke-width="1.5"/>
+      <text x="620" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#27500A">4. Confirm GREEN</text>
+      <text x="620" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#3B6D11">ALL tests pass</text>
+
+      <!-- Arrow down from GREEN -->
+      <line x1="620" y1="84" x2="620" y2="116" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <!-- Step 5: Refactor -->
+      <rect x="550" y="120" width="140" height="50" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+      <text x="620" y="145" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#085041">5. Refactor</text>
+      <text x="620" y="160" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#1D9E75">Tests stay green</text>
+
+      <!-- Arrow down from Refactor -->
+      <line x1="620" y1="174" x2="620" y2="206" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <!-- Step 6: Full Suite -->
+      <rect x="440" y="210" width="300" height="56" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="2"/>
+      <text x="590" y="234" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#3C3489">6. Run FULL SUITE</text>
+      <text x="590" y="252" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#534AB7">ALL pass = unit complete. ANY fail = fix first.</text>
+    </svg>
+
+    <div class="flow-box">
+      <div class="flow-title">Three test layers (all required for features)</div>
+      <div class="flow-desc">
+        <strong>Unit tests</strong> — every function with logic (3+ tests each: happy, sad, edge)<br>
+        <strong>Integration tests</strong> — every boundary crossing (DB, API, services)<br>
+        <strong>System/E2E tests</strong> — every user-facing feature (page renders, workflows complete)
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 4 ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--blue-bg);color:var(--blue-text)">4</div>
+      <div class="phase-name">Verify (E2E)</div>
+    </div>
+    <div class="phase-sub">Code is built, TDD tests pass. Now verify the running application with a real browser + backend checks.</div>
+
+    <div class="enforcement-box">
+      <div class="enforcement-title">Hook enforces: verification-before-completion ACTIVATED</div>
+      <div class="enforcement-desc">No completion claims without fresh verification evidence. "Should work" is not evidence. Run the command, read the output, then claim the result.</div>
+    </div>
+
+    <div class="flow-box">
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-optional">/e2e-feature-test</span>
+        <span class="skill-pill pill-mandatory">/verification-before-completion (MANDATORY)</span>
+      </div>
+    </div>
+
+    <!-- E2E Flow SVG -->
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:20px auto" aria-label="E2E test flow showing frontend and backend verification">
+      <defs>
+        <marker id="arr3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+        </marker>
+      </defs>
+
+      <!-- Generate Matrix -->
+      <rect x="10" y="30" width="140" height="60" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+      <text x="80" y="55" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#0C447C">Generate</text>
+      <text x="80" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">Test Matrix</text>
+
+      <line x1="154" y1="60" x2="176" y2="60" stroke="#999890" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+      <!-- Per Test Box -->
+      <rect x="180" y="10" width="400" height="160" rx="12" fill="var(--bg2)" stroke="var(--border)" stroke-width="1"/>
+      <text x="380" y="30" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="var(--text3)" letter-spacing="0.08em">PER TEST CASE</text>
+
+      <!-- Backend Pre -->
+      <rect x="200" y="42" width="100" height="44" rx="8" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"/>
+      <text x="250" y="60" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#3C3489">Backend</text>
+      <text x="250" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#534AB7">pre-state</text>
+
+      <line x1="304" y1="64" x2="324" y2="64" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
+
+      <!-- Browser Action -->
+      <rect x="328" y="42" width="100" height="44" rx="8" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"/>
+      <text x="378" y="60" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#633806">Browser</text>
+      <text x="378" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#BA7517">fill, click, nav</text>
+
+      <line x1="432" y1="64" x2="452" y2="64" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
+
+      <!-- Verify Frontend -->
+      <rect x="200" y="100" width="100" height="44" rx="8" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/>
+      <text x="250" y="118" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#085041">Frontend</text>
+      <text x="250" y="132" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#1D9E75">screenshot + DOM</text>
+
+      <!-- Verify Backend -->
+      <rect x="328" y="100" width="100" height="44" rx="8" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/>
+      <text x="378" y="118" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#085041">Backend</text>
+      <text x="378" y="132" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#1D9E75">DB + API + logs</text>
+
+      <!-- Result -->
+      <rect x="456" y="42" width="104" height="102" rx="8" fill="#EAF3DE" stroke="#97C459" stroke-width="1"/>
+      <text x="508" y="80" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#27500A">PASS</text>
+      <text x="508" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#27500A">or</text>
+      <text x="508" y="112" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#712B13">FAIL</text>
+      <text x="508" y="130" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#3B6D11">with evidence</text>
+
+      <!-- Arrows from verify boxes -->
+      <line x1="304" y1="122" x2="324" y2="122" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="432" y1="93" x2="452" y2="93" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
+
+      <!-- Arrow from browser down to verify -->
+      <line x1="378" y1="90" x2="378" y2="96" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
+      <line x1="250" y1="90" x2="250" y2="96" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
+
+      <!-- Arrow to report -->
+      <line x1="584" y1="90" x2="616" y2="90" stroke="#999890" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+      <!-- Report -->
+      <rect x="620" y="50" width="120" height="80" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+      <text x="680" y="78" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#0C447C">Test Report</text>
+      <text x="680" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">pass / fail / skip</text>
+      <text x="680" y="112" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">+ screenshots</text>
+    </svg>
+
+    <div class="flow-box">
+      <div class="flow-title">Test matrix categories</div>
+      <div class="flow-desc">
+        Happy path &middot; Input validation &middot; Edge cases &middot; Error handling &middot; Backend state &middot; UI feedback &middot; Permissions &middot; Idempotency &middot; Responsive
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 5 ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--green-bg);color:var(--green-text)">5</div>
+      <div class="phase-name">Ship</div>
+    </div>
+    <div class="phase-sub">All tests green, E2E verified. Commit, push, create PR.</div>
+    <div class="flow-box">
+      <div class="flow-title">Actions</div>
+      <div class="flow-desc"><code>git commit</code> &rarr; <code>git push</code> &rarr; <code>gh pr create</code></div>
+    </div>
+  </div>
+
+  <!-- ── QUICK REFERENCE ── -->
+  <div class="section-label">Quick Reference</div>
+
+  <table class="ref-table">
+    <thead>
+      <tr><th>Situation</th><th>Skill(s)</th><th>Mandatory?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Vague idea</td><td>/ce-brainstorm + /last30days</td><td>No</td></tr>
+      <tr><td>Clear requirements</td><td>/ce-plan</td><td>No</td></tr>
+      <tr><td>Writing code with logic</td><td>/tdd-first</td><td><strong style="color:var(--coral-text)">YES (hook)</strong></td></tr>
+      <tr><td>Executing a plan</td><td>/ce-work + /tdd-first</td><td><strong style="color:var(--coral-text)">TDD is mandatory</strong></td></tr>
+      <tr><td>Feature acceptance</td><td>/e2e-feature-test</td><td>Recommended</td></tr>
+      <tr><td>Claiming "done"</td><td>/verification-before-completion</td><td><strong style="color:var(--coral-text)">YES (hook)</strong></td></tr>
+      <tr><td>Auth, secrets, input</td><td>/security-review</td><td>Triggered by context</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── ENFORCEMENT ARCHITECTURE ── -->
+  <div class="section-label" style="margin-top:48px">Enforcement Architecture</div>
+
+  <div class="flow-box">
+    <div class="flow-title">Advisory (CLAUDE.md) vs Deterministic (Hooks)</div>
+    <div class="flow-desc">
+      <strong>CLAUDE.md</strong> — can be forgotten, per-conversation, honour system, context-dependent.<br>
+      <strong>Hooks</strong> — always fire, survive restarts, enforced gates, unconditional.<br><br>
+      The <code>UserPromptSubmit</code> hook in <code>~/.claude/settings.json</code> runs <code>~/.claude/hooks/skill-forced-eval-hook.sh</code> on every prompt. It injects mandatory instructions requiring skill evaluation before any work begins. This is what prevents TDD and verification from being forgotten.
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Development Lifecycle Walkthrough</span>
+  <span><a href="../walkthroughs.html" style="color:var(--text3)">&#8592; Back to walkthroughs</a></span>
+</footer>
+
+</body>
+</html>

@@ -37,7 +37,7 @@
     <div class="hero-title">Architecture diagrams &amp;<br><em>visual explainers</em></div>
     <div class="hero-sub">Generated when you ask Claude to show something worth keeping. Each walkthrough captures a decision, a mental model, or a system worth understanding at a glance.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n">8</span><span class="stat-l">Walkthroughs</span></div>
+      <div class="stat"><span class="stat-n">9</span><span class="stat-l">Walkthroughs</span></div>
       <div class="stat"><span class="stat-n">3</span><span class="stat-l">Categories</span></div>
     </div>
   </div>
@@ -51,6 +51,9 @@
     <a href="#" onclick="filter('architecture',this);return false">Architecture</a>
     <a href="#" onclick="filter('saas',this);return false">SaaS</a>
     <a href="#" onclick="filter('workflow',this);return false">Workflow</a>
+    <div style="margin-left:auto">
+      <input type="text" id="search" placeholder="Search walkthroughs..." oninput="searchCards(this.value)" style="font-size:13px;font-family:var(--font);padding:7px 14px;border:1px solid var(--border2);border-radius:20px;background:var(--bg2);color:var(--text);width:220px;outline:none">
+    </div>
   </div>
 </div>
 
@@ -240,6 +243,30 @@
       </div>
     </div>
 
+    <!-- DEVELOPMENT LIFECYCLE -->
+    <div class="wt-card" data-category="workflow">
+      <div class="wt-thumb" style="background:var(--coral-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start">
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--coral-text);opacity:0.6;margin-bottom:4px">hook-enforced pipeline</div>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-family:var(--mono);color:var(--coral-text)">
+          <div>&#9312; ideate &mdash; /ce-brainstorm</div>
+          <div style="padding-left:8px;color:var(--coral-text);opacity:0.5">&#8595;</div>
+          <div>&#9313; plan &mdash; /ce-plan</div>
+          <div style="padding-left:8px;color:var(--coral-text);opacity:0.5">&#8595;</div>
+          <div>&#9314; build &mdash; /tdd-first</div>
+          <div style="padding-left:8px;color:var(--coral-text);opacity:0.5">&#8595;</div>
+          <div>&#9315; verify &mdash; /e2e-feature-test</div>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Development Lifecycle: Idea to Verified Feature</div>
+        <div class="wt-desc">The complete skill pipeline enforced by UserPromptSubmit hooks. TDD-first and verification-before-completion are mandatory at every prompt. Covers ideation, planning, TDD build, browser E2E testing, and shipping.</div>
+        <div class="wt-tags"><span class="tag">workflow</span><span class="tag">tdd</span><span class="tag">hooks</span><span class="tag">e2e</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/development-lifecycle.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
     <!-- EMPTY STATE -->
     <div class="wt-card" data-category="placeholder" style="border-style:dashed;opacity:0.5">
       <div class="wt-thumb" style="flex-direction:column;gap:8px">
@@ -267,9 +294,20 @@
 function filter(cat, el) {
   document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
+  document.getElementById('search').value = '';
   document.querySelectorAll('.wt-card').forEach(card => {
     if(cat === 'all' || card.dataset.category === 'placeholder'){card.style.display='';return;}
     card.style.display = card.dataset.category === cat ? '' : 'none';
+  });
+}
+function searchCards(q) {
+  const term = q.toLowerCase().trim();
+  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
+  if(!term) { document.querySelector('.page-nav a').classList.add('active'); }
+  document.querySelectorAll('.wt-card').forEach(card => {
+    if(card.dataset.category === 'placeholder') { card.style.display = term ? 'none' : ''; return; }
+    const text = card.textContent.toLowerCase();
+    card.style.display = (!term || text.includes(term)) ? '' : 'none';
   });
 }
 </script>

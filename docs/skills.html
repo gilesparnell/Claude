@@ -55,6 +55,9 @@
     <a href="#" onclick="filter('category','workflow',this);return false">Workflow</a>
     <a href="#" onclick="filter('category','saas',this);return false">SaaS</a>
     <a href="#" onclick="filter('category','engagement',this);return false">Engagement</a>
+    <div style="margin-left:auto">
+      <input type="text" id="search" placeholder="Search skills..." oninput="searchSkills(this.value)" style="font-size:13px;font-family:var(--font);padding:7px 14px;border:1px solid var(--border2);border-radius:20px;background:var(--bg2);color:var(--text);width:220px;outline:none">
+    </div>
   </div>
 </div>
 
@@ -611,10 +614,22 @@
 function filter(type, val, el) {
   document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
+  document.getElementById('search').value = '';
   document.querySelectorAll('.skill-card').forEach(card => {
     if (type === 'all') { card.classList.remove('hidden'); return; }
     const match = type === 'scope' ? card.dataset.scope === val : card.dataset.category === val;
     card.classList.toggle('hidden', !match);
+  });
+  const visible = document.querySelectorAll('.skill-card:not(.hidden)').length;
+  document.getElementById('skill-count').textContent = visible;
+}
+function searchSkills(q) {
+  const term = q.toLowerCase().trim();
+  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
+  if(!term) { document.querySelector('.page-nav a').classList.add('active'); }
+  document.querySelectorAll('.skill-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.classList.toggle('hidden', term && !text.includes(term));
   });
   const visible = document.querySelectorAll('.skill-card:not(.hidden)').length;
   document.getElementById('skill-count').textContent = visible;
