@@ -39,9 +39,9 @@
     <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="skill-count">15</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="skill-count">16</span><span class="stat-l">Skills</span></div>
       <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">74+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n">83+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -328,6 +328,51 @@
       </div>
     </div>
 
+    <!-- PROJECT DOCUMENTATION STANDARD -->
+    <div class="skill-card" data-category="workflow" data-scope="global">
+      <div class="skill-band" style="background:var(--amber-bg)">
+        <div>
+          <div class="skill-name">Project Documentation Standard</div>
+          <div class="skill-slug">project-docs-standard</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">&#128218;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
+          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">Mandatory documentation structure for every project. Ensures consistent docs/ folder with requirements, design, plans, tracking, user guides, API reference, decisions, and a project portal page. Enforced during ce:plan and ce:work.</div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">new project</span>
+            <span class="trigger">project setup</span>
+            <span class="trigger">create project docs</span>
+            <span class="trigger">docs structure</span>
+            <span class="trigger">documentation standard</span>
+            <span class="trigger">set up docs</span>
+            <span class="trigger">project kickoff</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Required docs</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>docs/index.html — project portal page (Deep Ocean Tech design)</div>
+            <div class="check-item"><span class="check-dot"></span>docs/requirements/ — PRDs, feature specs, acceptance criteria</div>
+            <div class="check-item"><span class="check-dot"></span>docs/design/ — architecture diagrams, system design, data models</div>
+            <div class="check-item"><span class="check-dot"></span>docs/plans/ — build plans with implementation waves</div>
+            <div class="check-item"><span class="check-dot"></span>docs/diagrams/ — visual progress tracking (plan-tracker output)</div>
+            <div class="check-item"><span class="check-dot"></span>docs/user-guide/ — end-user documentation and onboarding</div>
+            <div class="check-item"><span class="check-dot"></span>docs/api/ — API reference, endpoints, schemas (if applicable)</div>
+            <div class="check-item"><span class="check-dot"></span>docs/decisions/ — per-project architecture decision records</div>
+            <div class="check-item"><span class="check-dot"></span>docs/brainstorms/ — discovery notes, alternatives considered</div>
+            <div class="check-item"><span class="check-dot"></span>CHANGELOG.md — what shipped and when</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SAAS AUTOMATION ENGAGEMENT -->
     <div class="skill-card" data-category="engagement" data-scope="project">
       <div class="skill-band" style="background:var(--navy-bg)">
@@ -342,7 +387,7 @@
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">End-to-end playbook for new client automation engagements — from feasibility through discovery, architecture, technical spec, proposal, and Claude Code handoff.</div>
+        <div class="skill-desc">End-to-end playbook for new client automation engagements — from feasibility through discovery, architecture, technical spec, proposal, documentation, and Claude Code handoff.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
@@ -350,15 +395,21 @@
             <span class="trigger">build a proposal</span>
             <span class="trigger">automation project</span>
             <span class="trigger">scope this work</span>
+            <span class="trigger">new client project</span>
+            <span class="trigger">client onboarding</span>
           </div>
         </div>
         <div>
           <div class="triggers-label">Phases</div>
           <div class="checks">
             <div class="check-item"><span class="check-dot"></span>Feasibility and API check</div>
-            <div class="check-item"><span class="check-dot"></span>Discovery and requirements</div>
+            <div class="check-item"><span class="check-dot"></span>Discovery and requirements (→ docs/requirements/)</div>
+            <div class="check-item"><span class="check-dot"></span>Architecture and design (→ docs/design/)</div>
             <div class="check-item"><span class="check-dot"></span>Technical spec + SOW + Proposal</div>
+            <div class="check-item"><span class="check-dot"></span>Build plan (→ docs/plans/ via ce:plan)</div>
+            <div class="check-item"><span class="check-dot"></span>Project portal setup (→ docs/index.html)</div>
             <div class="check-item"><span class="check-dot"></span>Testing framework and Claude Code handoff</div>
+            <div class="check-item"><span class="check-dot"></span>User guide scaffolding (→ docs/user-guide/)</div>
           </div>
         </div>
       </div>
