@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Status — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="portal.css">
+<style>
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+@media(max-width:580px){.plan-grid{grid-template-columns:1fr}}
+.plan-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s,transform 0.15s;display:flex;flex-direction:column}
+.plan-card:hover{border-color:var(--text3);transform:translateY(-2px)}
+.plan-band{padding:20px 24px 16px;display:flex;justify-content:space-between;align-items:flex-start}
+.plan-num{font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.plan-name{font-size:16px;font-weight:700;line-height:1.3}
+.plan-pct{font-size:28px;font-weight:700;font-family:var(--mono)}
+.plan-bar-track{height:4px;background:var(--border);margin:0 24px}
+.plan-bar-fill{height:100%;border-radius:2px;transition:width 0.6s ease}
+.plan-meta{padding:16px 24px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.plan-stat{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.plan-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.plan-dot.done{background:#34d399}
+.plan-dot.progress{background:#fbbf24}
+.plan-dot.blocked{background:#fb7185}
+.plan-dot.todo{background:#9ca3af}
+.plan-footer{margin-top:auto;padding:0 24px 20px}
+.plan-link{font-size:13px;font-weight:500;color:var(--text2);display:flex;align-items:center;gap:6px;transition:color 0.15s}
+.plan-card:hover .plan-link{color:var(--text)}
+.plan-updated{font-size:10px;font-family:var(--mono);color:var(--text3);margin-top:8px}
+
+/* Colour variants */
+.plan-green .plan-band{background:var(--green-bg)}
+.plan-green .plan-num,.plan-green .plan-name,.plan-green .plan-pct{color:var(--green-text)}
+.plan-green .plan-bar-fill{background:var(--green-text)}
+.plan-green{border-color:var(--green-border)}
+
+.plan-blue .plan-band{background:var(--blue-bg)}
+.plan-blue .plan-num,.plan-blue .plan-name,.plan-blue .plan-pct{color:var(--blue-text)}
+.plan-blue .plan-bar-fill{background:var(--blue-text)}
+.plan-blue{border-color:var(--blue-border)}
+
+.plan-amber .plan-band{background:var(--amber-bg)}
+.plan-amber .plan-num,.plan-amber .plan-name,.plan-amber .plan-pct{color:var(--amber-text)}
+.plan-amber .plan-bar-fill{background:var(--amber-text)}
+.plan-amber{border-color:var(--amber-border)}
+
+.plan-purple .plan-band{background:var(--purple-bg)}
+.plan-purple .plan-num,.plan-purple .plan-name,.plan-purple .plan-pct{color:var(--purple-text)}
+.plan-purple .plan-bar-fill{background:var(--purple-text)}
+.plan-purple{border-color:var(--purple-border)}
+
+.plan-teal .plan-band{background:var(--teal-bg)}
+.plan-teal .plan-num,.plan-teal .plan-name,.plan-teal .plan-pct{color:var(--teal-text)}
+.plan-teal .plan-bar-fill{background:var(--teal-text)}
+.plan-teal{border-color:var(--teal-border)}
+
+/* empty state */
+.plan-card.empty{border-style:dashed;opacity:0.5}
+.plan-card.empty .plan-band{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center}
+.plan-card.empty .plan-band span{font-size:28px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="skills.html">Skills</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="decisions.html">Decisions</a>
+      <a href="templates.html">Templates</a>
+      <a href="project-status.html" class="active">Project Status</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://github.com/gilesparnell/Claude/tree/main/docs/diagrams" target="_blank" class="gh-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Project Status</div>
+    <div class="hero-title">Active plans &amp;<br><em>progress tracking</em></div>
+    <div class="hero-sub">Visual progress dashboards for every active project plan. Click any plan to see the full workstream breakdown, task-level status, and blockers.</div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n" id="plan-count">1</span><span class="stat-l">Active Plans</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:36px;padding-bottom:60px">
+
+  <div class="plan-grid" id="plan-grid">
+  <!-- AUTO-GENERATED PLANS START -->
+
+    <a href="diagrams/gtm-plan-progress.html" class="plan-card plan-amber" style="text-decoration:none">
+      <div class="plan-band">
+        <div>
+          <div class="plan-num">Plan #1</div>
+          <div class="plan-name">GTM Acceleration & Revenue Growth</div>
+        </div>
+        <div class="plan-pct">28%</div>
+      </div>
+      <div class="plan-bar-track"><div class="plan-bar-fill" style="width:28%"></div></div>
+      <div class="plan-meta">
+        <div class="plan-stat"><span class="plan-dot done"></span> 19 done</div>
+        <div class="plan-stat"><span class="plan-dot progress"></span> 4 in progress</div>
+        <div class="plan-stat"><span class="plan-dot blocked"></span> 3 blocked</div>
+        <div class="plan-stat"><span class="plan-dot todo"></span> 42 remaining</div>
+      </div>
+      <div class="plan-footer">
+        <span class="plan-link">View full progress diagram &#8594;</span>
+        <div class="plan-updated">Last updated: 2026-04-01</div>
+      </div>
+    </a>
+  <!-- AUTO-GENERATED PLANS END -->
+
+    <div class="plan-card empty">
+      <div class="plan-band">
+        <span>+</span>
+        <div style="font-size:14px;color:var(--text3);font-weight:600">Next plan</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px">Run the plan-tracker skill after creating a new project plan to add it here.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Project Status</span>
+  <span>Updated by the plan-tracker skill &middot; <a href="https://github.com/gilesparnell/Claude" style="color:var(--text3)">GitHub &#8599;</a></span>
+</footer>
+
+</body>
+</html>

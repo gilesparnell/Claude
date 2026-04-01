@@ -282,6 +282,95 @@ if (decisions.length > 0 && fs.existsSync(decisionsFile)) {
   console.log('Patched: decisions.html');
 }
 
+// ── Discover plan progress diagrams ────────────────────────────────────
+
+function readPlanProgress() {
+  if (!fs.existsSync(DIAGS)) return [];
+  return fs.readdirSync(DIAGS)
+    .filter(f => f.endsWith('-progress.html'))
+    .map(f => {
+      const content = readFile(path.join(DIAGS, f));
+      // Extract title from <div class="page-title">...</div>
+      const titleMatch = content.match(/<div class="page-title">(.*?)<\/div>/);
+      // Extract percentage from <span class="progress-pct">XX%</span>
+      const pctMatch = content.match(/<span class="progress-pct">(\d+)%<\/span>/);
+      // Extract date from <div class="page-date">Last updated: (.*?)</div>
+      const dateMatch = content.match(/<div class="page-date">Last updated:\s*(.*?)<\/div>/);
+      // Extract task stats from progress-stat spans
+      const doneMatch = content.match(/(\d+) tasks? done/);
+      const progressMatch = content.match(/(\d+) in progress/);
+      const blockedMatch = content.match(/(\d+) blocked/);
+      const remainMatch = content.match(/(\d+) remaining/);
+
+      return {
+        file: f,
+        title: titleMatch ? titleMatch[1] : f.replace(/-progress\.html$/, '').replace(/-/g, ' '),
+        pct: pctMatch ? parseInt(pctMatch[1]) : 0,
+        date: dateMatch ? dateMatch[1].trim() : '',
+        done: doneMatch ? parseInt(doneMatch[1]) : 0,
+        inProgress: progressMatch ? parseInt(progressMatch[1]) : 0,
+        blocked: blockedMatch ? parseInt(blockedMatch[1]) : 0,
+        remaining: remainMatch ? parseInt(remainMatch[1]) : 0,
+      };
+    });
+}
+
+function planColor(pct) {
+  if (pct >= 75) return 'green';
+  if (pct >= 40) return 'blue';
+  if (pct >= 10) return 'amber';
+  return 'teal';
+}
+
+function planCard(plan, index) {
+  const color = planColor(plan.pct);
+  return `
+    <a href="diagrams/${plan.file}" class="plan-card plan-${color}" style="text-decoration:none">
+      <div class="plan-band">
+        <div>
+          <div class="plan-num">Plan #${index + 1}</div>
+          <div class="plan-name">${plan.title}</div>
+        </div>
+        <div class="plan-pct">${plan.pct}%</div>
+      </div>
+      <div class="plan-bar-track"><div class="plan-bar-fill" style="width:${plan.pct}%"></div></div>
+      <div class="plan-meta">
+        <div class="plan-stat"><span class="plan-dot done"></span> ${plan.done} done</div>
+        <div class="plan-stat"><span class="plan-dot progress"></span> ${plan.inProgress} in progress</div>
+        <div class="plan-stat"><span class="plan-dot blocked"></span> ${plan.blocked} blocked</div>
+        <div class="plan-stat"><span class="plan-dot todo"></span> ${plan.remaining} remaining</div>
+      </div>
+      <div class="plan-footer">
+        <span class="plan-link">View full progress diagram &#8594;</span>
+        <div class="plan-updated">Last updated: ${plan.date}</div>
+      </div>
+    </a>`;
+}
+
+// ── Patch project-status.html ─────────────────────────────────────────
+
+const plans = readPlanProgress();
+console.log('Plans found:', plans.map(p => p.file));
+
+const statusFile = path.join(DOCS, 'project-status.html');
+if (plans.length > 0 && fs.existsSync(statusFile)) {
+  let html = readFile(statusFile);
+  const plansHTML = plans.map(planCard).join('\n');
+
+  html = patchBetween(html,
+    '<!-- AUTO-GENERATED PLANS START -->',
+    '<!-- AUTO-GENERATED PLANS END -->',
+    plansHTML
+  );
+  html = html.replace(
+    /(<span class="stat-n" id="plan-count">)[^<]*(<\/span>)/,
+    `$1${plans.length}$2`
+  );
+
+  fs.writeFileSync(statusFile, html);
+  console.log('Patched: project-status.html');
+}
+
 // ── Patch index.html stats ─────────────────────────────────────────────────
 
 const indexFile = path.join(DOCS, 'index.html');
