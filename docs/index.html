@@ -19,6 +19,7 @@
 </style>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
 <header class="site-header">
   <div class="header-inner">
@@ -228,6 +229,11 @@ fetch('https://api.github.com/repos/gilesparnell/Claude/commits?per_page=8')
         <span class="feed-meta">${timeAgo(c.commit.author.date)}</span>
       </div>`).join('');
   }).catch(()=>{});
+</script>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
 </script>
 
 </body>

@@ -61,6 +61,7 @@
 </style>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
 <header class="site-header">
   <div class="header-inner">
@@ -139,6 +140,12 @@
   <span>gilesparnell &middot; Project Status</span>
   <span>Updated by the plan-tracker skill &middot; <a href="https://github.com/gilesparnell/Claude" style="color:var(--text3)">GitHub &#8599;</a></span>
 </footer>
+
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 
 </body>
 </html>

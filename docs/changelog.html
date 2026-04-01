@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="portal.css">
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
 <header class="site-header">
   <div class="header-inner">
@@ -117,6 +118,11 @@ fetch('https://api.github.com/repos/gilesparnell/Claude/commits?per_page=50')
     document.getElementById('changelog-content').innerHTML =
       '<div style="color:var(--text3);font-size:13px;text-align:center;padding:40px 0">Could not load changelog. <a href="https://github.com/gilesparnell/Claude/commits/main" style="color:var(--blue)">View on GitHub &#8599;</a></div>';
   });
+</script>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
 </script>
 </body>
 </html>

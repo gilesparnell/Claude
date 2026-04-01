@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="portal.css">
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
 <header class="site-header">
   <div class="header-inner">
@@ -132,6 +133,11 @@ function copyCmd(btn, cmd) {
     setTimeout(() => btn.textContent = orig, 1500);
   });
 }
+</script>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
 </script>
 </body>
 </html>
