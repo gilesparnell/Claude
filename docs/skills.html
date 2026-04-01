@@ -37,9 +37,9 @@
     <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="skill-count">14</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="skill-count">15</span><span class="stat-l">Skills</span></div>
       <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">68+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n">74+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -279,6 +279,48 @@
             <div class="check-item"><span class="check-dot"></span>Frontmatter-driven card generation</div>
             <div class="check-item"><span class="check-dot"></span>GitHub Action regenerates on every push</div>
             <div class="check-item"><span class="check-dot"></span>Changelog live from GitHub API</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAN PROGRESS TRACKER -->
+    <div class="skill-card" data-category="workflow" data-scope="global">
+      <div class="skill-band" style="background:var(--amber-bg)">
+        <div>
+          <div class="skill-name">Plan Progress Tracker</div>
+          <div class="skill-slug">plan-tracker</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="skill-icon">&#128506;</span>
+          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
+          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
+        </div>
+      </div>
+      <div class="skill-body">
+        <div class="skill-desc">></div>
+        <div>
+          <div class="triggers-label">Triggers on</div>
+          <div class="triggers">
+            <span class="trigger">show me plan progress</span>
+            <span class="trigger">where are we in the plan</span>
+            <span class="trigger">plan tracker</span>
+            <span class="trigger">visual progress</span>
+            <span class="trigger">update the plan diagram</span>
+            <span class="trigger">how are we tracking</span>
+          </div>
+        </div>
+        <div>
+          <div class="triggers-label">Process</div>
+          <div class="checks">
+            <div class="check-item"><span class="check-dot"></span>Read the plan markdown file and extract all workstreams, tasks, and completion markers</div>
+            <div class="check-item"><span class="check-dot"></span>Cross-reference with memory files for any completed items not yet checked off in the plan</div>
+            <div class="check-item"><span class="check-dot"></span>Generate a self-contained HTML file in docs/diagrams/ following the existing dark-theme diagram pattern</div>
+            <div class="check-item"><span class="check-dot"></span>Each workstream is a coloured phase card showing task count, completion percentage, and individual task status</div>
+            <div class="check-item"><span class="check-dot"></span>Use green for done, amber for in-progress, and slate for not-started</div>
+            <div class="check-item"><span class="check-dot"></span>Include a summary bar at the top with overall completion percentage</div>
+            <div class="check-item"><span class="check-dot"></span>Commit and push to update the portal automatically</div>
+            <div class="check-item"><span class="check-dot"></span>After generating, use the skill-publisher skill to update the portal</div>
           </div>
         </div>
       </div>
