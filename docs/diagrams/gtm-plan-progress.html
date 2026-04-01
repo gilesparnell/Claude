@@ -192,6 +192,35 @@
   .task.blocked .task-text { color: var(--rose-text); }
   .task.progress .task-text { color: var(--amber-text); }
 
+  /* Owner badges */
+  .owner {
+    flex-shrink: 0;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: auto;
+    white-space: nowrap;
+    font-family: var(--mono);
+  }
+  .owner.human {
+    background: var(--purple-bg);
+    color: var(--purple-text);
+    border: 1px solid var(--purple-border);
+  }
+  .owner.ai {
+    background: var(--teal-bg);
+    color: var(--teal-text);
+    border: 1px solid var(--teal-border);
+  }
+  .owner.both {
+    background: var(--blue-bg);
+    color: var(--blue-text);
+    border: 1px solid var(--blue-border);
+  }
+
   /* Colour variants for workstream bands */
   .ws-green  { border-color: var(--green-border); }
   .ws-green .ws-band { background: var(--green-bg); }
@@ -348,22 +377,22 @@
       </div>
       <div class="ws-bar-track"><div class="ws-bar-fill" style="width:85%"></div></div>
       <div class="ws-tasks">
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B1: Stripe payment links (test mode)</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B2: Privacy + Terms pages</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B3: /demos index route</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B4: Replace placeholder testimonials</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B5: UTM parameter passthrough</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B6: OG tags updated</span></div>
-        <div class="task blocked"><span class="task-icon">&#9679;</span> <span class="task-text">W1.1: Facebook Pixel (blocked — Meta ban)</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.2: GA4 integration (G-W5KLWM7QB0)</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.3: useSEO hook + per-page meta</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W1.3b: JSON-LD structured data + pre-renderer</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.4: Sitemap + robots.txt</span></div>
-        <div class="task progress"><span class="task-icon">&#9679;</span> <span class="task-text">W1.4: Google Search Console (Giles doing now)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W1.5: Google Business Profile</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.6: OG image exists</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Pricing page: $399/$599/$799 + annual toggle</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Early access banner</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B1: Stripe payment links (test mode)</span><span class="owner both">both</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B2: Privacy + Terms pages</span><span class="owner ai">claude</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B3: /demos index route</span><span class="owner ai">claude</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B4: Replace placeholder testimonials</span><span class="owner ai">claude</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B5: UTM parameter passthrough</span><span class="owner ai">claude</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">B6: OG tags updated</span><span class="owner ai">claude</span></div>
+        <div class="task blocked"><span class="task-icon">&#9679;</span> <span class="task-text">W1.1: Facebook Pixel (blocked — Meta ban)</span><span class="owner both">both</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.2: GA4 integration (G-W5KLWM7QB0)</span><span class="owner both">both</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.3: useSEO hook + per-page meta</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W1.3b: JSON-LD structured data + pre-renderer</span><span class="owner ai">claude</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.4: Sitemap + robots.txt</span><span class="owner ai">claude</span></div>
+        <div class="task progress"><span class="task-icon">&#9679;</span> <span class="task-text">W1.4: Google Search Console</span><span class="owner human">giles</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W1.5: Google Business Profile</span><span class="owner human">giles</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">W1.6: OG image exists</span><span class="owner ai">claude</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Pricing page: $399/$599/$799 + annual toggle</span><span class="owner ai">claude</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Early access banner</span><span class="owner ai">claude</span></div>
       </div>
     </div>
 
@@ -378,12 +407,12 @@
       </div>
       <div class="ws-bar-track"><div class="ws-bar-fill" style="width:0%"></div></div>
       <div class="ws-tasks">
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.1: HeyGen setup + avatar creation</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.2: VSL script templates (7 niches + 1 general)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.3: Record videos in HeyGen</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.4: Pain point stats on demo pages</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.5: Embed videos on website</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.6: Ad creative versions (9:16, 1:1)</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.1: HeyGen setup + avatar creation</span><span class="owner human">giles</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.2: VSL script templates (7 niches + 1 general)</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.3: Record videos in HeyGen</span><span class="owner human">giles</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.4: Pain point stats on demo pages</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.5: Embed videos on website</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W2.6: Ad creative versions (9:16, 1:1)</span><span class="owner both">both</span></div>
       </div>
     </div>
 
@@ -398,10 +427,10 @@
       </div>
       <div class="ws-bar-track"><div class="ws-bar-fill" style="width:0%"></div></div>
       <div class="ws-tasks">
-        <div class="task blocked"><span class="task-icon">&#9679;</span> <span class="task-text">W3.1: Meta Business Manager (blocked — new account needed)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W3.2: Campaign structure (Tradies, Gyms, Salons)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W3.3: Landing page optimisation</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W3.4: Launch 3 campaigns + retargeting</span></div>
+        <div class="task blocked"><span class="task-icon">&#9679;</span> <span class="task-text">W3.1: Meta Business Manager (blocked — new account needed)</span><span class="owner human">giles</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W3.2: Campaign structure (Tradies, Gyms, Salons)</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W3.3: Landing page optimisation</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W3.4: Launch 3 campaigns + retargeting</span><span class="owner human">giles</span></div>
       </div>
     </div>
 
@@ -416,11 +445,11 @@
       </div>
       <div class="ws-bar-track"><div class="ws-bar-fill" style="width:0%"></div></div>
       <div class="ws-tasks">
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.1: Pipeline setup (8 stages)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.2: Speed-to-lead workflow (&lt; 60s)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.3: 90-day nurture sequence</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.4: GHL AI lead qualification</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.5: Notification workflows</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.1: Pipeline setup (8 stages)</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.2: Speed-to-lead workflow (&lt; 60s)</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.3: 90-day nurture sequence</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.4: GHL AI lead qualification</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W4.5: Notification workflows</span><span class="owner both">both</span></div>
       </div>
     </div>
 
@@ -435,15 +464,15 @@
       </div>
       <div class="ws-bar-track"><div class="ws-bar-fill" style="width:30%"></div></div>
       <div class="ws-tasks">
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">GST registration (ABN 39 171 610 698)</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Stripe products + prices (test mode)</span></div>
-        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Payment links created (test mode)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Stripe live mode replication</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W5.2: Client onboarding form (GHL)</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W5.3: Post-form workflow</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W5.4: Niche setup runbooks</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Existing customer migration calls</span></div>
-        <div class="task progress"><span class="task-icon">&#9679;</span> <span class="task-text">ASIC "Parnell Systems" registration (pending)</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">GST registration (ABN 39 171 610 698)</span><span class="owner human">giles</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Stripe products + prices (test mode)</span><span class="owner both">both</span></div>
+        <div class="task done"><span class="task-icon">&#10003;</span> <span class="task-text">Payment links created (test mode)</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Stripe live mode replication</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W5.2: Client onboarding form (GHL)</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W5.3: Post-form workflow</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W5.4: Niche setup runbooks</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Existing customer migration calls</span><span class="owner human">giles</span></div>
+        <div class="task progress"><span class="task-icon">&#9679;</span> <span class="task-text">ASIC "Parnell Systems" registration (pending)</span><span class="owner human">giles</span></div>
       </div>
     </div>
 
@@ -458,10 +487,10 @@
       </div>
       <div class="ws-bar-track"><div class="ws-bar-fill" style="width:0%"></div></div>
       <div class="ws-tasks">
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W6.1-6.2: Google Maps scraping + review analysis</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W6.3: Pain-signal keyword scanning</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W6.4: Personalised outreach sequences</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Needs separate deep plan</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W6.1-6.2: Google Maps scraping + review analysis</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W6.3: Pain-signal keyword scanning</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">W6.4: Personalised outreach sequences</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Needs separate deep plan</span><span class="owner both">both</span></div>
       </div>
     </div>
 
@@ -476,10 +505,10 @@
       </div>
       <div class="ws-bar-track"><div class="ws-bar-fill" style="width:0%"></div></div>
       <div class="ws-tasks">
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Product packaging + pricing</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Website landing page</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">GHL workflow templates</span></div>
-        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Onboarding wedge strategy</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Product packaging + pricing</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Website landing page</span><span class="owner ai">claude</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">GHL workflow templates</span><span class="owner both">both</span></div>
+        <div class="task"><span class="task-icon">&#9675;</span> <span class="task-text">Onboarding wedge strategy</span><span class="owner both">both</span></div>
       </div>
     </div>
 
@@ -491,6 +520,10 @@
     <div class="legend-item"><span class="stat-dot progress"></span> In Progress</div>
     <div class="legend-item"><span class="stat-dot blocked"></span> Blocked</div>
     <div class="legend-item"><span class="stat-dot todo"></span> Not Started</div>
+    <span style="width:1px;height:16px;background:var(--border);margin:0 8px"></span>
+    <div class="legend-item"><span class="owner human" style="position:relative;top:0">giles</span> Human task</div>
+    <div class="legend-item"><span class="owner ai" style="position:relative;top:0">claude</span> AI task</div>
+    <div class="legend-item"><span class="owner both" style="position:relative;top:0">both</span> Collaborative</div>
   </div>
 
 </div>
