@@ -304,3 +304,57 @@ Every project MUST maintain a consistent `docs/` folder structure. This is enfor
 - DXA units only for Word tables. WidthType.PERCENTAGE breaks Word rendering. Use WidthType.DXA with columnWidths summing to 9026 for A4 with 1 inch margins.
 - Combine Proposal and SOW into one document. Client signs once and agrees to both.
 - Three-tier pricing works well. Option 1 no-code, Option 2 MVP with UI recommended, Option 3 full custom.
+
+## Adoption Discipline (MANDATORY) — added 2026-04-21
+
+When asked to adopt any recommendation set — `/insights` reports, audit outputs, third-party suggestions, "these best practices", anything arriving as a list — **do not produce a flat to-do list**. Produce an explicit **accept / reject / defer** triage against current state first. The plan follows the triage, not the other way round.
+
+### Pre-flight triage rule
+1. Read target files holistically (not grep for literal strings — semantic overlap is what matters).
+2. Classify each recommendation as **accept**, **reject** (already covered, overlapping, or not worth the cost), or **defer** (valuable but out of scope).
+3. **The reject column must exist.** If empty, re-check for overlap.
+4. Present the triage before writing any plan.
+
+Why: on 2026-04-21, Claude was asked to adopt seven `/insights` recommendations and built a plan to add all seven without checking overlap. Three were already covered by existing CLAUDE.md sections or always-active skills. The user had to prompt Claude to pause and think. Triage-first prevents that class of failure.
+
+### CLAUDE.md growth brake
+`~/.claude/CLAUDE.md` loads into every conversation, every turn. Bloat has a real per-turn cost.
+
+- Any proposal adding >20 lines to `~/.claude/CLAUDE.md` requires a paired proposal for what to **remove** or **migrate to a skill**.
+- Prefer skills over prose rules. Skills with triggers are cheaper than always-loaded prose. `verification-before-completion` and `tdd-first` are the reference pattern.
+- Candidates to migrate out: long procedural sections (Versioning Discipline, Shipping Discipline) are better as invokable skills.
+
+## Session Resumption Discipline — added 2026-04-21
+
+When asked "continue", "resume", "where were we", "catch me up":
+
+1. **Plans first** — glob `**/plan*`, read the most recent.
+2. **Handoff if present** — top entry of `docs/handoff/handoff.md`.
+3. **Git log + `gh pr list --state all --limit 10`**.
+4. **Summarise in three bullets** — active plan, in-flight work, ready-to-pick-up thread.
+5. **Stop and ask.** Never speculatively continue. The `/resume` skill automates this flow.
+
+## Per-Project CLAUDE.md Snippets — added 2026-04-21
+
+Copy-paste blocks for per-project `CLAUDE.md` files.
+
+### Test Execution
+
+Drop into a project's `CLAUDE.md` under `## Testing` or `## Development Workflow` when the project has memory-pressure sensitive tests or background test watchers.
+
+```markdown
+## Test Execution
+- Run tests sequentially (not in parallel) to avoid memory pressure and flaky results
+- Before running `git add -A` or `git status`, check for lingering background processes (vitest, dev servers) with `jobs` or `ps`
+- Kill stale background test processes before git operations
+```
+
+## Vitest Watcher Safety Hooks — added 2026-04-21
+
+Live in `~/.claude/settings.json`. Two hooks prevent the "stale `vitest --watch` hangs `git add`" failure mode:
+
+- `PreToolUse` matcher `Bash`: `pgrep -f 'vitest --watch' >/dev/null 2>&1 && echo 'WARN: vitest --watch still running — Bash calls like git add may hang' >&2; exit 0`
+- `Stop` (prepended): `pkill -f 'vitest --watch' 2>/dev/null; true`
+
+Narrow match on `vitest --watch` so one-shot `npm test -- --run` invocations are unaffected.
+
