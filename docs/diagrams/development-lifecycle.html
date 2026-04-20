@@ -7,37 +7,47 @@
 <link rel="stylesheet" href="../portal.css">
 <style>
 .phase{margin-bottom:48px}
-.phase-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.phase-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .phase-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
 .phase-name{font-size:18px;font-weight:600;letter-spacing:-0.02em}
 .phase-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
-.flow-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:12px}
+.flow-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin-bottom:12px}
 .flow-box code{font-size:12px}
 .flow-title{font-size:13px;font-weight:600;margin-bottom:8px}
-.flow-desc{font-size:12px;color:var(--text2);line-height:1.6}
+.flow-desc{font-size:13px;color:var(--text2);line-height:1.65}
+.flow-desc strong{color:var(--text)}
 .skill-pill{display:inline-block;font-size:11px;font-family:var(--mono);padding:3px 10px;border-radius:5px;font-weight:600;margin:2px 2px}
 .pill-mandatory{background:var(--coral-bg);color:var(--coral-text);border:1px solid var(--coral-border)}
+.pill-new{background:var(--teal-bg);color:var(--teal-text);border:1px solid var(--teal-border)}
 .pill-optional{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
 .pill-hook{background:var(--purple-bg);color:var(--purple-text);border:1px solid var(--purple-border)}
-.connector{display:flex;justify-content:center;padding:8px 0}
-.connector svg{width:20px;height:24px}
-.enforcement-box{background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px}
+.pill-rule{background:var(--amber-bg);color:var(--amber-text);border:1px solid var(--amber-border)}
+.enforcement-box{background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:var(--radius);padding:16px 20px;margin-bottom:18px}
 .enforcement-title{font-size:13px;font-weight:700;color:var(--purple-text);margin-bottom:6px}
-.enforcement-desc{font-size:12px;color:var(--purple-text);line-height:1.6;opacity:0.85}
+.enforcement-desc{font-size:12px;color:var(--text);line-height:1.6;opacity:0.9}
 .ref-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
 .ref-table th{text-align:left;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);padding:8px 12px;border-bottom:2px solid var(--border)}
-.ref-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
-.ref-table td:first-child{font-family:var(--mono);font-size:12px;white-space:nowrap}
+.ref-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2)}
+.ref-table td:first-child{font-family:var(--mono);font-size:12px;white-space:nowrap;color:var(--text)}
+.ref-table td strong{color:var(--text)}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:16px 0}
+.hook-card{background:var(--bg2);border:1px solid var(--purple-border);border-radius:var(--radius);padding:14px 16px}
+.hook-card-title{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--purple-text);margin-bottom:4px;letter-spacing:0.04em}
+.hook-card-cmd{font-family:var(--mono);font-size:11px;color:var(--text);background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:5px;margin:6px 0;display:block;word-break:break-word;line-height:1.5}
+.hook-card-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.loop-back{background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:var(--radius);padding:14px 18px;margin:18px 0;font-size:12px;color:var(--text);line-height:1.6}
+.loop-back strong{color:var(--teal-text)}
 </style>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-brand">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
       <div class="header-logo">PS</div>
       <span class="header-name">Parnell Systems</span>
-    </div>
+    </a>
     <nav class="header-nav">
       <a href="../index.html">Home</a>
       <a href="../skills.html">Skills</a>
@@ -56,8 +66,8 @@
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">Walkthrough &mdash; Workflow</div>
-    <div class="hero-title">Development Lifecycle<br><em>Idea to Verified Feature</em></div>
-    <div class="hero-sub">The complete skill pipeline: how every feature moves from brainstorm through TDD to browser-verified, shipped code. Enforced by hooks, not honour system.</div>
+    <div class="hero-title">Skills &amp; Hooks, <em>In Tandem</em><br>Across the Full Lifecycle</div>
+    <div class="hero-sub">Where each skill fires, which hooks run underneath, and how <code>/resume</code> and <code>/ship</code> close the loop between sessions. Updated 2026-04-21.</div>
   </div>
 </div>
 
@@ -66,324 +76,402 @@
   <!-- ── PIPELINE OVERVIEW ── -->
   <div class="section-label">The Pipeline</div>
 
-  <svg viewBox="0 0 900 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:900px;display:block;margin:0 auto 16px" aria-label="Five-stage development pipeline">
+  <svg viewBox="0 0 960 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:960px;display:block;margin:8px auto 16px" aria-label="Seven-stage development pipeline with always-active hook bar">
     <defs>
       <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
         <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
       </marker>
     </defs>
 
-    <!-- Hook bar -->
-    <rect x="10" y="0" width="880" height="28" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"/>
-    <text x="450" y="18" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#3C3489" letter-spacing="0.08em">USERPROMPTSUBMIT HOOK — FIRES EVERY PROMPT — ENFORCES TDD + VERIFICATION</text>
+    <!-- Ambient hook bar (always running) -->
+    <rect x="10" y="0" width="940" height="30" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"/>
+    <text x="480" y="19" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#3C3489" letter-spacing="0.08em">AMBIENT LAYER — HOOKS FIRE EVERY PROMPT, EVERY TOOL CALL, EVERY SESSION STOP</text>
 
-    <!-- Stage 1: Ideate -->
-    <rect x="10" y="40" width="150" height="54" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
-    <text x="85" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#3C3489">IDEATE</text>
-    <text x="85" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#534AB7">/ce-brainstorm</text>
+    <!-- Stage 1: Discover -->
+    <rect x="10" y="50" width="120" height="60" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+    <text x="70" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#3C3489">DISCOVER</text>
+    <text x="70" y="90" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#534AB7">/validate-problem</text>
+    <text x="70" y="102" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#534AB7">/ce:ideate</text>
+    <line x1="134" y1="80" x2="152" y2="80" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
 
-    <line x1="164" y1="67" x2="192" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+    <!-- Stage 2: Triage / Brainstorm -->
+    <rect x="156" y="50" width="120" height="60" rx="10" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.5"/>
+    <text x="216" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#633806">TRIAGE</text>
+    <text x="216" y="90" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#BA7517">Adoption Discipline</text>
+    <text x="216" y="102" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#BA7517">/ce:brainstorm</text>
+    <line x1="280" y1="80" x2="298" y2="80" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
 
-    <!-- Stage 2: Plan -->
-    <rect x="196" y="40" width="150" height="54" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
-    <text x="271" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#085041">PLAN</text>
-    <text x="271" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#1D9E75">/ce-plan</text>
+    <!-- Stage 3: Plan -->
+    <rect x="302" y="50" width="120" height="60" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <text x="362" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#085041">PLAN</text>
+    <text x="362" y="90" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#1D9E75">/ce:plan-beta</text>
+    <text x="362" y="102" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#1D9E75">/deepen-plan-beta</text>
+    <line x1="426" y1="80" x2="444" y2="80" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
 
-    <line x1="350" y1="67" x2="378" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+    <!-- Stage 4: Build -->
+    <rect x="448" y="50" width="120" height="60" rx="10" fill="#FAECE7" stroke="#F0997B" stroke-width="1.5"/>
+    <text x="508" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#712B13">BUILD</text>
+    <text x="508" y="90" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#993C1D">/tdd-first (hook)</text>
+    <text x="508" y="102" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#993C1D">/ce:work-beta</text>
+    <line x1="572" y1="80" x2="590" y2="80" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
 
-    <!-- Stage 3: Build -->
-    <rect x="382" y="40" width="150" height="54" rx="10" fill="#FAECE7" stroke="#F0997B" stroke-width="1.5"/>
-    <text x="457" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#712B13">BUILD (TDD)</text>
-    <text x="457" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#993C1D">/tdd-first + /ce-work</text>
+    <!-- Stage 5: Verify -->
+    <rect x="594" y="50" width="120" height="60" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+    <text x="654" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#0C447C">VERIFY</text>
+    <text x="654" y="90" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#378ADD">/code-review</text>
+    <text x="654" y="102" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#378ADD">/e2e-feature-test</text>
+    <line x1="718" y1="80" x2="736" y2="80" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
 
-    <line x1="536" y1="67" x2="564" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+    <!-- Stage 6: Ship -->
+    <rect x="740" y="50" width="100" height="60" rx="10" fill="#EAF3DE" stroke="#97C459" stroke-width="1.5"/>
+    <text x="790" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#27500A">SHIP</text>
+    <text x="790" y="90" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#3B6D11" font-weight="700">/ship ★</text>
+    <text x="790" y="102" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#3B6D11">/fix-pr</text>
+    <line x1="844" y1="80" x2="862" y2="80" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
 
-    <!-- Stage 4: Verify -->
-    <rect x="568" y="40" width="150" height="54" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
-    <text x="643" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C">VERIFY</text>
-    <text x="643" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#378ADD">/e2e-feature-test</text>
+    <!-- Stage 7: Resume -->
+    <rect x="866" y="50" width="84" height="60" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+    <text x="908" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#085041">RESUME</text>
+    <text x="908" y="90" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#1D9E75" font-weight="700">/resume ★</text>
+    <text x="908" y="102" text-anchor="middle" font-family="SF Mono,monospace" font-size="8" fill="#1D9E75">/learn</text>
 
-    <line x1="722" y1="67" x2="750" y2="67" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+    <!-- Loop back arrow from Resume back to Plan/Build -->
+    <path d="M 908,116 Q 908,145 480,145 Q 362,145 362,116" fill="none" stroke="#5DCAA5" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+    <text x="480" y="155" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#1D9E75" font-style="italic">next session picks up here</text>
 
-    <!-- Stage 5: Ship -->
-    <rect x="754" y="40" width="136" height="54" rx="10" fill="#EAF3DE" stroke="#97C459" stroke-width="1.5"/>
-    <text x="822" y="62" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#27500A">SHIP</text>
-    <text x="822" y="78" text-anchor="middle" font-family="SF Mono,monospace" font-size="9" fill="#3B6D11">git push + PR</text>
+    <!-- Star legend -->
+    <text x="10" y="130" font-family="-apple-system,sans-serif" font-size="9" fill="#4a5068">★ = added 2026-04-21</text>
   </svg>
 
-  <div class="enforcement-box">
-    <div class="enforcement-title">Enforcement Layer</div>
-    <div class="enforcement-desc">The <code>UserPromptSubmit</code> hook in <code>~/.claude/settings.json</code> injects mandatory instructions on every prompt. CLAUDE.md is advisory (can be forgotten). Hooks are deterministic (always fire). The hook hardcodes <code>tdd-first</code> and <code>verification-before-completion</code> as always-active when code is being produced.</div>
+  <!-- ── AMBIENT HOOKS LAYER ── -->
+  <div class="section-label" style="margin-top:28px">The Ambient Layer &mdash; Hooks</div>
+  <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px">Five hooks in <code>~/.claude/settings.json</code> run deterministically, regardless of which phase you&rsquo;re in. CLAUDE.md is advisory; hooks are guaranteed. If a rule must fire every time, it belongs in a hook.</p>
+
+  <div class="hook-grid">
+    <div class="hook-card">
+      <div class="hook-card-title">UserPromptSubmit</div>
+      <code class="hook-card-cmd">skill-forced-eval-hook.sh</code>
+      <div class="hook-card-desc">Fires on every prompt. Evaluates relevant skills and forces activation of <code>tdd-first</code> + <code>verification-before-completion</code> when code is being produced.</div>
+    </div>
+    <div class="hook-card">
+      <div class="hook-card-title">PreToolUse &middot; Bash &middot; <span style="color:var(--teal-text)">★ new</span></div>
+      <code class="hook-card-cmd">pgrep -f 'vitest --watch' &amp;&amp; WARN</code>
+      <div class="hook-card-desc">Before any Bash tool call, warns (stderr, non-blocking) if a <code>vitest --watch</code> is still running. Prevents the 22-minute <code>git add</code> hang.</div>
+    </div>
+    <div class="hook-card">
+      <div class="hook-card-title">PostToolUse &middot; Write / Edit</div>
+      <code class="hook-card-cmd">britfix/run-hook.sh</code>
+      <div class="hook-card-desc">After every file edit. Normalises British English spellings and other house-style tweaks.</div>
+    </div>
+    <div class="hook-card">
+      <div class="hook-card-title">Stop &middot; <span style="color:var(--teal-text)">★ new entry</span></div>
+      <code class="hook-card-cmd">pkill -f 'vitest --watch' &rarr; beep &rarr; session-end.js</code>
+      <div class="hook-card-desc">Session end. Kills any leaked <code>vitest --watch</code>, beeps, then runs the session bookkeeping script.</div>
+    </div>
+    <div class="hook-card">
+      <div class="hook-card-title">Notification &middot; compact</div>
+      <code class="hook-card-cmd">pre-compact.js</code>
+      <div class="hook-card-desc">Before auto-compaction. Saves session state so context loss after compaction is recoverable.</div>
+    </div>
   </div>
 
-  <!-- ── PHASE 1 ── -->
+  <!-- ── ALWAYS ACTIVE SKILLS ── -->
+  <div class="enforcement-box">
+    <div class="enforcement-title">Always-Active Skills (enforced by the UserPromptSubmit hook)</div>
+    <div class="enforcement-desc">
+      <span class="skill-pill pill-mandatory">/tdd-first</span>
+      <span class="skill-pill pill-mandatory">/verification-before-completion</span>
+      — these fire on every code-producing prompt without needing to be requested. The hook injects mandatory activation instructions so they can&rsquo;t be silently skipped.
+    </div>
+  </div>
+
+  <!-- ── PHASE 1: DISCOVER ── -->
   <div class="phase">
     <div class="phase-header">
       <div class="phase-num" style="background:var(--purple-bg);color:var(--purple-text)">1</div>
-      <div class="phase-name">Ideate</div>
+      <div class="phase-name">Discover &mdash; should this exist?</div>
     </div>
-    <div class="phase-sub">You have a vague idea, problem, or opportunity. Explore before committing.</div>
+    <div class="phase-sub">You have an idea or an opportunity. Before any code, validate it&rsquo;s worth building.</div>
 
     <div class="flow-box">
       <div class="flow-title">Skills activated</div>
       <div style="margin:8px 0">
-        <span class="skill-pill pill-optional">/ce-brainstorm</span>
-        <span class="skill-pill pill-optional">/last30days</span>
+        <span class="skill-pill pill-optional">/validate-problem</span>
+        <span class="skill-pill pill-optional">/ce:ideate</span>
+        <span class="skill-pill pill-optional">/find-first-10</span>
       </div>
       <div class="flow-desc">
-        <strong>/ce-brainstorm</strong> — collaborative dialogue to explore requirements, approaches, trade-offs, and scope before writing any code.<br>
-        <strong>/last30days</strong> — (optional) research what the community is doing across Reddit, X, HN, YouTube. Grounds the brainstorm in real-world patterns.
+        <strong>/validate-problem</strong> — pressure-test whether the problem is real before building. Painkiller vs vitamin.<br>
+        <strong>/ce:ideate</strong> — generate and critically evaluate grounded improvement ideas for the current project.<br>
+        <strong>/find-first-10</strong> — concrete plan for the first 10 manual customers. If you can&rsquo;t find them, the feature isn&rsquo;t worth building.
       </div>
     </div>
     <div class="flow-box">
       <div class="flow-title">Output</div>
-      <div class="flow-desc">A requirements document or clear feature description, right-sized for the feature.</div>
+      <div class="flow-desc">Either a validated problem worth building, or a clear reason to stop. Both are wins.</div>
     </div>
   </div>
 
-  <!-- ── PHASE 2 ── -->
+  <!-- ── PHASE 2: TRIAGE / BRAINSTORM ── -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-num" style="background:var(--teal-bg);color:var(--teal-text)">2</div>
-      <div class="phase-name">Plan</div>
+      <div class="phase-num" style="background:var(--amber-bg);color:var(--amber-text)">2</div>
+      <div class="phase-name">Triage &amp; Brainstorm &mdash; what to build</div>
     </div>
-    <div class="phase-sub">Requirements are clear. Break work into structured, ordered units with acceptance criteria.</div>
-
-    <div class="flow-box">
-      <div class="flow-title">Skills activated</div>
-      <div style="margin:8px 0">
-        <span class="skill-pill pill-optional">/ce-plan</span>
-      </div>
-      <div class="flow-desc">
-        Transforms requirements into ordered implementation units with dependencies mapped, acceptance criteria per unit, and TDD flags on code units.
-      </div>
-    </div>
-    <div class="flow-box">
-      <div class="flow-title">Output</div>
-      <div class="flow-desc">A structured plan document (<code>docs/plans/YYYY-MM-DD-NNN-*.md</code>) with numbered units ready for execution.</div>
-    </div>
-  </div>
-
-  <!-- ── PHASE 3 ── -->
-  <div class="phase">
-    <div class="phase-header">
-      <div class="phase-num" style="background:var(--coral-bg);color:var(--coral-text)">3</div>
-      <div class="phase-name">Build (TDD)</div>
-    </div>
-    <div class="phase-sub">Plan exists. Time to write code. The enforcement hook ensures TDD cannot be skipped.</div>
+    <div class="phase-sub">Explore requirements and trade-offs. If you&rsquo;re adopting someone else&rsquo;s recommendations (e.g. a <code>/insights</code> report), run the Adoption Discipline triage <em>first</em>.</div>
 
     <div class="enforcement-box">
-      <div class="enforcement-title">Hook enforces: tdd-first ACTIVATED</div>
-      <div class="enforcement-desc">Every prompt that produces code triggers mandatory TDD activation. Tests must be written and confirmed failing BEFORE implementation code exists.</div>
+      <div class="enforcement-title">Adoption Discipline (MANDATORY rule) <span style="font-weight:normal;opacity:0.7">&mdash; added 2026-04-21</span></div>
+      <div class="enforcement-desc">When asked to adopt any recommendation set — <code>/insights</code>, audits, third-party suggestions — Claude must produce an explicit <strong>accept / reject / defer</strong> triage against current state before writing any plan. The reject column must exist. Paired with a CLAUDE.md growth brake: any proposal adding &gt;20 lines requires a paired proposal for what to remove.</div>
     </div>
 
     <div class="flow-box">
       <div class="flow-title">Skills activated</div>
       <div style="margin:8px 0">
-        <span class="skill-pill pill-mandatory">/tdd-first (MANDATORY)</span>
-        <span class="skill-pill pill-optional">/ce-work</span>
-        <span class="skill-pill pill-optional">/security-review</span>
+        <span class="skill-pill pill-rule">Adoption Discipline (CLAUDE.md)</span>
+        <span class="skill-pill pill-optional">/ce:brainstorm</span>
+      </div>
+      <div class="flow-desc">
+        <strong>Adoption Discipline</strong> — triage-first for <em>any</em> recommendation set. Prevents blindly adopting rules that duplicate existing coverage.<br>
+        <strong>/ce:brainstorm</strong> — collaborative dialogue to shape requirements when scope is still fuzzy. Produces a requirements doc in <code>docs/brainstorms/</code>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 3: PLAN ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--teal-bg);color:var(--teal-text)">3</div>
+      <div class="phase-name">Plan &mdash; how to build it</div>
+    </div>
+    <div class="phase-sub">Requirements are clear. Break work into ordered units, tag each with Claude-or-Codex routing, capture decisions.</div>
+
+    <div class="flow-box">
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-optional">/ce:plan-beta</span>
+        <span class="skill-pill pill-optional">/deepen-plan-beta</span>
+        <span class="skill-pill pill-optional">/document-review</span>
+      </div>
+      <div class="flow-desc">
+        <strong>/ce:plan-beta</strong> — transforms requirements into ordered implementation units with dependencies, acceptance criteria, and an <code>Execution target:</code> tag (Claude vs Codex) per unit.<br>
+        <strong>/deepen-plan-beta</strong> — challenge before running. Stress-tests weak sections via parallel research agents. <em>Expensive &mdash; only when the plan has meaningful confidence gaps.</em><br>
+        <strong>/document-review</strong> — structured refinement of a plan document before execution.
       </div>
     </div>
 
-    <!-- TDD Cycle SVG -->
-    <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:20px auto" aria-label="TDD red-green-refactor cycle">
+    <div class="flow-box">
+      <div class="flow-title">Routing every unit (Claude vs Codex)</div>
+      <div class="flow-desc">
+        Every plan unit carries an explicit <code>Execution target:</code> tag. Default is <code>codex-delegate</code> (cheaper, for mechanical work). Use <code>claude</code> only when judgement, ambiguity, or design is the bottleneck. Plans without routing tags are incomplete.
+      </div>
+    </div>
+
+    <div class="flow-box">
+      <div class="flow-title">Output</div>
+      <div class="flow-desc">A plan at <code>docs/plans/YYYY-MM-DD-NNN-*-beta-plan.md</code>, plus initial entries in <code>docs/decisions/decisions.md</code>.</div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 4: BUILD ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--coral-bg);color:var(--coral-text)">4</div>
+      <div class="phase-name">Build &mdash; code, test, debug</div>
+    </div>
+    <div class="phase-sub">Plan exists, routing decided. Execute unit by unit. TDD is non-negotiable via the hook.</div>
+
+    <div class="enforcement-box">
+      <div class="enforcement-title">Hook-enforced: <code>/tdd-first</code> always active</div>
+      <div class="enforcement-desc">Every code-producing prompt triggers <code>/tdd-first</code> activation. Tests must be written and confirmed failing <strong>before</strong> implementation code exists. The <code>PreToolUse</code> Bash hook will also warn if a <code>vitest --watch</code> is still running when you try to shell out.</div>
+    </div>
+
+    <div class="flow-box">
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-mandatory">/tdd-first (hook)</span>
+        <span class="skill-pill pill-optional">/ce:work-beta</span>
+        <span class="skill-pill pill-optional">/testing-practices</span>
+        <span class="skill-pill pill-optional">/systematic-debugging</span>
+        <span class="skill-pill pill-optional">/security-review</span>
+      </div>
+      <div class="flow-desc">
+        <strong>/ce:work-beta</strong> — executes the plan unit-by-unit, respecting the routing tags. Writes to <code>docs/handoff/handoff.md</code> after each unit.<br>
+        <strong>/testing-practices</strong> — how to structure tests for the stack at hand.<br>
+        <strong>/systematic-debugging</strong> — root-cause-first methodology when a test fails unexpectedly or a bug surfaces.<br>
+        <strong>/security-review</strong> — fires contextually when you touch auth, secrets, or user input.
+      </div>
+    </div>
+
+    <!-- TDD cycle -->
+    <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:18px auto" aria-label="TDD red-green-refactor cycle">
       <defs>
         <marker id="arr2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
           <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
         </marker>
       </defs>
-
-      <!-- Step 1: Write tests -->
       <rect x="10" y="10" width="160" height="70" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
       <text x="90" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#0C447C">1. Write Tests</text>
       <text x="90" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">Unit + Integration + E2E</text>
-
       <line x1="174" y1="45" x2="206" y2="45" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
-
-      <!-- Step 2: Confirm RED -->
       <rect x="210" y="10" width="130" height="70" rx="10" fill="#FAECE7" stroke="#F0997B" stroke-width="1.5"/>
       <text x="275" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#712B13">2. Confirm RED</text>
       <text x="275" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#993C1D">Tests MUST fail</text>
-
       <line x1="344" y1="45" x2="376" y2="45" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
-
-      <!-- Step 3: Implement -->
       <rect x="380" y="10" width="130" height="70" rx="10" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.5"/>
       <text x="445" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#633806">3. Implement</text>
       <text x="445" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#BA7517">Minimum to pass</text>
-
       <line x1="514" y1="45" x2="546" y2="45" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
-
-      <!-- Step 4: Confirm GREEN -->
       <rect x="550" y="10" width="140" height="70" rx="10" fill="#EAF3DE" stroke="#97C459" stroke-width="1.5"/>
       <text x="620" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#27500A">4. Confirm GREEN</text>
       <text x="620" y="56" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#3B6D11">ALL tests pass</text>
-
-      <!-- Arrow down from GREEN -->
       <line x1="620" y1="84" x2="620" y2="116" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
-
-      <!-- Step 5: Refactor -->
       <rect x="550" y="120" width="140" height="50" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
       <text x="620" y="145" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#085041">5. Refactor</text>
       <text x="620" y="160" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#1D9E75">Tests stay green</text>
-
-      <!-- Arrow down from Refactor -->
       <line x1="620" y1="174" x2="620" y2="206" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
-
-      <!-- Step 6: Full Suite -->
       <rect x="440" y="210" width="300" height="56" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="2"/>
       <text x="590" y="234" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#3C3489">6. Run FULL SUITE</text>
       <text x="590" y="252" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#534AB7">ALL pass = unit complete. ANY fail = fix first.</text>
     </svg>
-
-    <div class="flow-box">
-      <div class="flow-title">Three test layers (all required for features)</div>
-      <div class="flow-desc">
-        <strong>Unit tests</strong> — every function with logic (3+ tests each: happy, sad, edge)<br>
-        <strong>Integration tests</strong> — every boundary crossing (DB, API, services)<br>
-        <strong>System/E2E tests</strong> — every user-facing feature (page renders, workflows complete)
-      </div>
-    </div>
   </div>
 
-  <!-- ── PHASE 4 ── -->
+  <!-- ── PHASE 5: VERIFY ── -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-num" style="background:var(--blue-bg);color:var(--blue-text)">4</div>
-      <div class="phase-name">Verify (E2E)</div>
+      <div class="phase-num" style="background:var(--blue-bg);color:var(--blue-text)">5</div>
+      <div class="phase-name">Verify &mdash; evidence before any claim</div>
     </div>
-    <div class="phase-sub">Code is built, TDD tests pass. Now verify the running application with a real browser + backend checks.</div>
+    <div class="phase-sub">Tests pass locally. Now prove the running system works &mdash; browser + backend + review pass.</div>
 
     <div class="enforcement-box">
-      <div class="enforcement-title">Hook enforces: verification-before-completion ACTIVATED</div>
-      <div class="enforcement-desc">No completion claims without fresh verification evidence. "Should work" is not evidence. Run the command, read the output, then claim the result.</div>
+      <div class="enforcement-title">Hook-enforced: <code>/verification-before-completion</code> always active</div>
+      <div class="enforcement-desc">No completion claims without fresh verification evidence. &ldquo;Should work&rdquo; is not evidence. Run the command, read the output, then claim the result.</div>
     </div>
 
     <div class="flow-box">
       <div class="flow-title">Skills activated</div>
       <div style="margin:8px 0">
+        <span class="skill-pill pill-mandatory">/verification-before-completion (hook)</span>
+        <span class="skill-pill pill-optional">/code-review</span>
+        <span class="skill-pill pill-optional">/code-quality</span>
+        <span class="skill-pill pill-optional">/security-review</span>
         <span class="skill-pill pill-optional">/e2e-feature-test</span>
-        <span class="skill-pill pill-mandatory">/verification-before-completion (MANDATORY)</span>
+        <span class="skill-pill pill-optional">/ce:review</span>
       </div>
-    </div>
-
-    <!-- E2E Flow SVG -->
-    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:20px auto" aria-label="E2E test flow showing frontend and backend verification">
-      <defs>
-        <marker id="arr3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-          <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
-        </marker>
-      </defs>
-
-      <!-- Generate Matrix -->
-      <rect x="10" y="30" width="140" height="60" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
-      <text x="80" y="55" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#0C447C">Generate</text>
-      <text x="80" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">Test Matrix</text>
-
-      <line x1="154" y1="60" x2="176" y2="60" stroke="#999890" stroke-width="1.5" marker-end="url(#arr3)"/>
-
-      <!-- Per Test Box -->
-      <rect x="180" y="10" width="400" height="160" rx="12" fill="var(--bg2)" stroke="var(--border)" stroke-width="1"/>
-      <text x="380" y="30" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="var(--text3)" letter-spacing="0.08em">PER TEST CASE</text>
-
-      <!-- Backend Pre -->
-      <rect x="200" y="42" width="100" height="44" rx="8" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"/>
-      <text x="250" y="60" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#3C3489">Backend</text>
-      <text x="250" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#534AB7">pre-state</text>
-
-      <line x1="304" y1="64" x2="324" y2="64" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
-
-      <!-- Browser Action -->
-      <rect x="328" y="42" width="100" height="44" rx="8" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"/>
-      <text x="378" y="60" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#633806">Browser</text>
-      <text x="378" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#BA7517">fill, click, nav</text>
-
-      <line x1="432" y1="64" x2="452" y2="64" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
-
-      <!-- Verify Frontend -->
-      <rect x="200" y="100" width="100" height="44" rx="8" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/>
-      <text x="250" y="118" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#085041">Frontend</text>
-      <text x="250" y="132" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#1D9E75">screenshot + DOM</text>
-
-      <!-- Verify Backend -->
-      <rect x="328" y="100" width="100" height="44" rx="8" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/>
-      <text x="378" y="118" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" font-weight="600" fill="#085041">Backend</text>
-      <text x="378" y="132" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#1D9E75">DB + API + logs</text>
-
-      <!-- Result -->
-      <rect x="456" y="42" width="104" height="102" rx="8" fill="#EAF3DE" stroke="#97C459" stroke-width="1"/>
-      <text x="508" y="80" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#27500A">PASS</text>
-      <text x="508" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#27500A">or</text>
-      <text x="508" y="112" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#712B13">FAIL</text>
-      <text x="508" y="130" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8" fill="#3B6D11">with evidence</text>
-
-      <!-- Arrows from verify boxes -->
-      <line x1="304" y1="122" x2="324" y2="122" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
-      <line x1="432" y1="93" x2="452" y2="93" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
-
-      <!-- Arrow from browser down to verify -->
-      <line x1="378" y1="90" x2="378" y2="96" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
-      <line x1="250" y1="90" x2="250" y2="96" stroke="#999890" stroke-width="1" marker-end="url(#arr3)"/>
-
-      <!-- Arrow to report -->
-      <line x1="584" y1="90" x2="616" y2="90" stroke="#999890" stroke-width="1.5" marker-end="url(#arr3)"/>
-
-      <!-- Report -->
-      <rect x="620" y="50" width="120" height="80" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
-      <text x="680" y="78" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#0C447C">Test Report</text>
-      <text x="680" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">pass / fail / skip</text>
-      <text x="680" y="112" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#378ADD">+ screenshots</text>
-    </svg>
-
-    <div class="flow-box">
-      <div class="flow-title">Test matrix categories</div>
       <div class="flow-desc">
-        Happy path &middot; Input validation &middot; Edge cases &middot; Error handling &middot; Backend state &middot; UI feedback &middot; Permissions &middot; Idempotency &middot; Responsive
+        <strong>/code-review</strong> / <strong>/code-quality</strong> — adversarial read before opening the PR.<br>
+        <strong>/security-review</strong> — OWASP-level audit when the change touches auth, secrets, payments, or user input.<br>
+        <strong>/e2e-feature-test</strong> — full matrix via agent-browser: UI drive, DB state, API response, report.<br>
+        <strong>/ce:review</strong> — heavyweight multi-agent review. <em>Expensive &mdash; challenge via Adoption Discipline before launching.</em>
       </div>
     </div>
   </div>
 
-  <!-- ── PHASE 5 ── -->
+  <!-- ── PHASE 6: SHIP ── -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-num" style="background:var(--green-bg);color:var(--green-text)">5</div>
-      <div class="phase-name">Ship</div>
+      <div class="phase-num" style="background:var(--green-bg);color:var(--green-text)">6</div>
+      <div class="phase-name">Ship &mdash; merge with evidence</div>
     </div>
-    <div class="phase-sub">All tests green, E2E verified. Commit, push, create PR.</div>
+    <div class="phase-sub">All green locally, reviews passed. Run the verified ship procedure &mdash; never claim &ldquo;merged&rdquo; without proof.</div>
+
     <div class="flow-box">
-      <div class="flow-title">Actions</div>
-      <div class="flow-desc"><code>git commit</code> &rarr; <code>git push</code> &rarr; <code>gh pr create</code></div>
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-new">/ship &nbsp;★ new</span>
+        <span class="skill-pill pill-optional">/git-conventions</span>
+        <span class="skill-pill pill-optional">/fix-pr</span>
+        <span class="skill-pill pill-optional">/feature-video</span>
+      </div>
+      <div class="flow-desc">
+        <strong>/ship</strong> &mdash; single procedure: sequential test run &rarr; lint &rarr; commit (via <code>git-conventions</code>) &rarr; push &rarr; <code>gh pr create</code> &rarr; wait for merge &rarr; <strong>verify</strong> via <code>gh pr view --json state,mergedAt</code>. Composes with <code>verification-before-completion</code> for the final step. Terminates the &ldquo;claimed merged but wasn&rsquo;t&rdquo; failure mode.<br>
+        <strong>/git-conventions</strong> &mdash; owns commit-message formatting. <code>/ship</code> delegates to it.<br>
+        <strong>/fix-pr</strong> &mdash; after a reviewer leaves comments. Fetches unresolved threads and addresses them.<br>
+        <strong>/feature-video</strong> &mdash; record a walkthrough and attach to the PR description.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 7: RESUME / LEARN ── -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:var(--teal-bg);color:var(--teal-text)">7</div>
+      <div class="phase-name">Resume &amp; Learn &mdash; close the loop</div>
+    </div>
+    <div class="phase-sub">Session ends; or the token window flips. Next session picks up cleanly &mdash; no speculative continuation.</div>
+
+    <div class="enforcement-box">
+      <div class="enforcement-title">Plan Execution Continuity (MANDATORY rule)</div>
+      <div class="enforcement-desc">Every project maintains <code>docs/decisions/decisions.md</code> (tactical log) and <code>docs/handoff/handoff.md</code> (newest-first running log). A fresh Claude or Codex session reads the top entry and picks up mid-flight.</div>
+    </div>
+
+    <div class="flow-box">
+      <div class="flow-title">Skills activated</div>
+      <div style="margin:8px 0">
+        <span class="skill-pill pill-new">/resume &nbsp;★ new</span>
+        <span class="skill-pill pill-optional">/learn</span>
+        <span class="skill-pill pill-optional">/skill-publisher</span>
+        <span class="skill-pill pill-optional">/ce:compound</span>
+      </div>
+      <div class="flow-desc">
+        <strong>/resume</strong> &mdash; at the start of a &ldquo;continue&rdquo; session, reads the most recent plan + top of <code>handoff.md</code> + git log + open PRs. Summarises in three bullets. Asks the user which thread to pull. <strong>Never starts work speculatively.</strong><br>
+        <strong>/learn</strong> &mdash; analyse the session for reusable patterns worth saving as a new skill or ADR.<br>
+        <strong>/skill-publisher</strong> &mdash; mirror any new skill or walkthrough to this portal. Mandatory post-step after skill creation.<br>
+        <strong>/ce:compound</strong> &mdash; document a freshly-solved problem so your team benefits next time.
+      </div>
+    </div>
+
+    <div class="loop-back">
+      <strong>&rarr; Loop back:</strong> the <code>/resume</code> summary usually sends you back to Plan (new work) or Build (next unit on an existing plan). That&rsquo;s the loop that keeps multi-session work coherent.
     </div>
   </div>
 
   <!-- ── QUICK REFERENCE ── -->
-  <div class="section-label">Quick Reference</div>
+  <div class="section-label" style="margin-top:40px">Quick Reference &mdash; Situation to Skill</div>
 
   <table class="ref-table">
     <thead>
-      <tr><th>Situation</th><th>Skill(s)</th><th>Mandatory?</th></tr>
+      <tr><th>When</th><th>Skill(s)</th><th>Mandatory?</th></tr>
     </thead>
     <tbody>
-      <tr><td>Vague idea</td><td>/ce-brainstorm + /last30days</td><td>No</td></tr>
-      <tr><td>Clear requirements</td><td>/ce-plan</td><td>No</td></tr>
+      <tr><td>Vague idea, no validated demand</td><td>/validate-problem &middot; /ce:ideate</td><td>No</td></tr>
+      <tr><td>Requirements still fuzzy</td><td>/ce:brainstorm</td><td>No</td></tr>
+      <tr><td>Adopting someone else&rsquo;s rules (insights, audits)</td><td><strong>Adoption Discipline triage</strong></td><td><strong style="color:var(--amber-text)">YES (CLAUDE.md)</strong></td></tr>
+      <tr><td>Clear requirements, need a plan</td><td>/ce:plan-beta</td><td>No</td></tr>
+      <tr><td>Plan has weak or risky sections</td><td>/deepen-plan-beta</td><td>No (costly &mdash; challenge first)</td></tr>
       <tr><td>Writing code with logic</td><td>/tdd-first</td><td><strong style="color:var(--coral-text)">YES (hook)</strong></td></tr>
-      <tr><td>Executing a plan</td><td>/ce-work + /tdd-first</td><td><strong style="color:var(--coral-text)">TDD is mandatory</strong></td></tr>
-      <tr><td>Feature acceptance</td><td>/e2e-feature-test</td><td>Recommended</td></tr>
-      <tr><td>Claiming "done"</td><td>/verification-before-completion</td><td><strong style="color:var(--coral-text)">YES (hook)</strong></td></tr>
-      <tr><td>Auth, secrets, input</td><td>/security-review</td><td>Triggered by context</td></tr>
+      <tr><td>Executing a plan unit-by-unit</td><td>/ce:work-beta</td><td>No</td></tr>
+      <tr><td>Root-cause debugging</td><td>/systematic-debugging</td><td>No</td></tr>
+      <tr><td>Touching auth, secrets, user input</td><td>/security-review</td><td>Triggered by context</td></tr>
+      <tr><td>Full feature test (UI + backend)</td><td>/e2e-feature-test</td><td>Recommended</td></tr>
+      <tr><td>Before saying &ldquo;done&rdquo;</td><td>/verification-before-completion</td><td><strong style="color:var(--coral-text)">YES (hook)</strong></td></tr>
+      <tr><td>Ready to push + PR + verify merge</td><td><strong>/ship ★</strong></td><td>Recommended</td></tr>
+      <tr><td>Responding to PR review comments</td><td>/fix-pr</td><td>No</td></tr>
+      <tr><td>Starting a session with &ldquo;continue&rdquo;</td><td><strong>/resume ★</strong></td><td>Recommended</td></tr>
+      <tr><td>Session produced a reusable pattern</td><td>/learn &rarr; /skill-publisher</td><td>Mandatory for new skills</td></tr>
     </tbody>
   </table>
 
-  <!-- ── ENFORCEMENT ARCHITECTURE ── -->
-  <div class="section-label" style="margin-top:48px">Enforcement Architecture</div>
+  <!-- ── ENFORCEMENT ── -->
+  <div class="section-label" style="margin-top:44px">Enforcement Architecture</div>
 
   <div class="flow-box">
-    <div class="flow-title">Advisory (CLAUDE.md) vs Deterministic (Hooks)</div>
+    <div class="flow-title">Advisory (CLAUDE.md + memory) vs Deterministic (Hooks)</div>
     <div class="flow-desc">
-      <strong>CLAUDE.md</strong> — can be forgotten, per-conversation, honour system, context-dependent.<br>
-      <strong>Hooks</strong> — always fire, survive restarts, enforced gates, unconditional.<br><br>
-      The <code>UserPromptSubmit</code> hook in <code>~/.claude/settings.json</code> runs <code>~/.claude/hooks/skill-forced-eval-hook.sh</code> on every prompt. It injects mandatory instructions requiring skill evaluation before any work begins. This is what prevents TDD and verification from being forgotten.
+      <strong>CLAUDE.md &amp; auto-memory</strong> &mdash; rules Claude reads and should follow. Can be forgotten under load or in long sessions. Honour system.<br>
+      <strong>Hooks</strong> &mdash; shell commands the harness runs. Always fire. Can&rsquo;t be forgotten. If a behaviour must happen every time, it belongs in a hook.<br><br>
+      The two new hooks added 2026-04-21 (<code>PreToolUse</code> Bash warning + <code>Stop</code> <code>pkill</code>) are the pattern for turning a CLAUDE.md rule into guaranteed behaviour.
+    </div>
+  </div>
+
+  <div class="flow-box">
+    <div class="flow-title">When to promote a rule from CLAUDE.md to a hook or skill</div>
+    <div class="flow-desc">
+      <strong>Hook</strong> &mdash; rule must fire every time, no exceptions, regardless of context. Example: vitest-watcher cleanup.<br>
+      <strong>Skill</strong> &mdash; rule only matters in specific contexts; triggers keep it out of the always-loaded prose. Example: <code>/ship</code>, <code>/resume</code>, <code>/verification-before-completion</code>.<br>
+      <strong>CLAUDE.md prose</strong> &mdash; rule applies broadly and needs to be readable context for any task. Example: the Adoption Discipline and Routing rules.<br><br>
+      The CLAUDE.md growth brake (&gt;20 lines requires a paired removal or skill migration) keeps the advisory layer from bloating.
     </div>
   </div>
 
@@ -391,7 +479,7 @@
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Development Lifecycle Walkthrough</span>
-  <span><a href="../walkthroughs.html" style="color:var(--text3)">&#8592; Back to walkthroughs</a></span>
+  <span>Updated April 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">&larr; Back to walkthroughs</a></span>
 </footer>
 
 </body>
