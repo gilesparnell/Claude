@@ -105,12 +105,42 @@
       </div>
     </div>
 
+    <div class="adr-card" data-category="process">
+      <div class="adr-num">ADR-016</div>
+      <div class="adr-body">
+        <div class="adr-title">Triage-first for adoption of any recommendation set</div>
+        <div class="adr-desc">For any "adopt X" / "add these recommendations" request, Claude must produce an explicit accept/reject/defer triage against current state before writing any plan. The reject column must exist — if empty, re-check for overlap. Paired with a CLAUDE.md growth brake (any proposal adding &gt;20 lines requires a paired proposal for what to remove or migrate to a skill). Prevents rubber-stamping recommendations that duplicate existing coverage.</div>
+        <div class="adr-meta">
+          <span class="adr-status status-accepted">accepted</span>
+          <span class="tag">workflow</span>
+          <span class="tag">claude</span>
+          <span class="tag">discipline</span>
+          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">April 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="adr-card" data-category="tooling">
+      <div class="adr-num">ADR-017</div>
+      <div class="adr-body">
+        <div class="adr-title">Ship /ship and /resume as skills, not commands</div>
+        <div class="adr-desc">Skills compose with the skill-forced-eval hook on UserPromptSubmit, show up in the live skill list, and reference other skills by declared triggers. /ship composes with the existing verification-before-completion skill for its merge-verification step rather than re-implementing gh pr view — composition over duplication. /resume automates the Project Status Catch-Up rule with an explicit stop-and-ask gate.</div>
+        <div class="adr-meta">
+          <span class="adr-status status-accepted">accepted</span>
+          <span class="tag">claude</span>
+          <span class="tag">skills</span>
+          <span class="tag">workflow</span>
+          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">April 2026</span>
+        </div>
+      </div>
+    </div>
+
     <!-- EMPTY STATE -->
     <div class="adr-card" style="border-style:dashed;opacity:0.45" data-category="placeholder">
-      <div class="adr-num" style="color:var(--text3)">ADR-004</div>
+      <div class="adr-num" style="color:var(--text3)">ADR-018</div>
       <div class="adr-body">
         <div class="adr-title" style="color:var(--text3)">Add your next decision</div>
-        <div class="adr-desc" style="color:var(--text3)">Add a markdown file to <code>decisions/</code> in the repo. The GitHub Action will pick it up and add it here automatically.</div>
+        <div class="adr-desc" style="color:var(--text3)">Add a markdown file to <code>decisions/</code> in the repo. Note: HTML cards are currently added manually — the auto-render gap (no AUTO-GENERATED ADRS markers in this file) is a known issue, logged for later.</div>
       </div>
     </div>
 
