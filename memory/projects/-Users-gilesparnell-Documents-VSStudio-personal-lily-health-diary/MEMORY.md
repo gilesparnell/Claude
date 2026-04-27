@@ -1,0 +1,1 @@
+- [feedback_push_to_main.md](feedback_push_to_main.md) — Solo dev, always push directly to main

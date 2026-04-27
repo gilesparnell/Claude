@@ -1,0 +1,3 @@
+- [Always deploy after code changes](feedback_always_deploy.md) — commit, push branch, open PR, auto-merge — never leave edits as local unstaged files
+- [UI polish pass after multi-surface rollouts](feedback_ui_polish_pass.md) — sample the existing visual language before shipping; JSX text doesn't process `\u` escapes; centred titles need a spacer for symmetric affordances
+- [WLC admin config is localStorage-only](project_wlc_admin_config_sync.md) — `DEFAULT_CONFIG.challengeStart` and `FALLBACK_START` must be kept in sync; cross-device changes don't propagate

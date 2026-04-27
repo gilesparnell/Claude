@@ -1,0 +1,1 @@
+- [Check plans folder for project status](feedback_project_status.md) — always read plans before git log when asked "what's the latest"
