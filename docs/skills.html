@@ -39,9 +39,9 @@
     <div class="hero-title">Reusable instructions that make<br>Claude <em>better on every project</em></div>
     <div class="hero-sub">Each skill is a folder Claude Code loads when triggered. They encode hard-won patterns — things corrected, approaches that worked, rules that should apply everywhere.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="skill-count">20</span><span class="stat-l">Skills</span></div>
-      <div class="stat"><span class="stat-n" id="cat-count">6</span><span class="stat-l">Categories</span></div>
-      <div class="stat"><span class="stat-n">102+</span><span class="stat-l">Trigger phrases</span></div>
+      <div class="stat"><span class="stat-n" id="skill-count">9</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="cat-count">5</span><span class="stat-l">Categories</span></div>
+      <div class="stat"><span class="stat-n">55+</span><span class="stat-l">Trigger phrases</span></div>
     </div>
   </div>
 </div>
@@ -67,221 +67,40 @@
   <div class="skills-grid" id="skills-grid">
     <!-- AUTO-GENERATED SKILLS START -->
 
-    <!-- CLAUDE CODE WORKFLOW -->
-    <div class="skill-card" data-category="tooling" data-scope="global">
-      <div class="skill-band" style="background:var(--purple-bg)">
-        <div>
-          <div class="skill-name">Claude Code Workflow</div>
-          <div class="skill-slug">claude-code-workflow</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128187;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)">tooling</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Visual guide to structuring Claude Code sessions with tmux, git worktrees, and Agent Teams for productive parallel development.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">set up my dev environment</span>
-            <span class="trigger">tmux workflow</span>
-            <span class="trigger">parallel sessions</span>
-            <span class="trigger">too many tabs</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Key patterns</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>tmux named windows replace random terminal tabs</div>
-            <div class="check-item"><span class="check-dot"></span>Git worktrees isolate parallel agents (no file conflicts)</div>
-            <div class="check-item"><span class="check-dot"></span>Agent Teams coordinate multi-agent implementation</div>
-            <div class="check-item"><span class="check-dot"></span>Max 2 parallel sessions, one task per session</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CODE QUALITY REVIEW -->
+    <!-- END-TO-END FEATURE TEST -->
     <div class="skill-card" data-category="code" data-scope="global">
       <div class="skill-band" style="background:var(--blue-bg)">
         <div>
-          <div class="skill-name">Code Quality Review</div>
-          <div class="skill-slug">code-quality</div>
+          <div class="skill-name">End-to-End Feature Test</div>
+          <div class="skill-slug">e2e-feature-test</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128269;</span>
+          <span class="skill-icon">🧪</span>
           <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
           <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
         </div>
       </div>
       <div class="skill-body">
-        <div class="skill-desc">Systematic checklist for auditing code before it ships. Covers correctness, readability, performance, security, and maintainability.</div>
+        <div class="skill-desc">Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a pass/fail report. Use after building a feature with both frontend and backend components. Triggers on 'test this feature end to end', 'e2e test', 'full feature test', 'usability test this', 'test the whole feature', 'browser and backend test'.</div>
         <div>
           <div class="triggers-label">Triggers on</div>
           <div class="triggers">
-            <span class="trigger">review this code</span>
-            <span class="trigger">check code quality</span>
-            <span class="trigger">audit this file</span>
-            <span class="trigger">make this production-ready</span>
+            <span class="trigger">e2e test</span>
+            <span class="trigger">end to end test</span>
+            <span class="trigger">full feature test</span>
+            <span class="trigger">usability test</span>
+            <span class="trigger">test the whole feature</span>
+            <span class="trigger">browser and backend test</span>
           </div>
         </div>
         <div>
-          <div class="triggers-label">Checks</div>
+          <div class="triggers-label">Rules</div>
           <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Correctness and edge cases</div>
-            <div class="check-item"><span class="check-dot"></span>Readability and naming</div>
-            <div class="check-item"><span class="check-dot"></span>Performance hotspots</div>
-            <div class="check-item"><span class="check-dot"></span>Security and input validation</div>
-            <div class="check-item"><span class="check-dot"></span>Maintainability and testability</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PR CODE REVIEW -->
-    <div class="skill-card" data-category="code" data-scope="global">
-      <div class="skill-band" style="background:var(--blue-bg)">
-        <div>
-          <div class="skill-name">PR Code Review</div>
-          <div class="skill-slug">code-review</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128065;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Adversarial fresh-eyes PR review. Catches what the author missed. Uses blocking, suggestion, and nit labels.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">review this PR</span>
-            <span class="trigger">adversarial review</span>
-            <span class="trigger">fresh eyes on this</span>
-            <span class="trigger">prepare for review</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Checks</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>PR description quality</div>
-            <div class="check-item"><span class="check-dot"></span>Runtime errors and edge cases</div>
-            <div class="check-item"><span class="check-dot"></span>Test coverage and meaning</div>
-            <div class="check-item"><span class="check-dot"></span>Security checks</div>
-            <div class="check-item"><span class="check-dot"></span>6-month maintainability</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FIND YOUR FIRST 10 CUSTOMERS -->
-    <div class="skill-card" data-category="engagement" data-scope="global">
-      <div class="skill-band" style="background:var(--navy-bg)">
-        <div>
-          <div class="skill-name">Find Your First 10 Customers</div>
-          <div class="skill-slug">find-first-10</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#127919;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--navy-bg);color:var(--navy-text);border-color:var(--navy-border)">engagement</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Builds a concrete 2-week plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier. Includes the Sean Ellis "would you be devastated" PMF test and explicit kill criteria. Use before spending money on paid ads.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">find first 10</span>
-            <span class="trigger">first 10 customers</span>
-            <span class="trigger">who do I sell this to first</span>
-            <span class="trigger">sean ellis test</span>
-            <span class="trigger">manual customer acquisition plan</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Use when</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Just launched and don't yet have 10 paying customers</div>
-            <div class="check-item"><span class="check-dot"></span>About to spend money on ads or SEO without proving manually</div>
-            <div class="check-item"><span class="check-dot"></span>Stuck on "how do I get my first customers"</div>
-            <div class="check-item"><span class="check-dot"></span>Launching a new pricing tier or product line</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FRONTEND DESIGN -->
-    <div class="skill-card" data-category="frontend" data-scope="global">
-      <div class="skill-band" style="background:var(--coral-bg)">
-        <div>
-          <div class="skill-name">Frontend Design</div>
-          <div class="skill-slug">frontend-design</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#127912;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--coral-bg);color:var(--coral-text);border-color:var(--coral-border)">frontend</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Opinionated UI design rules that avoid generic AI aesthetics. Whitespace, typography, colour intentionality. Tailwind patterns and component guidance.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">build this UI</span>
-            <span class="trigger">style this component</span>
-            <span class="trigger">make this look good</span>
-            <span class="trigger">create a landing page</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Key rules</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>No Inter/purple/gradient hero cliches</div>
-            <div class="check-item"><span class="check-dot"></span>Typography and whitespace first</div>
-            <div class="check-item"><span class="check-dot"></span>Mobile-first test at 375/768/1280px</div>
-            <div class="check-item"><span class="check-dot"></span>Design empty states — first thing users see</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- GIT CONVENTIONS -->
-    <div class="skill-card" data-category="workflow" data-scope="global">
-      <div class="skill-band" style="background:var(--amber-bg)">
-        <div>
-          <div class="skill-name">Git Conventions</div>
-          <div class="skill-slug">git-conventions</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#127809;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Conventional Commits format, branch naming, and PR description template. Keeps history clean and meaningful.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">commit this</span>
-            <span class="trigger">write a commit message</span>
-            <span class="trigger">create a PR</span>
-            <span class="trigger">prepare for review</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Types</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>feat — new feature</div>
-            <div class="check-item"><span class="check-dot"></span>fix — bug fix</div>
-            <div class="check-item"><span class="check-dot"></span>chore — maintenance</div>
-            <div class="check-item"><span class="check-dot"></span>docs — documentation</div>
-            <div class="check-item"><span class="check-dot"></span>refactor — no behaviour change</div>
+            <div class="check-item"><span class="check-dot"></span>Never claim a test passes without screenshot or command output evidence</div>
+            <div class="check-item"><span class="check-dot"></span>Always verify backend state after frontend actions (database, API, logs)</div>
+            <div class="check-item"><span class="check-dot"></span>Re-snapshot after every navigation or DOM mutation</div>
+            <div class="check-item"><span class="check-dot"></span>Test both happy path AND failure/edge cases</div>
+            <div class="check-item"><span class="check-dot"></span>Close the browser session when done</div>
           </div>
         </div>
       </div>
@@ -405,43 +224,6 @@
             <div class="check-item"><span class="check-dot"></span>docs/decisions/ — per-project architecture decision records</div>
             <div class="check-item"><span class="check-dot"></span>docs/brainstorms/ — discovery notes, alternatives considered</div>
             <div class="check-item"><span class="check-dot"></span>CHANGELOG.md — what shipped and when</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- /RESUME -->
-    <div class="skill-card" data-category="workflow" data-scope="global">
-      <div class="skill-band" style="background:var(--amber-bg)">
-        <div>
-          <div class="skill-name">/resume</div>
-          <div class="skill-slug">resume</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">⏮</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Load plans, handoff log, git log, and open PRs before continuing work. Summarise in three bullets, then ask which thread to pull. Prevents speculative continuation.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">continue</span>
-            <span class="trigger">resume</span>
-            <span class="trigger">where were we</span>
-            <span class="trigger">catch me up</span>
-            <span class="trigger">what's the latest</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Steps</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Read most recent plan + docs/handoff/handoff.md top entry</div>
-            <div class="check-item"><span class="check-dot"></span>Check git log + gh pr list for in-flight work</div>
-            <div class="check-item"><span class="check-dot"></span>Summarise in three bullets — plan, in-flight, next</div>
-            <div class="check-item"><span class="check-dot"></span>Ask user to pick a thread; never start work speculatively</div>
           </div>
         </div>
       </div>
@@ -572,78 +354,6 @@
       </div>
     </div>
 
-    <!-- /SHIP -->
-    <div class="skill-card" data-category="workflow" data-scope="global">
-      <div class="skill-band" style="background:var(--amber-bg)">
-        <div>
-          <div class="skill-name">/ship</div>
-          <div class="skill-slug">ship</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">🚢</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Verified PR ship procedure — tests, lint, commit, push, open PR, then verify merge before claiming done. Terminates the "claimed merged but wasn't" failure mode.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">ship this</span>
-            <span class="trigger">push and PR</span>
-            <span class="trigger">wrap up and ship</span>
-            <span class="trigger">ready to ship</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Steps</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Run tests sequentially (no --watch); halt on failure</div>
-            <div class="check-item"><span class="check-dot"></span>Lint + typecheck; never --no-verify to bypass</div>
-            <div class="check-item"><span class="check-dot"></span>Commit via git-conventions, push, open PR with gh</div>
-            <div class="check-item"><span class="check-dot"></span>Verify merge via gh pr view before claiming done</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SKILL PUBLISHER -->
-    <div class="skill-card" data-category="workflow" data-scope="global">
-      <div class="skill-band" style="background:var(--amber-bg)">
-        <div>
-          <div class="skill-name">Skill Publisher</div>
-          <div class="skill-slug">skill-publisher</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128230;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)">workflow</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Mandatory workflow for publishing skills, walkthroughs, decisions, and templates to the GitHub Pages knowledge portal with correct structure, cards, and git push.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">publish this skill</span>
-            <span class="trigger">create a walkthrough</span>
-            <span class="trigger">add to the portal</span>
-            <span class="trigger">publish this walkthrough</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Rules</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Every skill needs runtime SKILL.md + portal stub + git push</div>
-            <div class="check-item"><span class="check-dot"></span>Walkthroughs need detail page + card in walkthroughs.html + stat update</div>
-            <div class="check-item"><span class="check-dot"></span>All portal content uses docs/portal.css — no custom CSS</div>
-            <div class="check-item"><span class="check-dot"></span>Nothing is done until committed and pushed to gilesparnell/Claude</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- SYSTEMATIC DEBUGGING -->
     <div class="skill-card" data-category="code" data-scope="global">
       <div class="skill-band" style="background:var(--blue-bg)">
@@ -682,121 +392,6 @@
             <div class="check-item"><span class="check-dot"></span>If 3+ fixes fail, question the architecture</div>
             <div class="check-item"><span class="check-dot"></span>Trace bugs backward through the call stack to find the source</div>
             <div class="check-item"><span class="check-dot"></span>Add defence-in-depth validation at every layer</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TDD-FIRST ENFORCEMENT -->
-    <div class="skill-card" data-category="code" data-scope="global">
-      <div class="skill-band" style="background:var(--blue-bg)">
-        <div>
-          <div class="skill-name">TDD-First Enforcement</div>
-          <div class="skill-slug">tdd-first</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128308;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Mandatory test-first development for all non-trivial code. No trigger words needed — always active. Enforces the FULL test pyramid — unit, integration, and system/E2E tests. RED-GREEN-REFACTOR cycle for TypeScript, Python, Node.js, and Go. Nothing is "done" until the complete test suite passes.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">always active — no trigger needed</span>
-            <span class="trigger">write tests first</span>
-            <span class="trigger">TDD</span>
-            <span class="trigger">test first</span>
-            <span class="trigger">run the tests</span>
-            <span class="trigger">is this tested</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Rules</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Always active — no trigger words needed</div>
-            <div class="check-item"><span class="check-dot"></span>Three test layers enforced — unit + integration + system/E2E</div>
-            <div class="check-item"><span class="check-dot"></span>Tests written BEFORE implementation (happy + sad + edge)</div>
-            <div class="check-item"><span class="check-dot"></span>RED confirmed before code, GREEN confirmed after</div>
-            <div class="check-item"><span class="check-dot"></span>Full test suite MUST pass before declaring anything "done"</div>
-            <div class="check-item"><span class="check-dot"></span>Standardised test file placement per runtime and layer</div>
-            <div class="check-item"><span class="check-dot"></span>Bug fixes start with a reproduction test</div>
-            <div class="check-item"><span class="check-dot"></span>No mocking internal modules — mock only external boundaries</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TESTING PRACTICES -->
-    <div class="skill-card" data-category="code" data-scope="global">
-      <div class="skill-band" style="background:var(--blue-bg)">
-        <div>
-          <div class="skill-name">Testing Practices</div>
-          <div class="skill-slug">testing-practices</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#9989;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">code</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Testing philosophy, naming conventions, and structure patterns. DAMP over DRY. Arrange / Act / Assert. Behaviour not implementation.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">write tests for this</span>
-            <span class="trigger">add test coverage</span>
-            <span class="trigger">how do I test this</span>
-            <span class="trigger">set up testing</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Principles</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>Test behaviour not implementation</div>
-            <div class="check-item"><span class="check-dot"></span>DAMP naming — does X when Y</div>
-            <div class="check-item"><span class="check-dot"></span>Arrange / Act / Assert structure</div>
-            <div class="check-item"><span class="check-dot"></span>Unit to Integration to E2E pyramid</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VALIDATE THE PROBLEM -->
-    <div class="skill-card" data-category="engagement" data-scope="global">
-      <div class="skill-band" style="background:var(--navy-bg)">
-        <div>
-          <div class="skill-name">Validate the Problem</div>
-          <div class="skill-slug">validate-problem</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="skill-icon">&#128269;</span>
-          <span class="cat-badge" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">global</span>
-          <span class="cat-badge" style="background:var(--navy-bg);color:var(--navy-text);border-color:var(--navy-border)">engagement</span>
-        </div>
-      </div>
-      <div class="skill-body">
-        <div class="skill-desc">Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign. Steve Blank / Mom Test tradition. Output is a discovery script, not a verdict — surfaces the questions you should be asking real people.</div>
-        <div>
-          <div class="triggers-label">Triggers on</div>
-          <div class="triggers">
-            <span class="trigger">validate the problem</span>
-            <span class="trigger">is this a real problem</span>
-            <span class="trigger">pressure test this idea</span>
-            <span class="trigger">painkiller or vitamin</span>
-            <span class="trigger">discovery questions for</span>
-          </div>
-        </div>
-        <div>
-          <div class="triggers-label">Use when</div>
-          <div class="checks">
-            <div class="check-item"><span class="check-dot"></span>About to build a feature, product, or campaign with no recent customer evidence</div>
-            <div class="check-item"><span class="check-dot"></span>You have a niche hypothesis but no proof the pain is acute</div>
-            <div class="check-item"><span class="check-dot"></span>Tempted to skip discovery because "it's obvious"</div>
-            <div class="check-item"><span class="check-dot"></span>Need a 5-question script for prospect calls</div>
           </div>
         </div>
       </div>
