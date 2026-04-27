@@ -1,22 +1,6 @@
 ---
-title: Find Your First 10 Customers
-scope: global
-category: engagement
-icon: &#127919;
-description: Builds a concrete 2-week plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier. Includes the Sean Ellis "would you be devastated" PMF test and explicit kill criteria. Use before spending money on paid ads.
-triggers:
-  - find first 10
-  - first 10 customers
-  - who do I sell this to first
-  - sean ellis test
-  - manual customer acquisition plan
-checks-label: Use when
-checks:
-  - Just launched and don't yet have 10 paying customers
-  - About to spend money on ads or SEO without proving manually
-  - Stuck on "how do I get my first customers"
-  - Launching a new pricing tier or product line
-version: 1.0
+name: find-first-10
+description: Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier. Includes the Sean Ellis "would be devastated" test. Triggers on 'find first 10', 'first 10 customers', 'who do I sell this to first', 'sean ellis test', 'manual customer acquisition plan'.
 ---
 
 # Find Your First 10 Customers

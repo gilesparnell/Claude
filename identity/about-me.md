@@ -1,5 +1,8 @@
 # About Me — Giles Parnell
 
+## Location / Timezone
+Based in Australia, East Coast — **Australia/Sydney** timezone. This is AEST (UTC+10) for most of the year and AEDT (UTC+11) during daylight saving (roughly October → early April). My machine's local clock is authoritative — when Vercel/GitHub/etc. report UTC timestamps, convert them to my local time before showing me, and always include the timezone suffix so it's unambiguous (e.g. `9:46 pm AEST`, not bare `21:46`).
+
 ## Role
 Freelance developer and consultant at Parnell Systems. I build software for clients and ship my own products. Backend-heavy, 10+ years in the industry.
 

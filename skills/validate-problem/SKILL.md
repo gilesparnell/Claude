@@ -1,22 +1,6 @@
 ---
-title: Validate the Problem
-scope: global
-category: engagement
-icon: &#128269;
-description: Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign. Steve Blank / Mom Test tradition. Output is a discovery script, not a verdict — surfaces the questions you should be asking real people.
-triggers:
-  - validate the problem
-  - is this a real problem
-  - pressure test this idea
-  - painkiller or vitamin
-  - discovery questions for
-checks-label: Use when
-checks:
-  - About to build a feature, product, or campaign with no recent customer evidence
-  - You have a niche hypothesis but no proof the pain is acute
-  - Tempted to skip discovery because "it's obvious"
-  - Need a 5-question script for prospect calls
-version: 1.0
+name: validate-problem
+description: Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign. Triggers on 'validate the problem', 'is this a real problem', 'pressure test this idea', 'painkiller or vitamin', 'discovery questions for'.
 ---
 
 # Validate the Problem
