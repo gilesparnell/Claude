@@ -1,30 +1,39 @@
 ---
-name: project_current_state
-description: Sprint Tracker project status as of 2026-04-01 — 88% complete, roadmap planned, docs pushed
+name: SprintTracker Current State
+description: Sprint Tracker current version, shipped features, and what remains as of 2026-04-28
 type: project
 ---
 
-## Sprint Tracker — Current State (2026-04-01)
+## Version: 0.13.3 (live on Vercel)
 
-### What's Done (88% — 88/100 tasks)
-- W1-W9 all 100% complete: Core infra/auth, sprints, stories, backlog, tasks, subtasks, notes, notifications, products, admin panel
-- 79 tests across 9 files (schema, actions, integration, build, notifications)
-- 21 notification-specific integration tests added this session
-- Production on Turso, admin seeded (gilesparnell@gmail.com)
+**Note:** Earlier version of this file reflected state at 2026-04-01 (v~0.9.x, 88% complete). This file supersedes it.
 
-### What's Remaining (documented in roadmap)
+## What's Shipped Since April 2026
+
+- **v0.10.0** — Create-product dialogue in backlog, wider desktop layout; build error fixes
+- **v0.11.x** — Admin page fixes (badge alignment, live session name sync, conditional admin icon, backlog product default); mobile sign-out button; Next.js 16 revalidateTag fix
+- **v0.12.x** — Light "day work" mode toggle with system autodetect; extended to sidebar, drawer, mobile top bar; React hydration mismatch (#418) fixed
+- **v0.13.x** — Rename backlogs inline; surface parent story on tasks; parent story picker in Edit Task modal; always-show parent story picker fix
+
+## Kanban drag-and-drop
+Shipped and documented in roadmap. PR merged, docs updated.
+
+## Current architecture
+- Next.js 15 App Router + TypeScript
+- Turso (libSQL) in production — migration `0004_sudden_catseye.sql` applied to production
+- Auth via NextAuth v5
+- Vercel deployment, branch protection + CI required
+
+## What remains (from roadmap)
 - **P0:** Playwright E2E tests, API route integration tests
-- **P1:** Kanban DnD, keyboard shortcuts, archive status for stories
-- **P2:** Bidirectional ClickUp sync, global search (FTS5), burndown/velocity charts
+- **P1:** Keyboard shortcuts, archive status for stories
+- **P2:** Bidirectional ClickUp sync (plan exists in docs/plans/), global search (FTS5), burndown/velocity charts
 - **P3:** Bulk ops, sprint templates, file attachments, custom fields, permissions, webhooks
 
-### Key Files Created This Session
+## Key files
 - `docs/plans/2026-04-01-002-feat-sprint-tracker-roadmap-plan.md` — full prioritised roadmap
-- `docs/user-guide.html` — visual dark-theme user guide for end users
-- `docs/diagrams/plan-progress.html` — progress diagram (all cross-linked)
-- `docs/plan.md` — master checklist of all 100 tasks
-- `src/__tests__/integration/notification-system.test.ts` — 21 notification tests
+- `docs/user-guide.html` — visual user guide
+- `docs/diagrams/plan-progress.html` — progress dashboard
 
-### All pushed to GitHub (commit dfd9a4f)
-
-### Pending: User wanted to create a `/ce:plan` for the roadmap (was interrupted). The roadmap plan file already exists but they may want it enhanced with `/deepen-plan` or pushed to Proof.
+## Working tree state (check on next session)
+As of early April, there were uncommitted changes (dev auth bypass, lazy-loaded widgets, SidebarNavLink memo, ProductManager UI). Verify these were committed before assuming the tree is clean.
