@@ -67,6 +67,12 @@ for f in "$REPO_DIR/hooks/"*.sh; do
 done
 echo "✓ Hooks installed"
 
+# ── Session hooks (Stop hook scripts) ────────────────────────────────────────
+mkdir -p "$CLAUDE_DIR/tools/session-hooks"
+cp "$REPO_DIR/tools/session-hooks/sync-memory-to-repo.sh" "$CLAUDE_DIR/tools/session-hooks/"
+chmod +x "$CLAUDE_DIR/tools/session-hooks/sync-memory-to-repo.sh"
+echo "✓ Session hooks installed (sync-memory-to-repo.sh)"
+
 # ── Memory ───────────────────────────────────────────────────────────────────
 # Memory lives under the VSStudio workspace project path.
 # Adjust WORKSPACE_KEY if your VSStudio folder is in a different location.
