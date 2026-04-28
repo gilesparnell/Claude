@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Sync — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../decisions.html">Decisions</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../project-status.html">Project Status</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Tooling</div>
+    <div class="hero-title">Memory Sync<br><em>How Claude remembers you</em></div>
+    <div class="hero-sub">Claude writes memory files locally during sessions. A Stop hook auto-commits them to GitHub so a fresh session — on any machine or account — starts with full context.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <!-- ── SECTION 1: THE PROBLEM ── -->
+  <div class="section-label">The Problem</div>
+
+  <svg viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Memory drift problem diagram">
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+      <marker id="arr-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#e05c5c"/>
+      </marker>
+    </defs>
+
+    <!-- Session 1 -->
+    <rect x="20" y="20" width="150" height="60" rx="10" fill="#F3EFFA" stroke="#C9B8E8" stroke-width="1.5"/>
+    <text x="95" y="46" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#5B3E96">Session 1</text>
+    <text x="95" y="64" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#7B5EAD">WLC v0.11 shipped</text>
+
+    <!-- Arrow -->
+    <line x1="174" y1="50" x2="214" y2="50" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Session N -->
+    <rect x="218" y="20" width="150" height="60" rx="10" fill="#F3EFFA" stroke="#C9B8E8" stroke-width="1.5"/>
+    <text x="293" y="46" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#5B3E96">Sessions 2–N</text>
+    <text x="293" y="64" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#7B5EAD">More features ship…</text>
+
+    <!-- Arrow to new session -->
+    <line x1="372" y1="50" x2="412" y2="50" stroke="#999890" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- New session -->
+    <rect x="416" y="20" width="160" height="60" rx="10" fill="#FEF3F3" stroke="#F0A0A0" stroke-width="1.5"/>
+    <text x="496" y="46" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#C0392B">New session</text>
+    <text x="496" y="64" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#E05C5C">Memory says v0.11 😬</text>
+
+    <!-- Problem label -->
+    <text x="496" y="105" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#999890">Memory was never updated → stale context</text>
+    <line x1="496" y1="82" x2="496" y2="96" stroke="#E05C5C" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  </svg>
+
+  <!-- ── SECTION 2: THE SOLUTION ── -->
+  <div class="section-label">The Solution: Auto-Sync on Stop</div>
+
+  <svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Auto-sync solution diagram">
+    <defs>
+      <marker id="arr2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+      <marker id="arr2g" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#38bfa0"/>
+      </marker>
+    </defs>
+
+    <!-- Session box -->
+    <rect x="20" y="30" width="160" height="70" rx="10" fill="#F3EFFA" stroke="#C9B8E8" stroke-width="1.5"/>
+    <text x="100" y="57" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#5B3E96">Claude Session</text>
+    <text x="100" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#7B5EAD">Memory updated</text>
+    <text x="100" y="90" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#7B5EAD">during work</text>
+
+    <!-- Arrow to Stop -->
+    <line x1="184" y1="65" x2="224" y2="65" stroke="#999890" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+    <!-- Stop hook box -->
+    <rect x="228" y="30" width="160" height="70" rx="10" fill="#FFF8EC" stroke="#F0C070" stroke-width="1.5"/>
+    <text x="308" y="57" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#8B6010">Stop Hook fires</text>
+    <text x="308" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#A07020">sync-memory-</text>
+    <text x="308" y="90" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#A07020">to-repo.sh</text>
+
+    <!-- Arrow to GitHub -->
+    <line x1="392" y1="65" x2="432" y2="65" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr2g)"/>
+
+    <!-- GitHub box -->
+    <rect x="436" y="30" width="160" height="70" rx="10" fill="#EDFAF5" stroke="#38bfa0" stroke-width="1.5"/>
+    <text x="516" y="57" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#1a7a5e">GitHub</text>
+    <text x="516" y="74" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#38bfa0">gilesparnell/Claude</text>
+    <text x="516" y="90" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#38bfa0">memory/ updated ✓</text>
+
+    <!-- Arrow down to new session -->
+    <line x1="516" y1="104" x2="516" y2="138" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr2g)"/>
+
+    <!-- New session box -->
+    <rect x="436" y="140" width="160" height="30" rx="8" fill="#EDFAF5" stroke="#38bfa0" stroke-width="1.5"/>
+    <text x="516" y="159" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#1a7a5e">Next session: full context ✓</text>
+  </svg>
+
+  <!-- ── SECTION 3: WHAT GETS SYNCED ── -->
+  <div class="section-label">What Gets Synced</div>
+
+  <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Files synced diagram">
+    <defs>
+      <marker id="arr3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#38bfa0"/>
+      </marker>
+    </defs>
+
+    <!-- Left: local -->
+    <text x="180" y="20" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#aaa">LOCAL (~/.claude/)</text>
+
+    <!-- CLAUDE.md -->
+    <rect x="20" y="32" width="320" height="38" rx="8" fill="#1e2530" stroke="#2d3748" stroke-width="1"/>
+    <text x="36" y="52" font-family="monospace" font-size="12" fill="#38bfa0">~/.claude/CLAUDE.md</text>
+    <text x="36" y="65" font-family="monospace" font-size="10" fill="#666">Global rules (timezone, TDD, routing…)</text>
+
+    <!-- Global memory -->
+    <rect x="20" y="80" width="320" height="38" rx="8" fill="#1e2530" stroke="#2d3748" stroke-width="1"/>
+    <text x="36" y="100" font-family="monospace" font-size="12" fill="#38bfa0">~/.claude/projects/-Users-…-VSStudio/memory/</text>
+    <text x="36" y="113" font-family="monospace" font-size="10" fill="#666">Global workspace memory (18 files)</text>
+
+    <!-- Project memories -->
+    <rect x="20" y="128" width="320" height="38" rx="8" fill="#1e2530" stroke="#2d3748" stroke-width="1"/>
+    <text x="36" y="148" font-family="monospace" font-size="12" fill="#38bfa0">~/.claude/projects/*/memory/</text>
+    <text x="36" y="161" font-family="monospace" font-size="10" fill="#666">Per-project memory (WLC, SprintTracker…)</text>
+
+    <!-- Arrows -->
+    <line x1="344" y1="51" x2="396" y2="51" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="344" y1="99" x2="396" y2="99" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="344" y1="147" x2="396" y2="147" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+    <!-- Right: repo -->
+    <text x="580" y="20" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#aaa">REPO (github.com/gilesparnell/Claude)</text>
+
+    <rect x="400" y="32" width="340" height="38" rx="8" fill="#1e2530" stroke="#38bfa0" stroke-width="1"/>
+    <text x="416" y="52" font-family="monospace" font-size="12" fill="#ccc">global/CLAUDE.md</text>
+    <text x="416" y="65" font-family="monospace" font-size="10" fill="#666">Always current</text>
+
+    <rect x="400" y="80" width="340" height="38" rx="8" fill="#1e2530" stroke="#38bfa0" stroke-width="1"/>
+    <text x="416" y="100" font-family="monospace" font-size="12" fill="#ccc">memory/*.md</text>
+    <text x="416" y="113" font-family="monospace" font-size="10" fill="#666">feedback, user profile, references</text>
+
+    <rect x="400" y="128" width="340" height="38" rx="8" fill="#1e2530" stroke="#38bfa0" stroke-width="1"/>
+    <text x="416" y="148" font-family="monospace" font-size="12" fill="#ccc">memory/projects/*/</text>
+    <text x="416" y="161" font-family="monospace" font-size="10" fill="#666">project state, version, what's next</text>
+
+    <!-- Not synced section -->
+    <text x="380" y="210" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#555">NOT synced (intentional)</text>
+
+    <rect x="20" y="222" width="148" height="38" rx="8" fill="#111" stroke="#2d3748" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="94" y="238" text-anchor="middle" font-family="monospace" font-size="11" fill="#555">history.jsonl</text>
+    <text x="94" y="253" text-anchor="middle" font-family="monospace" font-size="10" fill="#444">too large / private</text>
+
+    <rect x="178" y="222" width="148" height="38" rx="8" fill="#111" stroke="#2d3748" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="252" y="238" text-anchor="middle" font-family="monospace" font-size="11" fill="#555">sessions/</text>
+    <text x="252" y="253" text-anchor="middle" font-family="monospace" font-size="10" fill="#444">runtime state</text>
+
+    <rect x="336" y="222" width="148" height="38" rx="8" fill="#111" stroke="#2d3748" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="410" y="238" text-anchor="middle" font-family="monospace" font-size="11" fill="#555">skills/</text>
+    <text x="410" y="253" text-anchor="middle" font-family="monospace" font-size="10" fill="#444">manual sync only</text>
+
+    <rect x="494" y="222" width="148" height="38" rx="8" fill="#111" stroke="#2d3748" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="568" y="238" text-anchor="middle" font-family="monospace" font-size="11" fill="#555">settings.json</text>
+    <text x="568" y="253" text-anchor="middle" font-family="monospace" font-size="10" fill="#444">manual sync only</text>
+  </svg>
+
+  <!-- ── SECTION 4: THE HOOK CHAIN ── -->
+  <div class="section-label">The Stop Hook Chain</div>
+
+  <svg viewBox="0 0 760 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Stop hook chain">
+    <defs>
+      <marker id="arr4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#999890"/>
+      </marker>
+    </defs>
+
+    <!-- Step 1 -->
+    <rect x="10" y="20" width="148" height="56" rx="8" fill="#1e2530" stroke="#2d3748" stroke-width="1.5"/>
+    <text x="84" y="43" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#ccc">1. Kill vitest</text>
+    <text x="84" y="60" text-anchor="middle" font-family="monospace" font-size="10" fill="#666">pkill -f vitest</text>
+    <text x="84" y="72" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#444">instant</text>
+
+    <line x1="162" y1="48" x2="180" y2="48" stroke="#999890" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <!-- Step 2 -->
+    <rect x="184" y="20" width="148" height="56" rx="8" fill="#1e2530" stroke="#2d3748" stroke-width="1.5"/>
+    <text x="258" y="43" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#ccc">2. Beep</text>
+    <text x="258" y="60" text-anchor="middle" font-family="monospace" font-size="10" fill="#666">osascript beep</text>
+    <text x="258" y="72" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#444">instant</text>
+
+    <line x1="336" y1="48" x2="354" y2="48" stroke="#999890" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <!-- Step 3 -->
+    <rect x="358" y="20" width="148" height="56" rx="8" fill="#1e2530" stroke="#2d3748" stroke-width="1.5"/>
+    <text x="432" y="43" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#ccc">3. Session log</text>
+    <text x="432" y="60" text-anchor="middle" font-family="monospace" font-size="10" fill="#666">session-end.js</text>
+    <text x="432" y="72" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#444">15s timeout</text>
+
+    <line x1="510" y1="48" x2="528" y2="48" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <!-- Step 4 — highlighted -->
+    <rect x="532" y="14" width="210" height="68" rx="8" fill="#0d2920" stroke="#38bfa0" stroke-width="2"/>
+    <text x="637" y="37" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#38bfa0">4. Memory sync ← NEW</text>
+    <text x="637" y="54" text-anchor="middle" font-family="monospace" font-size="10" fill="#2a9d7e">sync-memory-to-repo.sh</text>
+    <text x="637" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#1a6a52">30s timeout · git push</text>
+  </svg>
+
+  <!-- ── SECTION 5: THE SCRIPT ── -->
+  <div class="section-label">The Script (abridged)</div>
+
+  <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:24px;font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--text2);margin-bottom:40px;max-width:680px">
+    <div style="color:#666;margin-bottom:12px"># sync-memory-to-repo.sh</div>
+    <div><span style="color:#38bfa0">REPO</span>=<span style="color:#f0c070">"~/Documents/VSStudio/parnell-systems/claude-artefacts"</span></div>
+    <br>
+    <div style="color:#666"># 1. Sync CLAUDE.md</div>
+    <div>cp ~/.claude/CLAUDE.md <span style="color:#38bfa0">$REPO</span>/global/CLAUDE.md</div>
+    <br>
+    <div style="color:#666"># 2. Sync global workspace memory</div>
+    <div>cp ~/.claude/projects/…VSStudio/memory/*.md <span style="color:#38bfa0">$REPO</span>/memory/</div>
+    <br>
+    <div style="color:#666"># 3. Sync all project memories</div>
+    <div><span style="color:#c9b8e8">for</span> mem_dir <span style="color:#c9b8e8">in</span> ~/.claude/projects/*/memory; <span style="color:#c9b8e8">do</span></div>
+    <div>&nbsp;&nbsp;cp "$mem_dir"/*.md <span style="color:#38bfa0">$REPO</span>/memory/projects/$(basename …)/</div>
+    <div><span style="color:#c9b8e8">done</span></div>
+    <br>
+    <div style="color:#666"># 4. Only commit if something changed</div>
+    <div>git add memory/ global/CLAUDE.md</div>
+    <div><span style="color:#c9b8e8">if</span> git diff --staged --quiet; <span style="color:#c9b8e8">then</span> exit 0; <span style="color:#c9b8e8">fi</span></div>
+    <div>git commit -m <span style="color:#f0c070">"chore(auto-sync): session end $(date)"</span></div>
+    <div>git push origin main</div>
+  </div>
+
+  <!-- ── SECTION 6: BOOTSTRAP ── -->
+  <div class="section-label">Starting Fresh on a New Machine / Account</div>
+
+  <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="Bootstrap flow">
+    <defs>
+      <marker id="arr5" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#38bfa0"/>
+      </marker>
+    </defs>
+
+    <rect x="10" y="20" width="150" height="56" rx="8" fill="#0d2920" stroke="#38bfa0" stroke-width="1.5"/>
+    <text x="85" y="45" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#38bfa0">git clone</text>
+    <text x="85" y="63" text-anchor="middle" font-family="monospace" font-size="10" fill="#2a9d7e">gilesparnell/Claude</text>
+
+    <line x1="164" y1="48" x2="200" y2="48" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr5)"/>
+
+    <rect x="204" y="20" width="150" height="56" rx="8" fill="#0d2920" stroke="#38bfa0" stroke-width="1.5"/>
+    <text x="279" y="45" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#38bfa0">bash install.sh</text>
+    <text x="279" y="63" text-anchor="middle" font-family="monospace" font-size="10" fill="#2a9d7e">wires everything</text>
+
+    <line x1="358" y1="48" x2="394" y2="48" stroke="#38bfa0" stroke-width="1.5" marker-end="url(#arr5)"/>
+
+    <rect x="398" y="20" width="350" height="56" rx="8" fill="#1e2530" stroke="#2d3748" stroke-width="1.5"/>
+    <text x="573" y="40" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#ccc">Full context restored</text>
+    <text x="573" y="57" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#666">CLAUDE.md · Skills · Identity · Memory · Hooks</text>
+    <text x="573" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#444">+ re-auth plugins (Telegram, Compound Engineering)</text>
+  </svg>
+
+</div>
+
+<footer style="text-align:center;padding:32px;font-size:12px;color:var(--text3);border-top:1px solid var(--border)">
+  <a href="../walkthroughs.html" style="color:var(--teal)">&#8592; All walkthroughs</a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://github.com/gilesparnell/Claude/blob/main/tools/session-hooks/sync-memory-to-repo.sh" target="_blank" style="color:var(--teal)">View script on GitHub &#8594;</a>
+</footer>
+
+</body>
+</html>

@@ -39,7 +39,7 @@
     <div class="hero-title">Architecture diagrams &amp;<br><em>visual explainers</em></div>
     <div class="hero-sub">Generated when you ask Claude to show something worth keeping. Each walkthrough captures a decision, a mental model, or a system worth understanding at a glance.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n">9</span><span class="stat-l">Walkthroughs</span></div>
+      <div class="stat"><span class="stat-n">10</span><span class="stat-l">Walkthroughs</span></div>
       <div class="stat"><span class="stat-n">3</span><span class="stat-l">Categories</span></div>
     </div>
   </div>
@@ -270,6 +270,23 @@
     </div>
 
     <!-- EMPTY STATE -->
+    <!-- MEMORY SYNC -->
+    <div class="wt-card" data-category="tooling">
+      <div class="wt-thumb" style="background:var(--teal-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start;font-size:12px;font-family:var(--mono);color:var(--teal-text);line-height:1.7">
+        <div>Stop hook fires</div>
+        <div style="color:var(--teal);font-weight:600">sync-memory-to-repo.sh</div>
+        <div style="margin-top:4px">cp memory/ → repo/memory/</div>
+        <div>git add · commit · push</div>
+        <div style="color:#999;font-size:10px;margin-top:4px">only if changed · 30s timeout</div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Memory Sync — How Claude Remembers You</div>
+        <div class="wt-desc">Claude writes memory files locally during sessions. A Stop hook auto-commits them to GitHub so every new session starts with full context — across machines and accounts.</div>
+        <div class="wt-tags"><span class="tag">tooling</span><span class="tag">memory</span><span class="tag">hooks</span></div>
+        <a href="diagrams/memory-sync.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
     <div class="wt-card" data-category="placeholder" style="border-style:dashed;opacity:0.5">
       <div class="wt-thumb" style="flex-direction:column;gap:8px">
         <span style="font-size:28px">+</span>
