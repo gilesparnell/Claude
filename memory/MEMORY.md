@@ -48,6 +48,7 @@ All projects MUST live in `/Users/gilesparnell/Documents/VSStudio/`. Never creat
 - [Claude Brain Repo](reference_claude_brain_repo.md) — ALL docs, walkthroughs, skills go in gilesparnell/Claude (claude-artefacts/), NEVER in project repos. No project-specific docs or skills.
 - [Google Identities](reference_google_identities.md) — `giles@parnellsystems.com` is the canonical Workspace account for ALL Parnell Systems business infra (Ads, GA4, Search Console). Don't use personal Gmail.
 - [Claude Portal Skill Schema](reference_claude_portal_skill_schema.md) — portal mirror SKILL.md uses different frontmatter (title/scope/category/icon/triggers/checks) than runtime. Wrong schema = silently dropped on next push.
+- [Obsidian Vault](reference_obsidian_vault.md) — `/Users/gilesparnell/Documents/ObsidianVault/`. Job Hunt folder has dashboard + 3 complete STAR stories. 6,375 raw AWS Evernote notes in `Personal/Evernote/notes/AWS/`.
 
 ## Migration Plan Location
 The AWE2M8 to ParnellSystems migration plan lives at:
