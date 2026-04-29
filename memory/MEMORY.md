@@ -31,6 +31,7 @@ All projects MUST live in `/Users/gilesparnell/Documents/VSStudio/`. Never creat
 ```
 
 ## Key Memories
+- [Project Folder Structure Standard](feedback_project_folder_structure.md) — enforce full structure at day one: root=config only, scripts/, content/, exports/, design/, __tests__/, docs/plans|decisions|handoff/
 - [Resume Builder](project_resume_builder.md) — Next.js CV editor + AI profile generation from job URLs. Branch `feat/browser-ui-cv-editor`, all units complete. Needs `ANTHROPIC_API_KEY` in env to activate AI generation.
 - [Garion (assistant name)](user_garion_name.md) — Giles calls me Garion (after Belgariad). Whole David Eddings universe is fair shorthand.
 - [Giles Profile](user_giles_profile.md) — solopreneur, AU-based, voice AI SaaS
