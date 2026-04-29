@@ -1,6 +1,6 @@
 #!/bin/bash
-# sync-memory-to-repo.sh — Auto-sync Claude memory to GitHub on session end.
-# Runs as a Stop hook. Copies memory + CLAUDE.md to claude-artefacts, commits if changed.
+# sync-memory-to-repo.sh — Auto-sync Claude config to GitHub on session end.
+# Runs as a Stop hook. Copies memory, skills, and CLAUDE.md to claude-artefacts, commits if changed.
 
 set -euo pipefail
 
@@ -30,9 +30,22 @@ for mem_dir in "$PROJECTS_DIR"/*/memory; do
   cp "$mem_dir"/*.md "$dest/"
 done
 
+# ── Skills ───────────────────────────────────────────────────────────────────
+for skill_dir in "$HOME/.claude/skills/"/*/; do
+  name=$(basename "$skill_dir")
+  dest="$REPO/skills/$name"
+  mkdir -p "$dest"
+  cp "$skill_dir"*.md "$dest/" 2>/dev/null || true
+done
+# learned/ patterns live under skills/learned/ locally but repo/learned/
+if ls "$HOME/.claude/skills/learned/"*.md &>/dev/null 2>&1; then
+  mkdir -p "$REPO/learned"
+  cp "$HOME/.claude/skills/learned/"*.md "$REPO/learned/" 2>/dev/null || true
+fi
+
 # ── Commit and push if anything changed ─────────────────────────────────────
 cd "$REPO"
-git add memory/ global/CLAUDE.md 2>/dev/null || true
+git add memory/ global/CLAUDE.md skills/ learned/ 2>/dev/null || true
 
 if git diff --staged --quiet; then
   exit 0
