@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Engineering: CLAUDE.md Improvements — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../decisions.html">Decisions</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../project-status.html">Project Status</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Claude</div>
+    <div class="hero-title">CLAUDE.md Prompt<br><em>Engineering Improvements</em></div>
+    <div class="hero-sub">What an Anthropic prompt engineering course revealed about the global CLAUDE.md — and the six targeted edits that fixed it. Rules without examples drift. Critical instructions buried once get forgotten. Stale memory gets cited as fact.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <!-- ── SECTION 1: THE PROBLEM ── -->
+  <div class="section-label">The Problem</div>
+
+  <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Three gaps in CLAUDE.md">
+    <rect x="10" y="10" width="740" height="180" rx="12" fill="#0f1318" stroke="#1e2530" stroke-width="1"/>
+
+    <!-- Gap 1 -->
+    <rect x="36" y="34" width="210" height="132" rx="8" fill="#1a1f2e" stroke="#2d3a50" stroke-width="1"/>
+    <text x="141" y="58" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#7ca9e0" text-anchor="middle">Gap 1</text>
+    <text x="141" y="76" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#c8d8f0" text-anchor="middle">Rules without examples</text>
+    <text x="141" y="96" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a8d" text-anchor="middle">Extensive rules for commit</text>
+    <text x="141" y="112" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a8d" text-anchor="middle">messages, CHANGELOGs,</text>
+    <text x="141" y="128" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a8d" text-anchor="middle">and handoff entries — but</text>
+    <text x="141" y="144" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a8d" text-anchor="middle">no target output shown.</text>
+    <text x="141" y="158" font-family="-apple-system,sans-serif" font-size="10" fill="#e87c5b" text-anchor="middle">Rules drift without examples.</text>
+
+    <!-- Gap 2 -->
+    <rect x="274" y="34" width="212" height="132" rx="8" fill="#1a2018" stroke="#2d3d2a" stroke-width="1"/>
+    <text x="380" y="58" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#7cc87a" text-anchor="middle">Gap 2</text>
+    <text x="380" y="76" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#c8f0c8" text-anchor="middle">Stale memory cited as fact</text>
+    <text x="380" y="96" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a6b" text-anchor="middle">Memory records file paths</text>
+    <text x="380" y="112" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a6b" text-anchor="middle">and function names — but</text>
+    <text x="380" y="128" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a6b" text-anchor="middle">no rule required verifying</text>
+    <text x="380" y="144" font-family="-apple-system,sans-serif" font-size="11" fill="#6b7a6b" text-anchor="middle">them before citing.</text>
+    <text x="380" y="158" font-family="-apple-system,sans-serif" font-size="10" fill="#e87c5b" text-anchor="middle">Confident but wrong.</text>
+
+    <!-- Gap 3 -->
+    <rect x="514" y="34" width="210" height="132" rx="8" fill="#201a2a" stroke="#3a2d50" stroke-width="1"/>
+    <text x="619" y="58" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#a07cce" text-anchor="middle">Gap 3</text>
+    <text x="619" y="76" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#d8c8f0" text-anchor="middle">Critical rules buried once</text>
+    <text x="619" y="96" font-family="-apple-system,sans-serif" font-size="11" fill="#7a6b8d" text-anchor="middle">Timezone, TDD, commit gate,</text>
+    <text x="619" y="112" font-family="-apple-system,sans-serif" font-size="11" fill="#7a6b8d" text-anchor="middle">verify-before-done — each</text>
+    <text x="619" y="128" font-family="-apple-system,sans-serif" font-size="11" fill="#7a6b8d" text-anchor="middle">stated once in 590 lines.</text>
+    <text x="619" y="144" font-family="-apple-system,sans-serif" font-size="11" fill="#7a6b8d" text-anchor="middle">Forgotten mid long session.</text>
+    <text x="619" y="158" font-family="-apple-system,sans-serif" font-size="10" fill="#e87c5b" text-anchor="middle">Long prompts need repetition.</text>
+  </svg>
+
+  <!-- ── SECTION 2: THE INSIGHT ── -->
+  <div class="section-label" style="margin-top:40px">The Anthropic Insight</div>
+
+  <svg viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="10-element prompt structure">
+    <rect x="10" y="10" width="740" height="120" rx="12" fill="#0d1a17" stroke="#1a3328" stroke-width="1"/>
+    <text x="380" y="36" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#38bfa0" text-anchor="middle">10-Element Prompt Structure (Anthropic Course)</text>
+
+    <!-- Elements row 1 -->
+    <rect x="28" y="48" width="96" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.7"/>
+    <text x="76" y="66" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">1. Task context</text>
+
+    <rect x="132" y="48" width="96" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.6"/>
+    <text x="180" y="66" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">2. Tone context</text>
+
+    <rect x="236" y="48" width="114" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.6"/>
+    <text x="293" y="66" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">3. Background &amp; docs</text>
+
+    <rect x="358" y="48" width="120" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.6"/>
+    <text x="418" y="66" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">4. Detailed instructions</text>
+
+    <rect x="486" y="48" width="80" height="28" rx="5" fill="#e87c5b" stroke="#e87c5b" stroke-width="1" opacity="0.9"/>
+    <text x="526" y="62" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">5. Examples</text>
+    <text x="526" y="74" font-family="-apple-system,sans-serif" font-size="9" fill="#ffd4c8" text-anchor="middle">← missing</text>
+
+    <rect x="574" y="48" width="78" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.5"/>
+    <text x="613" y="66" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">6. Conv. history</text>
+
+    <!-- Elements row 2 -->
+    <rect x="28" y="88" width="122" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.5"/>
+    <text x="89" y="106" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">7. Immediate request</text>
+
+    <rect x="158" y="88" width="122" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.5"/>
+    <text x="219" y="106" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">8. Think step by step</text>
+
+    <rect x="288" y="88" width="110" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.5"/>
+    <text x="343" y="106" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">9. Output formatting</text>
+
+    <rect x="406" y="88" width="122" height="28" rx="5" fill="#1a3328" stroke="#38bfa0" stroke-width="1" opacity="0.5"/>
+    <text x="467" y="106" font-family="-apple-system,sans-serif" font-size="10" fill="#7edec8" text-anchor="middle">10. Prefilled response</text>
+
+    <text x="610" y="106" font-family="-apple-system,sans-serif" font-size="10" fill="#6b8a80" text-anchor="middle">← already covered</text>
+    <text x="610" y="118" font-family="-apple-system,sans-serif" font-size="9" fill="#5a7a70" text-anchor="middle">via Runner: prefix</text>
+  </svg>
+
+  <!-- ── SECTION 3: THE SIX CHANGES ── -->
+  <div class="section-label" style="margin-top:40px">The Six Edits (Net +11 Lines)</div>
+
+  <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Six edits to CLAUDE.md">
+    <rect x="10" y="10" width="740" height="340" rx="12" fill="#0f1318" stroke="#1e2530" stroke-width="1"/>
+
+    <!-- Header row -->
+    <rect x="28" y="24" width="320" height="24" rx="4" fill="#1a2030"/>
+    <text x="188" y="40" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#7ca9e0" text-anchor="middle">ADDED</text>
+    <rect x="360" y="24" width="372" height="24" rx="4" fill="#1a2820"/>
+    <text x="546" y="40" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#7cc87a" text-anchor="middle">REMOVED / TIGHTENED</text>
+
+    <!-- Add 1 -->
+    <rect x="28" y="56" width="320" height="52" rx="6" fill="#131d2e" stroke="#2d3a50" stroke-width="1"/>
+    <text x="44" y="73" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#38bfa0">+ Verify Before Citing</text>
+    <text x="44" y="89" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">grep/find before citing any path, function, or flag</text>
+    <text x="44" y="102" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">from memory. Say "I can't verify" rather than assert.</text>
+
+    <!-- Add 2 -->
+    <rect x="28" y="116" width="320" height="52" rx="6" fill="#131d2e" stroke="#2d3a50" stroke-width="1"/>
+    <text x="44" y="133" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#38bfa0">+ decisions.md example entry</text>
+    <text x="44" y="149" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">Inline concrete example of a well-formed entry.</text>
+    <text x="44" y="162" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">Date · title · rationale · file reference.</text>
+
+    <!-- Add 3 -->
+    <rect x="28" y="176" width="320" height="52" rx="6" fill="#131d2e" stroke="#2d3a50" stroke-width="1"/>
+    <text x="44" y="193" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#38bfa0">+ handoff.md example entry</text>
+    <text x="44" y="209" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">Runner switch · what's done · what's next · gotcha.</text>
+    <text x="44" y="222" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">Concrete so a fresh session can resume safely.</text>
+
+    <!-- Add 4 -->
+    <rect x="28" y="236" width="320" height="52" rx="6" fill="#131d2e" stroke="#2d3a50" stroke-width="1"/>
+    <text x="44" y="253" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#38bfa0">+ CHANGELOG good/bad example</text>
+    <text x="44" y="269" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">Good: outcome sentence. Bad: file name sentence.</text>
+    <text x="44" y="282" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">Shows target output, not just a description of it.</text>
+
+    <!-- Add 5 -->
+    <rect x="28" y="296" width="320" height="44" rx="6" fill="#131d2e" stroke="#2d3a50" stroke-width="1"/>
+    <text x="44" y="313" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#38bfa0">+ Critical Reminders block (bottom)</text>
+    <text x="44" y="329" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a8d">Timezone · TDD · commit gate · verify-before-done.</text>
+
+    <!-- Remove 1 -->
+    <rect x="360" y="56" width="372" height="52" rx="6" fill="#1a2218" stroke="#2a3828" stroke-width="1"/>
+    <text x="376" y="73" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#e87c5b">− Timezone landmark section</text>
+    <text x="376" y="89" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a6b">Pure cross-reference: "see the rule at the top."</text>
+    <text x="376" y="102" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a6b">Redundant — the ⚠️ rule at line 3 is the source of truth.</text>
+
+    <!-- Remove 2 -->
+    <rect x="360" y="116" width="372" height="52" rx="6" fill="#1a2218" stroke="#2a3828" stroke-width="1"/>
+    <text x="376" y="133" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#e87c5b">− "Relationship to existing conventions" (tightened)</text>
+    <text x="376" y="149" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a6b">6 lines explaining "New" items that are now established.</text>
+    <text x="376" y="162" font-family="-apple-system,sans-serif" font-size="10" fill="#6b7a6b">Replaced with 2-line ADR/decisions.md distinction.</text>
+
+    <!-- Net count -->
+    <rect x="360" y="176" width="372" height="164" rx="6" fill="#141a10" stroke="#2a3828" stroke-width="1"/>
+    <text x="546" y="226" font-family="-apple-system,sans-serif" font-size="48" font-weight="800" fill="#38bfa0" text-anchor="middle" opacity="0.15">+11</text>
+    <text x="546" y="240" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#38bfa0" text-anchor="middle">Net: +11 lines</text>
+    <text x="546" y="258" font-family="-apple-system,sans-serif" font-size="11" fill="#6b8a60" text-anchor="middle">Growth brake threshold: 20 lines</text>
+    <text x="546" y="276" font-family="-apple-system,sans-serif" font-size="11" fill="#6b8a60" text-anchor="middle">File: 585 → 596 lines</text>
+    <text x="546" y="300" font-family="-apple-system,sans-serif" font-size="10" fill="#4a6a40" text-anchor="middle">Every add paired with a remove.</text>
+    <text x="546" y="314" font-family="-apple-system,sans-serif" font-size="10" fill="#4a6a40" text-anchor="middle">CLAUDE.md is loaded every turn —</text>
+    <text x="546" y="328" font-family="-apple-system,sans-serif" font-size="10" fill="#4a6a40" text-anchor="middle">bloat has a real per-turn token cost.</text>
+  </svg>
+
+  <!-- ── SECTION 4: KEY PRINCIPLE ── -->
+  <div class="section-label" style="margin-top:40px">Key Principle: Examples over Rules</div>
+
+  <svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Examples beat rules">
+    <rect x="10" y="10" width="740" height="130" rx="12" fill="#0d1a17" stroke="#1a3328" stroke-width="1"/>
+
+    <!-- Left: Rules only -->
+    <rect x="28" y="28" width="330" height="96" rx="8" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+    <text x="193" y="48" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#888" text-anchor="middle">Rules only (before)</text>
+    <text x="44" y="66" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#666">"What's new" — customer-facing outcomes,</text>
+    <text x="44" y="80" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#666">written in the user's language. Things they'll</text>
+    <text x="44" y="94" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#666">notice, feel, or ask about. No file names.</text>
+    <text x="193" y="116" font-family="-apple-system,sans-serif" font-size="10" fill="#e87c5b" text-anchor="middle">↑ Interpretable many ways. Drifts.</text>
+
+    <!-- Arrow -->
+    <text x="380" y="78" font-family="-apple-system,sans-serif" font-size="22" fill="#38bfa0" text-anchor="middle">→</text>
+
+    <!-- Right: Rules + example -->
+    <rect x="402" y="28" width="330" height="96" rx="8" fill="#0d1f18" stroke="#1a4032" stroke-width="1"/>
+    <text x="567" y="48" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#38bfa0" text-anchor="middle">Rules + example (after)</text>
+    <text x="418" y="66" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#7edec8">Good: "Job descriptions auto-format</text>
+    <text x="418" y="80" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#7edec8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with one click"</text>
+    <text x="418" y="94" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#e87c5b">Bad: "Added auto-format to Editor.tsx"</text>
+    <text x="567" y="116" font-family="-apple-system,sans-serif" font-size="10" fill="#38bfa0" text-anchor="middle">↑ Unambiguous. Consistent output.</text>
+  </svg>
+
+  <!-- ── SECTION 5: VERIFY BEFORE CITING ── -->
+  <div class="section-label" style="margin-top:40px">Verify Before Citing</div>
+
+  <svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Verify before citing flow">
+    <rect x="10" y="10" width="740" height="140" rx="12" fill="#0f1318" stroke="#1e2530" stroke-width="1"/>
+
+    <!-- Step 1: Memory -->
+    <rect x="28" y="32" width="130" height="96" rx="8" fill="#201a2a" stroke="#3a2d50" stroke-width="1"/>
+    <text x="93" y="54" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#a07cce" text-anchor="middle">Memory recall</text>
+    <text x="93" y="72" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#7a6b8d" text-anchor="middle">lib/generate.ts</text>
+    <text x="93" y="86" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#7a6b8d" text-anchor="middle">useProfile()</text>
+    <text x="93" y="100" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#7a6b8d" text-anchor="middle">--think flag</text>
+    <text x="93" y="120" font-family="-apple-system,sans-serif" font-size="9" fill="#7a6b8d" text-anchor="middle">may be stale</text>
+
+    <!-- Arrow to verify -->
+    <text x="195" y="83" font-family="-apple-system,sans-serif" font-size="16" fill="#38bfa0" text-anchor="middle">→</text>
+    <text x="195" y="98" font-family="-apple-system,sans-serif" font-size="9" fill="#2a5a48" text-anchor="middle">verify first</text>
+
+    <!-- Step 2: Verify -->
+    <rect x="215" y="32" width="200" height="96" rx="8" fill="#0d1f18" stroke="#1a4032" stroke-width="1"/>
+    <text x="315" y="54" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#38bfa0" text-anchor="middle">grep / find</text>
+    <text x="315" y="72" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#4a9a80" text-anchor="middle">grep -r "useProfile" .</text>
+    <text x="315" y="88" font-family="'SF Mono','Fira Code',monospace" font-size="10" fill="#4a9a80" text-anchor="middle">find . -name "generate.ts"</text>
+    <text x="315" y="108" font-family="-apple-system,sans-serif" font-size="9" fill="#2a7a58" text-anchor="middle">codebase is authoritative</text>
+
+    <!-- Arrow split -->
+    <text x="453" y="68" font-family="-apple-system,sans-serif" font-size="14" fill="#38bfa0" text-anchor="middle">→</text>
+
+    <!-- Found -->
+    <rect x="470" y="32" width="130" height="42" rx="6" fill="#0d2018" stroke="#1a5030" stroke-width="1"/>
+    <text x="535" y="51" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#38bfa0" text-anchor="middle">Found ✓</text>
+    <text x="535" y="66" font-family="-apple-system,sans-serif" font-size="9" fill="#4a9a60" text-anchor="middle">Cite with confidence</text>
+
+    <!-- Not found -->
+    <rect x="470" y="82" width="130" height="46" rx="6" fill="#1f1010" stroke="#4a2020" stroke-width="1"/>
+    <text x="535" y="101" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#e87c5b" text-anchor="middle">Not found ✗</text>
+    <text x="535" y="115" font-family="-apple-system,sans-serif" font-size="9" fill="#8a5040" text-anchor="middle">Say "I can't verify this"</text>
+    <text x="535" y="126" font-family="-apple-system,sans-serif" font-size="9" fill="#8a5040" text-anchor="middle">rather than assert</text>
+
+    <!-- Vertical connect line -->
+    <line x1="453" y1="62" x2="453" y2="105" stroke="#2d3a50" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="460" y="99" font-family="-apple-system,sans-serif" font-size="14" fill="#666" text-anchor="middle">→</text>
+
+    <!-- Rule callout -->
+    <rect x="618" y="32" width="122" height="96" rx="8" fill="#131820" stroke="#2d3a50" stroke-width="1" stroke-dasharray="4,2"/>
+    <text x="679" y="54" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#7ca9e0" text-anchor="middle">New rule in</text>
+    <text x="679" y="68" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#7ca9e0" text-anchor="middle">CLAUDE.md</text>
+    <text x="679" y="86" font-family="-apple-system,sans-serif" font-size="9" fill="#4a6a8d" text-anchor="middle">Verify Before</text>
+    <text x="679" y="100" font-family="-apple-system,sans-serif" font-size="9" fill="#4a6a8d" text-anchor="middle">Citing</text>
+    <text x="679" y="118" font-family="-apple-system,sans-serif" font-size="9" fill="#3a5a7d" text-anchor="middle">(MANDATORY)</text>
+  </svg>
+
+  <!-- ── SECTION 6: WHAT'S STILL NOT IN CLAUDE.md ── -->
+  <div class="section-label" style="margin-top:40px">What Wasn't Changed (Already Covered)</div>
+
+  <svg viewBox="0 0 760 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 32px" aria-label="Already covered items">
+    <rect x="10" y="10" width="740" height="90" rx="12" fill="#0d1a17" stroke="#1a3328" stroke-width="1"/>
+
+    <text x="380" y="34" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#38bfa0" text-anchor="middle">Course advice we already follow — no changes needed</text>
+
+    <rect x="28" y="44" width="166" height="44" rx="6" fill="#0d1f18" stroke="#1a4032" stroke-width="1"/>
+    <text x="111" y="62" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#38bfa0" text-anchor="middle">Tone context ✓</text>
+    <text x="111" y="76" font-family="-apple-system,sans-serif" font-size="9" fill="#4a8a68" text-anchor="middle">identity/ files separate tone</text>
+
+    <rect x="202" y="44" width="166" height="44" rx="6" fill="#0d1f18" stroke="#1a4032" stroke-width="1"/>
+    <text x="285" y="62" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#38bfa0" text-anchor="middle">Think before answering ✓</text>
+    <text x="285" y="76" font-family="-apple-system,sans-serif" font-size="9" fill="#4a8a68" text-anchor="middle">extended thinking active</text>
+
+    <rect x="376" y="44" width="166" height="44" rx="6" fill="#0d1f18" stroke="#1a4032" stroke-width="1"/>
+    <text x="459" y="62" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#38bfa0" text-anchor="middle">Prefilled response ✓</text>
+    <text x="459" y="76" font-family="-apple-system,sans-serif" font-size="9" fill="#4a8a68" text-anchor="middle">Runner: prefix on every response</text>
+
+    <rect x="550" y="44" width="182" height="44" rx="6" fill="#0d1f18" stroke="#1a4032" stroke-width="1"/>
+    <text x="641" y="62" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#38bfa0" text-anchor="middle">Skills over prose rules ✓</text>
+    <text x="641" y="76" font-family="-apple-system,sans-serif" font-size="9" fill="#4a8a68" text-anchor="middle">tdd-first, verification skills active</text>
+  </svg>
+
+  <!-- Related ADR -->
+  <div style="margin-top:32px;padding:20px 24px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;display:flex;gap:20px;align-items:flex-start">
+    <div style="font-size:28px;opacity:0.5">📋</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">ADR-018 — Apply prompt engineering best practices to global CLAUDE.md</div>
+      <div style="font-size:12px;color:var(--text3);line-height:1.6">Decision record for the rationale, scope, and tradeoffs behind these six edits. Documents what was accepted, what was already covered, and why the growth brake was respected.</div>
+      <div style="margin-top:10px"><a href="../decisions.html" class="wt-link" style="font-size:12px">View all decisions →</a></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthrough</span>
+  <span>Prompt Engineering: CLAUDE.md Improvements &middot; May 2026</span>
+</footer>
+
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
+</body>
+</html>
