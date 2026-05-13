@@ -199,6 +199,8 @@ When working through a detailed plan (e.g. via `/ce:work-beta`, the `claude-supe
 - **Newest entry at the top** so a fresh session reads the most recent first
 - Structured so a new Claude *or* Codex session can read the most recent entry and pick up the plan mid-flight
 
+> Example: `## 2026-05-10 AEST — Phase 2 complete` — Runner: Claude→Codex. Units 4–6 done. Next: Unit 7 — CVPreview reads from Supabase on load. Gotcha: RLS not yet enabled on `profiles` table — don't ship Unit 8 before that's done.
+
 ### When to update
 
 - **During plan execution**: after every completed unit, before moving to the next, decide whether this completion warrants a handoff entry or a decisions entry (or both)
@@ -206,12 +208,9 @@ When working through a detailed plan (e.g. via `/ce:work-beta`, the `claude-supe
 - **On runner switch**: log both the decision (in `decisions.md`) and the handoff state (in `handoff.md`) before the switch fires
 - **Never batch at session end** — update incrementally as work lands. Deferred sweeps are exactly what fails when the session dies unexpectedly
 
-### Relationship to existing conventions
+### Relationship to ADRs
 
-- **Existing ADR flow** (`parnell-systems/claude-artefacts/decisions/ADR-NNN.md`, portal-published) = cross-project architectural decisions. Unchanged.
-- **New `docs/decisions/decisions.md`** = project-local, tactical, lives alongside the plan. Complements the ADR flow, doesn't replace it.
-- **New `docs/handoff/handoff.md`** = the runner-handoff and restart-continuity mechanism. No equivalent existed before.
-- **Supervisor integration**: `claude-supervisor` reads both files on every fresh run via its `HANDOFF_FILE` / `DECISIONS_FILE` config. Defaults point at these paths.
+`docs/decisions/decisions.md` = project-local, tactical. `parnell-systems/claude-artefacts/decisions/ADR-NNN.md` = cross-project architectural decisions. Never merge the two. `claude-supervisor` reads both files via `HANDOFF_FILE` / `DECISIONS_FILE` config on every fresh run.
 
 ### Skip when
 
@@ -349,6 +348,9 @@ Each entry is split into:
 - Short bullet on the technical change. File paths and rationale welcome here.
 - Why we did it this way rather than alternatives, if non-obvious.
 ```
+
+> **Good** What's new bullet: *"Job descriptions you paste now auto-format with one click"* — outcome-focused, no code references.
+> **Bad**: *"Added auto-format function to JobDescriptionEditor.tsx"* — names a file, not a user outcome.
 
 ### When to create a new entry vs. extend an existing one
 
@@ -568,6 +570,14 @@ Weekly (or on-demand), scan `.learnings/monitors/*.md` and:
    Monitoring section of CLAUDE.md and append a one-line changelog
    at the bottom.
 5. Never delete learnings entries — just flip `promoted: true`.
+
+## Critical Reminders (Repeated for Long Sessions)
+
+These four rules cause the most regressions mid-session:
+1. **Timezone**: All timestamps → Australia/Sydney. No raw UTC/Z/GMT in output.
+2. **TDD**: Tests exist and fail before any implementation code is written. No exceptions.
+3. **Commit gate**: Never commit without an explicit user request.
+4. **Verify before done**: Run verification commands and show the output before claiming anything works.
 
 ## Per-Project CLAUDE.md Snippets
 
