@@ -30,6 +30,10 @@ Before starting any task, read these identity files to understand who you're wor
 
 These files define how to communicate with me. Follow them.
 
+## Verify Before Citing (MANDATORY)
+
+Before citing a specific file path, function name, flag, or API as currently existing — whether recalled from memory or prior context — **verify with `grep` or `find` first**. Memory can be stale; the codebase is authoritative. If you can't verify, say so rather than asserting the thing exists.
+
 ## Compute Efficiency Defaults (MANDATORY)
 
 I am on Claude Max and burn credits fast when Claude is sloppy. **Apply these defaults on every session, every task — not just when asked.** The full rule lives in the `feedback_credit_efficiency` auto-memory; this section exists so it's discoverable from the global CLAUDE.md without a memory lookup.
@@ -187,6 +191,8 @@ When working through a detailed plan (e.g. via `/ce:work-beta`, the `claude-supe
 - Cheap and fast — these are tactical decisions within the current plan, not architectural ADRs
 - **Promote to a cross-project ADR** (in `parnell-systems/claude-artefacts/decisions/`) only when the decision has impact outside this project or establishes a long-lived architectural pattern. Never merge the two — project-local stays project-local
 
+> Example: `## 2026-05-10 AEST — Chose Zod for API validation` — Zod over Yup: first-class TS inference, smaller bundle. Yup rejected: type wrapping overhead. See `app/api/generate-profile/route.ts`.
+
 **`docs/handoff/handoff.md`** — running log of significant completed work, written as a handoff to the next session.
 - Append an entry every time a significant piece of work is finished (a plan phase, a feature, a non-trivial fix, a milestone, a runner switch)
 - Each entry: date (Australia/Sydney), what was completed, current runner, what's next, any gotchas / in-progress state a fresh session would need to resume safely
@@ -212,10 +218,6 @@ When working through a detailed plan (e.g. via `/ce:work-beta`, the `claude-supe
 - Single-file throwaway edits / typo fixes with no plan
 - Pure research or questions that don't result in code
 - Project has no `/docs/` directory AND no plan — don't create scaffolding just to write one entry; wait until there's a plan
-
-## Timezone
-
-See the ⚠️ STOP rule at the top of this file — all timestamps go through Australia/Sydney conversion before being shown. This section exists as a landmark so the rule is discoverable via section headings; the actual rule lives at the top.
 
 ## Project Documentation Standard (MANDATORY)
 
