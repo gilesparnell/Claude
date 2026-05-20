@@ -53,12 +53,20 @@ Three active life threads Giles is juggling:
 
 **Column layout:** A=Item, B=Full value (100%), C=Ownership/Allocation, D=Giles 45% (`=B*0.45`), E=Lisa 55% (`=B*0.55`), F=Other, G=Custody, H=Cash to Lisa (formula depends on asset vs liability section)
 
-**Current pool figures (post-SA Pension + SA Trust removal):**
-- Combined net pool: ~$1.82M
-- Giles target (45%): ~$820k
-- Lisa target (55%): ~$1,003k
+**Current pool figures (post-SA Pension + SA Trust removal + Lyn & Alan capital appreciation share):**
+- Combined net pool: ~$1.44M (reduced by ~$380k Lyn & Alan's 33% appreciation share)
+- Giles target (45%): ~$650k
+- Lisa target (55%): ~$794k
 - Variance: $0
-- Total cash settlement: ~$251k (Giles → Lisa, default super = each keeps own)
+- Total cash settlement: ~$251k (Giles → Lisa, unchanged because L&A share repaid from sale proceeds)
+
+**Lyn & Alan loan structure:**
+- Principal: $500k (joint, original deposit on 44 Koorangi when purchased Dec 2023 for $1.65M)
+- PLUS 33% share of capital appreciation on 44 Koorangi
+- Currently modelled at $500k + $379,500 = $879,500 total claim
+- Both repaid from sale proceeds (custody = "To sell" → H = 0)
+- Written agreement exists, needs to be filed in 05 — HIGH PRIORITY
+- Helper cells in spreadsheet rows 60-62 drive the appreciation calc (purchase price input → auto-calculates appreciation → 33% share)
 
 ---
 
