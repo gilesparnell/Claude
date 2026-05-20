@@ -51,7 +51,7 @@ Three active life threads Giles is juggling:
 **ID:** `1AASgOZ82YlLYML1VhwGWTKDSbZc9oz_4S5mVpJ10WFc`
 **Tab name:** `'PTY. FORMAT'`
 
-**Column layout:** A=Item, B=Full value (100%), C=Ownership/Allocation, D=Giles 45% (`=B*0.45`), E=Lisa 55% (`=B*0.55`), F=Other, G=Custody, H=Cash to Lisa (formula depends on asset vs liability section)
+**Column layout (7 columns — Giles deleted "Other's value" column 21 May 2026):** A=Item, B=Full value (100%), C=Ownership/Allocation, D=Giles 45% (`=B*0.45`), E=Lisa 55% (`=B*0.55`), **F=Custody**, **G=Cash to Lisa** (formula depends on asset vs liability section). When writing to rows, write A:G (7 cells), NOT A:H.
 
 **Current pool figures (post-SA Pension + SA Trust removal + Lyn & Alan capital appreciation share):**
 - Combined net pool: ~$1.44M (reduced by ~$380k Lyn & Alan's 33% appreciation share)
