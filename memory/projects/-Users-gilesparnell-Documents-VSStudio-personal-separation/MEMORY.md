@@ -1,0 +1,1 @@
+- [Separation disclosure project](project_separation_disclosure.md) — financial disclosure work May 2026; folders + index in Disclosure folder; personal context exists, engage when invited
