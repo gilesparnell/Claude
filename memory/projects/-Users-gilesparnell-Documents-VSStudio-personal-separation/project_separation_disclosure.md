@@ -37,6 +37,13 @@ Three active life threads Giles is juggling:
 - Column H ("Cash to Lisa") translates custody into the actual cash settlement amount
 - Positive H = Giles pays Lisa; Negative H = Lisa pays Giles
 
+## Bank disclosure principle (LOAD-BEARING)
+
+- For separation in AU family law, bank disclosure is about **proving access and transparency** (showing the account exists, is in his name, and he can access it) — NOT about disclosing balances or full transaction history.
+- **Account confirmation letters** are the primary requirement (e.g. "Proof of FNB" letter).
+- **Statements** are supplementary (useful for spotting hidden income/assets), not the minimum bar.
+- Don't over-engineer "12 months of statements" pressure for bank accounts that only need a confirmation letter.
+
 ---
 
 ## Master Property Pool spreadsheet (Melissa's template)
