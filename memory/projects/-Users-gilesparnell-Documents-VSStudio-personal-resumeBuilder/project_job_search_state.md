@@ -17,10 +17,11 @@ Snapshot as of **2026-05-28 AEST**. For latest state always read `docs/handoff/h
 - URL: https://docs.google.com/spreadsheets/d/1PKSjBCxYoJ-RdQ2E4gHqz5hOauhS39fohC3MwmjDAm8/edit
 - Old URL (`1Env6dGLx9yUQPCPjiYENjvkjBEwlsrhR4ihHdCzU8CE`) is DEPRECATED — do not use, do not reference
 - **TAB STRUCTURE MATTERS** (got this wrong once — Giles corrected it):
-  - **`status`** tab = the application log. **ADD NEW ROLES HERE.** Schema: `Date submitted | Org | Role | Contact | Number | Status | Latest update date | Notes`
-  - **`AI's`** tab = Action Items (A.I. = Action Items, NOT AI roles). Do NOT put roles here. Currently holds Giles's own follow-up tasks (value/mission statement, prioritised people/companies lists).
-- Date format in `status`: ordinal + month name, no year (e.g. "28th May", "13th August")
-- Do NOT impose an invented column schema — use the `status` tab's existing 8 columns
+  - **`status`** tab = the application log. **ADD NEW ROLES HERE.** Giles actively reorganises columns — READ THE TAB LIVE for current structure rather than trusting a pinned column order. As of 2026-05-28 it had: Date submitted · Role · Org · Status · Notes · Latest update date · Contact · Number · Comp · Bucket.
+  - **`AI's`** tab = Action Items (A.I. = Action Items, NOT AI roles). Do NOT put roles here. Holds Giles's own follow-up tasks.
+- **Dates are real date values** (ISO/serial), NOT text — converted 2026-05-28 so the column is filterable/sortable. Preserve this; don't write text dates like "28th May".
+- **Role cells are hyperlinks** to the job posting where a URL exists (`=HYPERLINK(url, role)`). The standalone Link column was removed. New roles: put the posting URL as a hyperlink on the Role cell, not a separate column.
+- Newest-first ordering: new roles go at row 2 (top). Considering/unsubmitted rows may have a blank Date submitted (open question whether to use a proxy pipeline-entry date).
 
 **Pipeline gaps still to work**
 - The career-direction plan's top targets (Operating Partner at AU VCs, Field CTO at AI infra, Strategic TAM at AI labs, AI PM at later-stage) have NOT been worked yet — these are the lanes that match comp floor + role shape. Open thread #4 from `docs/plans/2026-04-29-002-career-progression-options.md`.
