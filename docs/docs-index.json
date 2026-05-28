@@ -1,9 +1,9 @@
 {
-  "generated": "2026-05-28T14:57:03.229Z",
+  "generated": "2026-05-28T14:59:23.405Z",
   "counts": {
     "skill": 22,
     "walkthrough": 12,
-    "decision": 18,
+    "decision": 19,
     "template": 4,
     "unpublished_skills": 0
   },
@@ -677,6 +677,22 @@
       ],
       "url": "decisions.html",
       "meta": "ADR-018",
+      "date": "May 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Unified portal shell — sidebar + ⌘K search over per-page card grids",
+      "desc": "The card-grid-per-page portal stopped scaling: previously written docs were hard to find, there was no global search, and 14 of 23 skills were silently unpublished because…",
+      "tags": [
+        "portal",
+        "findability",
+        "claude",
+        "pagefind"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-019",
       "date": "May 2026",
       "status": "accepted",
       "published": true
