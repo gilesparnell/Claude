@@ -1,48 +1,39 @@
 {
-  "generated": "2026-05-28T14:59:23.405Z",
+  "generated": "2026-05-28T15:02:02.148Z",
   "counts": {
     "skill": 22,
     "walkthrough": 12,
     "decision": 19,
     "template": 4,
-    "unpublished_skills": 0
+    "unpublished_skills": 13
   },
   "entries": [
     {
       "type": "skill",
       "title": "Claude Code Workflow",
       "desc": "Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams.",
-      "tags": [
-        "workflow",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "claude-code-workflow",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
-      "title": "Code Quality Review",
+      "title": "Code Quality",
       "desc": "Use this skill when reviewing, auditing, or improving code quality.",
-      "tags": [
-        "code",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "code-quality",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
       "title": "Code Review",
       "desc": "Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass.",
-      "tags": [
-        "code",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "code-review",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
@@ -58,39 +49,30 @@
     },
     {
       "type": "skill",
-      "title": "Find Your First 10 Customers",
+      "title": "Find First 10",
       "desc": "Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier.",
-      "tags": [
-        "engagement",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "find-first-10",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
       "title": "Frontend Design",
       "desc": "Use this skill when building UI components, designing layouts, or making frontend styling decisions.",
-      "tags": [
-        "frontend",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "frontend-design",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
       "title": "Git Conventions",
       "desc": "Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow.",
-      "tags": [
-        "workflow",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "git-conventions",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
@@ -106,15 +88,12 @@
     },
     {
       "type": "skill",
-      "title": "Humanizer — Remove AI Writing Patterns",
+      "title": "Humanizer",
       "desc": "Remove signs of AI-generated writing from text.",
-      "tags": [
-        "workflow",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "humanizer",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
@@ -142,15 +121,12 @@
     },
     {
       "type": "skill",
-      "title": "Resume — Load Context Before Continuing",
+      "title": "Resume",
       "desc": "Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
-      "tags": [
-        "workflow",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "resume",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
@@ -190,27 +166,21 @@
     },
     {
       "type": "skill",
-      "title": "Ship — Verified PR Ship Procedure",
+      "title": "Ship",
       "desc": "Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
-      "tags": [
-        "workflow",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "ship",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
       "title": "Skill Publisher",
       "desc": "MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs, decisions, or templates.",
-      "tags": [
-        "tooling",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "skill-publisher",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
@@ -226,39 +196,30 @@
     },
     {
       "type": "skill",
-      "title": "Test-First Development",
+      "title": "Tdd First",
       "desc": "MANDATORY test-first development for ALL non-trivial code — no trigger words needed.",
-      "tags": [
-        "testing",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "tdd-first",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
       "title": "Testing Practices",
       "desc": "Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something.",
-      "tags": [
-        "testing",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "testing-practices",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
-      "title": "Validate the Problem",
+      "title": "Validate Problem",
       "desc": "Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign.",
-      "tags": [
-        "engagement",
-        "global"
-      ],
+      "tags": [],
       "url": "skills.html",
       "meta": "validate-problem",
-      "published": true
+      "published": false
     },
     {
       "type": "skill",
