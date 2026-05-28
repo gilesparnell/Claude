@@ -16,9 +16,11 @@ Snapshot as of **2026-05-28 AEST**. For latest state always read `docs/handoff/h
 **Tracking spreadsheet (REPLACES the earlier one)**
 - URL: https://docs.google.com/spreadsheets/d/1PKSjBCxYoJ-RdQ2E4gHqz5hOauhS39fohC3MwmjDAm8/edit
 - Old URL (`1Env6dGLx9yUQPCPjiYENjvkjBEwlsrhR4ihHdCzU8CE`) is DEPRECATED — do not use, do not reference
-- Schema: `Date Added | Company | Role | Bucket | Link | Comp | Stage | Next Action | Notes`
-- Bucket vocab: `Operating Partner` · `Field CTO` · `Strategic TAM` · `AI PM` · `Climate Tech` · `Other`
-- Stage vocab: `Considering` · `Applied` · `Screened` · `1st Interview` · `2nd Interview` · `Final` · `Offer` · `Rejected` · `Withdrawn` · `Passed (didn't apply)`
+- **TAB STRUCTURE MATTERS** (got this wrong once — Giles corrected it):
+  - **`status`** tab = the application log. **ADD NEW ROLES HERE.** Schema: `Date submitted | Org | Role | Contact | Number | Status | Latest update date | Notes`
+  - **`AI's`** tab = Action Items (A.I. = Action Items, NOT AI roles). Do NOT put roles here. Currently holds Giles's own follow-up tasks (value/mission statement, prioritised people/companies lists).
+- Date format in `status`: ordinal + month name, no year (e.g. "28th May", "13th August")
+- Do NOT impose an invented column schema — use the `status` tab's existing 8 columns
 
 **Pipeline gaps still to work**
 - The career-direction plan's top targets (Operating Partner at AU VCs, Field CTO at AI infra, Strategic TAM at AI labs, AI PM at later-stage) have NOT been worked yet — these are the lanes that match comp floor + role shape. Open thread #4 from `docs/plans/2026-04-29-002-career-progression-options.md`.
