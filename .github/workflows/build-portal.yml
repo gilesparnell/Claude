@@ -32,6 +32,12 @@ jobs:
       - name: Generate portal stats
         run: node scripts/generate-stats.js
 
+      - name: Build unified docs index
+        run: node scripts/build-docs-index.js
+
+      - name: Build Pagefind search index
+        run: npx -y pagefind --site docs
+
       - name: Configure git
         run: |
           git config user.name "GitHub Actions"

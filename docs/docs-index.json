@@ -1,0 +1,690 @@
+{
+  "generated": "2026-05-28T14:53:32.312Z",
+  "counts": {
+    "skill": 22,
+    "walkthrough": 12,
+    "decision": 18,
+    "template": 4,
+    "unpublished_skills": 13
+  },
+  "entries": [
+    {
+      "type": "skill",
+      "title": "Claude Code Workflow",
+      "desc": "Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "claude-code-workflow",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Code Quality",
+      "desc": "Use this skill when reviewing, auditing, or improving code quality.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "code-quality",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Code Review",
+      "desc": "Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "code-review",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "End-to-End Feature Test",
+      "desc": "Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a…",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills.html",
+      "meta": "e2e-feature-test",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Find First 10",
+      "desc": "Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "find-first-10",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Frontend Design",
+      "desc": "Use this skill when building UI components, designing layouts, or making frontend styling decisions.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "frontend-design",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Git Conventions",
+      "desc": "Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "git-conventions",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "GitHub Pages Portal",
+      "desc": "Self-updating GitHub Pages knowledge portal.",
+      "tags": [
+        "tooling",
+        "project"
+      ],
+      "url": "skills.html",
+      "meta": "github-pages-portal",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Humanizer",
+      "desc": "Remove signs of AI-generated writing from text.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "humanizer",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Plan Progress Tracker",
+      "desc": "Generates a visual HTML progress diagram for active project plans.",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills.html",
+      "meta": "plan-tracker",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Project Documentation Standard",
+      "desc": "Mandatory documentation structure for every project.",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills.html",
+      "meta": "project-docs-standard",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Resume",
+      "desc": "Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "resume",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "SaaS Automation Engagement",
+      "desc": "End-to-end playbook for new client automation engagements — from feasibility through discovery, architecture, technical spec, proposal, documentation, and Claude Code handoff.",
+      "tags": [
+        "engagement",
+        "project"
+      ],
+      "url": "skills.html",
+      "meta": "saas-automation-engagement",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "SaaS Patterns",
+      "desc": "Production-grade SaaS patterns. Tenant isolation, plan gating, usage tracking, idempotent ops, soft deletes, and onboarding principles.",
+      "tags": [
+        "saas",
+        "project"
+      ],
+      "url": "skills.html",
+      "meta": "saas-patterns",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Security Review",
+      "desc": "Comprehensive security review for web applications.",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills.html",
+      "meta": "security-review",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Ship",
+      "desc": "Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "ship",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Skill Publisher",
+      "desc": "MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs, decisions, or templates.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "skill-publisher",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Systematic Debugging",
+      "desc": "Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour — before proposing fixes. Enforces evidence gathering, pattern…",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills.html",
+      "meta": "systematic-debugging",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Tdd First",
+      "desc": "MANDATORY test-first development for ALL non-trivial code — no trigger words needed.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "tdd-first",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Testing Practices",
+      "desc": "Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "testing-practices",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Validate Problem",
+      "desc": "Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "validate-problem",
+      "published": false
+    },
+    {
+      "type": "skill",
+      "title": "Verification Before Completion",
+      "desc": "Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success…",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills.html",
+      "meta": "verification-before-completion",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Project vs Workspace Repo Structure",
+      "desc": "How to organise your AI workspace repo vs individual client project repos.",
+      "tags": [
+        "claude",
+        "workflow"
+      ],
+      "url": "diagrams/repo-structure.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "GitHub MCP Server Setup",
+      "desc": "How the GitHub MCP server connects Claude Code to your repos.",
+      "tags": [
+        "tooling",
+        "claude"
+      ],
+      "url": "diagrams/github-mcp-setup.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Skills Architecture",
+      "desc": "Three-location model, global vs project scope, the 7-section skill template, and how to write a skill from scratch.",
+      "tags": [
+        "claude",
+        "skills"
+      ],
+      "url": "skills-architecture.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Claude Chat vs Claude Code Workflow",
+      "desc": "How this chat and Claude Code work together.",
+      "tags": [
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/claude-workflow.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Compound Engineering Skills Map",
+      "desc": "Every /ce: command explained — what it does, when to use it, and how it relates to the others.",
+      "tags": [
+        "claude",
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/ce-skills-map.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "The mvanhorn Workflow",
+      "desc": "A no-IDE setup using only plan.md files and voice.",
+      "tags": [
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/mvanhorn-workflow.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Structured Claude Code Dev Environment",
+      "desc": "Replace chaotic terminal tabs with three layers: tmux for named windows, git worktrees for isolation, and Agent Teams for coordinated parallel agents.",
+      "tags": [
+        "tooling",
+        "claude-code",
+        "workflow"
+      ],
+      "url": "diagrams/claude-code-workflow-setup.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Wave-Based Parallel Execution",
+      "desc": "How /wave-execute fights context rot by splitting plans into dependency waves and dispatching each task to a fresh 200K-context agent.",
+      "tags": [
+        "workflow",
+        "claude-code",
+        "parallel"
+      ],
+      "url": "diagrams/wave-execute-workflow.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Skills & Hooks, In Tandem Across the Lifecycle",
+      "desc": "Where every skill fires, which hooks run underneath, and how /resume + /ship close the loop between sessions.",
+      "tags": [
+        "workflow",
+        "skills",
+        "hooks",
+        "tdd",
+        "lifecycle"
+      ],
+      "url": "diagrams/development-lifecycle.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Memory Sync — How Claude Remembers You",
+      "desc": "Claude writes memory files locally during sessions.",
+      "tags": [
+        "tooling",
+        "memory",
+        "hooks"
+      ],
+      "url": "diagrams/memory-sync.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Prompt Engineering: CLAUDE.md Improvements",
+      "desc": "What an Anthropic prompt engineering course revealed about our global CLAUDE.md — three gaps, six edits, and the principle that one example beats three paragraphs of rules.",
+      "tags": [
+        "claude",
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/prompt-engineering-claude-md.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Sub-agents & Agent Teams",
+      "desc": "Two ways to put more than one Claude on a problem.",
+      "tags": [
+        "claude",
+        "claude-code",
+        "agents"
+      ],
+      "url": "diagrams/subagents-vs-agent-teams.html",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Rules in config, never in code",
+      "desc": "All business rules — keywords, queue mappings, timing offsets — are stored in an external config file or database table, never hardcoded in the engine.",
+      "tags": [
+        "FSCA",
+        "automation"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-001",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Railway + Vercel over single-platform hosting",
+      "desc": "Backend (Node.js + PostgreSQL) on Railway, frontend (React dashboard) on Vercel.",
+      "tags": [
+        "infrastructure",
+        "hosting"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-002",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Git submodule for shared toolkit, not private npm",
+      "desc": "The shared allconvos.ai toolkit is consumed via git submodule rather than a private npm registry.",
+      "tags": [
+        "tooling",
+        "architecture"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-003",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Vite + React SPA over Next.js",
+      "desc": "Marketing site and future customer dashboards built as a Vite + React SPA with React Router, not Next.js.",
+      "tags": [
+        "frontend",
+        "infrastructure",
+        "website"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-004",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "GHL native voice agents as current delivery platform",
+      "desc": "All customer voice agents are delivered via Go High Level's native voice agent functionality.",
+      "tags": [
+        "voice-ai",
+        "ghl",
+        "platform"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-005",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "@prerenderer/rollup-plugin for SEO over SSR",
+      "desc": "Build-time pre-rendering via @prerenderer/rollup-plugin rather than server-side rendering.",
+      "tags": [
+        "seo",
+        "frontend",
+        "website"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-006",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "useSEO custom hook over react-helmet-async",
+      "desc": "A zero-dependency custom useSEO hook for managing page meta tags instead of react-helmet-async.",
+      "tags": [
+        "seo",
+        "frontend",
+        "dependencies"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-007",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Organisation + SoftwareApplication JSON-LD, not LocalBusiness",
+      "desc": "Structured data uses Organisation + SoftwareApplication + FAQPage schema, not LocalBusiness.",
+      "tags": [
+        "seo",
+        "structured-data",
+        "website"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-008",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Pricing tiers: $399/$599/$799 with $2,000 setup and tiered annual discounts",
+      "desc": "Three flat-rate tiers: Starter ($399/mo), Business ($599/mo), Professional ($799/mo).",
+      "tags": [
+        "pricing",
+        "stripe",
+        "revenue"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-009",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Two-stage reactivation model for AU compliance",
+      "desc": "Database reactivation campaigns use a two-stage permission-pass model to comply with AU Spam Act 2003 and Privacy Act 1988.",
+      "tags": [
+        "compliance",
+        "sms",
+        "australia",
+        "outreach"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-010",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "AllConvos demo separation strategy",
+      "desc": "Voice AI demos must migrate off the AllConvos platform to parnellsystems.com before full product separation.",
+      "tags": [
+        "allconvos",
+        "demos",
+        "migration"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-011",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "No brand name commitment — use Parnell Systems",
+      "desc": "Do not hardcode any product brand name (previously \"ZingCall\" was considered).",
+      "tags": [
+        "branding",
+        "naming"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-012",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Stripe Payment Links over embedded checkout",
+      "desc": "Pricing page CTAs link to Stripe Payment Links rather than embedding Stripe Checkout or building a custom payment flow.",
+      "tags": [
+        "stripe",
+        "payments",
+        "website"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-013",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "90-day pro-rata money-back guarantee, excludes setup fee",
+      "desc": "New customers get a 90-day pro-rata money-back guarantee on their subscription.",
+      "tags": [
+        "pricing",
+        "customer-trust",
+        "refunds"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-014",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Execute GTM plan week-by-week as independent work items",
+      "desc": "The 8-week GTM plan is executed one week at a time, each as an independent /ce:work scope.",
+      "tags": [
+        "workflow",
+        "planning",
+        "execution"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-015",
+      "date": "March 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Triage-first for adoption of any recommendation set",
+      "desc": "On 2026-04-21 Claude was asked to adopt seven `/insights` report recommendations for the global Claude setup.",
+      "tags": [
+        "workflow",
+        "claude",
+        "discipline"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-016",
+      "date": "April 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Ship /ship and /resume as skills, not commands",
+      "desc": "The `/insights` report on 2026-04-21 recommended a verified-ship workflow and an explicit session-resumption procedure.",
+      "tags": [
+        "claude",
+        "skills",
+        "workflow"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-017",
+      "date": "April 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "decision",
+      "title": "Apply prompt engineering best practices to global CLAUDE.md",
+      "desc": "A review of Anthropic's internal prompt engineering course (Christian Ryan, May 2026) against the existing global CLAUDE.md revealed three structural gaps: (1) rules described…",
+      "tags": [
+        "claude",
+        "claude-code",
+        "workflow",
+        "prompt-engineering"
+      ],
+      "url": "decisions.html",
+      "meta": "ADR-018",
+      "date": "May 2026",
+      "status": "accepted",
+      "published": true
+    },
+    {
+      "type": "template",
+      "title": "new-client.sh",
+      "desc": "Creates a full client project folder structure from the template.",
+      "tags": [
+        "shell script"
+      ],
+      "url": "templates.html",
+      "meta": "scripts/new-client.sh",
+      "published": true
+    },
+    {
+      "type": "template",
+      "title": "CLAUDE.md",
+      "desc": "The evolving project instructions file that Claude Code reads at the start of every session.",
+      "tags": [
+        "markdown template"
+      ],
+      "url": "templates.html",
+      "meta": "project-template/CLAUDE.md",
+      "published": true
+    },
+    {
+      "type": "template",
+      "title": ".env.example",
+      "desc": "Documents all required environment variables for a standard automation project.",
+      "tags": [
+        "config template"
+      ],
+      "url": "templates.html",
+      "meta": "project-template/infra/.env.example",
+      "published": true
+    },
+    {
+      "type": "template",
+      "title": "README.md",
+      "desc": "Standard project README with quick-start commands, project overview table, document index, key decisions log, and next actions.",
+      "tags": [
+        "markdown template"
+      ],
+      "url": "templates.html",
+      "meta": "project-template/README.md",
+      "published": true
+    }
+  ]
+}

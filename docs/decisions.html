@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Architecture Decisions — gilesparnell / Parnell Systems</title>
 <link rel="stylesheet" href="portal.css">
+<script defer src="portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -17,6 +18,7 @@
     </a>
     <nav class="header-nav">
       <a href="index.html">Home</a>
+      <a href="all.html">All Docs</a>
       <a href="skills.html">Skills</a>
       <a href="walkthroughs.html">Walkthroughs</a>
       <a href="decisions.html" class="active">Decisions</a>
@@ -25,349 +27,25 @@
       <a href="changelog.html">Changelog</a>
     </nav>
     <div class="header-right">
-      <a href="https://github.com/gilesparnell/Claude/tree/main/decisions" target="_blank" class="gh-btn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        View on GitHub
-      </a>
+      <button class="gh-btn" data-open-cmd style="cursor:pointer"><kbd>⌘K</kbd> Search</button>
     </div>
   </div>
 </header>
 
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Architecture Decisions</div>
-    <div class="hero-title">The &ldquo;why we built<br>it <em>this way</em>&rdquo; record</div>
-    <div class="hero-sub">One entry per key decision across all engagements. Invaluable when you return to a project six months later, or when a client asks why you made a particular choice.</div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-n" id="adr-count">18</span><span class="stat-l">Decisions</span></div>
-      <div class="stat"><span class="stat-n" id="accepted-count">18</span><span class="stat-l">Accepted</span></div>
-      <div class="stat"><span class="stat-n" id="proposed-count">0</span><span class="stat-l">Proposed</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="page-nav">
-  <div class="page-nav-inner">
-    <a href="#" class="active" onclick="filter('all',this);return false">All</a>
-    <a href="#" onclick="filter('infrastructure',this);return false">Infrastructure</a>
-    <a href="#" onclick="filter('architecture',this);return false">Architecture</a>
-    <a href="#" onclick="filter('tooling',this);return false">Tooling</a>
-    <a href="#" onclick="filter('process',this);return false">Process</a>
-    <div style="margin-left:auto">
-      <input type="text" id="search" placeholder="Search decisions..." oninput="searchADRs(this.value)" style="font-size:13px;font-family:var(--font);padding:7px 14px;border:1px solid var(--border2);border-radius:20px;background:var(--bg2);color:var(--text);width:220px;outline:none">
-    </div>
-  </div>
-</div>
-
-<div class="wrap" style="padding-top:36px;padding-bottom:60px">
-
-  <div class="adr-grid" id="adr-grid">
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-001</div>
-      <div class="adr-body">
-        <div class="adr-title">Rules in config, never in code</div>
-        <div class="adr-desc">All business rules — keywords, queue mappings, timing offsets, state detection — are stored in an external config file or database table, never hardcoded in the engine. This means rule changes never require a deployment.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">FSCA</span>
-          <span class="tag">automation</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="infrastructure">
-      <div class="adr-num">ADR-002</div>
-      <div class="adr-body">
-        <div class="adr-title">Railway + Vercel over single-platform hosting</div>
-        <div class="adr-desc">Backend (Node.js + PostgreSQL) on Railway, frontend (React dashboard) on Vercel. Keeps concerns separated, both have generous free tiers, and each can be scaled independently as engagements grow.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">infrastructure</span>
-          <span class="tag">hosting</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="process">
-      <div class="adr-num">ADR-003</div>
-      <div class="adr-body">
-        <div class="adr-title">Git submodule for shared toolkit, not private npm</div>
-        <div class="adr-desc">The shared Parnell Systems toolkit is consumed via git submodule rather than a private npm registry. Zero cost, works with any git host, no registry setup needed. Graduate to private npm when 3+ client repos are consuming it and the API is stable.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">tooling</span>
-          <span class="tag">architecture</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-004</div>
-      <div class="adr-body">
-        <div class="adr-title">Vite + React SPA over Next.js</div>
-        <div class="adr-desc">Marketing site and future customer dashboards built as a Vite + React SPA with React Router, not Next.js. GHL is the backend — we're building a frontend that talks to GHL's API, not a full-stack app. Pre-rendering covers SEO for the ~15–30 public pages. Migrate to Next.js only if content marketing scales beyond pre-rendering limits (50+ dynamic SEO pages).</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">frontend</span>
-          <span class="tag">infrastructure</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-005</div>
-      <div class="adr-body">
-        <div class="adr-title">GHL native voice agents as current delivery platform</div>
-        <div class="adr-desc">All customer voice agents delivered via Go High Level's native voice functionality. LiveKit and Vapi are future-state options for custom deployments requiring more control, but GHL native is current for all sales, demos, and client deployments. Plans and marketing materials must not reference LiveKit/Vapi as current capabilities.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">voice-ai</span>
-          <span class="tag">ghl</span>
-          <span class="tag">platform</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-006</div>
-      <div class="adr-body">
-        <div class="adr-title">@prerenderer/rollup-plugin for SEO over SSR</div>
-        <div class="adr-desc">Build-time pre-rendering rather than server-side rendering. The site is a Vite SPA with ~15 public pages — pre-rendering generates static HTML at build time that search engines can crawl, without requiring a Node.js server in production. Revisit if page count exceeds ~50 dynamic routes.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">seo</span>
-          <span class="tag">frontend</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-007</div>
-      <div class="adr-body">
-        <div class="adr-title">useSEO custom hook over react-helmet-async</div>
-        <div class="adr-desc">A zero-dependency custom useSEO hook for managing page meta tags instead of react-helmet-async. The pre-renderer captures the DOM after React renders, so meta tags set via direct DOM manipulation are picked up in static HTML output. Avoids a runtime dependency for something the build process handles. Sets title, description, canonical URL, OG tags, and JSON-LD structured data.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">seo</span>
-          <span class="tag">frontend</span>
-          <span class="tag">dependencies</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-008</div>
-      <div class="adr-body">
-        <div class="adr-title">Organisation + SoftwareApplication JSON-LD, not LocalBusiness</div>
-        <div class="adr-desc">Structured data uses Organisation + SoftwareApplication + FAQPage schema. Parnell Systems is a remote SaaS business — LocalBusiness would be factually incorrect and could trigger Google penalties. SoftwareApplication schema supports pricing, ratings, and feature data. FAQPage schema delivers highest SERP real estate on the pricing page.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">seo</span>
-          <span class="tag">structured-data</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="process">
-      <div class="adr-num">ADR-009</div>
-      <div class="adr-body">
-        <div class="adr-title">Pricing tiers: $399/$599/$799 with $2,000 setup and tiered annual discounts</div>
-        <div class="adr-desc">Three flat-rate tiers: Starter ($399/mo), Business ($599/mo), Professional ($799/mo). Annual billing at 1 month free. Setup fee: $2,000 for all tiers. Annual discounts on setup: Starter full, Business 50% off ($1,000), Professional waived. Monthly billing always pays full setup. Existing customers get 90-day loyalty bridge.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">pricing</span>
-          <span class="tag">stripe</span>
-          <span class="tag">revenue</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="process">
-      <div class="adr-num">ADR-010</div>
-      <div class="adr-body">
-        <div class="adr-title">Two-stage reactivation model for AU compliance</div>
-        <div class="adr-desc">Database reactivation campaigns use a two-stage permission-pass model to comply with AU Spam Act 2003 and Privacy Act 1988. Stage 1: single permission-pass SMS. Stage 2: only explicit opt-ins receive the full campaign. All numbers washed against DNCR before any voice outreach. SMS Sender ID Register compliance required from 1 July 2026.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">compliance</span>
-          <span class="tag">sms</span>
-          <span class="tag">australia</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-011</div>
-      <div class="adr-body">
-        <div class="adr-title">AllConvos demo separation strategy</div>
-        <div class="adr-desc">Voice AI demos must migrate off AllConvos to parnellsystems.com before full product separation. Demo pages on parnellsystems.com use GHL voice widgets directly, with each niche having its own widget ID, phone number, and audio sample. The AllConvos codebase must not be modified — it belongs to Jesse.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">allconvos</span>
-          <span class="tag">demos</span>
-          <span class="tag">migration</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="process">
-      <div class="adr-num">ADR-012</div>
-      <div class="adr-body">
-        <div class="adr-title">No brand name commitment — use Parnell Systems</div>
-        <div class="adr-desc">Do not hardcode any product brand name (previously "ZingCall" was considered). All customer-facing materials use "Parnell Systems" with a "voice" sub-brand badge until a final product name is decided. Code, config, URLs, and marketing copy must avoid baking in a name that may change.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">branding</span>
-          <span class="tag">naming</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="architecture">
-      <div class="adr-num">ADR-013</div>
-      <div class="adr-body">
-        <div class="adr-title">Stripe Payment Links over embedded checkout</div>
-        <div class="adr-desc">Pricing page CTAs link to Stripe Payment Links rather than embedded checkout or a custom payment flow. No backend required, Stripe handles the full checkout UX including tax collection. Each tier and billing interval gets its own Payment Link URL. Trade-off: less control over checkout experience, appropriate for current scale.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">stripe</span>
-          <span class="tag">payments</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="process">
-      <div class="adr-num">ADR-014</div>
-      <div class="adr-body">
-        <div class="adr-title">90-day pro-rata money-back guarantee, excludes setup fee</div>
-        <div class="adr-desc">New customers get a 90-day pro-rata money-back guarantee on subscription. The $2,000 setup fee is non-refundable — it covers real delivery work. Reduces buyer friction for a high-ticket SaaS without exposing setup costs to refund risk. Worst case Business Annual: cancel at day 89, refund ~$4,510, keep ~$2,480 for 3 months of service.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">pricing</span>
-          <span class="tag">customer-trust</span>
-          <span class="tag">refunds</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="process">
-      <div class="adr-num">ADR-015</div>
-      <div class="adr-body">
-        <div class="adr-title">Execute GTM plan week-by-week as independent work items</div>
-        <div class="adr-desc">The 8-week GTM plan is executed one week at a time, each as an independent /ce:work scope. Keeps each session focused, avoids burning credits planning work that's weeks away, and allows the plan to adapt based on prior-week results. Giles completes manual tasks (Stripe, Pixel IDs, etc.) before Claude runs code tasks with real values.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">workflow</span>
-          <span class="tag">planning</span>
-          <span class="tag">execution</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">March 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="process">
-      <div class="adr-num">ADR-016</div>
-      <div class="adr-body">
-        <div class="adr-title">Triage-first for adoption of any recommendation set</div>
-        <div class="adr-desc">For any "adopt X" / "add these recommendations" request, Claude must produce an explicit accept/reject/defer triage against current state before writing any plan. The reject column must exist — if empty, re-check for overlap. Paired with a CLAUDE.md growth brake: any proposal adding &gt;20 lines requires a paired proposal for what to remove or migrate to a skill.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">workflow</span>
-          <span class="tag">claude</span>
-          <span class="tag">discipline</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">April 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="tooling">
-      <div class="adr-num">ADR-017</div>
-      <div class="adr-body">
-        <div class="adr-title">Ship /ship and /resume as skills, not commands</div>
-        <div class="adr-desc">Skills compose with the skill-forced-eval hook on UserPromptSubmit, show up in the live skill list, and reference other skills by declared triggers. /ship composes with the existing verification-before-completion skill for its merge-verification step rather than re-implementing gh pr view — composition over duplication. /resume automates the Project Status Catch-Up rule with an explicit stop-and-ask gate.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">claude</span>
-          <span class="tag">skills</span>
-          <span class="tag">workflow</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">April 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="adr-card" data-category="tooling">
-      <div class="adr-num">ADR-018</div>
-      <div class="adr-body">
-        <div class="adr-title">Apply prompt engineering best practices to global CLAUDE.md</div>
-        <div class="adr-desc">Anthropic prompt engineering course review revealed three gaps: rules without examples drift; no verify-before-cite rule; critical rules stated once in 580 lines get forgotten mid-session. Six targeted edits fixed all three: added Verify Before Citing, inline examples for decisions/handoff/CHANGELOG, and a Critical Reminders block. Removed two redundant sections. Net: +11 lines, under the 20-line growth brake.</div>
-        <div class="adr-meta">
-          <span class="adr-status status-accepted">accepted</span>
-          <span class="tag">claude</span>
-          <span class="tag">claude-code</span>
-          <span class="tag">prompt-engineering</span>
-          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">May 2026</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- EMPTY STATE -->
-    <div class="adr-card" style="border-style:dashed;opacity:0.45" data-category="placeholder">
-      <div class="adr-num" style="color:var(--text3)">ADR-019</div>
-      <div class="adr-body">
-        <div class="adr-title" style="color:var(--text3)">Add your next decision</div>
-        <div class="adr-desc" style="color:var(--text3)">Add a markdown file to <code>decisions/</code> in the repo, then add the card here. Cards are currently added manually — see the walkthrough for the format.</div>
-      </div>
-    </div>
-
-  </div>
-
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="decisions"></aside>
+  <main class="dock-main">
+    <div class="main-title">Architecture Decisions</div>
+    <div class="main-sub" id="portal-sub">Loading…</div>
+    <input class="inline-filter" id="portal-filter" type="text" placeholder="Filter decisions…" autocomplete="off">
+    <div class="active-filter" id="portal-active"></div>
+    <div id="portal-list" data-type="decision"></div>
+  </main>
 </div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Architecture Decisions</span>
-  <span>Add decisions to <code>decisions/</code> &mdash; card added manually to this page</span>
+  <span>Generated from <code>decisions/*.md</code> frontmatter</span>
 </footer>
-
-<script>
-function filter(cat, el) {
-  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('search').value = '';
-  document.querySelectorAll('.adr-card').forEach(card => {
-    if(cat === 'all' || card.dataset.category === 'placeholder'){card.style.display='';return;}
-    card.style.display = card.dataset.category === cat ? '' : 'none';
-  });
-}
-function searchADRs(q) {
-  const term = q.toLowerCase().trim();
-  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
-  if(!term) { document.querySelector('.page-nav a').classList.add('active'); }
-  document.querySelectorAll('.adr-card').forEach(card => {
-    if(card.dataset.category === 'placeholder') { card.style.display = term ? 'none' : ''; return; }
-    const text = card.textContent.toLowerCase();
-    card.style.display = (!term || text.includes(term)) ? '' : 'none';
-  });
-}
-</script>
-<script>
-document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
-  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
-});
-</script>
 </body>
 </html>
