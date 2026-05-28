@@ -5,10 +5,27 @@ description: >
   Any time Claude or Codex produces a function, class, endpoint, service, or module,
   tests MUST be written and confirmed failing BEFORE implementation code exists.
   Enforces a full test suite: unit tests, integration tests, and system/E2E tests.
-  Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Mocha), and Go.
+  Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Moka), and Go.
   This skill is always active. It does not require the user to say 'TDD' or 'test first' —
   it applies automatically whenever code is being produced.
   NOTHING IS DONE until all tests pass. You must run the full suite before declaring completion.
+title: Test-First Development (TDD)
+scope: global
+category: testing
+icon: &#129514;
+triggers:
+  - write this function
+  - implement this feature
+  - fix this bug
+  - add an API endpoint
+  - test first
+checks-label: Steps
+checks:
+  - Write tests and confirm RED before any implementation exists
+  - Cover three layers - unit, integration, system/E2E
+  - Bug fix starts with a failing reproduction test
+  - Nothing is done until the full suite passes - show the output
+version: '1.0'
 ---
 
 # Test-First Development (TDD) Skill
@@ -40,12 +57,12 @@ If you catch yourself writing implementation first, STOP. Delete or stash it. Wr
 - Adding error handling for specific failure modes
 - Implementing a feature from a plan or spec
 - Fixing a bug (write the test that reproduces it FIRST)
-- Modifying existing logic (write tests covering current behavior FIRST, then modify)
+- Modifying existing logic (write tests covering current behaviour FIRST, then modify)
 
 **The ONLY exceptions — skip TDD for these and ONLY these:**
 - Pure configuration files (env vars, tailwind config, tsconfig, pyproject.toml)
 - CSS/styling-only changes with no logic
-- Import rewiring or re-exports with no behavior
+- Import rewiring or re-exports with no behaviour
 - README or documentation edits
 - One-line type alias additions
 - Renaming files with no logic change
@@ -223,7 +240,7 @@ cat package.json | grep -E '"test"|"vitest"|"jest"|"mocha"|"playwright"'
 |---|---|---|
 | `vitest` in devDependencies or scripts | **Vitest** | `npx vitest run` |
 | `jest` in devDependencies or `jest.config` exists | **Jest** | `npx jest` |
-| `mocha` in devDependencies | **Mocha** | `npx mocha` |
+| `mocha` in devDependencies | **Moka** | `npx mocha` |
 | `playwright` in devDependencies | **Playwright** (E2E) | `npx playwright test` |
 | None found | **Vitest** (install it) | `npm i -D vitest` |
 
@@ -256,7 +273,7 @@ For every unit of work, write tests at all applicable layers.
 ### Unit Test Coverage (Per Function)
 
 #### Happy Path Tests
-The expected behavior when inputs are valid and conditions are normal.
+The expected behaviour when inputs are valid and conditions are normal.
 
 ```
 - What does this function return when given valid input?
@@ -265,7 +282,7 @@ The expected behavior when inputs are valid and conditions are normal.
 ```
 
 #### Sad Path Tests
-The expected behavior when things go wrong.
+The expected behaviour when things go wrong.
 
 ```
 - What happens with null/undefined/empty input?
@@ -499,9 +516,9 @@ Now — and only now — write the code that makes the tests pass.
 
 **Rules during implementation:**
 - Write the **minimum code** to make the current failing test pass
-- Do not add behavior that no test covers
-- Do not optimize prematurely — correctness first
-- If you realize you need more behavior, go back to Step 2 and write a test for it first
+- Do not add behaviour that no test covers
+- Do not optimise prematurely — correctness first
+- If you realise you need more behaviour, go back to Step 2 and write a test for it first
 
 ---
 
@@ -536,7 +553,7 @@ With green tests as your safety net:
 - Simplify logic
 - Extract helpers if genuinely reused
 
-**After every refactor, run tests again.** If they break, your refactor changed behavior — revert it.
+**After every refactor, run tests again.** If they break, your refactor changed behaviour — revert it.
 
 ---
 
@@ -612,7 +629,7 @@ STEP 6 — FULL SUITE:
 | Only unit tests, no integration | Units work alone but break together | Add integration tests for every boundary |
 | Only happy path tests | Bugs live in sad paths and edge cases | Minimum: 1 happy, 1 sad, 1 edge per function |
 | Mocking everything | Tests pass but nothing actually works | Mock only external boundaries (APIs, DBs in unit tests). Use real DBs in integration tests |
-| Tests that mirror implementation | Refactoring breaks tests even when behavior is unchanged | Test behavior and outputs, not internal method calls |
+| Tests that mirror implementation | Refactoring breaks tests even when behaviour is unchanged | Test behaviour and outputs, not internal method calls |
 | `expect(result).toBeTruthy()` | Passes for almost anything | Assert specific values: `expect(result).toBe(42)` |
 | Giant test files with shared state | One failure cascades, impossible to debug | Each test sets up its own state. No shared mutable state between tests |
 | Skipping RED confirmation | You don't know if the test actually tests anything | Always run and see the failure before implementing |

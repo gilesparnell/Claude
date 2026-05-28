@@ -1,6 +1,23 @@
 ---
 name: testing-practices
 description: Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something. Triggers on 'write tests for this', 'add test coverage', 'how do I test this', 'set up testing'.
+title: Testing Practices
+scope: global
+category: testing
+icon: &#129666;
+triggers:
+  - write tests for this
+  - add test coverage
+  - how do I test this
+  - set up testing
+  - what should I test here
+checks-label: Principles
+checks:
+  - Test behaviour, not implementation - refactor without breaking tests
+  - Tests are DAMP, not DRY - clarity beats deduplication
+  - Use Arrange / Act / Assert with descriptive "does X when Y" names
+  - Skip framework internals and trivial getters; fix flaky tests
+version: '1.0'
 ---
 
 # Testing Practices Skill

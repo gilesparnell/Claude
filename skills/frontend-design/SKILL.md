@@ -1,6 +1,23 @@
 ---
 name: frontend-design
 description: Use this skill when building UI components, designing layouts, or making frontend styling decisions. Triggers on 'build this UI', 'style this component', 'make this look good', 'improve the design', 'create a landing page'.
+title: Frontend Design Principles
+scope: global
+category: frontend
+icon: &#127912;
+triggers:
+  - build this UI
+  - style this component
+  - make this look good
+  - improve the design
+  - create a landing page
+checks-label: Principles
+checks:
+  - Whitespace, type scale, and contrast over decoration
+  - Avoid AI cliches - Inter font, purple gradients, glassy cards
+  - Mobile-first - test at 375px, 768px, 1280px
+  - backdrop-blur on cards over dark backgrounds turns them grey
+version: '1.0'
 ---
 
 # Frontend Design Skill

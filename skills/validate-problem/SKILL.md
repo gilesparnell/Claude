@@ -1,6 +1,23 @@
 ---
 name: validate-problem
 description: Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign. Triggers on 'validate the problem', 'is this a real problem', 'pressure test this idea', 'painkiller or vitamin', 'discovery questions for'.
+title: Validate the Problem
+scope: global
+category: saas
+icon: &#128270;
+triggers:
+  - validate the problem
+  - is this a real problem
+  - pressure test this idea
+  - painkiller or vitamin
+  - discovery questions for
+checks-label: Steps
+checks:
+  - Painkiller or vitamin - will people pay, or is it nice-to-have
+  - Ask about past behaviour and current pain, never your solution
+  - Red flags are the cheap kills - watch for three of them
+  - Behavioural green flags beat opinions - "I pay for a workaround"
+version: '1.0'
 ---
 
 # Validate the Problem

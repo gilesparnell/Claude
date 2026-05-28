@@ -1,6 +1,23 @@
 ---
 name: code-quality
 description: Use this skill when reviewing, auditing, or improving code quality. Triggers on requests like 'review this code', 'check code quality', 'clean this up', 'audit this file', or 'make this production-ready'.
+title: Code Quality Review
+scope: global
+category: code
+icon: &#129529;
+triggers:
+  - review this code
+  - check code quality
+  - clean this up
+  - audit this file
+  - make this production-ready
+checks-label: Checks
+checks:
+  - Correctness - edge cases, off-by-one, explicit error handling
+  - Performance - N+1 queries, hoist expensive work out of loops
+  - Security - validate input, no hardcoded secrets, auth checks
+  - Verify deployed output for visual/CSS changes, not just source
+version: '1.0'
 ---
 
 # Code Quality Review Skill

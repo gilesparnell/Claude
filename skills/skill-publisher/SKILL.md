@@ -9,6 +9,23 @@ description: >
   'add this to walkthroughs', 'publish this walkthrough'.
   This skill is also MANDATORY post-step: after ANY skill creation or installation, this workflow
   MUST run to completion — git commit + push + portal updates are not optional.
+title: Skill & Walkthrough Publisher
+scope: global
+category: tooling
+icon: &#128228;
+triggers:
+  - add this as a skill
+  - publish this skill
+  - create a walkthrough
+  - add this to the portal
+  - new skill installed
+checks-label: Steps
+checks:
+  - Create both runtime SKILL.md and the portal stub frontmatter
+  - Portal stub needs title, scope, category, icon, triggers, 4 checks
+  - Walkthroughs - detail page plus a card before the empty state
+  - git pull --rebase, commit, push to gilesparnell/Claude - never force
+version: '1.0'
 ---
 
 # Skill Publisher
@@ -184,9 +201,9 @@ Walkthroughs are visual explainers — architecture diagrams, system flows, ment
 | `adr-grid` + `adr-card` | List of principle/rule cards with icon + title + desc |
 | `adr-num` | Left column of adr-card (emoji or number) |
 | `adr-body` > `adr-title` + `adr-desc` | Right column content |
-| Inline `<svg>` | Diagrams — use portal.css color variables |
+| Inline `<svg>` | Diagrams — use portal.css colour variables |
 
-**Color variables for SVG diagrams:**
+**Colour variables for SVG diagrams:**
 
 | Variable | Use For |
 |---|---|
@@ -197,7 +214,7 @@ Walkthroughs are visual explainers — architecture diagrams, system flows, ment
 | `--coral` / `--coral-bg` / `--coral-text` / `--coral-border` | Error, problem |
 | `--green` / `--green-bg` / `--green-text` / `--green-border` | Success, tmux |
 
-**Dark mode:** portal.css handles dark mode automatically via `@media(prefers-color-scheme:dark)`. Use CSS variables, not hardcoded colors, in inline styles. For SVG diagrams, hardcoded fills are OK (they're self-contained).
+**Dark mode:** portal.css handles dark mode automatically via `@media(prefers-color-scheme:dark)`. Use CSS variables, not hardcoded colours, in inline styles. For SVG diagrams, hardcoded fills are OK (they're self-contained).
 
 ### Step 2: Add a card to walkthroughs.html
 

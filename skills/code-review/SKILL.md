@@ -1,6 +1,23 @@
 ---
 name: code-review
 description: Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass. Triggers on 'review this PR', 'prepare this for review', 'adversarial review', 'fresh eyes on this'.
+title: Adversarial Code Review
+scope: global
+category: code
+icon: &#128269;
+triggers:
+  - review this PR
+  - prepare this for review
+  - do an adversarial review
+  - fresh eyes on this code
+  - what could go wrong at runtime
+checks-label: Checks
+checks:
+  - Read with fresh eyes - would a new engineer understand it
+  - Label feedback as blocking, suggestion, or nit
+  - Be specific - cite the line and the exact failure mode
+  - Don't block on style a linter could catch, or out-of-scope asks
+version: '1.0'
 ---
 
 # Code Review Skill

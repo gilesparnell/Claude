@@ -6,6 +6,24 @@ description: >
   to Claude Code workflows, or when terminal tabs are getting chaotic.
   Triggers on 'set up my dev environment', 'tmux workflow', 'parallel sessions',
   'worktree setup', 'agent teams setup', 'too many tabs'.
+title: Claude Code Parallel Workflow
+scope: global
+category: tooling
+icon: &#129520;
+triggers:
+  - set up my dev environment
+  - tmux workflow for claude
+  - run parallel claude sessions
+  - git worktree setup for claude
+  - too many terminal tabs
+  - set up agent teams
+checks-label: Principles
+checks:
+  - Three layers - tmux windows, git worktrees, agent teams
+  - Use a worktree for multi-file features, skip it for quick edits
+  - Max 2 parallel coding sessions to avoid rate-limit thrashing
+  - One session equals one task - never reuse for different work
+version: '1.0'
 ---
 
 # Claude Code Workflow — Structured Parallel Development

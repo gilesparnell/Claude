@@ -1,6 +1,24 @@
 ---
 name: resume
 description: Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull. Triggers on 'continue', 'resume', 'where were we', 'catch me up', 'what's the latest', 'what were we doing'. Use at the start of any session with no clear goal stated. Do NOT start implementation work before the user confirms a thread.
+title: Resume - Load Context Before Work
+scope: global
+category: workflow
+icon: &#128214;
+triggers:
+  - continue
+  - resume
+  - where were we
+  - catch me up
+  - what's the latest
+  - what were we doing
+checks-label: Steps
+checks:
+  - Read the most recent plan, handoff log, and decisions log
+  - Check git log and open PRs for what was in flight
+  - Summarise in exactly three bullets - active, in-flight, next
+  - Stop and ask which thread to pull - never start work speculatively
+version: '1.0'
 ---
 
 # /resume — Load context before resuming work

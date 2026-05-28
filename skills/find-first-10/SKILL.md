@@ -1,6 +1,23 @@
 ---
 name: find-first-10
 description: Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier. Includes the Sean Ellis "would be devastated" test. Triggers on 'find first 10', 'first 10 customers', 'who do I sell this to first', 'sean ellis test', 'manual customer acquisition plan'.
+title: Find Your First 10 Customers
+scope: global
+category: saas
+icon: &#127919;
+triggers:
+  - find first 10 customers
+  - who do I sell this to first
+  - run the sean ellis test
+  - manual customer acquisition plan
+  - how do I get my first customers
+checks-label: Steps
+checks:
+  - The Ten - specific places to find matching customers this week
+  - Non-cringe outreach that leads with the problem, one small ask
+  - Sean Ellis test - 40%+ "very disappointed" is the PMF signal
+  - Define kill criteria up front so you stop if it fails
+version: '1.0'
 ---
 
 # Find Your First 10 Customers

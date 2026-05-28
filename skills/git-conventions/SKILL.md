@@ -1,6 +1,23 @@
 ---
 name: git-conventions
 description: Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow. Triggers on 'commit this', 'write a commit message', 'create a PR', 'prepare for review'.
+title: Git Commit & PR Conventions
+scope: global
+category: workflow
+icon: &#128221;
+triggers:
+  - commit this
+  - write a commit message
+  - create a PR
+  - what's the branch naming convention
+  - prepare this for review
+checks-label: Rules
+checks:
+  - Conventional Commits - type(scope) subject, imperative, max 72 chars
+  - Body explains why, not what - reference issues with Fixes #N
+  - Branch names follow type/short-description
+  - Never commit to main directly or include secrets/.env files
+version: '1.0'
 ---
 
 # Git Conventions Skill
