@@ -1,4 +1,22 @@
 ---
+title: Skill Publisher
+scope: global
+category: tooling
+icon: &#128295;
+triggers:
+  - add this as a skill
+  - save this as a skill
+  - publish this skill
+  - create a skill for this
+  - add to the portal
+  - new skill installed
+checks-label: Key points
+checks:
+  - MANDATORY skill for publishing ANY content to the knowledge portal — skills, w…
+  - Use this skill whenever you have identified a reusable pattern worth preservin…
+  - Triggers on 'add this as a skill', 'save this as a skill', 'publish this skill…
+  - This skill is also MANDATORY post-step: after ANY skill creation or installati…
+version: '1.0'
 name: skill-publisher
 description: >
   MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs,

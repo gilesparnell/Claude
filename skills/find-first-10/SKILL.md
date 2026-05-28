@@ -1,4 +1,20 @@
 ---
+title: Find Your First 10 Customers
+scope: global
+category: engagement
+icon: &#127919;
+triggers:
+  - find first 10
+  - first 10 customers
+  - who do I sell this to first
+  - sean ellis test
+  - manual customer acquisition plan
+checks-label: Key points
+checks:
+  - Build a concrete plan to manually find and personally close the first 10 custo…
+  - Includes the Sean Ellis "would be devastated" test.
+  - Triggers on 'find first 10', 'first 10 customers', 'who do I sell this to firs…
+version: '1.0'
 name: find-first-10
 description: Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier. Includes the Sean Ellis "would be devastated" test. Triggers on 'find first 10', 'first 10 customers', 'who do I sell this to first', 'sean ellis test', 'manual customer acquisition plan'.
 ---

@@ -1,4 +1,18 @@
 ---
+title: Test-First Development
+scope: global
+category: testing
+icon: &#129514;
+triggers:
+  - TDD
+  - test first
+checks-label: Key points
+checks:
+  - MANDATORY test-first development for ALL non-trivial code — no trigger words n…
+  - Any time Claude or Codex produces a function, class, endpoint, service, or mod…
+  - Enforces a full test suite: unit tests, integration tests, and system/E2E test…
+  - Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Mocha), and…
+version: '1.0'
 name: tdd-first
 description: >
   MANDATORY test-first development for ALL non-trivial code — no trigger words needed.
