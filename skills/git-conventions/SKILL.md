@@ -1,18 +1,4 @@
 ---
-title: Git Conventions
-scope: global
-category: workflow
-icon: &#128260;
-triggers:
-  - commit this
-  - write a commit message
-  - create a PR
-  - prepare for review
-checks-label: Key points
-checks:
-  - Use this skill when creating commits, writing commit messages, preparing PRs,…
-  - Triggers on 'commit this', 'write a commit message', 'create a PR', 'prepare f…
-version: '1.0'
 name: git-conventions
 description: Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow. Triggers on 'commit this', 'write a commit message', 'create a PR', 'prepare for review'.
 ---

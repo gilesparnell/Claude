@@ -1,19 +1,4 @@
 ---
-title: Code Quality Review
-scope: global
-category: code
-icon: &#128187;
-triggers:
-  - review this code
-  - check code quality
-  - clean this up
-  - audit this file
-  - make this production-ready
-checks-label: Key points
-checks:
-  - Use this skill when reviewing, auditing, or improving code quality.
-  - Triggers on requests like 'review this code', 'check code quality', 'clean thi…
-version: '1.0'
 name: code-quality
 description: Use this skill when reviewing, auditing, or improving code quality. Triggers on requests like 'review this code', 'check code quality', 'clean this up', 'audit this file', or 'make this production-ready'.
 ---

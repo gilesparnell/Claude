@@ -1,18 +1,4 @@
 ---
-title: Testing Practices
-scope: global
-category: testing
-icon: &#129514;
-triggers:
-  - write tests for this
-  - add test coverage
-  - how do I test this
-  - set up testing
-checks-label: Key points
-checks:
-  - Use this skill when writing tests, setting up test infrastructure, or when ask…
-  - Triggers on 'write tests for this', 'add test coverage', 'how do I test this',…
-version: '1.0'
 name: testing-practices
 description: Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something. Triggers on 'write tests for this', 'add test coverage', 'how do I test this', 'set up testing'.
 ---

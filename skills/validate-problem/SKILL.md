@@ -1,19 +1,4 @@
 ---
-title: Validate the Problem
-scope: global
-category: engagement
-icon: &#127919;
-triggers:
-  - validate the problem
-  - is this a real problem
-  - pressure test this idea
-  - painkiller or vitamin
-  - discovery questions for
-checks-label: Key points
-checks:
-  - Customer-discovery prompt template for pressure-testing whether a problem is r…
-  - Triggers on 'validate the problem', 'is this a real problem', 'pressure test t…
-version: '1.0'
 name: validate-problem
 description: Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign. Triggers on 'validate the problem', 'is this a real problem', 'pressure test this idea', 'painkiller or vitamin', 'discovery questions for'.
 ---

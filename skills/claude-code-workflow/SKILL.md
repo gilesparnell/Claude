@@ -1,21 +1,4 @@
 ---
-title: Claude Code Workflow
-scope: global
-category: workflow
-icon: &#128260;
-triggers:
-  - set up my dev environment
-  - tmux workflow
-  - parallel sessions
-  - worktree setup
-  - agent teams setup
-  - too many tabs
-checks-label: Key points
-checks:
-  - Visual guide to structuring your Claude Code development environment with tmux…
-  - Use when setting up parallel sessions, onboarding to Claude Code workflows, or…
-  - Triggers on 'set up my dev environment', 'tmux workflow', 'parallel sessions',…
-version: '1.0'
 name: claude-code-workflow
 description: >
   Visual guide to structuring your Claude Code development environment with tmux,

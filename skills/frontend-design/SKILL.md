@@ -1,19 +1,4 @@
 ---
-title: Frontend Design
-scope: global
-category: frontend
-icon: &#127912;
-triggers:
-  - build this UI
-  - style this component
-  - make this look good
-  - improve the design
-  - create a landing page
-checks-label: Key points
-checks:
-  - Use this skill when building UI components, designing layouts, or making front…
-  - Triggers on 'build this UI', 'style this component', 'make this look good', 'i…
-version: '1.0'
 name: frontend-design
 description: Use this skill when building UI components, designing layouts, or making frontend styling decisions. Triggers on 'build this UI', 'style this component', 'make this look good', 'improve the design', 'create a landing page'.
 ---

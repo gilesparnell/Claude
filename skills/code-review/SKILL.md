@@ -1,18 +1,4 @@
 ---
-title: Code Review
-scope: global
-category: code
-icon: &#128187;
-triggers:
-  - review this PR
-  - prepare this for review
-  - adversarial review
-  - fresh eyes on this
-checks-label: Key points
-checks:
-  - Use this skill when preparing code for review, reviewing a PR, or doing an adv…
-  - Triggers on 'review this PR', 'prepare this for review', 'adversarial review',…
-version: '1.0'
 name: code-review
 description: Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass. Triggers on 'review this PR', 'prepare this for review', 'adversarial review', 'fresh eyes on this'.
 ---

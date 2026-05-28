@@ -1,17 +1,4 @@
 ---
-title: Humanizer — Remove AI Writing Patterns
-scope: global
-category: workflow
-icon: &#128260;
-triggers:
-  - humanizer
-checks-label: Key points
-checks:
-  - Remove signs of AI-generated writing from text.
-  - Use when editing or reviewing text to make it sound more natural and human-wri…
-  - Based on Wikipedia's comprehensive "Signs of AI writing" guide.
-  - Detects and fixes patterns including: inflated symbolism, promotional language…
-version: '1.0'
 name: humanizer
 version: 2.5.1
 description: |
