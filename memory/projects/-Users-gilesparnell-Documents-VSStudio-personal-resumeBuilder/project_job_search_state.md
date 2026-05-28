@@ -24,10 +24,10 @@ Snapshot as of **2026-05-28 AEST**. For latest state always read `docs/handoff/h
 - Newest-first ordering: new roles go at row 2 (top). Considering/unsubmitted rows may have a blank Date submitted (open question whether to use a proxy pipeline-entry date).
 
 **Pipeline gaps still to work**
-- The career-direction plan's top targets (Operating Partner at AU VCs, Field CTO at AI infra, Strategic TAM at AI labs, AI PM at later-stage) have NOT been worked yet — these are the lanes that match comp floor + role shape. Open thread #4 from `docs/plans/2026-04-29-002-career-progression-options.md`.
+- The career-direction plan's top targets (Operating Partner at AU VCs, Strategic TAM at AI labs, AI PM at later-stage) have NOT been worked yet — these are the lanes that match comp floor + role shape. Open thread #4 from `docs/plans/2026-04-29-002-career-progression-options.md`. (Field CTO removed from targets 2026-05-28 — now a hard pass.)
 - Manual logged-in sweep needed for: AGL Workday, Origin LinkedIn, EnergyAustralia careers, AEMO SuccessFactors — gated boards that likely have Head-of-Product seats in the $298k+ band but didn't surface through scripted scans.
 
 **Hard pass list (per career-direction plan)** — do not recommend these:
-Director/Head/VP Engineering · manager-of-managers eng roles · pre-sales SE/SA at quota-carrying enterprise software · FDE / Senior IC at AI-first cos · Customer Engineer at AI infra · Implementation Lead at AI-app cos · quota-carrying Sales Eng · Big-4 consulting · bootcamp educator.
+Director/Head/VP Engineering · manager-of-managers eng roles · pre-sales SE/SA at quota-carrying enterprise software · FDE / Senior IC at AI-first cos · Customer Engineer at AI infra · Implementation Lead at AI-app cos · quota-carrying Sales Eng · Big-4 consulting · bootcamp educator · **Field CTO / Office of the CTO** (reversed 2026-05-28, was top target #2 — doesn't want to own technical strategy for a host of customer companies; also customer-facing-heavy vs his internal-systems background).
 
 Related: [[project-comp-floor]] for the comp maths; [[feedback-gmail-no-send]] for the Gmail scope rule.
