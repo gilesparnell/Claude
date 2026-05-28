@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sub-agents &amp; Agent Teams — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../decisions.html">Decisions</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../project-status.html">Project Status</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Claude</div>
+    <div class="hero-title">Sub-agents &amp;<br><em>Agent Teams</em></div>
+    <div class="hero-sub">Two ways to put more than one Claude on a problem. They look similar and solve different problems. Here is how each one is wired, when to reach for it, and how to invoke it.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <!-- ── THE STACK ── -->
+  <div class="section-label">Where they sit in the stack</div>
+  <p style="color:var(--text2);font-size:14px;line-height:1.7;max-width:720px;margin:0 auto 28px;text-align:center">Agents don't work alone. Each layer feeds the one above it &mdash; persistent context at the bottom, event automation at the top. Sub-agents and Agent Teams sit in the middle: the part you actively orchestrate.</p>
+
+  <svg viewBox="0 0 760 392" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto 40px" aria-label="The agent stack: six layers from CLAUDE.md to Hooks">
+    <!-- CLAUDE.md -->
+    <rect x="120" y="10" width="520" height="52" rx="10" fill="#F1F0EE" stroke="#C9C7C1" stroke-width="1.5"/>
+    <text x="380" y="34" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#3a3a36">CLAUDE.md</text>
+    <text x="380" y="51" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#6f6e69">Always-loaded context &amp; rules every agent inherits</text>
+    <!-- Skills -->
+    <rect x="100" y="72" width="560" height="52" rx="10" fill="#FAEEDA" stroke="#FAC775" stroke-width="1.5"/>
+    <text x="380" y="96" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#633806">Skills</text>
+    <text x="380" y="113" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#BA7517">On-demand workflows &amp; knowledge, loaded only when triggers fire</text>
+    <!-- Sub-agents -->
+    <rect x="80" y="134" width="600" height="56" rx="10" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="2"/>
+    <text x="380" y="159" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#085041">Sub-agents &nbsp;&#8226;&nbsp; isolated workers</text>
+    <text x="380" y="178" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#1D9E75">A lead delegates a scoped task to a worker with its own context &amp; tools; worker reports back</text>
+    <!-- Agent Teams -->
+    <rect x="80" y="200" width="600" height="56" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="2"/>
+    <text x="380" y="225" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#3C3489">Agent Teams &nbsp;&#8226;&nbsp; peer coordination</text>
+    <text x="380" y="244" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#534AB7">Multiple agents share a task list &amp; message each other, challenging and building on findings</text>
+    <!-- MCP -->
+    <rect x="100" y="266" width="560" height="52" rx="10" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1.5"/>
+    <text x="380" y="290" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#0C447C">MCP servers</text>
+    <text x="380" y="307" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#378ADD">External systems &mdash; GitHub, Supabase, Drive. Any agent can call them</text>
+    <!-- Hooks -->
+    <rect x="120" y="328" width="520" height="52" rx="10" fill="#FAECE7" stroke="#F0997B" stroke-width="1.5"/>
+    <text x="380" y="352" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#993C1D">Hooks</text>
+    <text x="380" y="369" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#C0593A">Fire on events (prompt, tool use, stop) to enforce rules or spawn more agents</text>
+  </svg>
+
+  <!-- ── CORE DIFFERENCE ── -->
+  <div class="section-label">The core difference &mdash; hub-and-spoke vs. mesh</div>
+  <p style="color:var(--text2);font-size:14px;line-height:1.7;max-width:720px;margin:0 auto 28px;text-align:center">The single most useful mental model: a sub-agent setup is <strong style="color:var(--teal-text)">hub-and-spoke</strong> &mdash; one lead, workers that never talk to each other. An Agent Team is a <strong style="color:var(--purple-text)">mesh</strong> &mdash; peers that coordinate and message directly.</p>
+
+  <!-- Sub-agents diagram -->
+  <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;display:block;margin:0 auto 16px" aria-label="Hub and spoke: a lead delegates to four isolated workers">
+    <defs>
+      <marker id="sp" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#5DCAA5"/></marker>
+    </defs>
+    <text x="380" y="22" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#085041">Sub-agents &mdash; hub &amp; spoke</text>
+    <!-- spokes -->
+    <line x1="380" y1="160" x2="120" y2="80" stroke="#5DCAA5" stroke-width="1.5" marker-end="url(#sp)"/>
+    <line x1="380" y1="160" x2="640" y2="80" stroke="#5DCAA5" stroke-width="1.5" marker-end="url(#sp)"/>
+    <line x1="380" y1="160" x2="120" y2="248" stroke="#5DCAA5" stroke-width="1.5" marker-end="url(#sp)"/>
+    <line x1="380" y1="160" x2="640" y2="248" stroke="#5DCAA5" stroke-width="1.5" marker-end="url(#sp)"/>
+    <!-- workers -->
+    <g>
+      <rect x="40" y="56" width="150" height="48" rx="9" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+      <text x="115" y="78" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#085041">Explore</text>
+      <text x="115" y="94" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#1D9E75">own context</text>
+    </g>
+    <g>
+      <rect x="570" y="56" width="150" height="48" rx="9" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+      <text x="645" y="78" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#085041">Plan</text>
+      <text x="645" y="94" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#1D9E75">own context</text>
+    </g>
+    <g>
+      <rect x="40" y="224" width="150" height="48" rx="9" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+      <text x="115" y="246" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#085041">Review</text>
+      <text x="115" y="262" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#1D9E75">own context</text>
+    </g>
+    <g>
+      <rect x="570" y="224" width="150" height="48" rx="9" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
+      <text x="645" y="246" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#085041">Research</text>
+      <text x="645" y="262" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#1D9E75">own context</text>
+    </g>
+    <!-- lead -->
+    <rect x="318" y="132" width="124" height="56" rx="12" fill="#1D9E75"/>
+    <text x="380" y="158" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="14" font-weight="700" fill="#fff">LEAD</text>
+    <text x="380" y="175" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#C7EFE1">you</text>
+    <!-- annotation -->
+    <text x="380" y="300" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="var(--text2,#5f5e5a)">Lead delegates &#8594; workers run in parallel &#8594; report back &#8226; workers never message each other</text>
+  </svg>
+
+  <!-- Agent Teams diagram -->
+  <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;display:block;margin:0 auto 32px" aria-label="Mesh: four peer agents around a shared task list, all interconnected">
+    <text x="380" y="22" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" font-weight="700" fill="#3C3489">Agent Teams &mdash; mesh</text>
+    <!-- mesh links between peers -->
+    <g stroke="#AFA9EC" stroke-width="1.4" opacity="0.55">
+      <line x1="115" y1="80" x2="645" y2="80"/>
+      <line x1="115" y1="256" x2="645" y2="256"/>
+      <line x1="115" y1="80" x2="115" y2="256"/>
+      <line x1="645" y1="80" x2="645" y2="256"/>
+      <line x1="115" y1="80" x2="645" y2="256"/>
+      <line x1="645" y1="80" x2="115" y2="256"/>
+    </g>
+    <!-- dashed links to shared list -->
+    <g stroke="#8B7BF0" stroke-width="1.2" opacity="0.8" stroke-dasharray="4,3">
+      <line x1="115" y1="80" x2="380" y2="168"/>
+      <line x1="645" y1="80" x2="380" y2="168"/>
+      <line x1="115" y1="256" x2="380" y2="168"/>
+      <line x1="645" y1="256" x2="380" y2="168"/>
+    </g>
+    <!-- peers -->
+    <g>
+      <rect x="50" y="54" width="130" height="52" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+      <text x="115" y="78" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#3C3489">Lead</text>
+      <text x="115" y="94" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#534AB7">peer</text>
+    </g>
+    <g>
+      <rect x="580" y="54" width="130" height="52" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+      <text x="645" y="78" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#3C3489">Security</text>
+      <text x="645" y="94" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#534AB7">peer</text>
+    </g>
+    <g>
+      <rect x="50" y="230" width="130" height="52" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+      <text x="115" y="254" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#3C3489">Performance</text>
+      <text x="115" y="270" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#534AB7">peer</text>
+    </g>
+    <g>
+      <rect x="580" y="230" width="130" height="52" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+      <text x="645" y="254" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#3C3489">Tests</text>
+      <text x="645" y="270" text-anchor="middle" font-family="'SF Mono','Fira Code',monospace" font-size="9" fill="#534AB7">peer</text>
+    </g>
+    <!-- shared task list -->
+    <rect x="296" y="144" width="168" height="48" rx="10" fill="#534AB7"/>
+    <text x="380" y="167" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#fff">SHARED</text>
+    <text x="380" y="183" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#D7D2F7">task list</text>
+    <!-- annotation -->
+    <text x="380" y="312" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="var(--text2,#5f5e5a)">Peers self-assign from the shared list &#8226; message each other &#8226; challenge &amp; reconcile findings</text>
+  </svg>
+
+  <!-- ── WHEN SUB-AGENTS ── -->
+  <div class="section-label">When to reach for Sub-agents</div>
+  <div class="adr-grid" style="margin-bottom:32px">
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128270;</div>
+      <div class="adr-body">
+        <div class="adr-title">Parallel research</div>
+        <div class="adr-desc">"Find every place X is used" across many directories &mdash; fan out, merge the summaries.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#129529;</div>
+      <div class="adr-body">
+        <div class="adr-title">Protect the main context</div>
+        <div class="adr-desc">A noisy 15-grep investigation runs in a worker and returns one clean paragraph.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128269;</div>
+      <div class="adr-body">
+        <div class="adr-title">Specialised one-shot pass</div>
+        <div class="adr-desc">A security or performance review on a diff, then control comes straight back to you.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128176;</div>
+      <div class="adr-body">
+        <div class="adr-title">Cheap volume</div>
+        <div class="adr-desc">Run workers on a smaller model with scoped tools for repetitive, independent lookups.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WHEN AGENT TEAMS ── -->
+  <div class="section-label">When to reach for Agent Teams</div>
+  <div class="adr-grid" style="margin-bottom:32px">
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#9878;</div>
+      <div class="adr-body">
+        <div class="adr-title">Competing hypotheses</div>
+        <div class="adr-desc">Several agents debug the same flaky test from different angles and compare notes.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128065;</div>
+      <div class="adr-body">
+        <div class="adr-title">Multi-angle review</div>
+        <div class="adr-desc">Security, performance, and conventions reviewers cross-check and reconcile findings.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#129309;</div>
+      <div class="adr-body">
+        <div class="adr-title">Collaborative builds</div>
+        <div class="adr-desc">Each teammate owns a slice of a feature and coordinates on the shared interface.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#128737;</div>
+      <div class="adr-body">
+        <div class="adr-title">Red-team / blue-team</div>
+        <div class="adr-desc">One proposes, another tries to break it; they iterate to a stronger answer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── QUICK DECISION ── -->
+  <div class="section-label">Which one, right now?</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:36px">
+    <div style="padding:14px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="font-size:12px;color:var(--text2)">Chunks that don't depend on each other</div>
+      <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--teal-bg);color:var(--teal-text);white-space:nowrap">Sub-agents</span>
+    </div>
+    <div style="padding:14px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="font-size:12px;color:var(--text2)">Mainly keeping your main context clean</div>
+      <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--teal-bg);color:var(--teal-text);white-space:nowrap">Sub-agent</span>
+    </div>
+    <div style="padding:14px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="font-size:12px;color:var(--text2)">One specialised pass, then control back</div>
+      <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--teal-bg);color:var(--teal-text);white-space:nowrap">Sub-agent</span>
+    </div>
+    <div style="padding:14px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="font-size:12px;color:var(--text2)">Agents must challenge or build on each other</div>
+      <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--purple-bg);color:var(--purple-text);white-space:nowrap">Agent Team</span>
+    </div>
+    <div style="padding:14px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="font-size:12px;color:var(--text2)">A long collaborative build with shared state</div>
+      <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--purple-bg);color:var(--purple-text);white-space:nowrap">Agent Team</span>
+    </div>
+    <div style="padding:14px 18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="font-size:12px;color:var(--text2)">Debate / red-team to harden a conclusion</div>
+      <span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--purple-bg);color:var(--purple-text);white-space:nowrap">Agent Team</span>
+    </div>
+  </div>
+
+  <!-- ── HOW TO INVOKE: SUB-AGENTS ── -->
+  <div class="section-label">How to invoke &mdash; Sub-agents</div>
+  <p style="color:var(--text2);font-size:14px;line-height:1.7;max-width:720px;margin:0 auto 18px">Define a custom worker as a markdown file in <code>~/.claude/agents/</code> (user-wide) or <code>.claude/agents/</code> (project). The frontmatter scopes it; the body is its system prompt.</p>
+
+  <div style="background:#1a1a18;border-radius:10px;padding:24px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;line-height:1.9;color:#e8e6de;border:1px solid rgba(255,255,255,0.07);margin-bottom:18px;overflow-x:auto">
+    <span style="color:#5f5e5a"># 1 · Define a worker &mdash; ~/.claude/agents/cv-researcher.md</span><br>
+    <span style="color:#5f5e5a">---</span><br>
+    <span style="color:#AFA9EC">name</span>: cv-researcher<br>
+    <span style="color:#AFA9EC">description</span>: <span style="color:#5DCAA5">Researches a role + company for interview prep.</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#5DCAA5">Use proactively when prepping for a role.</span><br>
+    <span style="color:#AFA9EC">tools</span>: Read, Grep, WebSearch, WebFetch<br>
+    <span style="color:#AFA9EC">model</span>: sonnet<br>
+    <span style="color:#5f5e5a">---</span><br>
+    You are an interview-prep research specialist. Given a role,<br>
+    gather the company, the JD requirements, and likely questions.<br>
+    <br>
+    <span style="color:#5f5e5a"># 2 · Invoke it</span><br>
+    <span style="color:#97C459">&gt;</span> <span style="color:#e8e6de">Use the </span><span style="color:#FAC775">cv-researcher</span><span style="color:#e8e6de"> subagent to dig into this role.</span> &nbsp;<span style="color:#5f5e5a"># explicit</span><br>
+    <span style="color:#97C459">&gt;</span> <span style="color:#e8e6de">Prep me for this job posting: ...</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#5f5e5a"># auto-delegated</span><br>
+    <span style="color:#97C459">&gt;</span> <span style="color:#e8e6de">Explore: where is auth handled?</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#5f5e5a"># built-in, no file</span>
+  </div>
+
+  <!-- ── HOW TO INVOKE: AGENT TEAMS ── -->
+  <div class="section-label">How to invoke &mdash; Agent Teams</div>
+  <p style="color:var(--text2);font-size:14px;line-height:1.7;max-width:720px;margin:0 auto 18px">First enable the experimental flag in settings, then ask the lead to form a team and describe the angles &mdash; the teammates self-organise.</p>
+
+  <div style="background:#1a1a18;border-radius:10px;padding:24px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;line-height:1.9;color:#e8e6de;border:1px solid rgba(255,255,255,0.07);margin-bottom:18px;overflow-x:auto">
+    <span style="color:#5f5e5a"># 1 · Enable once &mdash; ~/.claude/settings.json</span><br>
+    { <span style="color:#AFA9EC">"env"</span>: { <span style="color:#AFA9EC">"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"</span>: <span style="color:#5DCAA5">"1"</span> } }<br>
+    <br>
+    <span style="color:#5f5e5a"># 2 · Ask the lead to form a team</span><br>
+    <span style="color:#97C459">&gt;</span> <span style="color:#e8e6de">Create a </span><span style="color:#FAC775">team</span><span style="color:#e8e6de"> to review this PR from three angles &mdash;</span><br>
+    &nbsp;&nbsp;<span style="color:#e8e6de">security, performance, and conventions. Have them</span><br>
+    &nbsp;&nbsp;<span style="color:#e8e6de">challenge each other and reconcile before reporting back.</span><br>
+    <br>
+    <span style="color:#97C459">&gt;</span> <span style="color:#e8e6de">Put a </span><span style="color:#FAC775">team</span><span style="color:#e8e6de"> on this flaky test: each takes a different</span><br>
+    &nbsp;&nbsp;<span style="color:#e8e6de">root-cause theory, then compare and converge.</span>
+  </div>
+
+  <div class="adr-grid" style="grid-template-columns:1fr;margin-bottom:36px">
+    <div class="adr-card" style="border-color:var(--amber-border,#FAC775);background:var(--amber-bg,#FAEEDA)">
+      <div class="adr-num" style="font-size:18px;padding-top:0;min-width:28px">&#9888;</div>
+      <div class="adr-body">
+        <div class="adr-title" style="color:var(--amber-text,#633806)">Agent Teams is experimental</div>
+        <div class="adr-desc" style="color:var(--amber-text,#BA7517)">Its exact surface (dashboard, command names) still shifts across releases. The reliable invocation today is the flag plus a natural-language request to the lead &mdash; treat any specific CLI command for it as version-dependent.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── THEY COMPOSE ── -->
+  <div class="section-label">They compose</div>
+  <p style="color:var(--text2);font-size:14px;line-height:1.8;max-width:760px;margin:0 auto 16px">These aren't either/or. A realistic flow stacks them: a <strong>hook</strong> fires on a new PR &#8594; the <strong>lead</strong> loads a review <strong>skill</strong> &#8594; it spins up an <strong style="color:var(--purple-text)">Agent Team</strong> for multi-angle review &#8594; each teammate dispatches its own <strong style="color:var(--teal-text)">sub-agents</strong> to fan out across the codebase &#8594; workers call <strong style="color:var(--blue-text)">MCP</strong> tools to pull GitHub and Supabase state &#8594; findings flow back up the mesh and the lead posts one reconciled summary.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;margin-top:8px">
+    <span style="padding:4px 10px;border-radius:6px;background:var(--coral-bg);color:var(--coral-text)">Hook</span><span style="color:var(--text3)">&#8594;</span>
+    <span style="padding:4px 10px;border-radius:6px;background:var(--amber-bg);color:var(--amber-text)">Skill</span><span style="color:var(--text3)">&#8594;</span>
+    <span style="padding:4px 10px;border-radius:6px;background:var(--purple-bg);color:var(--purple-text)">Agent Team</span><span style="color:var(--text3)">&#8594;</span>
+    <span style="padding:4px 10px;border-radius:6px;background:var(--teal-bg);color:var(--teal-text)">Sub-agents &times;N</span><span style="color:var(--text3)">&#8594;</span>
+    <span style="padding:4px 10px;border-radius:6px;background:var(--blue-bg);color:var(--blue-text)">MCP</span><span style="color:var(--text3)">&#8594;</span>
+    <span style="padding:4px 10px;border-radius:6px;background:var(--bg3);color:var(--text)">reconciled answer</span>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span>Generated May 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
+</footer>
+
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
+</body>
+</html>

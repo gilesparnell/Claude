@@ -39,7 +39,7 @@
     <div class="hero-title">Architecture diagrams &amp;<br><em>visual explainers</em></div>
     <div class="hero-sub">Generated when you ask Claude to show something worth keeping. Each walkthrough captures a decision, a mental model, or a system worth understanding at a glance.</div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-n">11</span><span class="stat-l">Walkthroughs</span></div>
+      <div class="stat"><span class="stat-n">12</span><span class="stat-l">Walkthroughs</span></div>
       <div class="stat"><span class="stat-n">3</span><span class="stat-l">Categories</span></div>
     </div>
   </div>
@@ -310,6 +310,50 @@
       </div>
       <div class="wt-footer">
         <a href="diagrams/prompt-engineering-claude-md.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- SUB-AGENTS VS AGENT TEAMS -->
+    <div class="wt-card" data-category="claude">
+      <div class="wt-thumb" style="background:var(--purple-bg);flex-direction:column;gap:6px;padding:14px;align-items:flex-start;justify-content:center">
+        <div style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-text);opacity:0.6">hub &amp; spoke vs. mesh</div>
+        <svg viewBox="0 0 240 70" style="width:100%;height:auto" aria-hidden="true">
+          <!-- hub & spoke (teal) -->
+          <line x1="55" y1="35" x2="22" y2="14" stroke="#5DCAA5" stroke-width="1.4"/>
+          <line x1="55" y1="35" x2="22" y2="56" stroke="#5DCAA5" stroke-width="1.4"/>
+          <line x1="55" y1="35" x2="92" y2="14" stroke="#5DCAA5" stroke-width="1.4"/>
+          <line x1="55" y1="35" x2="92" y2="56" stroke="#5DCAA5" stroke-width="1.4"/>
+          <circle cx="22" cy="14" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="22" cy="56" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="92" cy="14" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="92" cy="56" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="55" cy="35" r="9" fill="#1D9E75"/>
+          <!-- mesh (purple) -->
+          <g stroke="#AFA9EC" stroke-width="1.2" opacity="0.7">
+            <line x1="158" y1="14" x2="218" y2="14"/>
+            <line x1="158" y1="56" x2="218" y2="56"/>
+            <line x1="158" y1="14" x2="158" y2="56"/>
+            <line x1="218" y1="14" x2="218" y2="56"/>
+            <line x1="158" y1="14" x2="218" y2="56"/>
+            <line x1="218" y1="14" x2="158" y2="56"/>
+          </g>
+          <circle cx="158" cy="14" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <circle cx="218" cy="14" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <circle cx="158" cy="56" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <circle cx="218" cy="56" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <rect x="178" y="29" width="20" height="12" rx="3" fill="#534AB7"/>
+        </svg>
+        <div style="display:flex;justify-content:space-between;width:100%;font-size:9px;font-family:var(--mono);color:var(--purple-text);opacity:0.8">
+          <span>sub-agents</span><span>agent teams</span>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Sub-agents &amp; Agent Teams</div>
+        <div class="wt-desc">Two ways to put more than one Claude on a problem. The hub-and-spoke vs. mesh mental model, what each is for, and exactly how to invoke them.</div>
+        <div class="wt-tags"><span class="tag">claude</span><span class="tag">claude-code</span><span class="tag">agents</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/subagents-vs-agent-teams.html" class="wt-link">Open walkthrough &#8594;</a>
       </div>
     </div>
 
