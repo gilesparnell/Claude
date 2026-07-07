@@ -1,0 +1,365 @@
+{
+  "generated": "2026-07-07T14:52:39.113Z",
+  "counts": {
+    "skill": 21,
+    "walkthrough": 11,
+    "template": 3
+  },
+  "entries": [
+    {
+      "type": "skill",
+      "title": "Claude Code Workflow",
+      "desc": "Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "claude-code-workflow",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Code Quality",
+      "desc": "Use this skill when reviewing, auditing, or improving code quality.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "code-quality",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Code Review",
+      "desc": "Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "code-review",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "End-to-End Feature Test",
+      "desc": "Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a…",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "e2e-feature-test",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Find First 10",
+      "desc": "Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "find-first-10",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Frontend Design",
+      "desc": "Use this skill when building UI components, designing layouts, or making frontend styling decisions.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "frontend-design",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Git Conventions",
+      "desc": "Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "git-conventions",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "GitHub Pages Portal",
+      "desc": "Self-updating GitHub Pages knowledge portal.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "github-pages-portal",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Humanizer",
+      "desc": "Remove signs of AI-generated writing from text.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "humanizer",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Plan Progress Tracker",
+      "desc": "Generates a visual HTML progress diagram for active project plans.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "plan-tracker",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Project Documentation Standard",
+      "desc": "Mandatory documentation structure for every project.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "project-docs-standard",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Resume",
+      "desc": "Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "resume",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "SaaS Patterns",
+      "desc": "Production-grade SaaS patterns. Tenant isolation, plan gating, usage tracking, idempotent ops, soft deletes, and onboarding principles.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "saas-patterns",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Security Review",
+      "desc": "Comprehensive security review for web applications.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "security-review",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Ship",
+      "desc": "Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "ship",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Skill Publisher",
+      "desc": "MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs, decisions, or templates.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "skill-publisher",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Systematic Debugging",
+      "desc": "Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour — before proposing fixes. Enforces evidence gathering, pattern…",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "systematic-debugging",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Tdd First",
+      "desc": "MANDATORY test-first development for ALL non-trivial code — no trigger words needed.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "tdd-first",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Testing Practices",
+      "desc": "Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "testing-practices",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Validate Problem",
+      "desc": "Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign.",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "validate-problem",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Verification Before Completion",
+      "desc": "Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success…",
+      "tags": [],
+      "url": "skills.html",
+      "meta": "verification-before-completion",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Project vs Workspace Repo Structure",
+      "desc": "How to organise your AI workspace repo vs individual client project repos.",
+      "tags": [
+        "claude",
+        "workflow"
+      ],
+      "url": "diagrams/repo-structure.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "GitHub MCP Server Setup",
+      "desc": "How the GitHub MCP server connects Claude Code to your repos.",
+      "tags": [
+        "tooling",
+        "claude"
+      ],
+      "url": "diagrams/github-mcp-setup.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Claude Chat vs Claude Code Workflow",
+      "desc": "How this chat and Claude Code work together.",
+      "tags": [
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/claude-workflow.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Compound Engineering Skills Map",
+      "desc": "Every /ce: command explained — what it does, when to use it, and how it relates to the others.",
+      "tags": [
+        "claude",
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/ce-skills-map.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "The mvanhorn Workflow",
+      "desc": "A no-IDE setup using only plan.md files and voice.",
+      "tags": [
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/mvanhorn-workflow.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Structured Claude Code Dev Environment",
+      "desc": "Replace chaotic terminal tabs with three layers: tmux for named windows, git worktrees for isolation, and Agent Teams for coordinated parallel agents.",
+      "tags": [
+        "tooling",
+        "claude-code",
+        "workflow"
+      ],
+      "url": "diagrams/claude-code-workflow-setup.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Wave-Based Parallel Execution",
+      "desc": "How /wave-execute fights context rot by splitting plans into dependency waves and dispatching each task to a fresh 200K-context agent.",
+      "tags": [
+        "workflow",
+        "claude-code",
+        "parallel"
+      ],
+      "url": "diagrams/wave-execute-workflow.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Skills & Hooks, In Tandem Across the Lifecycle",
+      "desc": "Where every skill fires, which hooks run underneath, and how /resume + /ship close the loop between sessions.",
+      "tags": [
+        "workflow",
+        "skills",
+        "hooks",
+        "tdd",
+        "lifecycle"
+      ],
+      "url": "diagrams/development-lifecycle.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Memory Sync — How Claude Remembers You",
+      "desc": "Claude writes memory files locally during sessions.",
+      "tags": [
+        "tooling",
+        "memory",
+        "hooks"
+      ],
+      "url": "diagrams/memory-sync.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Prompt Engineering: CLAUDE.md Improvements",
+      "desc": "What an Anthropic prompt engineering course revealed about our global CLAUDE.md — three gaps, six edits, and the principle that one example beats three paragraphs of rules.",
+      "tags": [
+        "claude",
+        "workflow",
+        "claude-code"
+      ],
+      "url": "diagrams/prompt-engineering-claude-md.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Sub-agents & Agent Teams",
+      "desc": "Two ways to put more than one Claude on a problem.",
+      "tags": [
+        "claude",
+        "claude-code",
+        "agents"
+      ],
+      "url": "diagrams/subagents-vs-agent-teams.html",
+      "published": true
+    },
+    {
+      "type": "template",
+      "title": "default / CLAUDE.md",
+      "desc": "A generic starting CLAUDE.md for any project — architecture principles, testing and shipping discipline, and the conventions Claude Code should follow.",
+      "tags": [
+        "CLAUDE.md",
+        "default"
+      ],
+      "url": "templates.html",
+      "meta": "project-templates/default/CLAUDE.md",
+      "published": true
+    },
+    {
+      "type": "template",
+      "title": "nextjs / CLAUDE.md",
+      "desc": "A CLAUDE.md tuned for a modern Next.js App Router app: TypeScript, a service layer, thin API routes, and AI behind a single wrapper.",
+      "tags": [
+        "CLAUDE.md",
+        "nextjs"
+      ],
+      "url": "templates.html",
+      "meta": "project-templates/nextjs/CLAUDE.md",
+      "published": true
+    },
+    {
+      "type": "template",
+      "title": "python-api / CLAUDE.md",
+      "desc": "A CLAUDE.md for a Python API service: project layout, dependency and testing conventions, and endpoint-building guardrails.",
+      "tags": [
+        "CLAUDE.md",
+        "python"
+      ],
+      "url": "templates.html",
+      "meta": "project-templates/python-api/CLAUDE.md",
+      "published": true
+    }
+  ]
+}

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walkthroughs — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="portal.css">
+<script defer src="portal-shell.js"></script>
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="all.html">All Docs</a>
+      <a href="skills.html">Skills</a>
+      <a href="walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="templates.html">Templates</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://github.com/gilesparnell/Claude/tree/main/docs/diagrams" target="_blank" class="gh-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="walkthroughs"></aside>
+  <main class="dock-main">
+    <div class="main-title">Walkthroughs</div>
+    <div class="main-sub">Visual explainers &mdash; architecture diagrams, system flows, and mental models worth understanding at a glance.</div>
+    <div style="margin-top:8px">
+
+  <div class="wt-grid" id="wt-grid">
+
+    <!-- REPO STRUCTURE -->
+    <div class="wt-card" data-category="claude">
+      <div class="wt-thumb" style="background:var(--blue-bg);font-size:13px;font-family:var(--mono);color:var(--blue-text);padding:16px;align-items:flex-start;justify-content:flex-start;flex-direction:column;gap:4px;line-height:1.7">
+        <div>&#128230; gilesparnell/Claude</div>
+        <div>&nbsp;&nbsp;&#128193; skills/ &larr; reusable</div>
+        <div>&nbsp;&nbsp;&#128193; project-templates/</div>
+        <div>&nbsp;&nbsp;&#128193; docs/ &larr; these pages</div>
+        <div style="margin-top:8px">&#128230; client-acme/</div>
+        <div>&nbsp;&nbsp;&#128193; src/</div>
+        <div>&nbsp;&nbsp;&#128193; .claude/</div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Project vs Workspace Repo Structure</div>
+        <div class="wt-desc">How to organise your AI workspace repo vs individual client project repos. What lives where and why.</div>
+        <div class="wt-tags">
+          <span class="tag">claude</span>
+          <span class="tag">workflow</span>
+        </div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/repo-structure.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- GITHUB MCP -->
+    <div class="wt-card" data-category="tooling">
+      <div class="wt-thumb" style="background:var(--teal-bg);font-size:13px;font-family:var(--mono);color:var(--teal-text);padding:16px;align-items:flex-start;justify-content:flex-start;flex-direction:column;gap:4px;line-height:1.7">
+        <div>Claude Code CLI</div>
+        <div>&nbsp;&nbsp;&#8595; MCP protocol</div>
+        <div>GitHub API</div>
+        <div>&nbsp;&nbsp;&#8595; Bearer token</div>
+        <div>gilesparnell/Claude &#10003;</div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">GitHub MCP Server Setup</div>
+        <div class="wt-desc">How the GitHub MCP server connects Claude Code to your repos. Auth flow, scopes, and what you unlock once connected.</div>
+        <div class="wt-tags">
+          <span class="tag">tooling</span>
+          <span class="tag">claude</span>
+        </div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/github-mcp-setup.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+
+    <!-- SKILLS ARCHITECTURE -->
+    <div class="wt-card" data-category="claude">
+      <div class="wt-thumb" style="background:var(--teal-bg);font-size:12px;font-family:var(--mono);color:var(--teal-text);padding:16px;align-items:flex-start;justify-content:flex-start;flex-direction:column;gap:3px;line-height:1.8">
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--teal-text);opacity:0.6;margin-bottom:2px">global</div>
+        <div>~/.claude/skills/</div>
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--teal-text);opacity:0.6;margin:4px 0 2px">project</div>
+        <div>[project]/.claude/skills/</div>
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--teal-text);opacity:0.6;margin:4px 0 2px">portal</div>
+        <div>~/Claude/skills/</div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Skills Architecture</div>
+        <div class="wt-desc">Three-location model, global vs project scope, the 7-section skill template, and how to write a skill from scratch.</div>
+        <div class="wt-tags">
+          <span class="tag">claude</span>
+          <span class="tag">skills</span>
+        </div>
+      </div>
+      <div class="wt-footer">
+        <a href="skills-architecture.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- CLAUDE WORKFLOW -->
+    <div class="wt-card" data-category="workflow">
+      <div class="wt-thumb" style="background:var(--purple-bg);flex-direction:column;gap:6px;padding:16px">
+        <div style="display:flex;gap:8px;align-items:center;justify-content:center">
+          <div style="padding:6px 10px;background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:6px;font-size:11px;font-family:var(--mono);color:var(--purple-text)">claude.ai</div>
+          <span style="font-size:16px;color:var(--text3)">&#8594;</span>
+          <div style="padding:6px 10px;background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:6px;font-size:11px;font-family:var(--mono);color:var(--teal-text)">terminal</div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px;text-align:center">plan &#8594; build &#8594; push &#8594; portal</div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Claude Chat vs Claude Code Workflow</div>
+        <div class="wt-desc">How this chat and Claude Code work together. Plan and generate here, build and execute in the terminal.</div>
+        <div class="wt-tags"><span class="tag">workflow</span><span class="tag">claude-code</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/claude-workflow.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+    <!-- CE SKILLS MAP -->
+    <div class="wt-card" data-category="claude">
+      <div class="wt-thumb" style="background:var(--purple-bg);flex-direction:column;gap:5px;padding:16px;align-items:flex-start;justify-content:flex-start">
+        <div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-text);opacity:0.6;margin-bottom:4px">Discover → Plan → Build → Review → Compound</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:var(--purple-bg);border:1px solid var(--purple-border);color:var(--purple-text)">/ce:plan</span>
+          <span style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:var(--teal-bg);border:1px solid var(--teal-border);color:var(--teal-text)">/ce:work</span>
+          <span style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--blue-text)">/ce:review</span>
+          <span style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:var(--purple-bg);border:1px solid var(--purple-border);color:var(--purple-text)">/ce:brainstorm</span>
+          <span style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:var(--teal-bg);border:1px solid var(--teal-border);color:var(--teal-text)">/ce:compound</span>
+          <span style="font-size:9px;color:var(--text3);font-size:10px">+15 more</span>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Compound Engineering Skills Map</div>
+        <div class="wt-desc">Every /ce: command explained — what it does, when to use it, and how it relates to the others. Organised by feature lifecycle phase with a quick-reference decision table.</div>
+        <div class="wt-tags"><span class="tag">claude</span><span class="tag">workflow</span><span class="tag">claude-code</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/ce-skills-map.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- MVANHORN WORKFLOW -->
+    <div class="wt-card" data-category="workflow">
+      <div class="wt-thumb" style="background:var(--blue-bg);flex-direction:column;gap:6px;padding:16px">
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--blue-text);opacity:0.6;margin-bottom:2px">No IDE. Just plan.md files and voice.</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-family:var(--mono);color:var(--blue-text)">
+          <div>① Input — voice / task</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.7">&#8595;</div>
+          <div>② Brain — claude code</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.7">&#8595;</div>
+          <div>③ Shared Layer — git / mcp</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.7">&#8595;</div>
+          <div>④ Output — deployed</div>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">The mvanhorn Workflow</div>
+        <div class="wt-desc">A no-IDE setup using only plan.md files and voice. Four-layer flow: input → brain → shared glue → output. How to run Claude Code without ever opening an editor.</div>
+        <div class="wt-tags"><span class="tag">workflow</span><span class="tag">claude-code</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/mvanhorn-workflow.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- CLAUDE CODE WORKFLOW SETUP -->
+    <div class="wt-card" data-category="tooling">
+      <div class="wt-thumb" style="background:var(--teal-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start">
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--teal-text);opacity:0.6;margin-bottom:2px">tmux + worktrees + agent teams</div>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-family:var(--mono);color:var(--teal-text)">
+          <div>&#9312; tmux &mdash; named windows</div>
+          <div style="padding-left:8px;color:var(--teal-text);opacity:0.5">&#8595;</div>
+          <div>&#9313; worktrees &mdash; isolated files</div>
+          <div style="padding-left:8px;color:var(--teal-text);opacity:0.5">&#8595;</div>
+          <div>&#9314; agent teams &mdash; coordinated</div>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Structured Claude Code Dev Environment</div>
+        <div class="wt-desc">Replace chaotic terminal tabs with three layers: tmux for named windows, git worktrees for isolation, and Agent Teams for coordinated parallel agents. Visual diagrams and daily workflow.</div>
+        <div class="wt-tags"><span class="tag">tooling</span><span class="tag">claude-code</span><span class="tag">workflow</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/claude-code-workflow-setup.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- WAVE EXECUTE WORKFLOW -->
+    <div class="wt-card" data-category="workflow">
+      <div class="wt-thumb" style="background:var(--blue-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start">
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--blue-text);opacity:0.6;margin-bottom:4px">parallel execution pipeline</div>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-family:var(--mono);color:var(--blue-text)">
+          <div>&#9312; plan &#8594; dependency graph</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.5">&#8595;</div>
+          <div>&#9313; group into waves</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.5">&#8595;</div>
+          <div>&#9314; spawn fresh agents</div>
+          <div style="padding-left:8px;color:var(--blue-text);opacity:0.5">&#8595;</div>
+          <div>&#9315; verify &amp; report</div>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Wave-Based Parallel Execution</div>
+        <div class="wt-desc">How /wave-execute fights context rot by splitting plans into dependency waves and dispatching each task to a fresh 200K-context agent. The full pipeline from ce:brainstorm to deployed code.</div>
+        <div class="wt-tags"><span class="tag">workflow</span><span class="tag">claude-code</span><span class="tag">parallel</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/wave-execute-workflow.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- DEVELOPMENT LIFECYCLE -->
+    <div class="wt-card" data-category="workflow">
+      <div class="wt-thumb" style="background:var(--coral-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start">
+        <div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--coral-text);opacity:0.6;margin-bottom:4px">skills &middot; hooks &middot; loop</div>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-family:var(--mono);color:var(--coral-text)">
+          <div>discover &rarr; triage &rarr; plan</div>
+          <div style="padding-left:8px;opacity:0.5">&#8595;</div>
+          <div>build &middot; /tdd-first (hook)</div>
+          <div style="padding-left:8px;opacity:0.5">&#8595;</div>
+          <div>verify &middot; /ship &#9733;</div>
+          <div style="padding-left:8px;opacity:0.5">&#8593;</div>
+          <div>/resume &#9733; &larr; next session</div>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Skills &amp; Hooks, In Tandem Across the Lifecycle</div>
+        <div class="wt-desc">Where every skill fires, which hooks run underneath, and how /resume + /ship close the loop between sessions. Covers discovery, Adoption Discipline triage, planning, TDD build, verification, the verified ship procedure, and session-boundary continuity.</div>
+        <div class="wt-tags"><span class="tag">workflow</span><span class="tag">skills</span><span class="tag">hooks</span><span class="tag">tdd</span><span class="tag">lifecycle</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/development-lifecycle.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <!-- MEMORY SYNC -->
+    <div class="wt-card" data-category="tooling">
+      <div class="wt-thumb" style="background:var(--teal-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start;font-size:12px;font-family:var(--mono);color:var(--teal-text);line-height:1.7">
+        <div>Stop hook fires</div>
+        <div style="color:var(--teal);font-weight:600">sync-memory-to-repo.sh</div>
+        <div style="margin-top:4px">cp memory/ → repo/memory/</div>
+        <div>git add · commit · push</div>
+        <div style="color:#999;font-size:10px;margin-top:4px">only if changed · 30s timeout</div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Memory Sync — How Claude Remembers You</div>
+        <div class="wt-desc">Claude writes memory files locally during sessions. A Stop hook auto-commits them to GitHub so every new session starts with full context — across machines and accounts.</div>
+        <div class="wt-tags"><span class="tag">tooling</span><span class="tag">memory</span><span class="tag">hooks</span></div>
+        <a href="diagrams/memory-sync.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- PROMPT ENGINEERING CLAUDE.MD -->
+    <div class="wt-card" data-category="claude">
+      <div class="wt-thumb" style="background:var(--teal-bg);flex-direction:column;gap:3px;padding:16px;align-items:flex-start;justify-content:flex-start">
+        <div style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-text);opacity:0.6;margin-bottom:4px">before → after · 6 edits · +11 lines</div>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:10px;font-family:var(--mono);color:var(--teal-text)">
+          <div style="color:var(--teal)">+ Verify Before Citing</div>
+          <div style="color:var(--teal)">+ examples (decisions · handoff)</div>
+          <div style="color:var(--teal)">+ CHANGELOG good/bad example</div>
+          <div style="color:var(--teal)">+ Critical Reminders block</div>
+          <div style="color:var(--teal);opacity:0.5">− 2 redundant sections</div>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Prompt Engineering: CLAUDE.md Improvements</div>
+        <div class="wt-desc">What an Anthropic prompt engineering course revealed about our global CLAUDE.md — three gaps, six edits, and the principle that one example beats three paragraphs of rules.</div>
+        <div class="wt-tags">
+          <span class="tag">claude</span>
+          <span class="tag">workflow</span>
+          <span class="tag">claude-code</span>
+        </div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/prompt-engineering-claude-md.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <!-- SUB-AGENTS VS AGENT TEAMS -->
+    <div class="wt-card" data-category="claude">
+      <div class="wt-thumb" style="background:var(--purple-bg);flex-direction:column;gap:6px;padding:14px;align-items:flex-start;justify-content:center">
+        <div style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple-text);opacity:0.6">hub &amp; spoke vs. mesh</div>
+        <svg viewBox="0 0 240 70" style="width:100%;height:auto" aria-hidden="true">
+          <!-- hub & spoke (teal) -->
+          <line x1="55" y1="35" x2="22" y2="14" stroke="#5DCAA5" stroke-width="1.4"/>
+          <line x1="55" y1="35" x2="22" y2="56" stroke="#5DCAA5" stroke-width="1.4"/>
+          <line x1="55" y1="35" x2="92" y2="14" stroke="#5DCAA5" stroke-width="1.4"/>
+          <line x1="55" y1="35" x2="92" y2="56" stroke="#5DCAA5" stroke-width="1.4"/>
+          <circle cx="22" cy="14" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="22" cy="56" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="92" cy="14" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="92" cy="56" r="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.2"/>
+          <circle cx="55" cy="35" r="9" fill="#1D9E75"/>
+          <!-- mesh (purple) -->
+          <g stroke="#AFA9EC" stroke-width="1.2" opacity="0.7">
+            <line x1="158" y1="14" x2="218" y2="14"/>
+            <line x1="158" y1="56" x2="218" y2="56"/>
+            <line x1="158" y1="14" x2="158" y2="56"/>
+            <line x1="218" y1="14" x2="218" y2="56"/>
+            <line x1="158" y1="14" x2="218" y2="56"/>
+            <line x1="218" y1="14" x2="158" y2="56"/>
+          </g>
+          <circle cx="158" cy="14" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <circle cx="218" cy="14" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <circle cx="158" cy="56" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <circle cx="218" cy="56" r="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.2"/>
+          <rect x="178" y="29" width="20" height="12" rx="3" fill="#534AB7"/>
+        </svg>
+        <div style="display:flex;justify-content:space-between;width:100%;font-size:9px;font-family:var(--mono);color:var(--purple-text);opacity:0.8">
+          <span>sub-agents</span><span>agent teams</span>
+        </div>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title">Sub-agents &amp; Agent Teams</div>
+        <div class="wt-desc">Two ways to put more than one Claude on a problem. The hub-and-spoke vs. mesh mental model, what each is for, and exactly how to invoke them.</div>
+        <div class="wt-tags"><span class="tag">claude</span><span class="tag">claude-code</span><span class="tag">agents</span></div>
+      </div>
+      <div class="wt-footer">
+        <a href="diagrams/subagents-vs-agent-teams.html" class="wt-link">Open walkthrough &#8594;</a>
+      </div>
+    </div>
+
+    <div class="wt-card" data-category="placeholder" style="border-style:dashed;opacity:0.5">
+      <div class="wt-thumb" style="flex-direction:column;gap:8px">
+        <span style="font-size:28px">+</span>
+        <span style="font-size:12px;color:var(--text3)">Next walkthrough</span>
+      </div>
+      <div class="wt-body">
+        <div class="wt-title" style="color:var(--text3)">Ask Claude to show you something</div>
+        <div class="wt-desc">Architecture decisions, system flows, mental models — anything worth visualising can be added here.</div>
+      </div>
+      <div class="wt-footer">
+        <span style="font-size:12px;color:var(--text3)">Add to docs/diagrams/</span>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span>Add diagrams to <code>docs/diagrams/</code> and link them here</span>
+</footer>
+
+<script>
+function filter(cat, el) {
+  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.wt-card').forEach(card => {
+    if(cat === 'all' || card.dataset.category === 'placeholder'){card.style.display='';return;}
+    card.style.display = card.dataset.category === cat ? '' : 'none';
+  });
+}
+function searchCards(q) {
+  const term = q.toLowerCase().trim();
+  document.querySelectorAll('.page-nav a').forEach(a => a.classList.remove('active'));
+  if(!term) { document.querySelector('.page-nav a').classList.add('active'); }
+  document.querySelectorAll('.wt-card').forEach(card => {
+    if(card.dataset.category === 'placeholder') { card.style.display = term ? 'none' : ''; return; }
+    const text = card.textContent.toLowerCase();
+    card.style.display = (!term || text.includes(term)) ? '' : 'none';
+  });
+}
+</script>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
+</body>
+</html>

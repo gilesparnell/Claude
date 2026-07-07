@@ -1,0 +1,70 @@
+# Skills — Global vs Repo-Scoped
+
+Skills exist in **two formats** and **two scopes**. Understanding both is important.
+
+---
+
+## Two Formats
+
+Every skill has two files serving different purposes:
+
+| Format | Location | Purpose |
+|---|---|---|
+| **Portal stub** | `<claude-portal-repo>/skills/<slug>/SKILL.md` | Frontmatter-only. Rendered as a card on the GitHub Pages portal. |
+| **Runtime content** | `~/.claude/skills/<slug>/SKILL.md` or `<project>/.claude/skills/<slug>/SKILL.md` | Full markdown. What Claude reads when the skill is invoked. |
+
+The files in **this folder** are portal stubs. The runtime content lives elsewhere (see below).
+
+Each portal stub includes a `scope` field that identifies whether the runtime version is global or project-specific:
+
+```yaml
+scope: global   # runtime lives in ~/.claude/skills/ — loads in every session
+scope: project  # runtime lives in [project]/.claude/skills/ — loads only in that repo
+```
+
+---
+
+## Two Scopes
+
+### GLOBAL skills → `~/.claude/skills/`
+Generic enough to apply on any project. Loaded in every Claude Code session regardless of which repo you're in.
+
+| Skill | Why global |
+|---|---|
+| `code-quality` | Applies to any codebase |
+| `code-review` | Applies to any PR |
+| `frontend-design` | Generic UI principles (lean version) |
+| `git-conventions` | Conventional Commits applies everywhere |
+| `security-review` | OWASP Top 10 security checklist applies to any web project |
+| `systematic-debugging` | Root-cause-first debugging applies to any bug in any project |
+| `testing-practices` | Testing philosophy is language/framework agnostic |
+| `verification-before-completion` | Evidence-before-claims applies to any completion claim |
+| `skill-publisher` | Meta-skill for managing skills — useful globally |
+
+### REPO-SCOPED skills → `<project>/.claude/skills/`
+Reference a specific tech stack, client, workflow, or internal system. Should NOT be in `~/.claude/skills/` — they'd trigger incorrectly on unrelated projects.
+
+| Skill | Scope | Reason |
+|---|---|---|
+| `github-pages-portal` | This repo | Specific to this portal's infrastructure |
+| `saas-patterns` | A SaaS platform repo | Architecture patterns specific to one platform |
+| `frontend-design` (rich) | A client project repo | That project's brand standards and component conventions |
+
+---
+
+## Decision Rule
+
+Ask: *"Would this skill give correct, useful guidance on a completely unrelated project?"*
+
+- **Yes** → Global (`~/.claude/skills/`)
+- **No** → Repo-scoped (`<project>/.claude/skills/`)
+
+When in doubt, start repo-scoped. Promote to global only when you've confirmed it's truly project-agnostic.
+
+---
+
+## Adding a New Skill
+
+Use the `skill-publisher` skill. It walks through writing both the runtime version and the portal stub, deciding scope, and pushing to this repo.
+
+Trigger: `add this as a skill` / `save this as a skill` / `publish this skill`

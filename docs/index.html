@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Portal — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="portal.css">
+<script defer src="portal-shell.js"></script>
+<style>
+.hero-title{font-size:42px}
+.portal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:900px){.portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.portal-grid{grid-template-columns:1fr}.hero-title{font-size:30px}}
+.accent-blue{background:linear-gradient(90deg,var(--blue),#85B7EB)}
+.accent-teal{background:linear-gradient(90deg,var(--teal),#5DCAA5)}
+.accent-amber{background:linear-gradient(90deg,var(--amber),#EF9F27)}
+.accent-coral{background:linear-gradient(90deg,var(--coral),#F0997B)}
+.accent-purple{background:linear-gradient(90deg,var(--purple),#AFA9EC)}
+.accent-navy{background:linear-gradient(90deg,var(--navy),#2E86AB)}
+</style>
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="all.html">All Docs</a>
+      <a href="skills.html">Skills</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="templates.html">Templates</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <button class="gh-btn" data-open-cmd style="cursor:pointer;margin-right:8px"><kbd>⌘K</kbd> Search</button>
+      <a href="https://github.com/gilesparnell/Claude" target="_blank" class="gh-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        gilesparnell/Claude
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Knowledge Portal</div>
+    <div class="hero-title">Everything Claude knows<br>about <em>how you work</em></div>
+    <div class="hero-sub">Skills, patterns, and walkthroughs — a living knowledge base that grows with every project.</div>
+    <div class="hero-stats" id="stats">
+      <div class="stat"><span class="stat-n" id="stat-skills">9</span><span class="stat-l">Skills</span></div>
+      <div class="stat"><span class="stat-n" id="stat-walkthroughs">11</span><span class="stat-l">Walkthroughs</span></div>
+      <div class="stat"><span class="stat-n" id="stat-templates">1</span><span class="stat-l">Templates</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-inner">
+    <a href="#sections" class="active">Sections</a>
+    <a href="#activity">Recent activity</a>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:44px">
+
+  <div class="section-label" id="sections">Sections</div>
+  <div class="portal-grid" style="margin-bottom:44px">
+
+    <a href="all.html" class="card" style="display:flex;flex-direction:column">
+      <div class="card-accent" style="background:linear-gradient(90deg,var(--accent),var(--accent-light))"></div>
+      <div class="card-inner" style="flex:1">
+        <div class="card-header">
+          <div class="card-title">All Documentation</div>
+          <span class="card-count"><kbd>⌘K</kbd> search</span>
+        </div>
+        <div class="card-desc">One searchable index of every skill, walkthrough, and template. Sidebar browse, tag filters, and instant command-palette search across everything.</div>
+        <div class="card-tags">
+          <span class="tag">unified</span>
+          <span class="tag">search</span>
+          <span class="tag">find anything</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">Browse everything</span>
+          <span class="card-arrow">&#8594;</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="skills.html" class="card" style="display:flex;flex-direction:column">
+      <div class="card-accent accent-blue"></div>
+      <div class="card-inner" style="flex:1">
+        <div class="card-header">
+          <div class="card-title">Skills Library</div>
+          <span class="card-count" id="count-skills">14 skills</span>
+        </div>
+        <div class="card-desc">Reusable instructions Claude Code loads on every project. Encode hard-won patterns so they apply everywhere, automatically.</div>
+        <div class="card-tags">
+          <span class="tag">code-quality</span>
+          <span class="tag">tdd-first</span>
+          <span class="tag">frontend-design</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">View all skills</span>
+          <span class="card-arrow">&#8594;</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="walkthroughs.html" class="card" style="display:flex;flex-direction:column">
+      <div class="card-accent accent-teal"></div>
+      <div class="card-inner" style="flex:1">
+        <div class="card-header">
+          <div class="card-title">Walkthroughs</div>
+          <span class="card-count" id="count-walkthroughs">11 guides</span>
+        </div>
+        <div class="card-desc">Architecture diagrams, system designs, and visual explainers — generated when you ask Claude to show something worth keeping.</div>
+        <div class="card-tags">
+          <span class="tag">architecture</span>
+          <span class="tag">diagrams</span>
+          <span class="tag">flows</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">View all walkthroughs</span>
+          <span class="card-arrow">&#8594;</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="templates.html" class="card" style="display:flex;flex-direction:column">
+      <div class="card-accent accent-coral"></div>
+      <div class="card-inner" style="flex:1">
+        <div class="card-header">
+          <div class="card-title">Templates &amp; Scripts</div>
+          <span class="card-count" id="count-templates">3 templates</span>
+        </div>
+        <div class="card-desc">Reusable project templates and config files. CLAUDE.md, .env.example and more.</div>
+        <div class="card-tags">
+          <span class="tag">templates</span>
+          <span class="tag">CLAUDE.md</span>
+          <span class="tag">.env</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">View all templates</span>
+          <span class="card-arrow">&#8594;</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="changelog.html" class="card" style="display:flex;flex-direction:column">
+      <div class="card-accent accent-purple"></div>
+      <div class="card-inner" style="flex:1">
+        <div class="card-header">
+          <div class="card-title">Changelog</div>
+          <span class="card-count">auto-updated</span>
+        </div>
+        <div class="card-desc">Every change to the knowledge base, auto-generated from git history. Always current, never manual.</div>
+        <div class="card-tags">
+          <span class="tag">git log</span>
+          <span class="tag">auto-generated</span>
+          <span class="tag">history</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">View changelog</span>
+          <span class="card-arrow">&#8594;</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label" id="activity">Recent activity</div>
+  <div class="feed" style="margin-bottom:44px" id="activity-feed">
+    <div class="feed-header">
+      Latest commits
+      <a href="https://github.com/gilesparnell/Claude/commits/main" target="_blank" class="feed-link">View all &#8599;</a>
+    </div>
+    <div id="feed-rows">
+      <div class="feed-row">
+        <div class="feed-dot" style="background:var(--blue)"></div>
+        <span class="feed-text">Loading recent activity...</span>
+        <span class="feed-meta"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Parnell Systems Knowledge Portal</span>
+  <span>Auto-updated on every push &middot; <a href="https://github.com/gilesparnell/Claude" style="color:var(--text3)">GitHub &#8599;</a></span>
+</footer>
+
+<script>
+const COLORS = {feat:'var(--teal)',fix:'var(--coral)',chore:'var(--amber)',docs:'var(--blue)',skill:'var(--purple)',default:'var(--text3)'};
+function timeAgo(d){const s=Math.floor((Date.now()-new Date(d))/1000);if(s<60)return'just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';if(s<604800)return Math.floor(s/86400)+'d ago';return new Date(d).toLocaleDateString('en-AU',{day:'numeric',month:'short'})}
+function getColor(msg){if(msg.startsWith('feat'))return COLORS.feat;if(msg.startsWith('fix'))return COLORS.fix;if(msg.startsWith('chore'))return COLORS.chore;if(msg.startsWith('docs'))return COLORS.docs;if(msg.toLowerCase().includes('skill'))return COLORS.skill;return COLORS.default}
+fetch('https://api.github.com/repos/gilesparnell/Claude/commits?per_page=8')
+  .then(r=>r.json()).then(commits=>{
+    const rows=document.getElementById('feed-rows');
+    rows.innerHTML=commits.map(c=>`
+      <div class="feed-row">
+        <div class="feed-dot" style="background:${getColor(c.commit.message)}"></div>
+        <span class="feed-text">${c.commit.message.split('\n')[0]}</span>
+        <span class="feed-meta">${timeAgo(c.commit.author.date)}</span>
+      </div>`).join('');
+  }).catch(()=>{});
+</script>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compound Engineering Skills Map</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:         #0f1117;
+    --surface:    #151821;
+    --border:     #1e293b;
+    --text1:      #e2e8f0;
+    --text2:      #94a3b8;
+    --text3:      #475569;
+    --mono:       'SF Mono', Menlo, monospace;
+
+    --purple-bg:    #1a1035; --purple-border: #6d28d9; --purple-text: #a78bfa;
+    --blue-bg:      #0f1a2e; --blue-border:   #3b82f6; --blue-text:   #60a5fa;
+    --green-bg:     #0a1f14; --green-border:  #059669; --green-text:  #34d399;
+    --amber-bg:     #1a1208; --amber-border:  #d97706; --amber-text:  #fbbf24;
+    --teal-bg:      #051a18; --teal-border:   #0d9488; --teal-text:   #2dd4bf;
+    --slate-bg:     #111827; --slate-border:  #374151; --slate-text:  #9ca3af;
+    --pink-bg:      #1a0a14; --pink-border:   #db2777; --pink-text:   #f472b6;
+    --rose-bg:      #1a0808; --rose-border:   #e11d48; --rose-text:   #fb7185;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text1);
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .page-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .page-subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text3);
+    margin-bottom: 52px;
+  }
+
+  .diagram { max-width: 960px; margin: 0 auto; }
+
+  /* ── SECTION LABELS ── */
+  .layer-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    margin-bottom: 14px;
+    padding-left: 2px;
+  }
+
+  /* ── LIFECYCLE PIPELINE ── */
+  .pipeline {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    margin-bottom: 8px;
+  }
+  .phase {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 14px 14px;
+    position: relative;
+    background: var(--surface);
+  }
+  .phase + .phase { margin-left: 6px; }
+  .phase-num {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .phase-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .phase-skills {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .phase-skill {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 3px 7px;
+    border-radius: 5px;
+    border: 1px solid;
+    display: inline-block;
+    width: fit-content;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
+  .phase-skill:hover { opacity: 0.75; }
+
+  .phase-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: var(--text3);
+    font-size: 18px;
+    flex-shrink: 0;
+    padding-top: 28px;
+  }
+
+  /* phase colour variants */
+  .p-discover  { border-color: var(--purple-border); }
+  .p-discover .phase-num  { color: var(--purple-text); }
+  .p-discover .phase-name { color: var(--purple-text); }
+  .p-discover .phase-skill { background: var(--purple-bg); border-color: var(--purple-border); color: var(--purple-text); }
+
+  .p-plan      { border-color: var(--blue-border); }
+  .p-plan .phase-num  { color: var(--blue-text); }
+  .p-plan .phase-name { color: var(--blue-text); }
+  .p-plan .phase-skill { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue-text); }
+
+  .p-build     { border-color: var(--green-border); }
+  .p-build .phase-num  { color: var(--green-text); }
+  .p-build .phase-name { color: var(--green-text); }
+  .p-build .phase-skill { background: var(--green-bg); border-color: var(--green-border); color: var(--green-text); }
+
+  .p-review    { border-color: var(--amber-border); }
+  .p-review .phase-num  { color: var(--amber-text); }
+  .p-review .phase-name { color: var(--amber-text); }
+  .p-review .phase-skill { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber-text); }
+
+  .p-compound  { border-color: var(--teal-border); }
+  .p-compound .phase-num  { color: var(--teal-text); }
+  .p-compound .phase-name { color: var(--teal-text); }
+  .p-compound .phase-skill { background: var(--teal-bg); border-color: var(--teal-border); color: var(--teal-text); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 44px 0 36px;
+  }
+
+  /* ── TOOLING STRIP ── */
+  .tool-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .tool-chip {
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .tool-chip:hover { opacity: 0.7; }
+  .tc-slate { background: var(--slate-bg); border-color: var(--slate-border); color: var(--slate-text); }
+  .tc-pink  { background: var(--pink-bg);  border-color: var(--pink-border);  color: var(--pink-text); }
+  .tc-rose  { background: var(--rose-bg);  border-color: var(--rose-border);  color: var(--rose-text); }
+
+  /* ── SKILL DETAIL CARDS ── */
+  .section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    margin: 40px 0 16px;
+    padding-left: 2px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .skill-card {
+    border-radius: 12px;
+    border: 1px solid;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-margin-top: 24px;
+  }
+
+  .skill-cmd {
+    font-size: 12px;
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+  .skill-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .skill-when {
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.5;
+  }
+  .skill-when strong {
+    color: var(--text2);
+    font-weight: 600;
+  }
+  .skill-desc {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.65;
+  }
+  .skill-desc code {
+    background: rgba(255,255,255,0.07);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+  .skill-outputs {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .skill-output {
+    font-size: 11px;
+    color: var(--text3);
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .skill-output::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--text3);
+  }
+  .skill-triggers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .trigger {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text3);
+    border: 1px solid var(--border);
+  }
+
+  /* skill card colour themes */
+  .sc-purple { background: var(--purple-bg); border-color: var(--purple-border); }
+  .sc-purple .skill-cmd { color: var(--purple-text); }
+
+  .sc-blue   { background: var(--blue-bg);   border-color: var(--blue-border); }
+  .sc-blue   .skill-cmd { color: var(--blue-text); }
+
+  .sc-green  { background: var(--green-bg);  border-color: var(--green-border); }
+  .sc-green  .skill-cmd { color: var(--green-text); }
+
+  .sc-amber  { background: var(--amber-bg);  border-color: var(--amber-border); }
+  .sc-amber  .skill-cmd { color: var(--amber-text); }
+
+  .sc-teal   { background: var(--teal-bg);   border-color: var(--teal-border); }
+  .sc-teal   .skill-cmd { color: var(--teal-text); }
+
+  .sc-slate  { background: var(--slate-bg);  border-color: var(--slate-border); }
+  .sc-slate  .skill-cmd { color: var(--slate-text); }
+
+  .sc-pink   { background: var(--pink-bg);   border-color: var(--pink-border); }
+  .sc-pink   .skill-cmd { color: var(--pink-text); }
+
+  .sc-rose   { background: var(--rose-bg);   border-color: var(--rose-border); }
+  .sc-rose   .skill-cmd { color: var(--rose-text); }
+
+  /* ── DECISION TABLE ── */
+  .decision-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 16px;
+  }
+  .decision-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    border-bottom: 1px solid var(--border);
+  }
+  .decision-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(30,41,59,0.5);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .decision-table tr:last-child td { border-bottom: none; }
+  .decision-table td:first-child { font-family: var(--mono); font-size: 11px; white-space: nowrap; }
+  .decision-table td:nth-child(2) { color: var(--text2); }
+  .decision-table td:nth-child(3) { color: var(--text3); font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Compound Engineering Skills</h1>
+<p class="page-subtitle">Every /ce: command, what it does, and where it fits in the feature lifecycle</p>
+
+<div class="diagram">
+
+  <!-- ═══════════════════ LIFECYCLE PIPELINE ═══════════════════ -->
+  <div class="layer-label">Feature lifecycle — skills by phase</div>
+
+  <div class="pipeline">
+
+    <div class="phase p-discover">
+      <div class="phase-num">① Discover</div>
+      <div class="phase-name">Shape the idea</div>
+      <div class="phase-skills">
+        <a href="#brainstorm" class="phase-skill">/ce:brainstorm</a>
+        <a href="#ideate"     class="phase-skill">/ce:ideate</a>
+      </div>
+    </div>
+
+    <div class="phase-arrow">›</div>
+
+    <div class="phase p-plan">
+      <div class="phase-num">② Plan</div>
+      <div class="phase-name">Structure the work</div>
+      <div class="phase-skills">
+        <a href="#plan"            class="phase-skill">/ce:plan</a>
+        <a href="#deepen-plan"     class="phase-skill">/ce:deepen-plan</a>
+        <a href="#document-review" class="phase-skill">/ce:document-review</a>
+      </div>
+    </div>
+
+    <div class="phase-arrow">›</div>
+
+    <div class="phase p-build">
+      <div class="phase-num">③ Build</div>
+      <div class="phase-name">Execute the plan</div>
+      <div class="phase-skills">
+        <a href="#work"                    class="phase-skill">/ce:work</a>
+        <a href="#resolve-todo-parallel"   class="phase-skill">/ce:resolve-todo-parallel</a>
+        <a href="#reproduce-bug"           class="phase-skill">/ce:reproduce-bug</a>
+      </div>
+    </div>
+
+    <div class="phase-arrow">›</div>
+
+    <div class="phase p-review">
+      <div class="phase-num">④ Review</div>
+      <div class="phase-name">Verify &amp; ship</div>
+      <div class="phase-skills">
+        <a href="#review"        class="phase-skill">/ce:review</a>
+        <a href="#test-browser"  class="phase-skill">/ce:test-browser</a>
+        <a href="#feature-video" class="phase-skill">/ce:feature-video</a>
+      </div>
+    </div>
+
+    <div class="phase-arrow">›</div>
+
+    <div class="phase p-compound">
+      <div class="phase-num">⑤ Compound</div>
+      <div class="phase-name">Lock in the learning</div>
+      <div class="phase-skills">
+        <a href="#compound" class="phase-skill">/ce:compound</a>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════ TOOLING STRIP ═══════════════════ -->
+  <div class="layer-label">Tooling — reach for these at any phase</div>
+  <div class="tool-strip">
+    <a href="#agent-browser"              class="tool-chip tc-slate">/ce:agent-browser</a>
+    <a href="#git-worktree"               class="tool-chip tc-slate">/ce:git-worktree</a>
+    <a href="#rclone"                     class="tool-chip tc-slate">/ce:rclone</a>
+    <a href="#claude-permissions-optimizer" class="tool-chip tc-slate">/ce:claude-permissions-optimizer</a>
+    <a href="#proof"                      class="tool-chip tc-slate">/ce:proof</a>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="layer-label">Domain-specific — apply when the stack matches</div>
+    <div class="tool-strip">
+      <a href="#frontend-design"          class="tool-chip tc-pink">/ce:frontend-design</a>
+      <a href="#dhh-rails-style"          class="tool-chip tc-pink">/ce:dhh-rails-style</a>
+      <a href="#andrew-kane-gem-writer"   class="tool-chip tc-pink">/ce:andrew-kane-gem-writer</a>
+      <a href="#dspy-ruby"                class="tool-chip tc-pink">/ce:dspy-ruby</a>
+      <a href="#agent-native-architecture" class="tool-chip tc-pink">/ce:agent-native-architecture</a>
+      <a href="#gemini-imagegen"          class="tool-chip tc-rose">/ce:gemini-imagegen</a>
+      <a href="#every-style-editor"       class="tool-chip tc-rose">/ce:every-style-editor</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ PHASE 1: DISCOVER ═══════════════════ -->
+  <div class="section-title">① Discover — shape the idea before writing a line of code</div>
+  <div class="skills-grid">
+
+    <div class="skill-card sc-purple" id="brainstorm">
+      <div class="skill-cmd">/ce:brainstorm</div>
+      <div class="skill-title">Collaborative Requirements Exploration</div>
+      <div class="skill-when"><strong>Use when:</strong> a feature request is vague, ambitious, or has multiple valid approaches. Also when you're unsure about scope or want to think through trade-offs before committing.</div>
+      <div class="skill-desc">
+        Opens a structured dialogue — Claude asks clarifying questions, surfaces edge cases, challenges assumptions, and maps the problem space with you. Ends by writing a right-sized requirements doc that captures what you actually want to build (not just what you said).
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Requirements doc written to disk</div>
+        <div class="skill-output">Scope boundaries clarified</div>
+        <div class="skill-output">Alternative approaches surfaced</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"let's brainstorm"</span>
+        <span class="trigger">"think through X"</span>
+        <span class="trigger">"help me frame this"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-purple" id="ideate">
+      <div class="skill-cmd">/ce:ideate</div>
+      <div class="skill-title">Proactive Improvement Ideas</div>
+      <div class="skill-when"><strong>Use when:</strong> you want Claude to suggest what to build next — rather than bringing your own idea. Good for project stagnation, pre-sprint ideation, or getting a second opinion on direction.</div>
+      <div class="skill-desc">
+        Claude reads the current codebase, assesses where it's weak or where users are likely struggling, and generates a shortlist of grounded improvement ideas — each critically evaluated before being presented. Ends with a recommended direction you can run with.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Ranked list of improvement ideas</div>
+        <div class="skill-output">Rationale and trade-offs for each</div>
+        <div class="skill-output">Recommended next step</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"what should I improve"</span>
+        <span class="trigger">"give me ideas"</span>
+        <span class="trigger">"surprise me"</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ PHASE 2: PLAN ═══════════════════ -->
+  <div class="section-title">② Plan — turn clarity into a structured, executable plan</div>
+  <div class="skills-grid">
+
+    <div class="skill-card sc-blue" id="plan">
+      <div class="skill-cmd">/ce:plan</div>
+      <div class="skill-title">Feature Planning Engine</div>
+      <div class="skill-when"><strong>Use when:</strong> you have a clear feature description (or a requirements doc from <code>/ce:brainstorm</code>) and want a structured, checked <code>plan.md</code> ready for <code>/ce:work</code>.</div>
+      <div class="skill-desc">
+        Spins up parallel research agents: one reads your codebase, one checks past plans for relevant decisions, one optionally pulls framework docs. Synthesises into a structured plan: problem statement, approach, files to touch, and acceptance criteria with checkboxes.<br><br>
+        The plan is saved to <code>plans/features/</code> — it survives context loss and acts as a checkpoint between sessions.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output"><code>plans/features/your-feature.md</code> written</div>
+        <div class="skill-output">Acceptance criteria with checkboxes</div>
+        <div class="skill-output">Files to touch, risks flagged</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"plan this feature"</span>
+        <span class="trigger">"write a plan for"</span>
+        <span class="trigger">"create a plan.md"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-blue" id="deepen-plan">
+      <div class="skill-cmd">/ce:deepen-plan</div>
+      <div class="skill-title">Plan Depth Enhancer</div>
+      <div class="skill-when"><strong>Use when:</strong> you have a plan but it feels shallow — missing best practices, edge cases, or implementation detail. Run after <code>/ce:plan</code> for anything non-trivial.</div>
+      <div class="skill-desc">
+        Takes an existing plan and launches parallel research agents — one per section. Each agent adds depth: pulls official docs for any libraries involved, adds community-known gotchas, annotates the acceptance criteria with how to verify them. Returns an enriched plan.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Each plan section annotated with research</div>
+        <div class="skill-output">Library-specific gotchas surfaced</div>
+        <div class="skill-output">Verification steps added to criteria</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"deepen this plan"</span>
+        <span class="trigger">"add more detail"</span>
+        <span class="trigger">"research this plan"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-blue" id="document-review">
+      <div class="skill-cmd">/ce:document-review</div>
+      <div class="skill-title">Requirements Doc Refiner</div>
+      <div class="skill-when"><strong>Use when:</strong> a requirements or plan document exists and you want a structured review before handing it off — or before running <code>/ce:work</code> on it.</div>
+      <div class="skill-desc">
+        Reviews a document for completeness, ambiguity, missing edge cases, and internal contradictions. Provides specific, actionable feedback. Think of it as a code review, but for your spec. Prevents the most common source of implementation drift.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Annotated review with specific feedback</div>
+        <div class="skill-output">Gaps and ambiguities flagged</div>
+        <div class="skill-output">Updated doc ready for implementation</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"review this spec"</span>
+        <span class="trigger">"check this plan"</span>
+        <span class="trigger">"is this complete"</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ PHASE 3: BUILD ═══════════════════ -->
+  <div class="section-title">③ Build — execute the plan, fix bugs, clear the queue</div>
+  <div class="skills-grid">
+
+    <div class="skill-card sc-green" id="work">
+      <div class="skill-cmd">/ce:work</div>
+      <div class="skill-title">Plan Execution Engine</div>
+      <div class="skill-when"><strong>Use when:</strong> you have a <code>plan.md</code> and want Claude to implement it — not just talk about it. The primary skill for getting code written.</div>
+      <div class="skill-desc">
+        Takes a plan and executes it end-to-end: breaks into tasks, implements each one, runs tests, checks off acceptance criteria. Context lost mid-way? Point a new session at the same plan and continue — the checkboxes are the memory.<br><br>
+        Designed to run autonomously with <code>bypass permissions</code> on. You can be working in a different window.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Code written and tests passing</div>
+        <div class="skill-output">Plan checkboxes ticked as work completes</div>
+        <div class="skill-output">Summary of what was done (and what wasn't)</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"execute this plan"</span>
+        <span class="trigger">"implement this"</span>
+        <span class="trigger">"build it"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-green" id="resolve-todo-parallel">
+      <div class="skill-cmd">/ce:resolve-todo-parallel</div>
+      <div class="skill-title">Parallel TODO Resolver</div>
+      <div class="skill-when"><strong>Use when:</strong> you have a backlog of <code>TODO</code> comments or CLI tasks and want to clear them in bulk — especially when they're independent of each other.</div>
+      <div class="skill-desc">
+        Finds all pending todos, groups them by independence, and launches parallel sub-agents to resolve them simultaneously. After each batch, saves learnings to prevent re-introducing the same issues. Cleans up completed todos on finish.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">All resolvable TODOs addressed</div>
+        <div class="skill-output">Learnings compounded to memory</div>
+        <div class="skill-output">Completed items removed from queue</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"clear my todos"</span>
+        <span class="trigger">"resolve all pending tasks"</span>
+        <span class="trigger">"work through the queue"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-green" id="reproduce-bug">
+      <div class="skill-cmd">/ce:reproduce-bug</div>
+      <div class="skill-title">Bug Reproduction &amp; Investigation</div>
+      <div class="skill-when"><strong>Use when:</strong> you receive a bug report (GitHub issue, user report) and need to confirm whether it's real, reproduce the exact conditions, and understand the root cause before fixing.</div>
+      <div class="skill-desc">
+        Takes a GitHub issue number or description, systematically reproduces the reported behaviour, and validates whether it's an actual bug vs expected behaviour. Captures the exact reproduction steps, the stack trace, and the likely root cause — so the fix is targeted, not guesswork.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Confirmed reproduction steps</div>
+        <div class="skill-output">Root cause identified</div>
+        <div class="skill-output">Ready for <code>/ce:plan</code> to fix</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"reproduce this bug"</span>
+        <span class="trigger">"investigate issue #123"</span>
+        <span class="trigger">"is this actually a bug"</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ PHASE 4: REVIEW ═══════════════════ -->
+  <div class="section-title">④ Review — verify quality, test visually, ship with confidence</div>
+  <div class="skills-grid">
+
+    <div class="skill-card sc-amber" id="review">
+      <div class="skill-cmd">/ce:review</div>
+      <div class="skill-title">Exhaustive Multi-Agent Code Review</div>
+      <div class="skill-when"><strong>Use when:</strong> code is ready for review — before opening a PR, after a large feature, or when you want a genuinely adversarial pass, not a rubber stamp.</div>
+      <div class="skill-desc">
+        Launches multiple specialist review agents in parallel: architecture, security, performance, data integrity, test coverage, and simplicity. Each agent works independently in a git worktree so they don't interfere. Results are synthesised into a prioritised, actionable report.<br><br>
+        This is the most thorough review mode. Use it sparingly — on non-trivial PRs.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Multi-perspective review report</div>
+        <div class="skill-output">Issues prioritised by severity</div>
+        <div class="skill-output">Go / no-go recommendation</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"review this PR"</span>
+        <span class="trigger">"adversarial review"</span>
+        <span class="trigger">"thorough code review"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-amber" id="test-browser">
+      <div class="skill-cmd">/ce:test-browser</div>
+      <div class="skill-title">Browser Test Runner</div>
+      <div class="skill-when"><strong>Use when:</strong> you've made UI changes and want to run browser tests against the affected pages before merging.</div>
+      <div class="skill-desc">
+        Identifies which pages are affected by the current branch or PR, then runs automated browser tests against them. Catches visual regressions and interaction failures that unit tests miss. Works against localhost or a preview deployment.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Test results per affected page</div>
+        <div class="skill-output">Screenshots of failures</div>
+        <div class="skill-output">Pass / fail summary</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"test the UI"</span>
+        <span class="trigger">"run browser tests"</span>
+        <span class="trigger">"check affected pages"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-amber" id="feature-video">
+      <div class="skill-cmd">/ce:feature-video</div>
+      <div class="skill-title">Feature Walkthrough Video</div>
+      <div class="skill-when"><strong>Use when:</strong> a PR needs a visual demo for reviewers, or you want to show what changed without writing a long description.</div>
+      <div class="skill-desc">
+        Records a screen video walkthrough of the feature — navigating the UI, demonstrating the key flows, showing before/after if relevant. Uploads the video and adds it to the PR description automatically. Reviewers see the feature in action without checking out the branch.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Video recorded and uploaded</div>
+        <div class="skill-output">PR description updated with embed</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"record a demo"</span>
+        <span class="trigger">"add video to PR"</span>
+        <span class="trigger">"walkthrough this feature"</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ PHASE 5: COMPOUND ═══════════════════ -->
+  <div class="section-title">⑤ Compound — lock in what you learned so it's never lost</div>
+  <div class="skills-grid">
+
+    <div class="skill-card sc-teal" id="compound">
+      <div class="skill-cmd">/ce:compound</div>
+      <div class="skill-title">Knowledge Compounding</div>
+      <div class="skill-when"><strong>Use when:</strong> you've just solved a non-trivial problem and want to preserve the solution — so future you (or future Claude) doesn't have to solve it again.</div>
+      <div class="skill-desc">
+        Documents the problem, root cause, solution, and key decision rationale into a structured solution file in <code>docs/solutions/</code>. This is what feeds back into <code>/ce:plan</code> — when a new plan is generated, past solutions are surfaced automatically. The longer you use it, the smarter the plans become.
+      </div>
+      <div class="skill-outputs">
+        <div class="skill-output">Solution doc written to <code>docs/solutions/</code></div>
+        <div class="skill-output">Auto-surfaced in future <code>/ce:plan</code> runs</div>
+        <div class="skill-output">Team knowledge preserved beyond git history</div>
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"document this fix"</span>
+        <span class="trigger">"compound this learning"</span>
+        <span class="trigger">"save this solution"</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ TOOLING ═══════════════════ -->
+  <div class="section-title">Tooling — reach for these at any phase</div>
+  <div class="skills-grid">
+
+    <div class="skill-card sc-slate" id="agent-browser">
+      <div class="skill-cmd">/ce:agent-browser</div>
+      <div class="skill-title">Browser Automation CLI</div>
+      <div class="skill-when"><strong>Use when:</strong> any task requires interacting with a website — navigating, form-filling, scraping, testing, logging in, or clicking.</div>
+      <div class="skill-desc">
+        Gives Claude a full browser it can control programmatically. Navigate to pages, fill forms, click buttons, extract data, take screenshots. Works for manual QA, automated testing, web scraping, or any task that requires a real browser rather than an API.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"open this page"</span>
+        <span class="trigger">"fill out this form"</span>
+        <span class="trigger">"scrape this site"</span>
+        <span class="trigger">"take a screenshot"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-slate" id="git-worktree">
+      <div class="skill-cmd">/ce:git-worktree</div>
+      <div class="skill-title">Isolated Parallel Development</div>
+      <div class="skill-when"><strong>Use when:</strong> you want to work on two branches simultaneously without stashing/switching, or run parallel agents in isolation.</div>
+      <div class="skill-desc">
+        Creates, lists, switches, and cleans up git worktrees with a simple interactive interface. Each worktree is an independent copy of the repo at a given branch — multiple Claude sessions can work on different features at the same time without stepping on each other.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"create a worktree"</span>
+        <span class="trigger">"parallel branch"</span>
+        <span class="trigger">"isolate this work"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-slate" id="rclone">
+      <div class="skill-cmd">/ce:rclone</div>
+      <div class="skill-title">Cloud File Sync &amp; Upload</div>
+      <div class="skill-when"><strong>Use when:</strong> you need to upload files — images, videos, documents — to S3, Cloudflare R2, Backblaze B2, Google Drive, or any S3-compatible storage.</div>
+      <div class="skill-desc">
+        Wraps rclone for easy file transfer to cloud storage. Upload a single file or sync an entire directory. Returns the public URL. Useful after <code>/ce:feature-video</code> for getting videos to a CDN, or for backing up build artefacts.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"upload to S3"</span>
+        <span class="trigger">"sync to cloud"</span>
+        <span class="trigger">"upload this video"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-slate" id="claude-permissions-optimizer">
+      <div class="skill-cmd">/ce:claude-permissions-optimizer</div>
+      <div class="skill-title">Permission Fatigue Fixer</div>
+      <div class="skill-when"><strong>Use when:</strong> you're clicking "approve" too often, or you've just set up a new project and want to get permissions dialled in from the start.</div>
+      <div class="skill-desc">
+        Analyses your recent session history, identifies Bash commands that are safe to auto-approve, and adds them to your <code>settings.json</code> allowlist. Eliminates repetitive permission prompts without exposing you to genuinely risky operations. Run once per project.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"too many prompts"</span>
+        <span class="trigger">"permission fatigue"</span>
+        <span class="trigger">"optimize permissions"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-slate" id="proof">
+      <div class="skill-cmd">/ce:proof</div>
+      <div class="skill-title">Shared Document Creation</div>
+      <div class="skill-when"><strong>Use when:</strong> you need to create a shareable markdown document — specs, proposals, summaries — and share a link rather than a file.</div>
+      <div class="skill-desc">
+        Creates and publishes markdown documents via the Proof web API. Supports commenting, edit suggestions, and sharing. Useful for async spec reviews with stakeholders who don't use GitHub, or for externalising plans for feedback.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"share this doc"</span>
+        <span class="trigger">"create a proof doc"</span>
+        <span class="trigger">"publish this spec"</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ DOMAIN-SPECIFIC ═══════════════════ -->
+  <div class="section-title">Domain-specific — apply when the tech stack matches</div>
+  <div class="skills-grid">
+
+    <div class="skill-card sc-pink" id="frontend-design">
+      <div class="skill-cmd">/ce:frontend-design</div>
+      <div class="skill-title">High-Quality UI Building</div>
+      <div class="skill-when"><strong>Use when:</strong> building or modifying any UI — landing pages, dashboards, components. The standard for design quality is high: not AI slop.</div>
+      <div class="skill-desc">
+        Builds web interfaces with genuine design quality — proper typography, colour, spacing, motion, and composition. Detects your existing design system and respects it. Takes screenshots to verify results before declaring done. Covers greenfield builds and modifications to existing apps.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"build this UI"</span>
+        <span class="trigger">"design this page"</span>
+        <span class="trigger">"make this look good"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-pink" id="dhh-rails-style">
+      <div class="skill-cmd">/ce:dhh-rails-style</div>
+      <div class="skill-title">DHH / 37signals Rails Style</div>
+      <div class="skill-when"><strong>Use when:</strong> writing Rails code and you want strict adherence to the DHH aesthetic — fat models, thin controllers, REST purity, Hotwire patterns, no JS framework contamination.</div>
+      <div class="skill-desc">
+        Embodies the 37signals philosophy: clarity over cleverness, the Rails way over abstraction, Hotwire over React, Current attributes, no unnecessary gems. Includes an internal reviewer that will call out anti-patterns before they ship.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"DHH style"</span>
+        <span class="trigger">"37signals way"</span>
+        <span class="trigger">"Rails conventions"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-pink" id="andrew-kane-gem-writer">
+      <div class="skill-cmd">/ce:andrew-kane-gem-writer</div>
+      <div class="skill-title">Ruby Gem Author (Andrew Kane Style)</div>
+      <div class="skill-when"><strong>Use when:</strong> creating or refactoring a Ruby gem. Andrew Kane's gems (Searchkick, Ahoy, Blazer) are the benchmark for clean, minimal, production-ready Ruby library code.</div>
+      <div class="skill-desc">
+        Applies Andrew Kane's patterns: minimal dependencies, clean public API, sensible defaults that rarely need overriding, excellent README, battle-tested conventions. Produces gems that feel like they belong in the Ruby ecosystem.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"create a gem"</span>
+        <span class="trigger">"write a Ruby library"</span>
+        <span class="trigger">"Andrew Kane style"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-pink" id="dspy-ruby">
+      <div class="skill-cmd">/ce:dspy-ruby</div>
+      <div class="skill-title">LLM Apps with DSPy.rb</div>
+      <div class="skill-when"><strong>Use when:</strong> building AI features in Ruby — LLM signatures, modules, agents with tools, prompt optimisation. DSPy.rb gives you type-safe, testable LLM interactions.</div>
+      <div class="skill-desc">
+        Builds LLM-powered features using DSPy.rb: defines typed signatures, composes modules, configures model providers, builds agent tool loops, and writes optimisable prompts. Covers the full DSPy lifecycle from prototype to production.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"DSPy"</span>
+        <span class="trigger">"LLM feature in Ruby"</span>
+        <span class="trigger">"AI module"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-pink" id="agent-native-architecture">
+      <div class="skill-cmd">/ce:agent-native-architecture</div>
+      <div class="skill-title">Agent-First System Design</div>
+      <div class="skill-when"><strong>Use when:</strong> designing a system where agents are first-class — anything an agent can do, a user can do, and vice versa. Also when building MCP tools or self-modifying systems.</div>
+      <div class="skill-desc">
+        Applies agent-native design principles: every UI action exposed as an agent tool, MCP server design, agent loop architecture, self-modifying capability. Ensures parity between what humans can do in the UI and what agents can do programmatically.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"agent-native"</span>
+        <span class="trigger">"MCP tool"</span>
+        <span class="trigger">"autonomous agent system"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-rose" id="gemini-imagegen">
+      <div class="skill-cmd">/ce:gemini-imagegen</div>
+      <div class="skill-title">Image Generation &amp; Editing</div>
+      <div class="skill-when"><strong>Use when:</strong> you need to generate or edit images — logos with text, product mockups, stickers, style transfers, or any image creation/manipulation task.</div>
+      <div class="skill-desc">
+        Uses the Gemini API for text-to-image generation, image editing, multi-turn refinement, and composition from multiple reference images. Supports iterative refinement — describe what's wrong, and Gemini edits the existing output rather than starting over.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"generate an image"</span>
+        <span class="trigger">"edit this image"</span>
+        <span class="trigger">"create a logo"</span>
+      </div>
+    </div>
+
+    <div class="skill-card sc-rose" id="every-style-editor">
+      <div class="skill-cmd">/ce:every-style-editor</div>
+      <div class="skill-title">Every Magazine Style Editor</div>
+      <div class="skill-when"><strong>Use when:</strong> reviewing or editing copy that needs to meet Every's style guide — grammar, punctuation, mechanics, and editorial voice.</div>
+      <div class="skill-desc">
+        Performs a systematic line-by-line review: grammar, punctuation, mechanics, and Every-specific style compliance. Returns specific edits with rationale, not just "make it better." Use before publishing any copy that carries the Every brand.
+      </div>
+      <div class="skill-triggers">
+        <span class="trigger">"Every style"</span>
+        <span class="trigger">"edit this copy"</span>
+        <span class="trigger">"style review"</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ QUICK REFERENCE TABLE ═══════════════════ -->
+  <div class="section-title">Quick reference — "I want to…" → use this skill</div>
+  <table class="decision-table">
+    <thead>
+      <tr>
+        <th>Skill</th>
+        <th>I want to…</th>
+        <th>Not to be confused with…</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>/ce:brainstorm</td><td>Explore a vague idea and define what to build</td><td>/ce:plan — that structures an already-defined idea</td></tr>
+      <tr><td>/ce:ideate</td><td>Get Claude to suggest what to build next, unprompted</td><td>/ce:brainstorm — that starts from your idea, not Claude's</td></tr>
+      <tr><td>/ce:plan</td><td>Turn a clear feature description into an executable plan.md</td><td>/ce:work — that executes the plan, not creates it</td></tr>
+      <tr><td>/ce:deepen-plan</td><td>Add research depth and best practices to an existing plan</td><td>/ce:plan — that creates a new plan from scratch</td></tr>
+      <tr><td>/ce:document-review</td><td>Peer-review a spec or plan before implementation starts</td><td>/ce:review — that reviews code, not documents</td></tr>
+      <tr><td>/ce:work</td><td>Implement a plan.md end-to-end, autonomously</td><td>/ce:plan — that writes the plan, not the code</td></tr>
+      <tr><td>/ce:resolve-todo-parallel</td><td>Clear a backlog of TODOs in bulk, in parallel</td><td>/ce:work — that executes a structured plan, not a todo list</td></tr>
+      <tr><td>/ce:reproduce-bug</td><td>Confirm a bug report is real and find the root cause</td><td>/ce:work — that fixes the bug once it's confirmed</td></tr>
+      <tr><td>/ce:review</td><td>Get an exhaustive, adversarial multi-agent code review</td><td>/ce:document-review — that reviews specs, not code</td></tr>
+      <tr><td>/ce:test-browser</td><td>Run browser tests on affected UI pages before shipping</td><td>/ce:agent-browser — that automates general browser tasks</td></tr>
+      <tr><td>/ce:feature-video</td><td>Record a demo video and add it to the PR description</td><td>/ce:agent-browser — that automates tasks, not records them</td></tr>
+      <tr><td>/ce:compound</td><td>Document a solved problem so it informs future plans</td><td>Git commit messages — those are what, this is why + how</td></tr>
+      <tr><td>/ce:agent-browser</td><td>Control a browser to navigate, fill, click, or scrape</td><td>/ce:test-browser — that runs defined tests, not freeform tasks</td></tr>
+      <tr><td>/ce:git-worktree</td><td>Work on two branches at once without stashing</td><td>git stash — that hides changes, this isolates branches</td></tr>
+      <tr><td>/ce:frontend-design</td><td>Build UI that looks genuinely designed, not AI-generated</td><td>Any plain code output — this verifies visually via screenshots</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>

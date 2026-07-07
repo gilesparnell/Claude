@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="portal.css">
+<script defer src="portal-shell.js"></script>
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="index.html">Home</a>
+      <a href="all.html">All Docs</a>
+      <a href="skills.html" class="active">Skills</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="templates.html">Templates</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <button class="gh-btn" data-open-cmd style="cursor:pointer"><kbd>⌘K</kbd> Search</button>
+    </div>
+  </div>
+</header>
+
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Skills</div>
+    <div class="main-sub" id="portal-sub">Loading…</div>
+    <input class="inline-filter" id="portal-filter" type="text" placeholder="Filter skills…" autocomplete="off">
+    <div class="active-filter" id="portal-active"></div>
+    <div id="portal-list" data-type="skill"></div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/*/SKILL.md</code> frontmatter</span>
+</footer>
+</body>
+</html>
