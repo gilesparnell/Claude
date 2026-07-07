@@ -1,0 +1,20 @@
+name: Sensitive-term scan
+
+# Enforceable gate for this PUBLIC repo. Runs the same script the local
+# pre-commit hook uses, but here it cannot be bypassed — every push and PR
+# must pass before merge.
+on:
+  push:
+  pull_request:
+
+jobs:
+  scan:
+    name: scan-sensitive
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run sensitive-term scan
+        run: bash scripts/scan-sensitive.sh

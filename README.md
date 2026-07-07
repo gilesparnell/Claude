@@ -22,3 +22,11 @@ repo, with sidebar browsing, tag filters, and a command-palette search.
 
 The index is generated into `docs/docs-index.json`; full-text search is powered
 by a Pagefind index under `docs/pagefind/`.
+
+## Sensitive-term scan
+
+This is a public repo curated from private sources. `scripts/scan-sensitive.sh`
+greps every tracked file for pricing, client, PII, secret, and internal-path
+terms and fails on any match. It runs as an enforced check on every push and PR
+(`.github/workflows/scan.yml`) and as an advisory local pre-commit hook. After
+cloning, enable the hook with: `git config core.hooksPath .githooks`.

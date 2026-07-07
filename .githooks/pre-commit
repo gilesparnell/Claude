@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# Advisory pre-commit gate: refuses the commit if scripts/scan-sensitive.sh
+# finds any sensitive term in tracked (incl. staged) files.
+#
+# Hooks do NOT travel with a clone, so this is advisory only — the enforceable
+# gate is .github/workflows/scan.yml, which runs on every push and PR.
+# Enable locally after cloning:  git config core.hooksPath .githooks
+#
+set -uo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+"$repo_root/scripts/scan-sensitive.sh" || {
+  echo "pre-commit: scan-sensitive.sh blocked this commit. Fix the hits above or amend the staged content." >&2
+  exit 1
+}
