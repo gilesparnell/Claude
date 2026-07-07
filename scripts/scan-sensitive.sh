@@ -38,8 +38,13 @@ pricing=$(git grep -nIiE -e '\$[0-9]{3}' -e '\$[0-9]+,[0-9]{3}' \
 [ -n "$pricing" ] && report "pricing / dollar amount" "$pricing"
 
 # --- Private-business vocabulary ---------------------------------------------
+# NB: bare "GTM" is NOT blocked — it is a generic go-to-market / Google Tag
+# Manager acronym used benignly (e.g. "GTM coach" in the find-first-10 skill).
+# We block only the private artefact phrases (the "GTM plan"/"GTM strategy"),
+# which is what actually identifies internal business material.
 biz=$(git grep -nIiE -e 'allconvos' -e 'awe2m8' -e 'gohighlevel' -e '\bGHL\b' \
-                     -e '\btwilio\b' -e 'reactivation' -e '\bGTM\b' -e '\bJesse\b' -- . "$SELF" 2>/dev/null || true)
+                     -e '\btwilio\b' -e 'reactivation' -e 'GTM plan' -e 'GTM strateg' \
+                     -e 'master GTM' -e '\bJesse\b' -- . "$SELF" 2>/dev/null || true)
 [ -n "$biz" ] && report "private-business vocabulary" "$biz"
 
 # --- Client / project identifiers --------------------------------------------
