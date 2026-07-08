@@ -1,7 +1,7 @@
 {
   "generated": "2026-07-07T14:52:39.113Z",
   "counts": {
-    "skill": 21,
+    "skill": 23,
     "walkthrough": 11,
     "template": 3
   },
@@ -36,7 +36,7 @@
     {
       "type": "skill",
       "title": "End-to-End Feature Test",
-      "desc": "Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a…",
+      "desc": "Full end-to-end feature testing \u2014 generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a\u2026",
       "tags": [],
       "url": "skills.html",
       "meta": "e2e-feature-test",
@@ -108,7 +108,7 @@
     {
       "type": "skill",
       "title": "Resume",
-      "desc": "Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
+      "desc": "Load context before resuming work \u2014 read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
       "tags": [],
       "url": "skills.html",
       "meta": "resume",
@@ -135,7 +135,7 @@
     {
       "type": "skill",
       "title": "Ship",
-      "desc": "Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
+      "desc": "Verified PR ship workflow \u2014 tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
       "tags": [],
       "url": "skills.html",
       "meta": "ship",
@@ -144,7 +144,7 @@
     {
       "type": "skill",
       "title": "Skill Publisher",
-      "desc": "MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs, decisions, or templates.",
+      "desc": "MANDATORY skill for publishing ANY content to the knowledge portal \u2014 skills, walkthroughs, decisions, or templates.",
       "tags": [],
       "url": "skills.html",
       "meta": "skill-publisher",
@@ -153,7 +153,7 @@
     {
       "type": "skill",
       "title": "Systematic Debugging",
-      "desc": "Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour — before proposing fixes. Enforces evidence gathering, pattern…",
+      "desc": "Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour \u2014 before proposing fixes. Enforces evidence gathering, pattern\u2026",
       "tags": [],
       "url": "skills.html",
       "meta": "systematic-debugging",
@@ -162,7 +162,7 @@
     {
       "type": "skill",
       "title": "Tdd First",
-      "desc": "MANDATORY test-first development for ALL non-trivial code — no trigger words needed.",
+      "desc": "MANDATORY test-first development for ALL non-trivial code \u2014 no trigger words needed.",
       "tags": [],
       "url": "skills.html",
       "meta": "tdd-first",
@@ -189,7 +189,7 @@
     {
       "type": "skill",
       "title": "Verification Before Completion",
-      "desc": "Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success…",
+      "desc": "Prevents premature completion claims. Use before claiming work is done, fixed, or passing \u2014 requires running verification commands and confirming output before making any success\u2026",
       "tags": [],
       "url": "skills.html",
       "meta": "verification-before-completion",
@@ -231,7 +231,7 @@
     {
       "type": "walkthrough",
       "title": "Compound Engineering Skills Map",
-      "desc": "Every /ce: command explained — what it does, when to use it, and how it relates to the others.",
+      "desc": "Every /ce: command explained \u2014 what it does, when to use it, and how it relates to the others.",
       "tags": [
         "claude",
         "workflow",
@@ -291,7 +291,7 @@
     },
     {
       "type": "walkthrough",
-      "title": "Memory Sync — How Claude Remembers You",
+      "title": "Memory Sync \u2014 How Claude Remembers You",
       "desc": "Claude writes memory files locally during sessions.",
       "tags": [
         "tooling",
@@ -304,7 +304,7 @@
     {
       "type": "walkthrough",
       "title": "Prompt Engineering: CLAUDE.md Improvements",
-      "desc": "What an Anthropic prompt engineering course revealed about our global CLAUDE.md — three gaps, six edits, and the principle that one example beats three paragraphs of rules.",
+      "desc": "What an Anthropic prompt engineering course revealed about our global CLAUDE.md \u2014 three gaps, six edits, and the principle that one example beats three paragraphs of rules.",
       "tags": [
         "claude",
         "workflow",
@@ -328,7 +328,7 @@
     {
       "type": "template",
       "title": "default / CLAUDE.md",
-      "desc": "A generic starting CLAUDE.md for any project — architecture principles, testing and shipping discipline, and the conventions Claude Code should follow.",
+      "desc": "A generic starting CLAUDE.md for any project \u2014 architecture principles, testing and shipping discipline, and the conventions Claude Code should follow.",
       "tags": [
         "CLAUDE.md",
         "default"
@@ -359,6 +359,32 @@
       ],
       "url": "templates.html",
       "meta": "project-templates/python-api/CLAUDE.md",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Cloudflare Access via API",
+      "desc": "Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API \u2014 the dashboard reshuffles constantly; the API is stable and verifiable.",
+      "tags": [
+        "cloudflare",
+        "access",
+        "security"
+      ],
+      "url": "skills.html",
+      "meta": "cloudflare-access-via-api",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Repo Rename Leak-Vector Closure",
+      "desc": "When renaming a GitHub repo to free its name for a new public repo, re-point every remote and hook BEFORE the new repo claims the name.",
+      "tags": [
+        "git",
+        "github",
+        "security"
+      ],
+      "url": "skills.html",
+      "meta": "repo-rename-leak-closure",
       "published": true
     }
   ]
