@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End-to-End Feature Test — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">🧪</span>
+    <div>
+      <h1 class="skill-page-title">End-to-End Feature Test</h1>
+      <p class="skill-page-desc">Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a pass/fail report. Use after building a feature with both frontend and backend components. Triggers on &#39;test this feature end to end&#39;, &#39;e2e test&#39;, &#39;full feature test&#39;, &#39;usability test this&#39;, &#39;test the whole feature&#39;, &#39;browser and backend test&#39;.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>e2e test</li><li>end to end test</li><li>full feature test</li><li>usability test</li><li>test the whole feature</li><li>browser and backend test</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Never claim a test passes without screenshot or command output evidence</li><li>Always verify backend state after frontend actions (database, API, logs)</li><li>Re-snapshot after every navigation or DOM mutation</li><li>Test both happy path AND failure/edge cases</li><li>Close the browser session when done</li></ul></section>
+  <section class="skill-doc"><p>Full-stack feature testing that drives the browser UI and verifies backend state in a single workflow.</p>
+<h2>Use <code>agent-browser</code> Only For Browser Automation</h2>
+<p>This workflow uses the <code>agent-browser</code> CLI exclusively. Do not use any alternative browser automation system, browser MCP integration, or built-in browser-control tool.</p>
+<h2>Prerequisites</h2>
+<ul>
+<li><strong>TDD-first skill has been applied</strong> — all unit, integration, and system tests must already be written and passing before running this skill. This skill is the post-build acceptance gate, NOT a substitute for TDD. If TDD hasn&#39;t been done, stop and do it first.</li>
+<li>Local development server running (e.g., <code>bin/dev</code>, <code>rails server</code>, <code>npm run dev</code>)</li>
+<li><code>agent-browser</code> CLI installed</li>
+<li>Database accessible for backend verification (e.g., <code>psql</code>, <code>rails console</code>, <code>sqlite3</code>, or API endpoints)</li>
+</ul>
+<h2>Relationship to TDD-First</h2>
+<pre><code>Development:   /tdd-first  →  Write tests → RED → Implement → GREEN → Full suite
+Acceptance:    /e2e-feature-test  →  Drive real browser → Verify UI + backend → Report
+</code></pre>
+<p>TDD ensures the code is correct via automated test suites. This skill ensures the <strong>running application</strong> behaves correctly from a real user&#39;s perspective — filling actual forms, clicking actual buttons, checking actual database records. Both are required. Neither replaces the other.</p>
+<h2>Workflow</h2>
+<h3>Phase 1: Setup &amp; Discovery</h3>
+<h4>1.1 Verify agent-browser</h4>
+<pre><code class="language-bash">command -v agent-browser &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo &quot;Ready&quot; || (echo &quot;Installing...&quot; &amp;&amp; npm install -g agent-browser &amp;&amp; agent-browser install)
+</code></pre>
+<p>If installation fails, inform the user and stop.</p>
+<h4>1.2 Ask Browser Mode</h4>
+<p>Ask the user:</p>
+<pre><code>How do you want to run the tests?
+
+1. Headed (watch) — Opens visible browser so you can see tests run
+2. Headless (faster) — Runs in background, faster but invisible
+</code></pre>
+<p>Store the choice. Use <code>--headed</code> flag when option 1 is selected.</p>
+<h4>1.3 Determine Feature Scope</h4>
+<p><strong>If feature description provided:</strong> Use it to identify the components under test.</p>
+<p><strong>If &#39;current&#39; or empty:</strong> Auto-detect from recent changes:</p>
+<pre><code class="language-bash">git diff --name-only main...HEAD
+</code></pre>
+<p>Read the changed files to understand what the feature does. Identify:</p>
+<ul>
+<li><strong>Frontend routes/pages</strong> affected</li>
+<li><strong>Backend endpoints/controllers</strong> involved</li>
+<li><strong>Database tables/models</strong> touched</li>
+<li><strong>Business logic/validations</strong> that should be enforced</li>
+</ul>
+<h4>1.4 Detect Dev Server Port</h4>
+<p>Use this priority:</p>
+<ol>
+<li>Explicit <code>--port</code> argument from user</li>
+<li><code>AGENTS.md</code> / <code>CLAUDE.md</code> port references</li>
+<li><code>package.json</code> dev/start scripts</li>
+<li><code>.env</code> / <code>.env.local</code> / <code>.env.development</code> files</li>
+<li>Default: <code>3000</code></li>
+</ol>
+<h4>1.5 Verify Server is Running</h4>
+<pre><code class="language-bash">agent-browser open http://localhost:${PORT}
+agent-browser wait --load networkidle
+agent-browser snapshot -i
+</code></pre>
+<p>If server is not running, tell the user to start it and re-run.</p>
+<h3>Phase 2: Test Matrix Generation</h3>
+<p>This is the core differentiator. Before running any tests, generate a comprehensive test matrix.</p>
+<h4>2.1 Analyse the Feature</h4>
+<p>Read all relevant source files (views, controllers, models, migrations, API routes, frontend components) to understand:</p>
+<ul>
+<li>Every user-facing interaction (forms, buttons, links, toggles)</li>
+<li>Every validation rule (required fields, format checks, uniqueness)</li>
+<li>Every state transition (create, update, delete, status changes)</li>
+<li>Every error condition (invalid input, permission denied, not found)</li>
+<li>Every backend side-effect (database writes, emails, external API calls)</li>
+</ul>
+<h4>2.2 Build the Test Matrix</h4>
+<p>Categorise tests into these groups:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>What to Test</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Happy Path</strong></td>
+<td>Normal successful flow from start to finish</td>
+</tr>
+<tr>
+<td><strong>Input Validation</strong></td>
+<td>Required fields, format validation, length limits, type checks</td>
+</tr>
+<tr>
+<td><strong>Edge Cases</strong></td>
+<td>Empty inputs, boundary values, special characters, very long strings</td>
+</tr>
+<tr>
+<td><strong>Error Handling</strong></td>
+<td>Invalid submissions, server errors, network issues</td>
+</tr>
+<tr>
+<td><strong>State Verification</strong></td>
+<td>Database records created/updated/deleted correctly</td>
+</tr>
+<tr>
+<td><strong>UI Feedback</strong></td>
+<td>Success messages, error messages, loading states, redirects</td>
+</tr>
+<tr>
+<td><strong>Permissions</strong></td>
+<td>Access control (if applicable) — logged in vs out, roles</td>
+</tr>
+<tr>
+<td><strong>Idempotency</strong></td>
+<td>Double-submit, back button, refresh after submit</td>
+</tr>
+<tr>
+<td><strong>Responsive</strong></td>
+<td>Mobile viewport if the feature has responsive behaviour</td>
+</tr>
+</tbody></table>
+<p>Present the test matrix to the user before running:</p>
+<pre><code class="language-markdown">## Test Matrix for [Feature Name]
+
+### Happy Path (N tests)
+- [ ] HP-1: [description]
+- [ ] HP-2: [description]
+
+### Input Validation (N tests)
+- [ ] IV-1: [description]
+- [ ] IV-2: [description]
+
+### Edge Cases (N tests)
+- [ ] EC-1: [description]
+
+### Error Handling (N tests)
+- [ ] EH-1: [description]
+
+### Backend State (N tests)
+- [ ] BS-1: [description]
+
+### UI Feedback (N tests)
+- [ ] UF-1: [description]
+
+Total: N tests
+
+Proceed with all tests? Or select specific categories?
+</code></pre>
+<p>Wait for user confirmation. They may choose to run all, select categories, or adjust the matrix.</p>
+<h3>Phase 3: Execute Tests</h3>
+<p>Run each test case following this pattern:</p>
+<h4>3.1 Per-Test Workflow</h4>
+<p>For each test case:</p>
+<p><strong>Step 1 — Setup:</strong> Reset to a known state if needed (navigate to starting page, clear forms).</p>
+<pre><code class="language-bash">agent-browser open &quot;http://localhost:${PORT}/[route]&quot;
+agent-browser wait --load networkidle
+agent-browser snapshot -i
+</code></pre>
+<p><strong>Step 2 — Capture pre-state (backend):</strong> Before the action, capture the current backend state for comparison.</p>
+<pre><code class="language-bash"># Examples — adapt to the project&#39;s stack:
+# Rails:
+rails runner &quot;puts User.count&quot;
+# SQL:
+psql -d mydb -c &quot;SELECT count(*) FROM users;&quot;
+# API:
+curl -s http://localhost:${PORT}/api/users | jq &#39;.length&#39;
+# SQLite:
+sqlite3 db/development.sqlite3 &quot;SELECT count(*) FROM users;&quot;
+</code></pre>
+<p><strong>Step 3 — Perform frontend action:</strong> Use agent-browser to interact with the UI exactly as a user would.</p>
+<pre><code class="language-bash">agent-browser fill @e1 &quot;test value&quot;
+agent-browser click @e3
+agent-browser wait --load networkidle
+agent-browser snapshot -i
+</code></pre>
+<p><strong>Step 4 — Verify frontend result:</strong> Check the UI shows the expected outcome.</p>
+<pre><code class="language-bash">agent-browser snapshot -i          # Check for success/error messages
+agent-browser screenshot test-name.png  # Visual evidence
+agent-browser get url              # Verify redirect happened
+</code></pre>
+<p><strong>Step 5 — Verify backend state:</strong> Confirm the backend reflects the action.</p>
+<pre><code class="language-bash"># Check database was updated
+rails runner &quot;puts User.last.to_json&quot;
+# Check API returns new data
+curl -s http://localhost:${PORT}/api/users/latest | jq &#39;.&#39;
+# Check logs for expected entries
+tail -20 log/development.log
+</code></pre>
+<p><strong>Step 6 — Record result:</strong></p>
+<pre><code>[PASS] HP-1: Create new user with valid data
+  Frontend: Success message displayed, redirected to /users/5
+  Backend: User record created (id=5, name=&quot;Test User&quot;, email=&quot;test@example.com&quot;)
+  Screenshot: hp-1-create-user.png
+</code></pre>
+<p>or</p>
+<pre><code>[FAIL] IV-2: Submit form with invalid email
+  Expected: Validation error on email field
+  Actual: Form submitted successfully — no validation!
+  Frontend: Redirected to /users/6 (should not have)
+  Backend: User created with invalid email &quot;notanemail&quot;
+  Screenshot: iv-2-invalid-email-FAIL.png
+</code></pre>
+<h4>3.2 Headed Mode</h4>
+<p>When running headed, prefix browser commands with <code>--headed</code>:</p>
+<pre><code class="language-bash">agent-browser --headed open &quot;http://localhost:${PORT}/[route]&quot;
+agent-browser --headed snapshot -i
+agent-browser --headed click @e1
+</code></pre>
+<h4>3.3 Backend Verification Strategies</h4>
+<p>Adapt to the project&#39;s stack. Detect the stack from project files:</p>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>How to verify backend</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Rails</strong></td>
+<td><code>rails runner</code>, <code>rails console</code>, read <code>log/development.log</code></td>
+</tr>
+<tr>
+<td><strong>Django</strong></td>
+<td><code>python manage.py shell -c</code>, check Django logs</td>
+</tr>
+<tr>
+<td><strong>Node/Express</strong></td>
+<td><code>curl</code> API endpoints, check stdout/logs</td>
+</tr>
+<tr>
+<td><strong>Next.js</strong></td>
+<td><code>curl</code> API routes, check <code>.next</code> server logs</td>
+</tr>
+<tr>
+<td><strong>Laravel</strong></td>
+<td><code>php artisan tinker --execute</code>, check <code>storage/logs</code></td>
+</tr>
+<tr>
+<td><strong>SQLite</strong></td>
+<td><code>sqlite3 &lt;db-path&gt; &quot;&lt;SQL&gt;&quot;</code></td>
+</tr>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td><code>psql -d &lt;db&gt; -c &quot;&lt;SQL&gt;&quot;</code></td>
+</tr>
+<tr>
+<td><strong>MySQL</strong></td>
+<td><code>mysql -e &quot;&lt;SQL&gt;&quot; &lt;db&gt;</code></td>
+</tr>
+<tr>
+<td><strong>MongoDB</strong></td>
+<td><code>mongosh --eval &quot;&lt;JS&gt;&quot;</code></td>
+</tr>
+</tbody></table>
+<h3>Phase 4: Failure Handling</h3>
+<p>When a test fails:</p>
+<ol>
+<li><p><strong>Capture evidence:</strong></p>
+<pre><code class="language-bash">agent-browser screenshot FAIL-test-id.png
+agent-browser snapshot -i  # Capture DOM state
+</code></pre>
+</li>
+<li><p><strong>Ask the user:</strong></p>
+<pre><code>Test Failed: [test-id] — [description]
+
+Issue: [what went wrong]
+Evidence: [screenshot path, backend state]
+
+How to proceed?
+1. Fix now — I&#39;ll debug and fix, then re-run this test
+2. Log and continue — Record failure, move to next test
+3. Stop — End testing here
+</code></pre>
+</li>
+<li><p><strong>If &quot;Fix now&quot;:</strong> Investigate the root cause, propose a fix, apply it, re-run the specific failing test. If it passes, continue with remaining tests.</p>
+</li>
+<li><p><strong>If &quot;Log and continue&quot;:</strong> Record the failure with full details, continue testing.</p>
+</li>
+<li><p><strong>If &quot;Stop&quot;:</strong> Proceed to the summary with tests completed so far.</p>
+</li>
+</ol>
+<h3>Phase 5: Cleanup</h3>
+<p>Always close the browser session:</p>
+<pre><code class="language-bash">agent-browser close
+</code></pre>
+<h3>Phase 6: Test Report</h3>
+<p>Present a comprehensive report:</p>
+<pre><code class="language-markdown">## E2E Feature Test Report
+
+**Feature:** [name/description]
+**Server:** http://localhost:${PORT}
+**Date:** [timestamp]
+**Mode:** Headed / Headless
+
+### Summary
+
+| Category | Passed | Failed | Skipped | Total |
+|----------|--------|--------|---------|-------|
+| Happy Path | 3 | 0 | 0 | 3 |
+| Input Validation | 4 | 1 | 0 | 5 |
+| Edge Cases | 2 | 0 | 1 | 3 |
+| Error Handling | 2 | 0 | 0 | 2 |
+| Backend State | 3 | 0 | 0 | 3 |
+| UI Feedback | 2 | 1 | 0 | 3 |
+| **Total** | **16** | **2** | **1** | **19** |
+
+### Failures
+
+#### [FAIL] IV-2: Submit form with invalid email
+- **Expected:** Validation error displayed
+- **Actual:** Form submitted, invalid record created
+- **Root Cause:** Missing email format validation on User model
+- **Evidence:** FAIL-iv-2.png
+- **Backend:** User(id=6) created with email=&quot;notanemail&quot;
+
+#### [FAIL] UF-3: Error message styling on failed save
+- **Expected:** Red error banner with message
+- **Actual:** Raw error text without styling
+- **Evidence:** FAIL-uf-3.png
+
+### Skipped
+
+#### [SKIP] EC-3: Unicode emoji in name field
+- **Reason:** Requires database UTF-8mb4 config verification
+
+### Backend Verification Summary
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Records created correctly | PASS | 3 users created with correct attributes |
+| Records not created on validation failure | FAIL | 1 invalid record slipped through |
+| Associations set correctly | PASS | User-&gt;Profile link verified |
+| Cleanup/deletion works | PASS | Soft-delete sets deleted_at |
+
+### Screenshots
+All screenshots saved to: `./e2e-screenshots/[feature-name]/`
+
+### Result: FAIL (16/19 passed, 2 failures, 1 skipped)
+</code></pre>
+<h2>Quick Usage</h2>
+<pre><code class="language-bash"># Test the feature you just built (auto-detect from git diff)
+/e2e-feature-test current
+
+# Test a specific feature by description
+/e2e-feature-test &quot;user registration form with email verification&quot;
+
+# Test on a specific port
+/e2e-feature-test current --port 5000
+</code></pre>
+<h2>Key Principles</h2>
+<ol>
+<li><strong>Evidence over assertion</strong> — Every pass/fail must have a screenshot or command output backing it</li>
+<li><strong>Frontend + backend</strong> — Never test UI without checking the database, never check the database without testing the UI</li>
+<li><strong>Exhaustive matrix</strong> — Generate more test cases than the developer thought of. Cover validation, edge cases, error paths, not just the happy path</li>
+<li><strong>User perspective</strong> — Interact with the app exactly as a real user would. Use the actual UI, not API shortcuts</li>
+<li><strong>Fail fast, fix fast</strong> — When something fails, offer to fix it immediately rather than accumulating a list of problems</li>
+</ol>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/e2e-feature-test/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/e2e-feature-test/SKILL.md</code></span>
+</footer>
+</body>
+</html>

@@ -98,7 +98,7 @@ internal=$(git grep -nIiE -e '/Users/gilesparnell' -e '~/Documents/VSStudio' \
 # lowercase CSS class names (adr-card, adr-num, adr-grid...) used by the diagram
 # pages, which are layout classes, not decision records.
 adr=$(git grep -nIE 'ADR-([0-9]|NNN)' -- . "$SELF" 2>/dev/null \
-      | grep -vE '^skills/project-docs-standard/SKILL\.md:[0-9]+:.*ADR-NNN' || true)
+      | grep -vE '^(skills/project-docs-standard/SKILL\.md|docs/skills/project-docs-standard\.html):[0-9]+:.*ADR-NNN' || true)
 [ -n "$adr" ] && report "ADR reference" "$adr"
 
 if [ "$fail" -ne 0 ]; then

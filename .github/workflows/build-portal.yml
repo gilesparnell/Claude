@@ -1,0 +1,62 @@
+name: Build portal
+
+# Regenerates docs-index.json + per-skill detail pages whenever skill/walkthrough
+# content or the build tooling changes, then commits the result so GitHub Pages
+# (served from /docs on main) picks it up. Deterministic output + [skip ci] on the
+# auto-commit prevent rebuild loops.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'docs/walkthroughs.html'
+      - 'docs/templates.html'
+      - 'scripts/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/build-portal.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: build-portal
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Regenerate portal
+        run: npm run build
+
+      - name: Stage regenerated files
+        run: git add docs/docs-index.json docs/skills/
+
+      - name: Sensitive-content scan (includes freshly generated pages)
+        run: bash scripts/scan-sensitive.sh
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --staged --quiet; then
+            echo "Portal already up to date — nothing to commit."
+          else
+            git commit -m "chore(portal): regenerate index + skill pages [skip ci]"
+            git push
+          fi

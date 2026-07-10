@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Conventions — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Git Conventions</h1>
+      <p class="skill-page-desc">Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow. Triggers on &#39;commit this&#39;, &#39;write a commit message&#39;, &#39;create a PR&#39;, &#39;prepare for review&#39;.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><p>Follow these conventions for all git operations.</p>
+<h2>Commit Message Format</h2>
+<p>Use Conventional Commits:</p>
+<pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;short description&gt;
+
+[optional body]
+
+[optional footer]
+</code></pre>
+<h3>Types</h3>
+<ul>
+<li><code>feat</code> — new feature</li>
+<li><code>fix</code> — bug fix</li>
+<li><code>chore</code> — maintenance, dependencies, config</li>
+<li><code>docs</code> — documentation only</li>
+<li><code>refactor</code> — code change that neither fixes a bug nor adds a feature</li>
+<li><code>test</code> — adding or updating tests</li>
+<li><code>perf</code> — performance improvement</li>
+<li><code>ci</code> — CI/CD changes</li>
+</ul>
+<h3>Rules</h3>
+<ul>
+<li>Subject line: max 72 characters, imperative mood, no period at end</li>
+<li>Body: wrap at 72 chars, explain <em>why</em> not <em>what</em></li>
+<li>Reference issues: <code>Fixes #123</code> or <code>Relates to #456</code></li>
+</ul>
+<h3>Examples</h3>
+<pre><code>feat(auth): add OAuth2 login with Google
+
+Adds Google OAuth2 as a login option alongside existing email/password.
+Uses the existing session management system.
+
+Fixes #89
+</code></pre>
+<pre><code>fix(api): handle null response from payment provider
+
+The Stripe webhook occasionally sends a null amount field for
+disputed charges. This was causing an unhandled exception.
+</code></pre>
+<h2>Branch Naming</h2>
+<pre><code>&lt;type&gt;/&lt;short-description&gt;
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>feat/user-dashboard</code></li>
+<li><code>fix/login-redirect-bug</code></li>
+<li><code>chore/update-dependencies</code></li>
+</ul>
+<h2>PR Description Template</h2>
+<pre><code class="language-markdown">## What
+[Brief description of the change]
+
+## Why
+[Context and motivation]
+
+## How
+[Implementation approach, notable decisions]
+
+## Testing
+[How to verify this works]
+
+## Screenshots (if UI change)
+</code></pre>
+<h2>Post-Push Verification</h2>
+<p>For CSS, visual, or layout changes deployed to a hosted environment:</p>
+<ul>
+<li>Run the project&#39;s <code>verify-deploy.sh</code> script (if one exists) after the deployment completes</li>
+<li>Report pass/fail results before telling the user the change is live</li>
+<li>Never say &quot;it should work&quot; without fetching and checking the deployed output</li>
+</ul>
+<h2>Gotchas</h2>
+<ul>
+<li>Never commit directly to <code>main</code> or <code>master</code></li>
+<li>Never include secrets, API keys, or <code>.env</code> files</li>
+<li>Squash fixup commits before merging — don&#39;t leave &quot;fix typo&quot; commits in history</li>
+<li>If a commit message needs &quot;and&quot; to describe what it does, it probably should be two commits</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/git-conventions/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/git-conventions/SKILL.md</code></span>
+</footer>
+</body>
+</html>

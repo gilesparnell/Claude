@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validate Problem — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Validate Problem</h1>
+      <p class="skill-page-desc">Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign. Triggers on &#39;validate the problem&#39;, &#39;is this a real problem&#39;, &#39;pressure test this idea&#39;, &#39;painkiller or vitamin&#39;, &#39;discovery questions for&#39;.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><p>A structured customer-discovery prompt for pressure-testing whether a problem is real <em>before</em> building a feature, product, or campaign.</p>
+<h2>When to use</h2>
+<ul>
+<li>About to build a new product, feature, or paid campaign and you haven&#39;t talked to a real customer about the underlying pain in the last 90 days.</li>
+<li>You have a hypothesis about a niche but no evidence the problem is acute.</li>
+<li>You&#39;re tempted to skip discovery because &quot;it&#39;s obvious&quot; — that&#39;s exactly when to use this.</li>
+</ul>
+<h2>When NOT to use</h2>
+<ul>
+<li>The product is already in customers&#39; hands and you have real usage data — go look at the data instead.</li>
+<li>You&#39;re polishing a feature you already validated. This is for <em>upstream</em> validation, not late-stage refinement.</li>
+<li>You&#39;ve already done customer interviews recently and the answer was clear.</li>
+</ul>
+<h2>How to use</h2>
+<p>Paste the prompt below into Claude (or run it inline). Replace the bracketed fields. <strong>Treat the output as a discovery template, not a verdict.</strong> The point is to surface the questions you should be asking real people, not to let an LLM substitute for those conversations.</p>
+<h2>The Prompt</h2>
+<pre><code>Act as a customer-discovery coach in the Steve Blank / &quot;Mom Test&quot; tradition.
+I&#39;m validating whether the following problem is real and acute enough to
+build for.
+
+Problem hypothesis: [one sentence — what hurts, for whom]
+Target customer: [specific role + industry + business size]
+My current evidence: [what makes me think this is a real problem — be honest if it&#39;s just a hunch]
+
+Walk me through:
+
+1. PAINKILLER OR VITAMIN — Is this a problem people will pay to solve, or
+   a nice-to-have? What&#39;s the single tightest test I can run to find out?
+
+2. WHO HURTS THE MOST — Who is the early-adopter sub-segment, narrower
+   than my &quot;target customer&quot; above? Describe them in one sentence so I
+   could find 5 of them on LinkedIn this afternoon.
+
+3. FIVE DISCOVERY QUESTIONS — Five open-ended questions I should ask real
+   prospects in a 20-minute call. Questions must be about their past
+   behaviour and current pain, NOT about my proposed solution. No leading
+   questions. No &quot;would you use…?&quot;.
+
+4. RED FLAGS — Three responses from prospects that should make me kill
+   this idea immediately, even if they&#39;re polite about it.
+
+5. GREEN FLAGS — Three behavioural signals (not opinions) that prove the
+   problem is real and acute.
+
+Be brutally honest. If my problem hypothesis is vague, fluffy, or
+obviously a vitamin, say so first and refuse to proceed until I sharpen it.
+</code></pre>
+<h2>Reading the output</h2>
+<ul>
+<li><strong>Treat the 5 questions as a script for real calls.</strong> If you don&#39;t book at least 3 conversations off the back of this prompt, you wasted the prompt.</li>
+<li><strong>Red flags are the most valuable section.</strong> They&#39;re the cheap kills — pay attention if any prospect gives you one.</li>
+<li><strong>Behavioural green flags &gt; opinion green flags.</strong> &quot;Yes I&#39;d buy that&quot; means nothing. &quot;I&#39;m currently paying $X/month for [hacky workaround]&quot; means everything.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li>Running this prompt and treating the output as validation. It is not.</li>
+<li>Running this prompt and never making the calls.</li>
+<li>Tweaking the prompt until the LLM tells you the idea is good. That&#39;s the opposite of validation.</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/validate-problem/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/validate-problem/SKILL.md</code></span>
+</footer>
+</body>
+</html>

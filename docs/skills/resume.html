@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Resume</h1>
+      <p class="skill-page-desc">Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull. Triggers on &#39;continue&#39;, &#39;resume&#39;, &#39;where were we&#39;, &#39;catch me up&#39;, &#39;what&#39;s the latest&#39;, &#39;what were we doing&#39;. Use at the start of any session with no clear goal stated. Do NOT start implementation work before the user confirms a thread.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><p>This skill turns &quot;continue prior work&quot; from a speculative void into a specific thread pickup. It is the automation of the Project Status Catch-Up rule in the global CLAUDE.md.</p>
+<h2>Runner announcement</h2>
+<p>Before step 1, state: <code>Runner: Claude — /resume context load</code>. The work the user picks <em>after</em> the summary may be delegated to Codex per the routing rules, but the summary step itself is a judgement call that stays with Claude.</p>
+<h2>Procedure</h2>
+<ol>
+<li><p><strong>Find recent plans.</strong> Glob for <code>**/plan*</code>, <code>**/plans/**</code>, <code>**/roadmap*</code>. Read the most recent one to understand scope, phases, and current workstream. If the file matches the per-project docs convention (<code>docs/plans/YYYY-MM-DD-NNN-*-plan.md</code>), prefer the highest-numbered most-recent entry.</p>
+</li>
+<li><p><strong>Check the handoff log.</strong> If <code>docs/handoff/handoff.md</code> exists, read the top entry. The Plan Execution Continuity rule requires newest-first ordering, so the top entry is the most recent resumable state. Note the date — if it&#39;s stale (&gt;2 weeks), flag it rather than treating it as load-bearing.</p>
+</li>
+<li><p><strong>Check the decisions log.</strong> If <code>docs/decisions/decisions.md</code> exists, skim the top few entries for recent technical calls that might shape the next step.</p>
+</li>
+<li><p><strong>Git context.</strong> Run <code>git log --oneline -20</code> to see recent commits. If the repo has a remote, also run <code>gh pr list --state all --limit 10</code> to see open and recent PRs.</p>
+</li>
+<li><p><strong>Summarise in three bullets:</strong></p>
+<ul>
+<li><strong>What plan is active</strong> — name the plan file, its current phase, and the active workstream.</li>
+<li><strong>What was in flight</strong> — the last thing that landed or was in progress, per the handoff log + git log.</li>
+<li><strong>What looks ready to pick up</strong> — the most likely next step, framed as a concrete thread (e.g. &quot;Unit 4 of the beta-plan is tagged codex-delegate and ready to execute&quot;).</li>
+</ul>
+</li>
+<li><p><strong>Ask the user to pick a thread.</strong> Use the platform&#39;s blocking question tool when available. Example question: &quot;Which of these should I continue, or describe a new goal?&quot;</p>
+</li>
+<li><p><strong>Do not start work</strong> until the user confirms. Speculative continuation is the failure mode this skill exists to prevent.</p>
+</li>
+</ol>
+<h2>Fallbacks</h2>
+<ul>
+<li><strong>No <code>plans/</code> directory:</strong> proceed with steps 2–6 using whatever is available; flag the absence and suggest creating a plan if the next step is non-trivial.</li>
+<li><strong>No <code>docs/handoff/handoff.md</code>:</strong> rely on git log + PR list. Flag the absence and suggest creating the file per Plan Execution Continuity if the project is active.</li>
+<li><strong>No git remote:</strong> skip the PR list step; git log alone is fine.</li>
+<li><strong>Empty state (new repo, no commits, no plans, no handoff):</strong> report that explicitly — &quot;this appears to be a fresh repo, nothing to resume&quot; — and ask what the goal is.</li>
+</ul>
+<h2>Rules</h2>
+<ul>
+<li>Never infer work to do from thin signals. &quot;There&#39;s an open PR&quot; is not &quot;continue that PR&quot; — surface it, let the user decide.</li>
+<li>Never start implementation inside step 5. The summary is read-only; implementation waits for the user&#39;s reply in step 6.</li>
+<li>Keep the summary to three bullets. Longer summaries are a sign the skill is doing too much.</li>
+<li>The Runner announcement in step 0 is for the summary phase. When the user picks a thread, re-evaluate the runner per the Claude-vs-Codex routing rules.</li>
+</ul>
+<h2>Why this skill exists</h2>
+<p>Four recent sessions started with &quot;continue&quot; and Claude had no context, leading to speculative work and user exits. Automating the catch-up procedure with a stop-and-ask gate at the end reclaims those sessions.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/resume/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/resume/SKILL.md</code></span>
+</footer>
+</body>
+</html>

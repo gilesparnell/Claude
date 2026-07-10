@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Review — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">🔒</span>
+    <div>
+      <h1 class="skill-page-title">Security Review</h1>
+      <p class="skill-page-desc">Comprehensive security review for web applications. Use when implementing auth, handling user input, working with secrets, creating API endpoints, or touching sensitive features. Covers OWASP Top 10, secrets management, input validation, SQL injection, XSS, CSRF, and rate limiting. Adapted from everything-claude-code.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>security review</li><li>is this secure</li><li>authentication</li><li>handling user input</li><li>API endpoint</li><li>secrets</li><li>vulnerability</li><li>OWASP</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No hardcoded secrets — all in environment variables</li><li>All user inputs validated with schemas (whitelist, not blacklist)</li><li>All database queries use parameterised queries — no string concatenation</li><li>Tokens stored in httpOnly cookies, not localStorage</li><li>Authorisation checks before every sensitive operation</li><li>User-provided HTML sanitised before rendering</li><li>CSRF tokens on state-changing operations</li><li>Rate limiting on all API endpoints</li><li>Error messages never expose internal details</li><li>No secrets or sensitive data in logs</li><li>Dependencies checked for known vulnerabilities</li></ul></section>
+  <section class="skill-doc"><h2>When to Activate</h2>
+<ul>
+<li>Implementing authentication or authorisation</li>
+<li>Handling user input or file uploads</li>
+<li>Creating new API endpoints</li>
+<li>Working with secrets or credentials</li>
+<li>Implementing payment features</li>
+<li>Storing or transmitting sensitive data</li>
+<li>Integrating third-party APIs</li>
+</ul>
+<h2>Security Checklist</h2>
+<h3>1. Secrets Management</h3>
+<p><strong>NEVER</strong> hardcode API keys, tokens, or passwords. All secrets must live in environment variables. Verify:</p>
+<ul>
+<li><code>.env.local</code> is in <code>.gitignore</code></li>
+<li>No secrets in git history (<code>git log -p --all -S &#39;password&#39;</code>)</li>
+<li>Production secrets in hosting platform (Vercel, Railway, etc.)</li>
+</ul>
+<h3>2. Input Validation</h3>
+<p>Always validate user input with schemas (e.g. Zod, Joi). Use whitelist validation, not blacklist.</p>
+<p><strong>File uploads</strong>: Restrict size, MIME type, and extension. Never trust the client&#39;s <code>Content-Type</code>.</p>
+<p><strong>Error messages</strong>: Never leak internal details. Return generic messages to users; log details server-side.</p>
+<h3>3. SQL Injection Prevention</h3>
+<p>All database queries MUST use parameterised queries or an ORM. Never concatenate user input into SQL strings.</p>
+<pre><code>WRONG:  `SELECT * FROM users WHERE email = &#39;${userEmail}&#39;`
+RIGHT:  db.query(&#39;SELECT * FROM users WHERE email = $1&#39;, [userEmail])
+RIGHT:  supabase.from(&#39;users&#39;).select(&#39;*&#39;).eq(&#39;email&#39;, userEmail)
+</code></pre>
+<h3>4. Authentication and Authorisation</h3>
+<ul>
+<li>Store tokens in <code>httpOnly; Secure; SameSite=Strict</code> cookies — never <code>localStorage</code></li>
+<li>Verify authorisation before every sensitive operation (don&#39;t just check auth)</li>
+<li>Enable Row Level Security on all database tables (Supabase)</li>
+<li>Implement role-based access control</li>
+</ul>
+<h3>5. XSS Prevention</h3>
+<ul>
+<li>Sanitise all user-provided HTML before rendering (<code>DOMPurify</code> with explicit allowlists)</li>
+<li>Configure Content Security Policy headers</li>
+<li>Use framework-provided XSS protection (React auto-escapes by default)</li>
+<li>Never use <code>dangerouslySetInnerHTML</code> without sanitisation</li>
+</ul>
+<h3>6. CSRF Protection</h3>
+<ul>
+<li>CSRF tokens on all state-changing operations (POST, PUT, DELETE)</li>
+<li><code>SameSite=Strict</code> on all cookies</li>
+<li>Consider double-submit cookie pattern</li>
+</ul>
+<h3>7. Rate Limiting</h3>
+<ul>
+<li>Rate limit all API endpoints (e.g. 100 requests per 15 minutes)</li>
+<li>Stricter limits on expensive operations (search, auth attempts)</li>
+<li>Both IP-based and user-based limiting</li>
+</ul>
+<h3>8. Sensitive Data Exposure</h3>
+<ul>
+<li>Never log passwords, tokens, API keys, or PII</li>
+<li>Generic error messages for users; detailed errors only in server logs</li>
+<li>No stack traces exposed to users in production</li>
+<li>Audit log output before deploying</li>
+</ul>
+<h3>9. Dependency Security</h3>
+<ul>
+<li>Run <code>npm audit</code> (or equivalent) regularly</li>
+<li>Commit lock files</li>
+<li>Enable Dependabot or similar automated security updates</li>
+<li>Use <code>npm ci</code> in CI/CD for reproducible builds</li>
+</ul>
+<h3>10. Security Headers</h3>
+<p>Configure in production:</p>
+<ul>
+<li><code>Content-Security-Policy</code> — restrict script/style/image sources</li>
+<li><code>X-Frame-Options: DENY</code> — prevent clickjacking</li>
+<li><code>X-Content-Type-Options: nosniff</code></li>
+<li><code>Strict-Transport-Security</code> — enforce HTTPS</li>
+<li><code>Referrer-Policy: strict-origin-when-cross-origin</code></li>
+</ul>
+<h2>Pre-Deployment Checklist</h2>
+<p>Before ANY production deployment, verify:</p>
+<ul>
+<li><input disabled="" type="checkbox"> No hardcoded secrets; all in env vars</li>
+<li><input disabled="" type="checkbox"> All user inputs validated with schemas</li>
+<li><input disabled="" type="checkbox"> All queries parameterised</li>
+<li><input disabled="" type="checkbox"> User content sanitised (XSS)</li>
+<li><input disabled="" type="checkbox"> CSRF protection enabled</li>
+<li><input disabled="" type="checkbox"> Proper token handling (httpOnly cookies)</li>
+<li><input disabled="" type="checkbox"> Authorisation checks in place</li>
+<li><input disabled="" type="checkbox"> Rate limiting enabled</li>
+<li><input disabled="" type="checkbox"> HTTPS enforced</li>
+<li><input disabled="" type="checkbox"> Security headers configured</li>
+<li><input disabled="" type="checkbox"> No sensitive data in error messages or logs</li>
+<li><input disabled="" type="checkbox"> Dependencies up to date; no known vulnerabilities</li>
+<li><input disabled="" type="checkbox"> Row Level Security enabled (if using Supabase)</li>
+<li><input disabled="" type="checkbox"> CORS properly configured</li>
+<li><input disabled="" type="checkbox"> File uploads validated (size, type)</li>
+</ul>
+<h2>Security Testing</h2>
+<p>Write automated tests for:</p>
+<ul>
+<li>Unauthenticated access returns 401</li>
+<li>Unauthorised access returns 403</li>
+<li>Invalid input returns 400</li>
+<li>Rate limits enforce 429</li>
+<li>SQL injection attempts are rejected</li>
+<li>XSS payloads are sanitised</li>
+</ul>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a></li>
+<li><a href="https://portswigger.net/web-security">Web Security Academy</a></li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/security-review/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/security-review/SKILL.md</code></span>
+</footer>
+</body>
+</html>

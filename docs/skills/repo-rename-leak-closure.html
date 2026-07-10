@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repo Rename Leak-Vector Closure — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Repo Rename Leak-Vector Closure</h1>
+      <p class="skill-page-desc">When renaming a GitHub repo to free its name for a new public repo, re-point every remote and hook BEFORE the new repo claims the name — or auto-pushes leak private content publicly.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>learned</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>rename github repo</li><li>reuse repo name</li><li>split repo public private</li><li>gh repo rename</li></ul></section>
+  
+  <section class="skill-doc"><p><strong>Extracted:</strong> 2026-07-08
+<strong>Context:</strong> Splitting a private repo into a private operations repo plus a fresh-history public repo while keeping the original repo name (and its GitHub Pages URL) for the public one.</p>
+<h2>Problem</h2>
+<p>GitHub leaves a redirect after <code>gh repo rename</code>, so every local remote, script, and hook pointing at the old <code>owner/name</code> keeps working silently. The moment a <strong>new</strong> repo claims that name, the redirect dies and all those un-repointed references push to the NEW repo instead. If the old repo held private content and the new one is public, any auto-firing push (a session-end memory-sync hook, a CI job, a cron script) becomes a silent data leak to a public repo. The redirect makes this failure <em>invisible</em> until it&#39;s too late — nothing errors in between.</p>
+<h2>Solution</h2>
+<p>Strict ordering — the closure happens <strong>between</strong> the rename and the new repo&#39;s creation:</p>
+<pre><code class="language-bash"># 1. Rename
+gh repo rename new-private-name --repo owner/OldName --yes
+
+# 2. CLOSE THE VECTOR (gated step — nothing proceeds until clean)
+git -C /path/to/local/checkout remote set-url origin https://github.com/owner/new-private-name.git
+# Hunt every hardcoded reference — hooks are the killers (they fire unattended):
+grep -rn &quot;owner/OldName&quot; ~/.claude/settings*.json ~/.claude/hooks/ ~/.claude/skills/ \
+    /path/to/checkout/{scripts,tools,hooks,.github} 2&gt;/dev/null
+# Fix every hit. Documentation-only refs can wait; anything that PUSHES cannot.
+
+# 3. Only now create the new repo that claims the name
+gh repo create owner/OldName --private ...
+
+# 4. Verify empirically: watch the next auto-push land on the RENAMED repo
+git -C /path/to/checkout log origin/main --oneline -1   # after the next hook firing
+</code></pre>
+<h2>When to Use</h2>
+<p>Any repo rename where the old name will be reused; any private→public repo split that keeps a name or URL; before creating a fresh-history public twin of a private repo. Ask: &quot;what pushes to this name unattended?&quot; — session hooks, CI, cron, supervisor scripts — and re-point all of them first.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/repo-rename-leak-closure/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/repo-rename-leak-closure/SKILL.md</code></span>
+</footer>
+</body>
+</html>

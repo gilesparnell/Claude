@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Review — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Code Review</h1>
+      <p class="skill-page-desc">Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass. Triggers on &#39;review this PR&#39;, &#39;prepare this for review&#39;, &#39;adversarial review&#39;, &#39;fresh eyes on this&#39;.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><h2>Adversarial Review Mode</h2>
+<p>When doing a full review, spawn a &quot;fresh eyes&quot; perspective — pretend you&#39;ve never seen this codebase and are reading this code for the first time.</p>
+<p>Ask yourself:</p>
+<ol>
+<li>Would a new engineer understand what this code does without documentation?</li>
+<li>What could go wrong at runtime that isn&#39;t handled?</li>
+<li>What edge cases did the author probably not think about?</li>
+<li>What will this look like in 6 months when the context is gone?</li>
+</ol>
+<h2>Review Checklist</h2>
+<h3>Before Looking at Code</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Is the PR description clear? Does it explain <em>why</em>, not just <em>what</em>?</li>
+<li><input disabled="" type="checkbox"> Is the scope appropriate? (Not too big, not a trivial one-liner PR)</li>
+</ul>
+<h3>Code Quality</h3>
+<ul>
+<li><input disabled="" type="checkbox"> No obvious bugs or logic errors</li>
+<li><input disabled="" type="checkbox"> Error handling is explicit</li>
+<li><input disabled="" type="checkbox"> No hardcoded values that should be config</li>
+<li><input disabled="" type="checkbox"> No dead code or commented-out blocks</li>
+<li><input disabled="" type="checkbox"> No obvious performance issues</li>
+</ul>
+<h3>Security</h3>
+<ul>
+<li><input disabled="" type="checkbox"> User input is validated and sanitised</li>
+<li><input disabled="" type="checkbox"> No secrets or credentials in code</li>
+<li><input disabled="" type="checkbox"> Permissions are checked where needed</li>
+</ul>
+<h3>Tests</h3>
+<ul>
+<li><input disabled="" type="checkbox"> New logic has test coverage</li>
+<li><input disabled="" type="checkbox"> Tests are meaningful (not just hitting 100% line coverage)</li>
+<li><input disabled="" type="checkbox"> Edge cases are tested</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Complex logic has comments explaining <em>why</em></li>
+<li><input disabled="" type="checkbox"> Public APIs / functions have clear names</li>
+<li><input disabled="" type="checkbox"> README updated if needed</li>
+</ul>
+<h2>Feedback Tone</h2>
+<ul>
+<li>Be specific — &quot;this could cause a null pointer exception on line 42 when X&quot; not &quot;this looks risky&quot;</li>
+<li>Distinguish between blocking issues and suggestions — use labels: <code>blocking</code>, <code>suggestion</code>, <code>nit</code></li>
+<li>Acknowledge good work — if something is well done, say so</li>
+</ul>
+<h2>Gotchas</h2>
+<ul>
+<li>Don&#39;t block PRs over style preferences that aren&#39;t covered by a linter</li>
+<li>Don&#39;t ask for changes that are out of scope for this PR — file a separate issue</li>
+<li>Separate &quot;I would have done this differently&quot; from &quot;this is actually wrong&quot;</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/code-review/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/code-review/SKILL.md</code></span>
+</footer>
+</body>
+</html>

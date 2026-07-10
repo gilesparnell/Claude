@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testing Practices — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Testing Practices</h1>
+      <p class="skill-page-desc">Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something. Triggers on &#39;write tests for this&#39;, &#39;add test coverage&#39;, &#39;how do I test this&#39;, &#39;set up testing&#39;.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><h2>Testing Philosophy</h2>
+<p>Tests are documentation. A good test suite tells the story of how the system is supposed to behave.</p>
+<ul>
+<li>Test <strong>behaviour</strong>, not implementation — if you can refactor without changing tests, you&#39;re testing the right thing</li>
+<li>Tests should be <strong>DAMP</strong> (Descriptive And Meaningful Phrases), not DRY — duplication in tests is acceptable if it aids clarity</li>
+<li>One assertion per test where possible — makes failures easier to diagnose</li>
+</ul>
+<h2>Test Structure</h2>
+<p>Use the Arrange / Act / Assert pattern:</p>
+<pre><code class="language-javascript">it(&#39;returns null when user is not found&#39;, () =&gt; {
+  // Arrange
+  const repo = new UserRepository({ users: [] })
+
+  // Act
+  const result = repo.findById(&#39;nonexistent-id&#39;)
+
+  // Assert
+  expect(result).toBeNull()
+})
+</code></pre>
+<h2>Naming Tests</h2>
+<p>Format: <code>it(&#39;&lt;does something&gt; when &lt;condition&gt;&#39;)</code></p>
+<p>Good examples:</p>
+<ul>
+<li><code>it(&#39;throws an error when email is invalid&#39;)</code></li>
+<li><code>it(&#39;returns an empty array when no results match&#39;)</code></li>
+<li><code>it(&#39;sends a welcome email after successful registration&#39;)</code></li>
+</ul>
+<p>Bad examples:</p>
+<ul>
+<li><code>it(&#39;works&#39;)</code></li>
+<li><code>it(&#39;test user creation&#39;)</code></li>
+<li><code>it(&#39;should work correctly&#39;)</code></li>
+</ul>
+<h2>What to Test</h2>
+<p><strong>Always test:</strong></p>
+<ul>
+<li>Business logic and domain rules</li>
+<li>Edge cases: empty input, null, zero, very large values</li>
+<li>Error paths and failure modes</li>
+<li>Public API of modules/classes</li>
+</ul>
+<p><strong>Don&#39;t bother testing:</strong></p>
+<ul>
+<li>Framework internals (e.g. that React renders a div)</li>
+<li>Simple getters/setters with no logic</li>
+<li>Third-party library behaviour</li>
+</ul>
+<h2>Test Types</h2>
+<ul>
+<li><strong>Unit tests</strong> — isolated logic, fast, no I/O</li>
+<li><strong>Integration tests</strong> — test real interactions between components (prefer these for user-facing flows)</li>
+<li><strong>E2E tests</strong> — use sparingly for critical user journeys only</li>
+</ul>
+<h2>Gotchas</h2>
+<ul>
+<li>Never test implementation details — if your test breaks when you rename a private method, it&#39;s testing the wrong thing</li>
+<li>Avoid testing through the UI when a unit test would do — E2E tests are slow and brittle</li>
+<li>Don&#39;t mock what you don&#39;t own — use test doubles for third-party services</li>
+<li>Flaky tests are worse than no tests — fix or delete them</li>
+<li>Keep test files next to the code they test, not in a separate <code>__tests__</code> folder (unless the framework requires it)</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/testing-practices/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/testing-practices/SKILL.md</code></span>
+</footer>
+</body>
+</html>

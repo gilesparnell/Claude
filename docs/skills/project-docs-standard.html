@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Documentation Standard — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128218;</span>
+    <div>
+      <h1 class="skill-page-title">Project Documentation Standard</h1>
+      <p class="skill-page-desc">Mandatory documentation structure for every project. Ensures consistent docs/ folder with requirements, design, plans, tracking, user guides, API reference, decisions, and a project portal page. Enforced during ce:plan and ce:work.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>new project</li><li>project setup</li><li>create project docs</li><li>docs structure</li><li>documentation standard</li><li>set up docs</li><li>project kickoff</li></ul></section>
+  <section class="skill-checks"><h2>Required docs</h2><ul class="skill-check-list"><li>docs/index.html — project portal page (Deep Ocean Tech design)</li><li>docs/requirements/ — PRDs, feature specs, acceptance criteria</li><li>docs/design/ — architecture diagrams, system design, data models</li><li>docs/plans/ — build plans with implementation waves</li><li>docs/diagrams/ — visual progress tracking (plan-tracker output)</li><li>docs/user-guide/ — end-user documentation and onboarding</li><li>docs/api/ — API reference, endpoints, schemas (if applicable)</li><li>docs/decisions/ — per-project architecture decision records</li><li>docs/brainstorms/ — discovery notes, alternatives considered</li><li>CHANGELOG.md — what shipped and when</li></ul></section>
+  <section class="skill-doc"><p>Every Parnell Systems project MUST have a consistent <code>docs/</code> folder structure. This standard applies to all projects — internal, client, and personal.</p>
+<h2>When This Applies</h2>
+<ul>
+<li><strong>Project kickoff</strong>: Create the full structure immediately</li>
+<li><strong>ce:plan</strong>: Every plan MUST include a &quot;Documentation&quot; section listing which docs will be created or updated</li>
+<li><strong>ce:work</strong>: Documentation tasks are part of the work, not a follow-up</li>
+<li><strong>Feature completion</strong>: User guides and API docs updated before declaring &quot;done&quot;</li>
+</ul>
+<h2>Required Directory Structure</h2>
+<pre><code>project-root/
+├── docs/
+│   ├── index.html          ← Project portal page (matches hub design)
+│   ├── requirements/       ← PRDs, feature specs, acceptance criteria
+│   │   └── *.md
+│   ├── design/             ← Architecture, system design, data models
+│   │   └── *.md
+│   ├── plans/              ← Build plans, implementation waves
+│   │   └── YYYY-MM-DD-*.md
+│   ├── diagrams/           ← Visual progress, architecture diagrams
+│   │   └── *.html
+│   ├── user-guide/         ← End-user docs, onboarding, how-tos
+│   │   └── *.md or *.html
+│   ├── api/                ← API reference (if project has an API)
+│   │   └── *.md
+│   ├── decisions/          ← Per-project ADRs
+│   │   └── ADR-NNN-*.md
+│   └── brainstorms/        ← Discovery notes, alternatives explored
+│       └── YYYY-MM-DD-*.md
+├── CHANGELOG.md            ← What shipped and when
+└── ...
+</code></pre>
+<h2>Document Types</h2>
+<h3>1. Project Portal (<code>docs/index.html</code>)</h3>
+<ul>
+<li>Uses the Deep Ocean Tech design system (same as gilesparnell.github.io)</li>
+<li>Glassmorphism cards, mesh background, Satoshi + Outfit fonts</li>
+<li>Auto-discovers sections based on which docs/ subdirectories have content</li>
+<li>Links back to hub portal via PS logo</li>
+<li>Created at project kickoff, updated as docs accumulate</li>
+</ul>
+<h3>2. Requirements (<code>docs/requirements/</code>)</h3>
+<ul>
+<li>One file per feature or PRD</li>
+<li>Format: <code>YYYY-MM-DD-feature-name-requirements.md</code></li>
+<li>Must include: problem statement, success criteria, scope boundaries, out-of-scope</li>
+<li>Created during <code>ce:brainstorm</code> or discovery phase</li>
+</ul>
+<h3>3. Design Docs (<code>docs/design/</code>)</h3>
+<ul>
+<li>Architecture diagrams, data models, system design</li>
+<li>Format: <code>feature-name-design.md</code></li>
+<li>Must include: context, decision drivers, chosen approach, alternatives considered</li>
+<li>Created during <code>ce:plan</code> or when making significant technical decisions</li>
+</ul>
+<h3>4. Build Plans (<code>docs/plans/</code>)</h3>
+<ul>
+<li>Implementation plans with waves/phases</li>
+<li>Format: <code>YYYY-MM-DD-NNN-plan-name.md</code></li>
+<li>Created by <code>ce:plan</code>, tracked by <code>plan-tracker</code></li>
+<li>Must include: scope, implementation units, dependencies, verification criteria</li>
+</ul>
+<h3>5. Progress Diagrams (<code>docs/diagrams/</code>)</h3>
+<ul>
+<li>Visual HTML dashboards showing plan progress</li>
+<li>Generated by the <code>plan-tracker</code> skill</li>
+<li>Self-contained HTML with dark theme</li>
+</ul>
+<h3>6. User Guides (<code>docs/user-guide/</code>)</h3>
+<ul>
+<li>End-user documentation, onboarding flows, how-tos</li>
+<li>Written when UI features ship — not as a follow-up</li>
+<li>Can be markdown or HTML</li>
+</ul>
+<h3>7. API Reference (<code>docs/api/</code>)</h3>
+<ul>
+<li>Endpoint documentation, request/response schemas, auth</li>
+<li>Only required for projects with an API</li>
+<li>Updated when endpoints are added or changed</li>
+</ul>
+<h3>8. Architecture Decisions (<code>docs/decisions/</code>)</h3>
+<ul>
+<li>Per-project ADRs — &quot;why we built it this way&quot;</li>
+<li>Format: <code>ADR-NNN-title.md</code></li>
+<li>Frontmatter: title, status (proposed/accepted/deprecated), date, tags</li>
+<li>Created when making non-obvious technical choices</li>
+</ul>
+<h3>9. Brainstorms (<code>docs/brainstorms/</code>)</h3>
+<ul>
+<li>Discovery notes, alternatives considered, meeting notes</li>
+<li>Output from <code>ce:brainstorm</code> sessions</li>
+<li>Format: <code>YYYY-MM-DD-topic-requirements.md</code></li>
+</ul>
+<h3>10. Changelog (<code>CHANGELOG.md</code>)</h3>
+<ul>
+<li>What shipped and when</li>
+<li>Updated with each significant release or feature completion</li>
+<li>Format: Keep a Changelog (keepachangelog.com)</li>
+</ul>
+<h2>Integration with Planning Skills</h2>
+<h3>During <code>ce:plan</code></h3>
+<p>Every plan MUST include a <strong>Documentation</strong> section that lists:</p>
+<ol>
+<li>Which existing docs need updating</li>
+<li>Which new docs will be created</li>
+<li>The project portal page update (if new sections are added)</li>
+</ol>
+<h3>During <code>ce:work</code></h3>
+<p>Documentation tasks are NOT optional follow-ups. They are part of the implementation:</p>
+<ul>
+<li>User guide updates ship with the feature</li>
+<li>API docs update when endpoints change</li>
+<li>ADRs written when decisions are made (not retroactively)</li>
+<li>Changelog updated before declaring work complete</li>
+</ul>
+<h3>During <code>ce:brainstorm</code></h3>
+<p>Output goes to <code>docs/brainstorms/</code> (already the default) AND requirements go to <code>docs/requirements/</code>.</p>
+<h2>Project Portal Design</h2>
+<p>The <code>docs/index.html</code> for each project follows the Deep Ocean Tech design system:</p>
+<ul>
+<li>Animated mesh gradient background</li>
+<li>Glassmorphism section cards</li>
+<li>Each section card only appears if that docs/ subdirectory has content</li>
+<li>Status badge showing project state (Active, Maintenance, Archived)</li>
+<li>Quick stats (doc count, last updated, completion %)</li>
+<li>PS logo links back to hub portal (gilesparnell.github.io)</li>
+<li>GitHub icon links to repo</li>
+</ul>
+<h2>Enforcement</h2>
+<ul>
+<li><strong>ce:plan</strong> must reference this skill and include documentation tasks</li>
+<li><strong>ce:work</strong> must not mark a feature complete without updating relevant docs</li>
+<li><strong>plan-tracker</strong> generates progress diagrams into docs/diagrams/</li>
+<li><strong>skill-publisher</strong> updates the Knowledge Portal when skills change</li>
+<li>Missing docs in a PR review is a blocking issue</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/project-docs-standard/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/project-docs-standard/SKILL.md</code></span>
+</footer>
+</body>
+</html>

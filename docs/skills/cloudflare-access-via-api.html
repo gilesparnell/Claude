@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloudflare Access via API, Not Dashboard — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Cloudflare Access via API, Not Dashboard</h1>
+      <p class="skill-page-desc">Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API — the dashboard UI reshuffles constantly; the API is stable and verifiable.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>learned</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>cloudflare access setup</li><li>gate a static site by email</li><li>protect a pages.dev site</li><li>client portal login</li><li>zero trust application</li></ul></section>
+  
+  <section class="skill-doc"><p><strong>Extracted:</strong> 2026-07-08
+<strong>Context:</strong> Gating per-client status pages on Cloudflare Pages behind email one-time-PIN login. Two dashboard attempts failed on UI churn; the API path worked first time and is fully machine-verifiable.</p>
+<h2>Problem</h2>
+<p>Cloudflare&#39;s dashboard reorganises constantly (Pages → Workers merge, Zero Trust → &quot;Cloudflare One&quot; rebrand). UI instructions rot within months, and some controls (the Pages &quot;Enable Access policy&quot; toggle) have been removed entirely. Meanwhile client-gating needs to be <em>provably</em> correct — a mis-scoped policy exposes client data.</p>
+<h2>Solution</h2>
+<p><strong>1. Scoped token</strong> (the token-creation UI is stable): My Profile → API Tokens → Custom token → <code>Account / Access: Apps and Policies / Edit</code>. Add <code>Access: Organizations, Identity Providers, and Groups / Edit</code> if the account has no One-time PIN provider yet. Short TTL (1 day).</p>
+<p><strong>2. Ensure the OTP identity provider exists</strong> (NOT on by default for all accounts — a login page showing only a &quot;Cloudflare&quot; button means it&#39;s missing):</p>
+<pre><code class="language-bash">curl -X POST &quot;https://api.cloudflare.com/client/v4/accounts/$ACCT/access/identity_providers&quot; \
+  -H &quot;Authorization: Bearer $TOKEN&quot; -H &quot;Content-Type: application/json&quot; \
+  -d &#39;{&quot;name&quot;:&quot;One-time PIN&quot;,&quot;type&quot;:&quot;onetimepin&quot;,&quot;config&quot;:{}}&#39;
+</code></pre>
+<p><strong>3. One path-scoped app per client + exact-email policy:</strong></p>
+<pre><code class="language-bash"># App scoped to the client&#39;s path
+curl -X POST &quot;.../accounts/$ACCT/access/apps&quot; -d &#39;{
+  &quot;name&quot;:&quot;clientname-status&quot;,&quot;type&quot;:&quot;self_hosted&quot;,
+  &quot;domain&quot;:&quot;myproject.pages.dev/clientname&quot;,&quot;session_duration&quot;:&quot;24h&quot;}&#39;
+# Policy: exactly one email, nothing broader
+curl -X POST &quot;.../accounts/$ACCT/access/apps/$APP_ID/policies&quot; -d &#39;{
+  &quot;name&quot;:&quot;client-only&quot;,&quot;decision&quot;:&quot;allow&quot;,&quot;precedence&quot;:1,
+  &quot;include&quot;:[{&quot;email&quot;:{&quot;email&quot;:&quot;client@example.com&quot;}}]}&#39;
+</code></pre>
+<p><strong>4. Wildcard app for preview deployments</strong> — Pages generates per-branch preview URLs that would expose everything: app with <code>&quot;domain&quot;:&quot;*.myproject.pages.dev&quot;</code>, policy allowing only the owner&#39;s email.</p>
+<p><strong>5. Machine-verify (no incognito windows needed):</strong></p>
+<pre><code class="language-bash">curl -s -o /dev/null -w &quot;%{http_code} %{redirect_url}&quot; https://myproject.pages.dev/clientname/
+# PASS = 302 to &lt;team&gt;.cloudflareaccess.com. Public paths must stay 200.
+</code></pre>
+<h2>Gotchas (each cost real debugging)</h2>
+<ul>
+<li><strong>The dashboard&#39;s default &quot;Create&quot; flow makes a Worker-with-static-assets, not a Pages project.</strong> Only classic Pages gets a <code>pages.dev</code> URL; Git-connect via the de-emphasised &quot;Pages&quot; tab. A <code>workers.dev</code> URL means you&#39;re on the wrong product — delete and redo.</li>
+<li><strong>OTP rejection is silence, not a message.</strong> Unauthorised emails get NO code email (anti-enumeration) — the code-entry screen appears identically for everyone. Verify with a positive control: test an <em>authorised</em> address and confirm its code arrives; the unauthorised address&#39;s missing email is the rejection.</li>
+<li><strong>Deploy-then-gate ordering:</strong> put the Access app on a placeholder BEFORE real content exists behind it, and re-check the 302 immediately after every content deploy.</li>
+</ul>
+<h2>When to Use</h2>
+<p>Any &quot;give this one person a login to this one page&quot; requirement on static hosting; any Cloudflare Zero Trust setup where dashboard instructions don&#39;t match what you see; verifying an Access gate actually enforces before content ships.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/cloudflare-access-via-api/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/cloudflare-access-via-api/SKILL.md</code></span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Ship</h1>
+      <p class="skill-page-desc">Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done. Triggers on &#39;ship this&#39;, &#39;ship it&#39;, &#39;push and PR&#39;, &#39;wrap up and ship&#39;, &#39;open a PR and merge&#39;, &#39;ready to ship&#39;. Use when a branch is ready for production and the user wants a single-command procedure. Do NOT use for WIP pushes, draft PRs, or exploratory commits.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><p>This skill terminates the &quot;claimed merged but wasn&#39;t&quot; failure mode. It is a procedure, not a script. Follow the steps in order; never skip the verification step at the end.</p>
+<h2>Runner announcement</h2>
+<p>Before step 1, state: <code>Runner: Claude — /ship procedure</code>. If the user has already delegated implementation to Codex for this branch, announce the switch: <code>Runner: Codex finished the build; Claude running /ship from here.</code></p>
+<h2>Procedure</h2>
+<ol>
+<li><p><strong>Run the full test suite sequentially.</strong> One-shot, not <code>--watch</code>:</p>
+<ul>
+<li><code>npm test -- --run</code> (Vitest), <code>pytest</code> (Python), <code>rspec</code> (Ruby), <code>go test ./...</code>, etc.</li>
+<li>If tests fail: stop. Do not proceed. Report the failure.</li>
+<li>If the project is one where a subset is acceptable, the user must say so explicitly for this run — never assume.</li>
+</ul>
+</li>
+<li><p><strong>Lint and typecheck.</strong> Run the project&#39;s configured linters and type checkers. Fix any failures before proceeding. Never use <code>--no-verify</code> to bypass hooks (per Shipping Discipline in global CLAUDE.md).</p>
+</li>
+<li><p><strong>Commit with a conventional-commits message.</strong> Delegate the mechanics to the <code>git-conventions</code> skill — do not re-derive the format here. Co-authorship footer per the repo&#39;s convention.</p>
+</li>
+<li><p><strong>Push the branch</strong> and <strong>open the PR</strong> with <code>gh pr create</code>. Fill title and body per the project&#39;s PR template if one exists. Include a Test plan checklist.</p>
+</li>
+<li><p><strong>Wait for the user to merge.</strong> Do not self-merge unless the user has explicitly asked for auto-merge behaviour.</p>
+</li>
+<li><p><strong>VERIFY the merge.</strong> Invoke the <code>verification-before-completion</code> skill. At minimum, run and show:</p>
+<ul>
+<li><code>gh pr view &lt;num&gt; --json state,mergedAt,mergeCommit</code></li>
+<li>If a Vercel or similar preview deploy is attached, show the deployment status output.</li>
+</ul>
+</li>
+<li><p><strong>Only then report &quot;shipped&quot;</strong> — never before step 6 output is visible.</p>
+</li>
+</ol>
+<h2>Rules</h2>
+<ul>
+<li>Never claim &quot;merged&quot;, &quot;shipped&quot;, or &quot;deployed&quot; without showing verification output from step 6. Prose reassurance without evidence = violation.</li>
+<li>Never bypass git hooks, CI checks, or signing with <code>--no-verify</code> / <code>--no-gpg-sign</code> / similar.</li>
+<li>Never <code>--amend</code> a pushed commit. Create a new commit instead.</li>
+<li>If the user selected &quot;Squash and merge&quot; on GitHub, the verification query still applies — <code>gh pr view</code> reports state correctly regardless of merge method.</li>
+<li>On branch-protection failure (required check red, review missing), stop at step 5 and report the blocker. Do not retry in a loop.</li>
+</ul>
+<h2>Integration with other skills</h2>
+<ul>
+<li><code>verification-before-completion</code> — required for step 6. This skill does not re-implement that logic.</li>
+<li><code>git-conventions</code> — owns the commit message format for step 3.</li>
+<li><code>tdd-first</code> — should already have shipped tests alongside the implementation. <code>/ship</code> does not write new tests.</li>
+</ul>
+<h2>Why this skill exists</h2>
+<p>Multiple past sessions reported PRs as &quot;merged&quot; when they weren&#39;t, caused rebases and cleanup, and burned trust. Having a single procedure that enforces evidence at the claim point eliminates the class.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/ship/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/ship/SKILL.md</code></span>
+</footer>
+</body>
+</html>

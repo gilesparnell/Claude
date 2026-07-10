@@ -1,9 +1,9 @@
 {
-  "generated": "2026-07-07T14:52:39.113Z",
   "counts": {
     "skill": 23,
-    "walkthrough": 11,
-    "template": 3
+    "walkthrough": 12,
+    "template": 3,
+    "unpublished_skills": 0
   },
   "entries": [
     {
@@ -11,8 +11,20 @@
       "title": "Claude Code Workflow",
       "desc": "Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/claude-code-workflow.html",
       "meta": "claude-code-workflow",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Cloudflare Access via API, Not Dashboard",
+      "desc": "Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API — the dashboard UI reshuffles constantly; the API is stable and verifiable.",
+      "tags": [
+        "learned",
+        "global"
+      ],
+      "url": "skills/cloudflare-access-via-api.html",
+      "meta": "cloudflare-access-via-api",
       "published": true
     },
     {
@@ -20,7 +32,7 @@
       "title": "Code Quality",
       "desc": "Use this skill when reviewing, auditing, or improving code quality.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/code-quality.html",
       "meta": "code-quality",
       "published": true
     },
@@ -29,16 +41,19 @@
       "title": "Code Review",
       "desc": "Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/code-review.html",
       "meta": "code-review",
       "published": true
     },
     {
       "type": "skill",
       "title": "End-to-End Feature Test",
-      "desc": "Full end-to-end feature testing \u2014 generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a\u2026",
-      "tags": [],
-      "url": "skills.html",
+      "desc": "Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a…",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills/e2e-feature-test.html",
       "meta": "e2e-feature-test",
       "published": true
     },
@@ -47,7 +62,7 @@
       "title": "Find First 10",
       "desc": "Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/find-first-10.html",
       "meta": "find-first-10",
       "published": true
     },
@@ -56,7 +71,7 @@
       "title": "Frontend Design",
       "desc": "Use this skill when building UI components, designing layouts, or making frontend styling decisions.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/frontend-design.html",
       "meta": "frontend-design",
       "published": true
     },
@@ -65,7 +80,7 @@
       "title": "Git Conventions",
       "desc": "Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/git-conventions.html",
       "meta": "git-conventions",
       "published": true
     },
@@ -73,8 +88,11 @@
       "type": "skill",
       "title": "GitHub Pages Portal",
       "desc": "Self-updating GitHub Pages knowledge portal.",
-      "tags": [],
-      "url": "skills.html",
+      "tags": [
+        "tooling",
+        "project"
+      ],
+      "url": "skills/github-pages-portal.html",
       "meta": "github-pages-portal",
       "published": true
     },
@@ -83,7 +101,7 @@
       "title": "Humanizer",
       "desc": "Remove signs of AI-generated writing from text.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/humanizer.html",
       "meta": "humanizer",
       "published": true
     },
@@ -91,8 +109,11 @@
       "type": "skill",
       "title": "Plan Progress Tracker",
       "desc": "Generates a visual HTML progress diagram for active project plans.",
-      "tags": [],
-      "url": "skills.html",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/plan-tracker.html",
       "meta": "plan-tracker",
       "published": true
     },
@@ -100,17 +121,32 @@
       "type": "skill",
       "title": "Project Documentation Standard",
       "desc": "Mandatory documentation structure for every project.",
-      "tags": [],
-      "url": "skills.html",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/project-docs-standard.html",
       "meta": "project-docs-standard",
       "published": true
     },
     {
       "type": "skill",
+      "title": "Repo Rename Leak-Vector Closure",
+      "desc": "When renaming a GitHub repo to free its name for a new public repo, re-point every remote and hook BEFORE the new repo claims the name — or auto-pushes leak private content…",
+      "tags": [
+        "learned",
+        "global"
+      ],
+      "url": "skills/repo-rename-leak-closure.html",
+      "meta": "repo-rename-leak-closure",
+      "published": true
+    },
+    {
+      "type": "skill",
       "title": "Resume",
-      "desc": "Load context before resuming work \u2014 read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
+      "desc": "Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/resume.html",
       "meta": "resume",
       "published": true
     },
@@ -118,8 +154,11 @@
       "type": "skill",
       "title": "SaaS Patterns",
       "desc": "Production-grade SaaS patterns. Tenant isolation, plan gating, usage tracking, idempotent ops, soft deletes, and onboarding principles.",
-      "tags": [],
-      "url": "skills.html",
+      "tags": [
+        "saas",
+        "project"
+      ],
+      "url": "skills/saas-patterns.html",
       "meta": "saas-patterns",
       "published": true
     },
@@ -127,44 +166,50 @@
       "type": "skill",
       "title": "Security Review",
       "desc": "Comprehensive security review for web applications.",
-      "tags": [],
-      "url": "skills.html",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills/security-review.html",
       "meta": "security-review",
       "published": true
     },
     {
       "type": "skill",
       "title": "Ship",
-      "desc": "Verified PR ship workflow \u2014 tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
+      "desc": "Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/ship.html",
       "meta": "ship",
       "published": true
     },
     {
       "type": "skill",
       "title": "Skill Publisher",
-      "desc": "MANDATORY skill for publishing ANY content to the knowledge portal \u2014 skills, walkthroughs, decisions, or templates.",
+      "desc": "MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs, decisions, or templates.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/skill-publisher.html",
       "meta": "skill-publisher",
       "published": true
     },
     {
       "type": "skill",
       "title": "Systematic Debugging",
-      "desc": "Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour \u2014 before proposing fixes. Enforces evidence gathering, pattern\u2026",
-      "tags": [],
-      "url": "skills.html",
+      "desc": "Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour — before proposing fixes. Enforces evidence gathering, pattern…",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills/systematic-debugging.html",
       "meta": "systematic-debugging",
       "published": true
     },
     {
       "type": "skill",
       "title": "Tdd First",
-      "desc": "MANDATORY test-first development for ALL non-trivial code \u2014 no trigger words needed.",
+      "desc": "MANDATORY test-first development for ALL non-trivial code — no trigger words needed.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/tdd-first.html",
       "meta": "tdd-first",
       "published": true
     },
@@ -173,7 +218,7 @@
       "title": "Testing Practices",
       "desc": "Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/testing-practices.html",
       "meta": "testing-practices",
       "published": true
     },
@@ -182,16 +227,19 @@
       "title": "Validate Problem",
       "desc": "Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign.",
       "tags": [],
-      "url": "skills.html",
+      "url": "skills/validate-problem.html",
       "meta": "validate-problem",
       "published": true
     },
     {
       "type": "skill",
       "title": "Verification Before Completion",
-      "desc": "Prevents premature completion claims. Use before claiming work is done, fixed, or passing \u2014 requires running verification commands and confirming output before making any success\u2026",
-      "tags": [],
-      "url": "skills.html",
+      "desc": "Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success…",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills/verification-before-completion.html",
       "meta": "verification-before-completion",
       "published": true
     },
@@ -219,6 +267,17 @@
     },
     {
       "type": "walkthrough",
+      "title": "Skills Architecture",
+      "desc": "Three-location model, global vs project scope, the 7-section skill template, and how to write a skill from scratch.",
+      "tags": [
+        "claude",
+        "skills"
+      ],
+      "url": "skills-architecture.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
       "title": "Claude Chat vs Claude Code Workflow",
       "desc": "How this chat and Claude Code work together.",
       "tags": [
@@ -231,7 +290,7 @@
     {
       "type": "walkthrough",
       "title": "Compound Engineering Skills Map",
-      "desc": "Every /ce: command explained \u2014 what it does, when to use it, and how it relates to the others.",
+      "desc": "Every /ce: command explained — what it does, when to use it, and how it relates to the others.",
       "tags": [
         "claude",
         "workflow",
@@ -291,7 +350,7 @@
     },
     {
       "type": "walkthrough",
-      "title": "Memory Sync \u2014 How Claude Remembers You",
+      "title": "Memory Sync — How Claude Remembers You",
       "desc": "Claude writes memory files locally during sessions.",
       "tags": [
         "tooling",
@@ -304,7 +363,7 @@
     {
       "type": "walkthrough",
       "title": "Prompt Engineering: CLAUDE.md Improvements",
-      "desc": "What an Anthropic prompt engineering course revealed about our global CLAUDE.md \u2014 three gaps, six edits, and the principle that one example beats three paragraphs of rules.",
+      "desc": "What an Anthropic prompt engineering course revealed about our global CLAUDE.md — three gaps, six edits, and the principle that one example beats three paragraphs of rules.",
       "tags": [
         "claude",
         "workflow",
@@ -328,10 +387,9 @@
     {
       "type": "template",
       "title": "default / CLAUDE.md",
-      "desc": "A generic starting CLAUDE.md for any project \u2014 architecture principles, testing and shipping discipline, and the conventions Claude Code should follow.",
+      "desc": "A generic starting CLAUDE.md for any project.",
       "tags": [
-        "CLAUDE.md",
-        "default"
+        "markdown template"
       ],
       "url": "templates.html",
       "meta": "project-templates/default/CLAUDE.md",
@@ -340,10 +398,9 @@
     {
       "type": "template",
       "title": "nextjs / CLAUDE.md",
-      "desc": "A CLAUDE.md tuned for a modern Next.js App Router app: TypeScript, a service layer, thin API routes, and AI behind a single wrapper.",
+      "desc": "A CLAUDE.md tuned for a modern Next.js App Router app: TypeScript, a service layer for business logic, thin API routes, and AI features behind a single wrapper.",
       "tags": [
-        "CLAUDE.md",
-        "nextjs"
+        "markdown template"
       ],
       "url": "templates.html",
       "meta": "project-templates/nextjs/CLAUDE.md",
@@ -352,39 +409,12 @@
     {
       "type": "template",
       "title": "python-api / CLAUDE.md",
-      "desc": "A CLAUDE.md for a Python API service: project layout, dependency and testing conventions, and endpoint-building guardrails.",
+      "desc": "A CLAUDE.md for a Python API service: project layout, dependency and testing conventions, and the guardrails Claude Code should respect when building endpoints and services.",
       "tags": [
-        "CLAUDE.md",
-        "python"
+        "markdown template"
       ],
       "url": "templates.html",
       "meta": "project-templates/python-api/CLAUDE.md",
-      "published": true
-    },
-    {
-      "type": "skill",
-      "title": "Cloudflare Access via API",
-      "desc": "Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API \u2014 the dashboard reshuffles constantly; the API is stable and verifiable.",
-      "tags": [
-        "cloudflare",
-        "access",
-        "security"
-      ],
-      "url": "skills.html",
-      "meta": "cloudflare-access-via-api",
-      "published": true
-    },
-    {
-      "type": "skill",
-      "title": "Repo Rename Leak-Vector Closure",
-      "desc": "When renaming a GitHub repo to free its name for a new public repo, re-point every remote and hook BEFORE the new repo claims the name.",
-      "tags": [
-        "git",
-        "github",
-        "security"
-      ],
-      "url": "skills.html",
-      "meta": "repo-rename-leak-closure",
       "published": true
     }
   ]

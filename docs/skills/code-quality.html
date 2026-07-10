@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Quality — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Code Quality</h1>
+      <p class="skill-page-desc">Use this skill when reviewing, auditing, or improving code quality. Triggers on requests like &#39;review this code&#39;, &#39;check code quality&#39;, &#39;clean this up&#39;, &#39;audit this file&#39;, or &#39;make this production-ready&#39;.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><p>This skill guides a thorough code quality review. Work through each section systematically.</p>
+<h2>What to Check</h2>
+<h3>1. Correctness</h3>
+<ul>
+<li>Does the code do what it claims?</li>
+<li>Are edge cases handled? (null/undefined, empty arrays, network failures)</li>
+<li>Are there off-by-one errors?</li>
+<li>Is error handling explicit and meaningful?</li>
+</ul>
+<h3>2. Readability</h3>
+<ul>
+<li>Are names descriptive and consistent?</li>
+<li>Are functions small and focused?</li>
+<li>Is the code self-documenting, or does it need comments to be understood?</li>
+<li>Are there any &quot;clever&quot; tricks that sacrifice clarity?</li>
+</ul>
+<h3>3. Performance</h3>
+<ul>
+<li>Are there any obvious N+1 query patterns?</li>
+<li>Are expensive operations inside loops when they could be hoisted?</li>
+<li>Are large data structures being unnecessarily copied?</li>
+</ul>
+<h3>4. Security</h3>
+<ul>
+<li>Is user input validated and sanitised?</li>
+<li>Are there any potential injection points (SQL, shell, etc.)?</li>
+<li>Are secrets or credentials hardcoded anywhere?</li>
+<li>Are permissions/authorisation checks in place where needed?</li>
+</ul>
+<h3>5. Maintainability</h3>
+<ul>
+<li>Is there duplicated logic that should be extracted?</li>
+<li>Are there magic numbers or strings that should be constants?</li>
+<li>Is the code testable? (no hidden dependencies, side effects isolated)</li>
+</ul>
+<h3>6. Deployed Output Verification (for visual/CSS changes)</h3>
+<ul>
+<li>Are the intended CSS classes present in the deployed HTML?</li>
+<li>Do compiled CSS variable values match what was set in source?</li>
+<li>Are known-bad patterns absent (e.g. <code>backdrop-blur</code> on content cards)?</li>
+<li>If a <code>verify-deploy.sh</code> script exists, has it been run and passed?</li>
+</ul>
+<h2>Output Format</h2>
+<p>Structure your review as:</p>
+<p><strong>Summary</strong> — one paragraph overall assessment</p>
+<p><strong>Issues</strong> — list each issue with:</p>
+<ul>
+<li>Severity: <code>critical</code> / <code>major</code> / <code>minor</code> / <code>suggestion</code></li>
+<li>Location: file + line number</li>
+<li>Description: what&#39;s wrong</li>
+<li>Fix: how to address it</li>
+</ul>
+<p><strong>Positives</strong> — what&#39;s done well (always include this)</p>
+<h2>Gotchas</h2>
+<ul>
+<li>Don&#39;t flag style issues as &quot;critical&quot; — reserve that for correctness and security problems</li>
+<li>Don&#39;t rewrite working code just because you&#39;d do it differently — focus on actual problems</li>
+<li>If you&#39;d need more context to assess something fully, say so rather than guessing</li>
+<li>Check for commented-out code and flag it for removal</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/code-quality/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/code-quality/SKILL.md</code></span>
+</footer>
+</body>
+</html>

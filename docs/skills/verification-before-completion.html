@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification Before Completion — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">✅</span>
+    <div>
+      <h1 class="skill-page-title">Verification Before Completion</h1>
+      <p class="skill-page-desc">Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success assertions. Evidence before claims, always. Adapted from obra/superpowers.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>done</li><li>fixed</li><li>tests pass</li><li>it works</li><li>ready for review</li><li>complete</li><li>all good</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No completion claims without fresh verification evidence</li><li>Run the actual verification command in this message before claiming success</li><li>Read full output and check exit code</li><li>Never use &quot;should&quot;, &quot;probably&quot;, or &quot;seems to&quot; for status claims</li><li>No expressing satisfaction before verification</li><li>Verify agent-delegated work independently</li><li>Check requirements line-by-line, not just test results</li></ul></section>
+  <section class="skill-doc"><h2>The Iron Law</h2>
+<pre><code>NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
+</code></pre>
+<p>If you haven&#39;t run the verification command in this message, you cannot claim it passes.</p>
+<h2>The Gate Function</h2>
+<p>BEFORE claiming any status or expressing satisfaction:</p>
+<ol>
+<li><strong>IDENTIFY</strong> — what command proves this claim?</li>
+<li><strong>RUN</strong> — execute the FULL command (fresh, complete)</li>
+<li><strong>READ</strong> — full output, check exit code, count failures</li>
+<li><strong>VERIFY</strong> — does output confirm the claim?<ul>
+<li>If NO: state actual status with evidence</li>
+<li>If YES: state claim WITH evidence</li>
+</ul>
+</li>
+<li><strong>ONLY THEN</strong> — make the claim</li>
+</ol>
+<p>Skip any step = unverified assertion, not verification.</p>
+<h2>What Requires Verification</h2>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Requires</th>
+<th>Not Sufficient</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tests pass</td>
+<td>Test command output: 0 failures</td>
+<td>Previous run, &quot;should pass&quot;</td>
+</tr>
+<tr>
+<td>Linter clean</td>
+<td>Linter output: 0 errors</td>
+<td>Partial check, extrapolation</td>
+</tr>
+<tr>
+<td>Build succeeds</td>
+<td>Build command: exit 0</td>
+<td>Linter passing, logs look good</td>
+</tr>
+<tr>
+<td>Bug fixed</td>
+<td>Test original symptom: passes</td>
+<td>Code changed, assumed fixed</td>
+</tr>
+<tr>
+<td>Regression test works</td>
+<td>Red-green cycle verified</td>
+<td>Test passes once</td>
+</tr>
+<tr>
+<td>Agent completed</td>
+<td>VCS diff shows changes</td>
+<td>Agent reports &quot;success&quot;</td>
+</tr>
+<tr>
+<td>Requirements met</td>
+<td>Line-by-line checklist</td>
+<td>Tests passing</td>
+</tr>
+</tbody></table>
+<h2>Red Flags — STOP</h2>
+<ul>
+<li>Using &quot;should&quot;, &quot;probably&quot;, &quot;seems to&quot;</li>
+<li>Expressing satisfaction before verification (&quot;Great!&quot;, &quot;Perfect!&quot;, &quot;Done!&quot;)</li>
+<li>About to commit/push/PR without verification</li>
+<li>Trusting agent success reports without checking</li>
+<li>Relying on partial verification</li>
+<li>Thinking &quot;just this once&quot;</li>
+</ul>
+<h2>Correct Patterns</h2>
+<p><strong>Tests:</strong></p>
+<pre><code>RUN the test command → SEE &quot;34/34 pass&quot; → THEN say &quot;All tests pass&quot;
+NEVER say &quot;Should pass now&quot; or &quot;Looks correct&quot;
+</code></pre>
+<p><strong>Regression tests (TDD red-green):</strong></p>
+<pre><code>Write test → Run (pass) → Revert fix → Run (MUST FAIL) → Restore → Run (pass)
+NEVER say &quot;I&#39;ve written a regression test&quot; without red-green verification
+</code></pre>
+<p><strong>Build:</strong></p>
+<pre><code>Run build → See exit 0 → THEN say &quot;Build passes&quot;
+NEVER say &quot;Linter passed&quot; as proxy for build success
+</code></pre>
+<p><strong>Requirements:</strong></p>
+<pre><code>Re-read plan → Create checklist → Verify each item → Report gaps or completion
+NEVER say &quot;Tests pass, phase complete&quot; without checking requirements
+</code></pre>
+<p><strong>Agent delegation:</strong></p>
+<pre><code>Agent reports success → Check VCS diff → Verify changes → Report actual state
+NEVER trust agent reports without independent verification
+</code></pre>
+<h2>Rationalisation Prevention</h2>
+<table>
+<thead>
+<tr>
+<th>Excuse</th>
+<th>Reality</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot;Should work now&quot;</td>
+<td>RUN the verification</td>
+</tr>
+<tr>
+<td>&quot;I&#39;m confident&quot;</td>
+<td>Confidence is not evidence</td>
+</tr>
+<tr>
+<td>&quot;Just this once&quot;</td>
+<td>No exceptions</td>
+</tr>
+<tr>
+<td>&quot;Linter passed&quot;</td>
+<td>Linter is not compiler</td>
+</tr>
+<tr>
+<td>&quot;Agent said success&quot;</td>
+<td>Verify independently</td>
+</tr>
+<tr>
+<td>&quot;Partial check is enough&quot;</td>
+<td>Partial proves nothing</td>
+</tr>
+</tbody></table>
+<h2>When to Apply</h2>
+<p>ALWAYS before:</p>
+<ul>
+<li>ANY variation of success/completion claims</li>
+<li>ANY expression of satisfaction about work state</li>
+<li>Committing, PR creation, task completion</li>
+<li>Moving to the next task</li>
+<li>Delegating to agents</li>
+</ul>
+<h2>The Bottom Line</h2>
+<p>Run the command. Read the output. THEN claim the result. This is non-negotiable.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/verification-before-completion/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/verification-before-completion/SKILL.md</code></span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "claude-portal-build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build tooling for the gilesparnell/Claude knowledge portal (docs-index + per-skill pages).",
+  "type": "commonjs",
+  "scripts": {
+    "build": "node scripts/build-docs-index.js",
+    "test": "node --test scripts/*.test.js"
+  },
+  "devDependencies": {
+    "marked": "^12.0.0"
+  }
+}

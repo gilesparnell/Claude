@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Workflow — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Claude Code Workflow</h1>
+      <p class="skill-page-desc">Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams. Use when setting up parallel sessions, onboarding to Claude Code workflows, or when terminal tabs are getting chaotic. Triggers on &#39;set up my dev environment&#39;, &#39;tmux workflow&#39;, &#39;parallel sessions&#39;, &#39;worktree setup&#39;, &#39;agent teams setup&#39;, &#39;too many tabs&#39;.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><p>A visual guide to replacing chaotic terminal tabs with structured, named, isolated Claude Code sessions using tmux + git worktrees + Agent Teams.</p>
+<hr>
+<h2>The Problem</h2>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  Ghostty Tab Bar                                             │
+│                                                              │
+│  [Tab 1]  [Tab 2]  [Tab 3]  [Tab 4]  [Tab 5]               │
+│    ???      ???      ???      ???      ???                    │
+│                                                              │
+│  - No labels                                                 │
+│  - All editing the same files                                │
+│  - Can&#39;t remember what each is doing                         │
+│  - Context bleeding between sessions                         │
+│  - Files conflict when two agents edit the same thing        │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2>The Solution — Three Layers</h2>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│                                                              │
+│   Layer 1: tmux          → Named windows, persistent         │
+│   Layer 2: Worktrees     → Isolated file systems per agent   │
+│   Layer 3: Agent Teams   → Coordinated multi-agent work      │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2>Layer 1: tmux — Replace Tabs with Named Windows</h2>
+<h3>What it gives you</h3>
+<ul>
+<li><strong>Named windows</strong> — not &quot;Tab 3&quot; but &quot;claude&quot; or &quot;dev-server&quot;</li>
+<li><strong>Persistent sessions</strong> — close Ghostty, come back later, everything&#39;s still running</li>
+<li><strong>Split panes</strong> — see two things at once in one window</li>
+<li><strong>Keystroke switching</strong> — <code>Ctrl+B</code> then <code>1</code>, <code>2</code>, <code>3</code></li>
+</ul>
+<h3>Install</h3>
+<pre><code class="language-bash">brew install tmux    # macOS
+</code></pre>
+<h3>Visual: tmux session layout</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│ [parnell] 1:dev*  2:claude  3:agent2              13:42      │
+├─────────────────────────┬────────────────────────────────────┤
+│                         │                                    │
+│  VITE v6.0.0 ready      │  ~/my-project                 │
+│                         │  $ git status                      │
+│  &gt; Local:               │  On branch main                    │
+│    localhost:8080        │  nothing to commit                 │
+│                         │  $ _                               │
+│  (dev server running)   │  (general terminal)                │
+│                         │                                    │
+├─────────────────────────┴────────────────────────────────────┤
+│ Window 1: &quot;dev&quot; — split into server + terminal               │
+│ Window 2: &quot;claude&quot; — primary Claude Code session             │
+│ Window 3: &quot;agent2&quot; — parallel work with --worktree           │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>Launch script</h3>
+<p>Create <code>scripts/tmux-dev.sh</code> in your project:</p>
+<pre><code class="language-bash">#!/bin/bash
+SESSION=&quot;${1:-parnell}&quot;
+PROJECT_DIR=&quot;$(cd &quot;$(dirname &quot;$0&quot;)/..&quot; &amp;&amp; pwd)&quot;
+
+tmux has-session -t &quot;$SESSION&quot; 2&gt;/dev/null &amp;&amp; tmux kill-session -t &quot;$SESSION&quot;
+
+# Window 1: Dev server + terminal
+tmux new-session -d -s &quot;$SESSION&quot; -n &quot;dev&quot; -c &quot;$PROJECT_DIR&quot;
+tmux send-keys -t &quot;$SESSION:dev&quot; &quot;npm run dev&quot; C-m
+tmux split-window -h -t &quot;$SESSION:dev&quot; -c &quot;$PROJECT_DIR&quot;
+
+# Window 2: Primary Claude session
+tmux new-window -t &quot;$SESSION&quot; -n &quot;claude&quot; -c &quot;$PROJECT_DIR&quot;
+
+# Window 3: Parallel agent slot
+tmux new-window -t &quot;$SESSION&quot; -n &quot;agent2&quot; -c &quot;$PROJECT_DIR&quot;
+
+tmux select-window -t &quot;$SESSION:claude&quot;
+tmux attach-session -t &quot;$SESSION&quot;
+</code></pre>
+<pre><code class="language-bash">chmod +x scripts/tmux-dev.sh
+./scripts/tmux-dev.sh
+</code></pre>
+<h3>Key bindings cheat sheet</h3>
+<pre><code>┌─────────────────────┬────────────────────────────────────────┐
+│ Ctrl+B → 1          │ Switch to dev server window             │
+│ Ctrl+B → 2          │ Switch to primary Claude session        │
+│ Ctrl+B → 3          │ Switch to secondary agent (worktree)    │
+│ Ctrl+B → d          │ Detach — session stays alive            │
+│ Ctrl+B → ←/→        │ Switch between split panes              │
+│ tmux attach -t name │ Reattach to a session later             │
+│ tmux ls             │ List all active sessions                 │
+└─────────────────────┴────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2>Layer 2: Git Worktrees — Isolated File Systems</h2>
+<h3>The problem worktrees solve</h3>
+<pre><code>  Without worktrees:
+  ┌─────────────────────┐
+  │ ~/my-project/   │ ← BOTH agents edit this
+  │                     │
+  │ Agent A: editing    │ ← Conflict!
+  │   src/pages/...     │
+  │ Agent B: editing    │ ← Conflict!
+  │   src/pages/...     │
+  └─────────────────────┘
+
+  With worktrees:
+  ┌─────────────────────┐     ┌──────────────────────────────┐
+  │ ~/my-project/   │     │ ~/my-project-wt-a3f/     │
+  │                     │     │                              │
+  │ Agent A: landing    │     │ Agent B: auth feature        │
+  │ Branch: main        │     │ Branch: feature/auth-flow    │
+  │                     │     │                              │
+  │ (isolated)          │     │ (isolated)                   │
+  └─────────────────────┘     └──────────────────────────────┘
+          ↓                              ↓
+      No conflicts — completely separate file systems
+</code></pre>
+<h3>How to use</h3>
+<pre><code class="language-bash"># Start an isolated Claude session with its own worktree
+claude --worktree
+
+# Claude creates a separate directory + branch automatically
+# When done, changes merge back via PR
+</code></pre>
+<h3>When to use worktrees vs direct editing</h3>
+<pre><code>┌──────────────────────────────┬───────────────────────────────┐
+│ ✅ USE A WORKTREE             │ ⬜ SKIP THE WORKTREE           │
+├──────────────────────────────┼───────────────────────────────┤
+│ New feature (multi-file)     │ Quick copy/content edit       │
+│ Bug fix while feature WIP    │ Running commands (build/test) │
+│ Refactoring that might break │ Research / asking questions   │
+│ Anything you&#39;ll PR separately│ Business ops (ops/)          │
+└──────────────────────────────┴───────────────────────────────┘
+</code></pre>
+<hr>
+<h2>Layer 3: Agent Teams — Coordinated Parallel Agents</h2>
+<h3>Enable it</h3>
+<pre><code class="language-bash">echo &#39;export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1&#39; &gt;&gt; ~/.zshrc
+source ~/.zshrc
+</code></pre>
+<h3>How it works</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│                                                              │
+│                    ┌─────────────────┐                       │
+│                    │   Lead Agent    │                       │
+│                    │ Plans, delegates│                       │
+│                    └───────┬─────────┘                       │
+│                            │                                 │
+│              ┌─────────────┼─────────────┐                   │
+│              │             │             │                   │
+│     ┌────────▼──────┐ ┌───▼──────────┐ ┌▼───────────────┐   │
+│     │  Frontend     │ │  Content     │ │  Infra         │   │
+│     │  Agent        │ │  Agent       │ │  Agent         │   │
+│     │              │ │              │ │                │   │
+│     │ Components,  │ │ Copy, pages, │ │ Build, deploy, │   │
+│     │ styling      │ │ training     │ │ config         │   │
+│     └──────────────┘ └──────────────┘ └────────────────┘   │
+│                                                              │
+│     Agents communicate via shared task list                  │
+│     Each gets its own tmux pane                              │
+│     Lead coordinates and resolves conflicts                  │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>Prompt example</h3>
+<pre><code>&gt; Create an agent team with 3 members:
+&gt; 1. Frontend agent — update landing page components
+&gt; 2. Content agent — rewrite training page copy
+&gt; 3. Test agent — add Vitest coverage for changed components
+</code></pre>
+<h3>When to use Agent Teams vs manual sessions</h3>
+<pre><code>┌──────────────────────────────┬───────────────────────────────┐
+│ ✅ AGENT TEAMS                │ ⬜ MANUAL SESSIONS             │
+├──────────────────────────────┼───────────────────────────────┤
+│ Multi-part feature build     │ Independent, unrelated tasks  │
+│ Agents need to coordinate    │ Simple single-file edits      │
+│ Backend depends on frontend  │ Research + one implementation │
+│ Full-stack implementation    │ Exploratory / uncertain scope │
+└──────────────────────────────┴───────────────────────────────┘
+</code></pre>
+<hr>
+<h2>Session Scoping Rules</h2>
+<p>Every Claude Code session gets ONE clear purpose. Name it. Scope it.</p>
+<pre><code>┌────────────────────┬──────────────────────┬───────────┐
+│ Session Name       │ Scope                │ Worktree? │
+├────────────────────┼──────────────────────┼───────────┤
+│ feature-[name]     │ New feature dev      │ Yes       │
+│ bugfix-[name]      │ Single bug fix       │ Yes       │
+│ landing-page       │ Marketing site edits │ Optional  │
+│ training           │ Course content       │ Optional  │
+│ refactor-[scope]   │ Code cleanup         │ Yes       │
+│ ops                │ Business operations  │ No        │
+└────────────────────┴──────────────────────┴───────────┘
+</code></pre>
+<h3>The three rules</h3>
+<pre><code> ┌─ Rule 1: Max 2 parallel coding sessions
+ │          (avoids rate-limit thrashing)
+ │
+ ├─ Rule 2: Never edit the same file in two sessions
+ │          (finish one first, or use worktrees)
+ │
+ └─ Rule 3: One session = one task
+            (don&#39;t reuse sessions for different work)
+</code></pre>
+<hr>
+<h2>Daily Workflow — The Complete Picture</h2>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  MORNING                                                     │
+│                                                              │
+│  $ cd ~/code/my-project                                      │
+│  $ ./scripts/tmux-dev.sh                                     │
+│                                                              │
+│  ┌─────────────────────────────────────────────────────────┐ │
+│  │ tmux: [parnell]  1:dev*  2:claude  3:agent2            │ │
+│  └─────────────────────────────────────────────────────────┘ │
+│                                                              │
+│  Ctrl+B → 2 (switch to claude window)                        │
+│  $ claude                                                    │
+│  &gt; Update the hero section copy on the landing page          │
+│                                                              │
+│  Ctrl+B → 3 (switch to agent2 window)                        │
+│  $ claude --worktree                                         │
+│  &gt; Add authentication flow to the dashboard                  │
+│                                                              │
+│  ── Both agents work in parallel, isolated ──                │
+│                                                              │
+│  Ctrl+B → 1 (check dev server anytime)                       │
+│  Ctrl+B → d (detach — go get coffee)                         │
+│  $ tmux attach -t parnell (come back later)                  │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2>Tools Worth Knowing</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What</th>
+<th>Install</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>tmux</strong></td>
+<td>Terminal multiplexer — named windows, persistent sessions</td>
+<td><code>brew install tmux</code></td>
+</tr>
+<tr>
+<td><strong>workmux</strong></td>
+<td>Couples git worktrees with tmux windows automatically</td>
+<td>GitHub binary</td>
+</tr>
+<tr>
+<td><strong>muxtree</strong></td>
+<td>Dead-simple worktree + tmux launcher (single bash script)</td>
+<td>Copy to <code>/usr/local/bin</code></td>
+</tr>
+<tr>
+<td><strong>dmux</strong></td>
+<td>Full dev agent multiplexer (11+ agents, hooks, CI/CD)</td>
+<td>GitHub / npm</td>
+</tr>
+<tr>
+<td><strong>claude-esp</strong></td>
+<td>TUI to monitor Claude&#39;s hidden thinking across sessions</td>
+<td>GitHub</td>
+</tr>
+</tbody></table>
+<p><strong>Recommendation:</strong> Start with raw tmux + <code>claude --worktree</code>. Graduate to dmux when you&#39;re regularly running 3+ parallel agents.</p>
+<hr>
+<h2>Quick Reference</h2>
+<pre><code>tmux new -s parnell          # Create named session
+tmux attach -t parnell       # Reattach
+tmux ls                      # List sessions
+Ctrl+B d                     # Detach
+Ctrl+B 1/2/3                 # Switch windows
+Ctrl+B %                     # Split pane vertical
+Ctrl+B &quot;                     # Split pane horizontal
+claude --worktree            # Isolated parallel session
+claude --resume              # Resume named session
+claude --continue            # Continue most recent session
+</code></pre>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/claude-code-workflow/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/claude-code-workflow/SKILL.md</code></span>
+</footer>
+</body>
+</html>

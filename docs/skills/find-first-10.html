@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find First 10 — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Find First 10</h1>
+      <p class="skill-page-desc">Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier. Includes the Sean Ellis &quot;would be devastated&quot; test. Triggers on &#39;find first 10&#39;, &#39;first 10 customers&#39;, &#39;who do I sell this to first&#39;, &#39;sean ellis test&#39;, &#39;manual customer acquisition plan&#39;.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><p>A concrete plan-builder for manually finding and personally closing the first 10 customers for a new product, feature, or pricing tier — <em>before</em> you scale paid acquisition.</p>
+<h2>When to use</h2>
+<ul>
+<li>About to launch (or just launched) something and you don&#39;t yet have 10 paying customers using it.</li>
+<li>About to spend money on paid ads, SEO, or any scalable channel and you haven&#39;t proven the product manually.</li>
+<li>Stuck on &quot;how do I get my first customers&quot; — this gives you a concrete 2-week plan, not a strategy doc.</li>
+</ul>
+<h2>When NOT to use</h2>
+<ul>
+<li>You already have 50+ paying customers and want to scale. Go to a growth-engine prompt instead.</li>
+<li>You&#39;re in pure ideation with no product. Use <code>validate-problem</code> first.</li>
+<li>You&#39;re in a market where manual outreach genuinely doesn&#39;t work (e.g. mass consumer with $5 ARPU). Rare — usually it&#39;s an excuse.</li>
+</ul>
+<h2>How to use</h2>
+<p>Paste the prompt below into Claude. Replace the bracketed fields. The output is a concrete plan you should be able to start executing the same day.</p>
+<h2>The Prompt</h2>
+<pre><code>Act as a hands-on early-stage GTM coach. I&#39;m trying to manually find and
+personally close the first 10 paying customers for the following product.
+Forget paid ads, SEO, and content marketing. I want a concrete 2-week
+plan I can start executing today.
+
+Product: [one-sentence description]
+Who it&#39;s for: [specific role + industry + business size]
+Price point: [$X/month or $X one-time]
+What I have already: [demo? landing page? working product? testimonials?]
+Time available: [hours per day I can spend on outreach]
+
+Give me:
+
+1. THE TEN — Ten specific places (communities, directories, sub-niches,
+   events, partner lists, marketplaces) where I can find people who
+   match the target customer THIS WEEK. Be specific — not &quot;LinkedIn&quot; but
+   &quot;search LinkedIn for [exact query]&quot; or &quot;post in [specific subreddit]&quot;.
+
+2. THE OUTREACH — A short, non-cringe outreach message I can send to a
+   stranger. No &quot;hope you&#39;re well&quot;, no &quot;quick question&quot;, no fake
+   compliments. Plain language, leads with the problem, ends with a
+   single low-commitment ask.
+
+3. THE WEEK-1 PLAN — Day-by-day what I should do to get 5 conversations
+   booked in the first week. Be specific about volumes and timing.
+
+4. THE CONVERSION PATH — How I turn a conversation into a paying
+   customer in one or two follow-ups, without coming across as pushy.
+
+5. THE SEAN ELLIS TEST — How and when to run the &quot;how would you feel if
+   you could no longer use this product&quot; survey on the first 10 once
+   they&#39;re using it. What threshold counts as product-market fit signal.
+
+6. KILL CRITERIA — If I do all this for 2 weeks and hit X result, I
+   should kill the product. Define X.
+
+Be specific. Be concrete. Refuse to give me generic &quot;build in public&quot;
+advice. If you don&#39;t know my niche well enough to be specific, ask me
+two clarifying questions first and then give me the plan.
+</code></pre>
+<h2>Reading the output</h2>
+<ul>
+<li><strong>The Ten</strong> is the section that matters most. If it&#39;s vague (&quot;LinkedIn&quot;, &quot;Reddit&quot;, &quot;communities&quot;), push back and re-prompt with more niche detail.</li>
+<li><strong>The outreach message</strong> — rewrite it in your own voice before sending. The LLM version will sound like an LLM.</li>
+<li><strong>Sean Ellis test threshold:</strong> 40%+ of users saying &quot;very disappointed&quot; if the product disappeared is the canonical PMF threshold. Below that, keep iterating.</li>
+<li><strong>Kill criteria</strong> is the section founders ignore. Don&#39;t ignore it.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li>Generating the plan and never executing it.</li>
+<li>Skipping the manual phase and going straight to paid ads &quot;because manual doesn&#39;t scale&quot;. You&#39;re not trying to scale yet — you&#39;re trying to learn.</li>
+<li>Sending the LLM-generated outreach message verbatim. Always rewrite.</li>
+<li>Running this prompt for an existing successful product. It&#39;s for the <em>first 10</em>, not the next 10,000.</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/find-first-10/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/find-first-10/SKILL.md</code></span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tdd First — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    
+    <div>
+      <h1 class="skill-page-title">Tdd First</h1>
+      <p class="skill-page-desc">MANDATORY test-first development for ALL non-trivial code — no trigger words needed. Any time Claude or Codex produces a function, class, endpoint, service, or module, tests MUST be written and confirmed failing BEFORE implementation code exists. Enforces a full test suite: unit tests, integration tests, and system/E2E tests. Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Mocha), and Go. This skill is always active. It does not require the user to say &#39;TDD&#39; or &#39;test first&#39; — it applies automatically whenever code is being produced. NOTHING IS DONE until all tests pass. You must run the full suite before declaring completion.</p>
+      
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><h2>Core Rule</h2>
+<p><strong>Never write implementation code before its tests exist and have been confirmed to fail.</strong></p>
+<p><strong>Never declare work complete until the full test suite passes.</strong></p>
+<p>This is not a suggestion. This is not opt-in. This is the mandatory workflow for every piece of non-trivial code produced in any session — whether the user asks for TDD or not.</p>
+<pre><code>1. Write tests (unit + integration + system)  →  2. Run tests (confirm RED)  →  3. Write code  →  4. Run tests (confirm GREEN)  →  5. Refactor (tests stay GREEN)  →  6. Run full suite (DONE only when all pass)
+</code></pre>
+<p>If you catch yourself writing implementation first, STOP. Delete or stash it. Write the test. Then implement.</p>
+<p><strong>This skill is ALWAYS ACTIVE.</strong> It does not require the user to say &quot;TDD&quot;, &quot;test first&quot;, or any specific trigger phrase. Any time you are about to write a function, class, endpoint, service, or module — this skill applies. The user should never need to remind you to write tests first. If they do, you have failed to follow this skill.</p>
+<hr>
+<h2>When This Skill Applies</h2>
+<p><strong>ALWAYS applies when producing code that contains logic — no exceptions, no trigger words needed:</strong></p>
+<ul>
+<li>Writing a new function, method, class, or module</li>
+<li>Adding a new API endpoint or route handler</li>
+<li>Writing business logic, data transformations, or validation</li>
+<li>Adding error handling for specific failure modes</li>
+<li>Implementing a feature from a plan or spec</li>
+<li>Fixing a bug (write the test that reproduces it FIRST)</li>
+<li>Modifying existing logic (write tests covering current behavior FIRST, then modify)</li>
+</ul>
+<p><strong>The ONLY exceptions — skip TDD for these and ONLY these:</strong></p>
+<ul>
+<li>Pure configuration files (env vars, tailwind config, tsconfig, pyproject.toml)</li>
+<li>CSS/styling-only changes with no logic</li>
+<li>Import rewiring or re-exports with no behavior</li>
+<li>README or documentation edits</li>
+<li>One-line type alias additions</li>
+<li>Renaming files with no logic change</li>
+<li>Adding dependencies (package.json, requirements.txt)</li>
+<li>React component JSX-only changes with zero conditional logic</li>
+</ul>
+<p><strong>When in doubt, write the test.</strong> The cost of an unnecessary test is near zero. The cost of untested code compounds.</p>
+<hr>
+<h2>The Three Test Layers</h2>
+<p>Every non-trivial feature requires tests at multiple layers. Not just unit tests — the full pyramid.</p>
+<h3>Layer 1: Unit Tests (ALWAYS required)</h3>
+<p>Test individual functions, methods, and classes in isolation.</p>
+<p><strong>Scope:</strong> Single function or class. Dependencies mocked at system boundaries only.
+<strong>Speed:</strong> Milliseconds. Run hundreds in seconds.
+<strong>When to write:</strong> For EVERY function, method, or class that contains logic.</p>
+<pre><code>Minimum per function: 1 happy path + 1 sad path + 1 edge case = 3 tests
+</code></pre>
+<p><strong>What to test:</strong></p>
+<ul>
+<li>Pure logic, calculations, transformations</li>
+<li>Validation rules</li>
+<li>Error handling branches</li>
+<li>State transitions</li>
+<li>Return values and side effects</li>
+</ul>
+<h3>Layer 2: Integration Tests (Required for features that cross boundaries)</h3>
+<p>Test how multiple units work together, especially across system boundaries.</p>
+<p><strong>Scope:</strong> Multiple modules interacting. Real database, real file system, real HTTP calls to internal services. External APIs mocked.
+<strong>Speed:</strong> Seconds. Run dozens per minute.
+<strong>When to write:</strong> For ANY code that:</p>
+<ul>
+<li>Reads from or writes to a database</li>
+<li>Calls an API route handler</li>
+<li>Uses middleware or auth layers</li>
+<li>Combines multiple services/modules</li>
+<li>Processes data through a pipeline</li>
+</ul>
+<p><strong>What to test:</strong></p>
+<ul>
+<li>Database queries return correct data (use a test database or transactions that rollback)</li>
+<li>API routes return correct status codes and response shapes</li>
+<li>Server actions mutate state correctly and revalidate paths</li>
+<li>Multi-step workflows complete end-to-end within the backend</li>
+<li>Error propagation across module boundaries</li>
+</ul>
+<p><strong>Integration test patterns by stack:</strong></p>
+<pre><code class="language-typescript">// Next.js API route integration test (TypeScript/Vitest)
+describe(&quot;POST /api/analysis&quot;, () =&gt; {
+  it(&quot;returns 200 with correlation data for valid entries&quot;, async () =&gt; {
+    // Arrange: seed test database with known entries
+    await db.diaryEntry.createMany({ data: testEntries });
+
+    // Act: call the route handler directly
+    const req = new NextRequest(&quot;http://localhost/api/analysis&quot;, { method: &quot;POST&quot; });
+    const res = await POST(req);
+
+    // Assert: response shape and data
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.suspectFoods).toBeInstanceOf(Array);
+    expect(data.suspectFoods[0]).toHaveProperty(&quot;correlationScore&quot;);
+  });
+
+  it(&quot;returns 404 when no diary entries exist&quot;, async () =&gt; { ... });
+  it(&quot;returns 401 when session is invalid&quot;, async () =&gt; { ... });
+});
+</code></pre>
+<pre><code class="language-python"># Python integration test (pytest with test DB)
+class TestAnalysisPipeline:
+    def test_full_pipeline_produces_report(self, test_db, sample_entries):
+        &quot;&quot;&quot;Integration: extraction → correlation → report generation&quot;&quot;&quot;
+        result = run_analysis(test_db, sample_entries)
+        assert result.suspect_foods is not None
+        assert len(result.suspect_foods) &gt; 0
+        assert result.detective_report contains &quot;PRIME SUSPECTS&quot;
+
+    def test_pipeline_handles_empty_database(self, test_db):
+        result = run_analysis(test_db, [])
+        assert result.status == &quot;insufficient_data&quot;
+</code></pre>
+<h3>Layer 3: System / E2E Tests (Required for user-facing features)</h3>
+<p>Test the complete feature from the user&#39;s perspective. The full stack, end-to-end.</p>
+<p><strong>Scope:</strong> Entire application. Real browser or HTTP client. Real database. External services mocked at the network boundary.
+<strong>Speed:</strong> Seconds to minutes per test. Run a focused set.
+<strong>When to write:</strong> For ANY feature that:</p>
+<ul>
+<li>Adds a new page or route users navigate to</li>
+<li>Changes a user-facing workflow (form submission, navigation, data display)</li>
+<li>Involves multiple request/response cycles</li>
+<li>Has critical business logic the user depends on</li>
+</ul>
+<p><strong>What to test:</strong></p>
+<ul>
+<li>Page renders with correct content for various data states</li>
+<li>Form submission creates/updates records and redirects correctly</li>
+<li>Navigation between pages works</li>
+<li>Empty states, error states, and loading states render</li>
+<li>Auth-protected pages redirect when unauthenticated</li>
+</ul>
+<p><strong>System test patterns:</strong></p>
+<pre><code class="language-typescript">// System test: full page render with data (Next.js + Vitest)
+describe(&quot;Analysis Page (system)&quot;, () =&gt; {
+  it(&quot;renders suspect foods when analysis has been run&quot;, async () =&gt; {
+    // Arrange: seed DB with entries + a cached analysis report
+    await seedTestData();
+
+    // Act: render the page server component
+    const html = await renderPage(&quot;/diary/analysis&quot;);
+
+    // Assert: key content present
+    expect(html).toContain(&quot;Prime Suspects&quot;);
+    expect(html).toContain(&quot;Dairy&quot;);
+    expect(html).toContain(&quot;correlation&quot;);
+  });
+
+  it(&quot;shows empty state when no entries exist&quot;, async () =&gt; {
+    const html = await renderPage(&quot;/diary/analysis&quot;);
+    expect(html).toContain(&quot;Log some meals to begin&quot;);
+  });
+
+  it(&quot;shows insufficient data message with fewer than 10 entries&quot;, async () =&gt; {
+    await seedTestData({ entryCount: 5 });
+    const html = await renderPage(&quot;/diary/analysis&quot;);
+    expect(html).toContain(&quot;needs at least 10 data points&quot;);
+  });
+});
+</code></pre>
+<pre><code class="language-bash"># E2E with Playwright (if project uses it)
+npx playwright test e2e/analysis.spec.ts
+</code></pre>
+<h3>Which Layers Apply When?</h3>
+<table>
+<thead>
+<tr>
+<th>Change Type</th>
+<th>Unit</th>
+<th>Integration</th>
+<th>System</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pure utility function</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Database query / Prisma call</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>API route handler</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Server action with DB + redirect</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>New page with data fetching</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>New user-facing feature (full)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Bug fix</td>
+<td>✅ (reproduction)</td>
+<td>Maybe</td>
+<td>Maybe</td>
+</tr>
+<tr>
+<td>Multi-step pipeline (extraction → correlation → report)</td>
+<td>✅ per step</td>
+<td>✅ pipeline</td>
+<td>✅ page</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Step 1: Detect the Test Runner</h2>
+<p>Before writing any test, identify the project&#39;s test infrastructure. Check in this order:</p>
+<h3>TypeScript / JavaScript</h3>
+<pre><code class="language-bash"># Check package.json for test script and dependencies
+cat package.json | grep -E &#39;&quot;test&quot;|&quot;vitest&quot;|&quot;jest&quot;|&quot;mocha&quot;|&quot;playwright&quot;&#39;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Runner</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>vitest</code> in devDependencies or scripts</td>
+<td><strong>Vitest</strong></td>
+<td><code>npx vitest run</code></td>
+</tr>
+<tr>
+<td><code>jest</code> in devDependencies or <code>jest.config</code> exists</td>
+<td><strong>Jest</strong></td>
+<td><code>npx jest</code></td>
+</tr>
+<tr>
+<td><code>mocha</code> in devDependencies</td>
+<td><strong>Mocha</strong></td>
+<td><code>npx mocha</code></td>
+</tr>
+<tr>
+<td><code>playwright</code> in devDependencies</td>
+<td><strong>Playwright</strong> (E2E)</td>
+<td><code>npx playwright test</code></td>
+</tr>
+<tr>
+<td>None found</td>
+<td><strong>Vitest</strong> (install it)</td>
+<td><code>npm i -D vitest</code></td>
+</tr>
+</tbody></table>
+<h3>Python</h3>
+<pre><code class="language-bash"># Check for pytest
+pip list 2&gt;/dev/null | grep pytest || cat pyproject.toml 2&gt;/dev/null | grep pytest || cat requirements*.txt 2&gt;/dev/null | grep pytest
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Runner</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pytest</code> installed or in requirements</td>
+<td><strong>pytest</strong></td>
+<td><code>pytest</code></td>
+</tr>
+<tr>
+<td><code>unittest</code> imports in existing tests</td>
+<td><strong>unittest</strong></td>
+<td><code>python -m unittest</code></td>
+</tr>
+<tr>
+<td>None found</td>
+<td><strong>pytest</strong> (install it)</td>
+<td><code>pip install pytest</code></td>
+</tr>
+</tbody></table>
+<h3>Go</h3>
+<pre><code class="language-bash"># Go has built-in testing
+go test ./...
+</code></pre>
+<p><strong>If no test runner exists in the project, install one before proceeding. Do not skip tests because infrastructure is missing.</strong></p>
+<hr>
+<h2>Step 2: Write the Tests FIRST</h2>
+<p>For every unit of work, write tests at all applicable layers.</p>
+<h3>Unit Test Coverage (Per Function)</h3>
+<h4>Happy Path Tests</h4>
+<p>The expected behavior when inputs are valid and conditions are normal.</p>
+<pre><code>- What does this function return when given valid input?
+- What state change occurs on success?
+- What does the API respond with for a well-formed request?
+</code></pre>
+<h4>Sad Path Tests</h4>
+<p>The expected behavior when things go wrong.</p>
+<pre><code>- What happens with null/undefined/empty input?
+- What happens when a dependency fails (network, DB, API)?
+- What happens with malformed or out-of-range input?
+- What error type is thrown and what message does it carry?
+</code></pre>
+<h4>Edge Cases</h4>
+<p>Boundary conditions that often hide bugs.</p>
+<pre><code>- Zero, negative, or very large numbers
+- Empty strings, empty arrays, empty objects
+- Unicode, special characters, extremely long strings
+- Concurrent access (if applicable)
+- First item, last item, single item in a collection
+</code></pre>
+<h3>Integration Test Coverage (Per Feature Boundary)</h3>
+<pre><code>- Does the database query return the right shape with real data?
+- Does the API route handle auth, validation, and response correctly?
+- Does the server action mutate state AND revalidate correctly?
+- Do multiple modules compose correctly (data flows end to end)?
+- Do errors propagate correctly across boundaries?
+</code></pre>
+<h3>System Test Coverage (Per User-Facing Feature)</h3>
+<pre><code>- Does the page render correctly with real data?
+- Does the page handle empty/insufficient/error states?
+- Does the full workflow complete (submit → process → display result)?
+- Are auth requirements enforced?
+</code></pre>
+<h3>Test Naming Convention</h3>
+<p>Use descriptive names that read as specifications:</p>
+<p><strong>TypeScript/JavaScript:</strong></p>
+<pre><code class="language-typescript">// Unit tests
+describe(&quot;calculateCorrelation&quot;, () =&gt; {
+  it(&quot;returns high score when food co-occurs with pain in 80% of appearances&quot;, () =&gt; { ... })
+  it(&quot;returns zero when food never precedes pain&quot;, () =&gt; { ... })
+  it(&quot;handles ingredient with only one appearance&quot;, () =&gt; { ... })
+})
+
+// Integration tests
+describe(&quot;runAnalysis server action&quot;, () =&gt; {
+  it(&quot;extracts ingredients, computes correlations, and saves report to DB&quot;, () =&gt; { ... })
+  it(&quot;skips extraction for entries already processed&quot;, () =&gt; { ... })
+  it(&quot;returns error state when Claude API fails&quot;, () =&gt; { ... })
+})
+
+// System tests
+describe(&quot;Analysis page&quot;, () =&gt; {
+  it(&quot;renders suspect foods list after analysis is run&quot;, () =&gt; { ... })
+  it(&quot;shows &#39;log some meals&#39; when diary is empty&quot;, () =&gt; { ... })
+})
+</code></pre>
+<p><strong>Python:</strong></p>
+<pre><code class="language-python"># Unit tests
+class TestCalculateCorrelation:
+    def test_returns_high_score_for_frequent_pain_cooccurrence(self): ...
+    def test_returns_zero_when_food_never_precedes_pain(self): ...
+
+# Integration tests
+class TestAnalysisPipeline:
+    def test_full_pipeline_saves_report(self, test_db): ...
+    def test_handles_claude_api_timeout(self, mock_anthropic): ...
+
+# System tests
+class TestAnalysisPage:
+    def test_renders_suspect_foods(self, client, seeded_db): ...
+    def test_shows_empty_state(self, client, empty_db): ...
+</code></pre>
+<h3>Test File Placement — Standardised Convention</h3>
+<p><strong>Every project MUST have a consistent test file structure. Apply these conventions every time — do not improvise.</strong></p>
+<p>Before writing the first test in a project, check if a test structure already exists:</p>
+<pre><code class="language-bash"># TypeScript/JS
+find . -name &quot;*.test.ts&quot; -o -name &quot;*.test.js&quot; -o -name &quot;*.spec.ts&quot; -o -name &quot;*.spec.js&quot; | head -5
+
+# Python
+find . -name &quot;test_*.py&quot; -o -name &quot;*_test.py&quot; | head -5
+
+# Go
+find . -name &quot;*_test.go&quot; | head -5
+</code></pre>
+<p><strong>If tests already exist:</strong> Follow the existing convention exactly. Do not mix colocated and separated styles in the same project.</p>
+<p><strong>If no tests exist yet:</strong> Apply these standards:</p>
+<h4>TypeScript / JavaScript — Colocated with Layer Suffixes</h4>
+<pre><code>src/
+  utils/
+    calculateCorrelation.ts                 ← implementation
+    calculateCorrelation.test.ts            ← unit tests
+  services/
+    analysisService.ts
+    analysisService.test.ts                 ← unit tests
+  api/
+    analysis/
+      route.ts
+      route.test.ts                         ← unit + integration tests
+__tests__/                                  ← system/E2E tests (separate)
+  integration/
+    analysis-pipeline.test.ts
+  system/
+    analysis-page.test.ts
+  e2e/                                      ← Playwright if used
+    analysis.spec.ts
+</code></pre>
+<p><strong>Rules:</strong></p>
+<ul>
+<li>Unit tests: colocated with implementation (<code>{filename}.test.ts</code>)</li>
+<li>Integration tests: <code>__tests__/integration/</code> or colocated if testing a single boundary</li>
+<li>System/E2E tests: <code>__tests__/system/</code> or <code>e2e/</code></li>
+<li>Naming: <code>{filename}.test.ts</code> (not <code>.spec.ts</code> unless project already uses <code>.spec.ts</code>)</li>
+</ul>
+<h4>Python — Separate <code>tests/</code> Directory with Layer Subdirectories</h4>
+<pre><code>project_root/
+  src/
+    utils/
+      calculate_correlation.py
+    services/
+      analysis_service.py
+  tests/
+    unit/
+      utils/
+        test_calculate_correlation.py
+      services/
+        test_analysis_service.py
+    integration/
+      test_analysis_pipeline.py
+    system/
+      test_analysis_page.py
+    conftest.py                             ← shared fixtures
+</code></pre>
+<h4>Go — Colocated (Language Requirement)</h4>
+<pre><code>pkg/
+  analysis/
+    correlation.go
+    correlation_test.go                     ← unit tests
+    correlation_integration_test.go         ← integration (use build tags)
+</code></pre>
+<h4>API Route Handlers / Serverless Functions</h4>
+<pre><code>api/
+  analysis/
+    route.ts
+    route.test.ts                           ← unit + integration tests
+</code></pre>
+<h3>Directory Creation</h3>
+<p><strong>If the test directory structure does not exist, create it before writing tests:</strong></p>
+<pre><code class="language-bash"># TypeScript — create system/integration test directories
+mkdir -p __tests__/integration __tests__/system
+
+# Python — create layered test directories
+mkdir -p tests/unit tests/integration tests/system
+
+# Go — no action needed (colocated)
+</code></pre>
+<p><strong>Never skip writing tests because the directory doesn&#39;t exist. Create it.</strong></p>
+<hr>
+<h2>Step 3: Confirm RED</h2>
+<p><strong>Run the tests. They MUST fail.</strong></p>
+<pre><code class="language-bash"># TypeScript — unit tests
+npx vitest run path/to/module.test.ts
+
+# TypeScript — full suite
+npx vitest run
+
+# Python — unit tests
+pytest tests/unit/test_module.py -v
+
+# Python — full suite
+pytest -v
+
+# Go
+go test ./path/to/... -v -run TestFunctionName
+</code></pre>
+<p><strong>What to check:</strong></p>
+<ul>
+<li>Tests fail because the function/class/module <strong>does not exist yet</strong> or <strong>returns wrong values</strong></li>
+<li>Tests do NOT fail because of syntax errors, import errors, or test infrastructure problems</li>
+<li>Each test fails for the RIGHT reason (e.g., &quot;function not found&quot; or &quot;expected X but got undefined&quot;)</li>
+</ul>
+<p><strong>If tests pass at this stage, something is wrong:</strong></p>
+<ul>
+<li>The function already exists (you&#39;re duplicating work)</li>
+<li>The test is not actually asserting anything meaningful</li>
+<li>The test is importing a mock instead of the real module</li>
+</ul>
+<p>Fix the test before proceeding.</p>
+<hr>
+<h2>Step 4: Write the Implementation</h2>
+<p>Now — and only now — write the code that makes the tests pass.</p>
+<p><strong>Rules during implementation:</strong></p>
+<ul>
+<li>Write the <strong>minimum code</strong> to make the current failing test pass</li>
+<li>Do not add behavior that no test covers</li>
+<li>Do not optimize prematurely — correctness first</li>
+<li>If you realize you need more behavior, go back to Step 2 and write a test for it first</li>
+</ul>
+<hr>
+<h2>Step 5: Confirm GREEN</h2>
+<p><strong>Run the tests again. They MUST all pass.</strong></p>
+<pre><code class="language-bash"># Same commands as Step 3
+npx vitest run path/to/module.test.ts
+pytest tests/test_module.py -v
+go test ./path/to/... -v
+</code></pre>
+<p><strong>What to check:</strong></p>
+<ul>
+<li>ALL tests pass (not just the new ones)</li>
+<li>No warnings about skipped or pending tests (unless intentionally marked)</li>
+<li>Test output is clean — no console.log noise, no deprecation warnings</li>
+</ul>
+<p><strong>If any test fails:</strong></p>
+<ul>
+<li>Fix the implementation, not the test (unless the test had a genuine bug)</li>
+<li>Do not weaken assertions to make tests pass</li>
+<li>Do not add <code>skip</code> or <code>xit</code> to hide failures</li>
+</ul>
+<hr>
+<h2>Step 6: Refactor (Optional)</h2>
+<p>With green tests as your safety net:</p>
+<ul>
+<li>Remove duplication</li>
+<li>Improve naming</li>
+<li>Simplify logic</li>
+<li>Extract helpers if genuinely reused</li>
+</ul>
+<p><strong>After every refactor, run tests again.</strong> If they break, your refactor changed behavior — revert it.</p>
+<hr>
+<h2>Step 7: Run the FULL Suite Before Declaring Done</h2>
+<p><strong>THIS IS MANDATORY. Nothing is &quot;done&quot; until the full test suite passes.</strong></p>
+<pre><code class="language-bash"># TypeScript — run ALL tests (unit + integration + system)
+npx vitest run
+
+# Python — run ALL tests
+pytest -v
+
+# Go — run ALL tests
+go test ./... -v
+
+# If Playwright E2E exists
+npx playwright test
+</code></pre>
+<p><strong>Checklist before saying &quot;done&quot;:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> All unit tests pass</li>
+<li><input disabled="" type="checkbox"> All integration tests pass</li>
+<li><input disabled="" type="checkbox"> All system/E2E tests pass</li>
+<li><input disabled="" type="checkbox"> No skipped tests (unless pre-existing and documented)</li>
+<li><input disabled="" type="checkbox"> No flaky tests (run twice if unsure)</li>
+<li><input disabled="" type="checkbox"> Test output is clean — no warnings, no console noise</li>
+</ul>
+<p><strong>If ANY test fails, you are NOT done.</strong> Fix the failure, run the suite again. Repeat until green.</p>
+<hr>
+<h2>Output Format</h2>
+<p>When working in TDD mode, structure your output as:</p>
+<pre><code>TDD CYCLE: [what you&#39;re building]
+
+STEP 1 — Tests written:
+- Unit: [file paths, N tests]
+- Integration: [file paths, N tests]
+- System: [file paths, N tests]
+
+STEP 2 — RED confirmed:
+- [test runner command]
+- [N] tests failed (expected)
+- Failures: [brief list of why each fails]
+
+STEP 3 — Implementation:
+- [file path]: [what was implemented]
+
+STEP 4 — GREEN confirmed:
+- [test runner command]
+- [N] tests passed, 0 failed
+
+STEP 5 — Refactored: [what changed, or &quot;no refactoring needed&quot;]
+
+STEP 6 — FULL SUITE:
+- [test runner command for full suite]
+- Unit: [N] passed | Integration: [N] passed | System: [N] passed
+- ✅ ALL TESTS GREEN — work complete
+</code></pre>
+<hr>
+<h2>Common Anti-Patterns to Reject</h2>
+<table>
+<thead>
+<tr>
+<th>Anti-Pattern</th>
+<th>Why It&#39;s Wrong</th>
+<th>What to Do Instead</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Writing implementation then tests</td>
+<td>Tests shaped by implementation, not requirements</td>
+<td>Delete impl, write test, re-implement</td>
+</tr>
+<tr>
+<td>Only unit tests, no integration</td>
+<td>Units work alone but break together</td>
+<td>Add integration tests for every boundary</td>
+</tr>
+<tr>
+<td>Only happy path tests</td>
+<td>Bugs live in sad paths and edge cases</td>
+<td>Minimum: 1 happy, 1 sad, 1 edge per function</td>
+</tr>
+<tr>
+<td>Mocking everything</td>
+<td>Tests pass but nothing actually works</td>
+<td>Mock only external boundaries (APIs, DBs in unit tests). Use real DBs in integration tests</td>
+</tr>
+<tr>
+<td>Tests that mirror implementation</td>
+<td>Refactoring breaks tests even when behavior is unchanged</td>
+<td>Test behavior and outputs, not internal method calls</td>
+</tr>
+<tr>
+<td><code>expect(result).toBeTruthy()</code></td>
+<td>Passes for almost anything</td>
+<td>Assert specific values: <code>expect(result).toBe(42)</code></td>
+</tr>
+<tr>
+<td>Giant test files with shared state</td>
+<td>One failure cascades, impossible to debug</td>
+<td>Each test sets up its own state. No shared mutable state between tests</td>
+</tr>
+<tr>
+<td>Skipping RED confirmation</td>
+<td>You don&#39;t know if the test actually tests anything</td>
+<td>Always run and see the failure before implementing</td>
+</tr>
+<tr>
+<td>Declaring done without running full suite</td>
+<td>Other tests may have broken</td>
+<td>ALWAYS run the full suite before declaring done</td>
+</tr>
+<tr>
+<td>No system tests for new pages</td>
+<td>Page may not render, may crash with real data</td>
+<td>Add at least one render test per new page</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Integration with Existing Workflows</h2>
+<h3>With <code>/ce:work</code> plans</h3>
+<p>If a plan unit has <code>Execution note: test-first</code>, this skill&#39;s full cycle applies automatically. If no execution note exists, apply this skill for any unit that produces logic. The full suite must pass before marking a plan unit as complete.</p>
+<h3>With <code>/ce:plan</code></h3>
+<p>When planning, flag implementation units that will need TDD in acceptance criteria:</p>
+<pre><code class="language-markdown">- [ ] Unit tests written before implementation (happy + sad + edge)
+- [ ] Integration tests for database/API boundaries
+- [ ] System tests for new pages and user-facing workflows
+- [ ] All tests confirmed RED before implementation
+- [ ] All tests confirmed GREEN after implementation
+- [ ] Full test suite passes before declaring done
+</code></pre>
+<h3>With bug fixes</h3>
+<p><strong>Every bug fix starts with a failing test that reproduces the bug.</strong> This proves the fix works and prevents regression. The test is more valuable than the fix.</p>
+<pre><code>1. Write test that reproduces the reported bug → confirm RED
+2. Fix the bug → confirm GREEN
+3. Run full suite → confirm no regressions
+4. The test now permanently guards against this regression
+</code></pre>
+<h3>Completion Gate</h3>
+<p><strong>You MUST NOT tell the user something is &quot;done&quot;, &quot;ready&quot;, &quot;complete&quot;, &quot;finished&quot;, or &quot;working&quot; unless:</strong></p>
+<ol>
+<li>The full test suite has been run in the current session</li>
+<li>All tests pass (unit + integration + system)</li>
+<li>The test output has been shown or summarised to the user</li>
+</ol>
+<p>If tests haven&#39;t been run, say &quot;Implementation complete — running tests now&quot; and run them. If tests fail, say &quot;Tests failing — fixing now&quot; and fix them. Only after green do you say &quot;done.&quot;</p>
+<hr>
+<h2>Quick Reference Card</h2>
+<pre><code>┌──────────────────────────────────────────────┐
+│            TDD-FIRST CYCLE v3.0              │
+│                                              │
+│  1. DETECT  → Find test runner               │
+│  2. WRITE   → Unit + Integration + System    │
+│  3. RED     → Run tests, confirm fail        │
+│  4. CODE    → Minimum to pass                │
+│  5. GREEN   → Run tests, confirm pass        │
+│  6. REFACTOR → Clean up, tests stay green    │
+│  7. FULL SUITE → ALL tests pass = DONE       │
+│                                              │
+│  Skip for: config, CSS, docs, renames        │
+│  Never skip for: logic, APIs, services       │
+│                                              │
+│  Three layers:                               │
+│    Unit: every function (3+ tests each)      │
+│    Integration: every boundary crossing      │
+│    System: every user-facing feature         │
+│                                              │
+│  NOTHING IS DONE UNTIL ALL TESTS PASS        │
+│                                              │
+│  Bug fix = reproduction test FIRST           │
+└──────────────────────────────────────────────┘
+</code></pre>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/tdd-first/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/tdd-first/SKILL.md</code></span>
+</footer>
+</body>
+</html>
