@@ -1,5 +1,20 @@
 ---
 name: git-conventions
+title: Git Conventions
+scope: global
+category: workflow
+icon: 🔀
+version: 1.0
+triggers:
+  - commit this
+  - write a commit message
+  - create a PR
+  - prepare for review
+checks:
+  - Conventional commit message format
+  - Descriptive branch naming
+  - PR describes what, why, how, and testing
+  - Never bypass hooks or CI
 description: Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow. Triggers on 'commit this', 'write a commit message', 'create a PR', 'prepare for review'.
 ---
 

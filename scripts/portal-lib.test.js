@@ -6,8 +6,31 @@ const {
   buildSkillEntry,
   renderMarkdown,
   renderSkillPage,
+  renderTemplatePage,
   stripLeadingH1,
 } = require('./portal-lib');
+
+// ── renderTemplatePage ──────────────────────────────────────────────────────
+test('renderTemplatePage: complete doc rendering title, description, and body', () => {
+  const html = renderTemplatePage('nextjs', { title: 'nextjs / CLAUDE.md', desc: 'A CLAUDE.md tuned for Next.js.' }, '<p>template body</p>');
+  assert.match(html, /<!DOCTYPE html>/i);
+  assert.match(html, /portal\.css/);
+  assert.match(html, /nextjs \/ CLAUDE\.md/);
+  assert.match(html, /tuned for Next\.js/);
+  assert.match(html, /template body/);
+});
+
+test('renderTemplatePage: source link points at the CLAUDE.md file, not a SKILL.md', () => {
+  const html = renderTemplatePage('nextjs', { title: 'x', desc: 'y' }, '');
+  assert.match(html, /project-templates\/nextjs\/CLAUDE\.md/);
+  assert.doesNotMatch(html, /SKILL\.md/);
+});
+
+test('renderTemplatePage: has no triggers or checks sections', () => {
+  const html = renderTemplatePage('nextjs', { title: 'x', desc: 'y' }, '<p>b</p>');
+  assert.doesNotMatch(html, /class="skill-triggers"/);
+  assert.doesNotMatch(html, /class="skill-checks"/);
+});
 
 // ── stripLeadingH1 ──────────────────────────────────────────────────────────
 test('stripLeadingH1: removes a leading H1 and its trailing blank lines', () => {

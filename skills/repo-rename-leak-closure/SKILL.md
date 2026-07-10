@@ -1,6 +1,12 @@
 ---
 name: repo-rename-leak-closure
 title: Repo Rename Leak-Vector Closure
+icon: 🔗
+checks:
+  - Re-point every remote and hook before the new repo claims the name
+  - Hunt hardcoded references — unattended hooks are the killers
+  - Verify no auto-push targets the freed name
+  - Confirm the rename redirect routes nowhere sensitive
 scope: global
 category: learned
 description: "When renaming a GitHub repo to free its name for a new public repo, re-point every remote and hook BEFORE the new repo claims the name — or auto-pushes leak private content publicly."

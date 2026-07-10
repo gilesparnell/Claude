@@ -1,5 +1,21 @@
 ---
 name: validate-problem
+title: Validate the Problem
+scope: global
+category: product
+icon: 🔬
+version: 1.0
+triggers:
+  - validate the problem
+  - is this a real problem
+  - pressure test this idea
+  - painkiller or vitamin
+  - discovery questions for
+checks:
+  - Test the problem before building anything
+  - Distinguish painkiller from vitamin
+  - Talk to real users with discovery questions
+  - Watch for the documented anti-patterns
 description: Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign. Triggers on 'validate the problem', 'is this a real problem', 'pressure test this idea', 'painkiller or vitamin', 'discovery questions for'.
 ---
 

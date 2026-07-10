@@ -103,36 +103,37 @@ const NAV = [
   ['../changelog.html', 'Changelog'],
 ];
 
-function renderSkillPage(slug, fm = {}, bodyHtml = '') {
-  const title = fm.title || titleize(slug);
-  const desc = flat(fm.description);
-  const icon = fm.icon ? `<span class="skill-page-icon">${fm.icon}</span>` : '';
+// Shared detail-page renderer for skills and templates. `opts`:
+//   title, desc, icon, badges[], activeNav, backHref, backLabel,
+//   triggers[], checks[], checksLabel, bodyHtml, sourceHref, sourceLabel, sourcePath, kind
+function renderDocPage(opts) {
+  const {
+    title, desc = '', icon: iconChar, badges: badgeVals = [], activeNav,
+    backHref, backLabel, triggers = [], checks = [], checksLabel = 'Rules',
+    bodyHtml = '', sourceHref, sourceLabel, sourcePath,
+  } = opts;
+
+  const icon = iconChar ? `<span class="skill-page-icon">${iconChar}</span>` : '';
   const badge = (label, val) => (val ? `<span class="skill-badge"><span class="skill-badge-k">${esc(label)}</span>${esc(val)}</span>` : '');
-  const badges = [badge('scope', fm.scope), badge('category', fm.category), badge('version', fm.version)].filter(Boolean).join('');
+  const badges = badgeVals.map(([l, v]) => badge(l, v)).filter(Boolean).join('');
 
-  const triggers = Array.isArray(fm.triggers) ? fm.triggers.filter(Boolean) : [];
-  const checks = Array.isArray(fm.checks) ? fm.checks.filter(Boolean) : [];
-  const checksLabel = fm['checks-label'] || 'Rules';
-
-  const triggersSection = triggers.length
-    ? `<section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list">${triggers.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>`
+  const trig = triggers.filter(Boolean);
+  const chk = checks.filter(Boolean);
+  const triggersSection = trig.length
+    ? `<section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list">${trig.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>`
     : '';
-  const checksSection = checks.length
-    ? `<section class="skill-checks"><h2>${esc(checksLabel)}</h2><ul class="skill-check-list">${checks.map((c) => `<li>${esc(c)}</li>`).join('')}</ul></section>`
+  const checksSection = chk.length
+    ? `<section class="skill-checks"><h2>${esc(checksLabel)}</h2><ul class="skill-check-list">${chk.map((c) => `<li>${esc(c)}</li>`).join('')}</ul></section>`
     : '';
-  const bodySection = bodyHtml
-    ? `<section class="skill-doc">${bodyHtml}</section>`
-    : '';
-
-  const source = `https://github.com/gilesparnell/Claude/blob/main/skills/${slug}/SKILL.md`;
-  const nav = NAV.map(([href, label]) => `<a href="${href}"${label === 'Skills' ? ' class="active"' : ''}>${label}</a>`).join('\n      ');
+  const bodySection = bodyHtml ? `<section class="skill-doc">${bodyHtml}</section>` : '';
+  const nav = NAV.map(([href, label]) => `<a href="${href}"${label === activeNav ? ' class="active"' : ''}>${label}</a>`).join('\n      ');
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(title)} — Skills — gilesparnell</title>
+<title>${esc(title)} — ${esc(activeNav)} — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
 </head>
 <body>
@@ -151,7 +152,7 @@ function renderSkillPage(slug, fm = {}, bodyHtml = '') {
 </header>
 
 <main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <a class="skill-back" href="${backHref}">&larr; ${esc(backLabel)}</a>
   <div class="skill-page-head">
     ${icon}
     <div>
@@ -163,16 +164,51 @@ function renderSkillPage(slug, fm = {}, bodyHtml = '') {
   ${triggersSection}
   ${checksSection}
   ${bodySection}
-  <div class="skill-source"><a href="${source}">View <code>SKILL.md</code> source &rarr;</a></div>
+  <div class="skill-source"><a href="${sourceHref}">View <code>${esc(sourceLabel)}</code> source &rarr;</a></div>
 </main>
 
 <footer class="site-footer">
-  <span>gilesparnell &middot; Skills</span>
-  <span>Generated from <code>skills/${esc(slug)}/SKILL.md</code></span>
+  <span>gilesparnell &middot; ${esc(activeNav)}</span>
+  <span>Generated from <code>${esc(sourcePath)}</code></span>
 </footer>
 </body>
 </html>
 `;
 }
 
-module.exports = { esc, titleize, oneLiner, parseFrontmatter, buildSkillEntry, renderMarkdown, renderSkillPage, stripLeadingH1 };
+function renderSkillPage(slug, fm = {}, bodyHtml = '') {
+  return renderDocPage({
+    title: fm.title || titleize(slug),
+    desc: flat(fm.description),
+    icon: fm.icon,
+    badges: [['scope', fm.scope], ['category', fm.category], ['version', fm.version]],
+    activeNav: 'Skills',
+    backHref: '../skills.html',
+    backLabel: 'All skills',
+    triggers: Array.isArray(fm.triggers) ? fm.triggers : [],
+    checks: Array.isArray(fm.checks) ? fm.checks : [],
+    checksLabel: fm['checks-label'] || 'Rules',
+    bodyHtml,
+    sourceHref: `https://github.com/gilesparnell/Claude/blob/main/skills/${slug}/SKILL.md`,
+    sourceLabel: 'SKILL.md',
+    sourcePath: `skills/${slug}/SKILL.md`,
+  });
+}
+
+function renderTemplatePage(slug, info = {}, bodyHtml = '') {
+  return renderDocPage({
+    title: info.title || titleize(slug),
+    desc: flat(info.desc),
+    icon: info.icon || '📄',
+    badges: [['type', 'CLAUDE.md']],
+    activeNav: 'Templates',
+    backHref: '../templates.html',
+    backLabel: 'All templates',
+    bodyHtml,
+    sourceHref: `https://github.com/gilesparnell/Claude/blob/main/project-templates/${slug}/CLAUDE.md`,
+    sourceLabel: 'CLAUDE.md',
+    sourcePath: `project-templates/${slug}/CLAUDE.md`,
+  });
+}
+
+module.exports = { esc, titleize, oneLiner, parseFrontmatter, buildSkillEntry, renderMarkdown, renderSkillPage, renderTemplatePage, stripLeadingH1 };

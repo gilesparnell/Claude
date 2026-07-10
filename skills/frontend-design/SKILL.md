@@ -1,5 +1,21 @@
 ---
 name: frontend-design
+title: Frontend Design
+scope: global
+category: design
+icon: 🎨
+version: 1.0
+triggers:
+  - build this UI
+  - style this component
+  - make this look good
+  - improve the design
+  - create a landing page
+checks:
+  - Avoid the AI-cliché look
+  - Consistent design system and spacing
+  - Responsive across breakpoints
+  - Visual changes verified on a deployed build
 description: Use this skill when building UI components, designing layouts, or making frontend styling decisions. Triggers on 'build this UI', 'style this component', 'make this look good', 'improve the design', 'create a landing page'.
 ---
 

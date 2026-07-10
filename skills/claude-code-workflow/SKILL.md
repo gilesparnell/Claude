@@ -1,5 +1,22 @@
 ---
 name: claude-code-workflow
+title: Claude Code Workflow
+scope: global
+category: tooling
+icon: 🪟
+version: 1.0
+triggers:
+  - set up my dev environment
+  - tmux workflow
+  - parallel sessions
+  - worktree setup
+  - agent teams setup
+  - too many tabs
+checks:
+  - Named tmux windows replace ad-hoc terminal tabs
+  - Git worktrees isolate parallel work streams
+  - One Claude session per worktree
+  - Primary and parallel agent slots kept separate
 description: >
   Visual guide to structuring your Claude Code development environment with tmux,
   git worktrees, and Agent Teams. Use when setting up parallel sessions, onboarding

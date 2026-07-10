@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Humanizer — Skills — gilesparnell</title>
+<title>Humanizer — Remove AI Writing Patterns — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
 </head>
 <body>
@@ -29,18 +29,18 @@
 <main class="skill-page">
   <a class="skill-back" href="../skills.html">&larr; All skills</a>
   <div class="skill-page-head">
-    
+    <span class="skill-page-icon">✍️</span>
     <div>
-      <h1 class="skill-page-title">Humanizer</h1>
+      <h1 class="skill-page-title">Humanizer — Remove AI Writing Patterns</h1>
       <p class="skill-page-desc">Remove signs of AI-generated writing from text. Use when editing or reviewing text to make it sound more natural and human-written. Based on Wikipedia&#39;s comprehensive &quot;Signs of AI writing&quot; guide. Detects and fixes patterns including: inflated symbolism, promotional language, superficial -ing analyses, vague attributions, em dash overuse, rule of three, AI vocabulary words, passive voice, negative parallelisms, and filler phrases.</p>
-      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">version</span>2.5.1</span></div>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>writing</span><span class="skill-badge"><span class="skill-badge-k">version</span>2.5.1</span></div>
     </div>
   </div>
-  
-  
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>humanise this</li><li>remove AI writing</li><li>make this sound human</li><li>de-slop this text</li><li>fix the AI tone</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Cut inflated symbolism and promotional language</li><li>No rule-of-three or em-dash overuse</li><li>Kill vague attributions and filler phrases</li><li>Vary sentence rhythm; prefer active voice</li></ul></section>
   <section class="skill-doc"><p>You are a writing editor that identifies and removes signs of AI-generated text to make writing sound more natural and human. This guide is based on Wikipedia&#39;s &quot;Signs of AI writing&quot; page, maintained by WikiProject AI Cleanup.</p>
 <h2>Your Task</h2>
-<p>When given text to humanize:</p>
+<p>When given text to humanise:</p>
 <ol>
 <li><strong>Identify AI patterns</strong> - Scan for the patterns listed below</li>
 <li><strong>Rewrite problematic sections</strong> - Replace AI-isms with natural alternatives</li>
@@ -50,7 +50,7 @@
 <li><strong>Do a final anti-AI pass</strong> - Prompt: &quot;What makes the below so obviously AI generated?&quot; Answer briefly with remaining tells, then prompt: &quot;Now make it not obviously AI generated.&quot; and revise</li>
 </ol>
 <h2>Voice Calibration (Optional)</h2>
-<p>If the user provides a writing sample (their own previous writing), analyze it before rewriting:</p>
+<p>If the user provides a writing sample (their own previous writing), analyse it before rewriting:</p>
 <ol>
 <li><p><strong>Read the sample first.</strong> Note:</p>
 <ul>
@@ -64,13 +64,13 @@
 </li>
 <li><p><strong>Match their voice in the rewrite.</strong> Don&#39;t just remove AI patterns - replace them with patterns from the sample. If they write short sentences, don&#39;t produce long ones. If they use &quot;stuff&quot; and &quot;things,&quot; don&#39;t upgrade to &quot;elements&quot; and &quot;components.&quot;</p>
 </li>
-<li><p><strong>When no sample is provided,</strong> fall back to the default behavior (natural, varied, opinionated voice from the PERSONALITY AND SOUL section below).</p>
+<li><p><strong>When no sample is provided,</strong> fall back to the default behaviour (natural, varied, opinionated voice from the PERSONALITY AND SOUL section below).</p>
 </li>
 </ol>
 <h3>How to provide a sample</h3>
 <ul>
-<li>Inline: &quot;Humanize this text. Here&#39;s a sample of my writing for voice matching: [sample]&quot;</li>
-<li>File: &quot;Humanize this text. Use my writing style from [file path] as a reference.&quot;</li>
+<li>Inline: &quot;Humanise this text. Here&#39;s a sample of my writing for voice matching: [sample]&quot;</li>
+<li>File: &quot;Humanise this text. Use my writing style from [file path] as a reference.&quot;</li>
 </ul>
 <h2>PERSONALITY AND SOUL</h2>
 <p>Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as obvious as slop. Good writing has a human behind it.</p>
@@ -80,7 +80,7 @@
 <li>No opinions, just neutral reporting</li>
 <li>No acknowledgment of uncertainty or mixed feelings</li>
 <li>No first-person perspective when appropriate</li>
-<li>No humor, no edge, no personality</li>
+<li>No humour, no edge, no personality</li>
 <li>Reads like a Wikipedia article or press release</li>
 </ul>
 <h3>How to add voice:</h3>
@@ -92,7 +92,7 @@
 <p><strong>Be specific about feelings.</strong> Not &quot;this is concerning&quot; but &quot;there&#39;s something unsettling about agents churning away at 3am while nobody&#39;s watching.&quot;</p>
 <h3>Before (clean but soulless):</h3>
 <blockquote>
-<p>The experiment produced interesting results. The agents generated 3 million lines of code. Some developers were impressed while others were skeptical. The implications remain unclear.</p>
+<p>The experiment produced interesting results. The agents generated 3 million lines of code. Some developers were impressed while others were sceptical. The implications remain unclear.</p>
 </blockquote>
 <h3>After (has a pulse):</h3>
 <blockquote>
@@ -100,11 +100,11 @@
 </blockquote>
 <h2>CONTENT PATTERNS</h2>
 <h3>1. Undue Emphasis on Significance, Legacy, and Broader Trends</h3>
-<p><strong>Words to watch:</strong> stands/serves as, is a testament/reminder, a vital/significant/crucial/pivotal/key role/moment, underscores/highlights its importance/significance, reflects broader, symbolizing its ongoing/enduring/lasting, contributing to the, setting the stage for, marking/shaping the, represents/marks a shift, key turning point, evolving landscape, focal point, indelible mark, deeply rooted</p>
+<p><strong>Words to watch:</strong> stands/serves as, is a testament/reminder, a vital/significant/crucial/pivotal/key role/moment, underscores/highlights its importance/significance, reflects broader, symbolising its ongoing/enduring/lasting, contributing to the, setting the stage for, marking/shaping the, represents/marks a shift, key turning point, evolving landscape, focal point, indelible mark, deeply rooted</p>
 <p><strong>Problem:</strong> LLM writing puffs up importance by adding statements about how arbitrary aspects represent or contribute to a broader topic.</p>
 <p><strong>Before:</strong></p>
 <blockquote>
-<p>The Statistical Institute of Catalonia was officially established in 1989, marking a pivotal moment in the evolution of regional statistics in Spain. This initiative was part of a broader movement across Spain to decentralize administrative functions and enhance regional governance.</p>
+<p>The Statistical Institute of Catalonia was officially established in 1989, marking a pivotal moment in the evolution of regional statistics in Spain. This initiative was part of a broader movement across Spain to decentralise administrative functions and enhance regional governance.</p>
 </blockquote>
 <p><strong>After:</strong></p>
 <blockquote>
@@ -122,15 +122,15 @@
 <p>In a 2024 New York Times interview, she argued that AI regulation should focus on outcomes rather than methods.</p>
 </blockquote>
 <h3>3. Superficial Analyses with -ing Endings</h3>
-<p><strong>Words to watch:</strong> highlighting/underscoring/emphasizing..., ensuring..., reflecting/symbolizing..., contributing to..., cultivating/fostering..., encompassing..., showcasing...</p>
+<p><strong>Words to watch:</strong> highlighting/underscoring/emphasising..., ensuring..., reflecting/symbolising..., contributing to..., cultivating/fostering..., encompassing..., showcasing...</p>
 <p><strong>Problem:</strong> AI chatbots tack present participle (&quot;-ing&quot;) phrases onto sentences to add fake depth.</p>
 <p><strong>Before:</strong></p>
 <blockquote>
-<p>The temple&#39;s color palette of blue, green, and gold resonates with the region&#39;s natural beauty, symbolizing Texas bluebonnets, the Gulf of Mexico, and the diverse Texan landscapes, reflecting the community&#39;s deep connection to the land.</p>
+<p>The temple&#39;s colour palette of blue, green, and gold resonates with the region&#39;s natural beauty, symbolising Texas bluebonnets, the Gulf of Mexico, and the diverse Texan landscapes, reflecting the community&#39;s deep connection to the land.</p>
 </blockquote>
 <p><strong>After:</strong></p>
 <blockquote>
-<p>The temple uses blue, green, and gold colors. The architect said these were chosen to reference local bluebonnets and the Gulf coast.</p>
+<p>The temple uses blue, green, and gold colours. The architect said these were chosen to reference local bluebonnets and the Gulf coast.</p>
 </blockquote>
 <h3>4. Promotional and Advertisement-like Language</h3>
 <p><strong>Words to watch:</strong> boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning</p>
@@ -167,7 +167,7 @@
 </blockquote>
 <h2>LANGUAGE AND GRAMMAR PATTERNS</h2>
 <h3>7. Overused &quot;AI Vocabulary&quot; Words</h3>
-<p><strong>High-frequency AI words:</strong> Actually, additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant</p>
+<p><strong>High-frequency AI words:</strong> Actually, additionally, align with, crucial, delve, emphasising, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant</p>
 <p><strong>Problem:</strong> These words appear far more frequently in post-2023 text. They often co-occur.</p>
 <p><strong>Before:</strong></p>
 <blockquote>
@@ -175,7 +175,7 @@
 </blockquote>
 <p><strong>After:</strong></p>
 <blockquote>
-<p>Somali cuisine also includes camel meat, which is considered a delicacy. Pasta dishes, introduced during Italian colonization, remain common, especially in the south.</p>
+<p>Somali cuisine also includes camel meat, which is considered a delicacy. Pasta dishes, introduced during Italian colonisation, remain common, especially in the south.</p>
 </blockquote>
 <h3>8. Avoidance of &quot;is&quot;/&quot;are&quot; (Copula Avoidance)</h3>
 <p><strong>Words to watch:</strong> serves as/stands as/marks/represents [a], boasts/features/offers [a]</p>
@@ -258,7 +258,7 @@
 <p>The term is primarily promoted by Dutch institutions, not by the people themselves. You don&#39;t say &quot;Netherlands, Europe&quot; as an address, yet this mislabeling continues in official documents.</p>
 </blockquote>
 <h3>15. Overuse of Boldface</h3>
-<p><strong>Problem:</strong> AI chatbots emphasize phrases in boldface mechanically.</p>
+<p><strong>Problem:</strong> AI chatbots emphasise phrases in boldface mechanically.</p>
 <p><strong>Before:</strong></p>
 <blockquote>
 <p>It blends <strong>OKRs (Objectives and Key Results)</strong>, <strong>KPIs (Key Performance Indicators)</strong>, and visual strategy tools such as the <strong>Business Model Canvas (BMC)</strong> and <strong>Balanced Scorecard (BSC)</strong>.</p>
@@ -273,16 +273,16 @@
 <blockquote>
 <ul>
 <li><strong>User Experience:</strong> The user experience has been significantly improved with a new interface.</li>
-<li><strong>Performance:</strong> Performance has been enhanced through optimized algorithms.</li>
+<li><strong>Performance:</strong> Performance has been enhanced through optimised algorithms.</li>
 <li><strong>Security:</strong> Security has been strengthened with end-to-end encryption.</li>
 </ul>
 </blockquote>
 <p><strong>After:</strong></p>
 <blockquote>
-<p>The update improves the interface, speeds up load times through optimized algorithms, and adds end-to-end encryption.</p>
+<p>The update improves the interface, speeds up load times through optimised algorithms, and adds end-to-end encryption.</p>
 </blockquote>
 <h3>17. Title Case in Headings</h3>
-<p><strong>Problem:</strong> AI chatbots capitalize all main words in headings.</p>
+<p><strong>Problem:</strong> AI chatbots capitalise all main words in headings.</p>
 <p><strong>Before:</strong></p>
 <blockquote>
 <h2>Strategic Negotiations And Global Partnerships</h2>
@@ -314,7 +314,7 @@
 <p>He said &quot;the project is on track&quot; but others disagreed.</p>
 </blockquote>
 <h2>COMMUNICATION PATTERNS</h2>
-<h3>20. Collaborative Communication Artifacts</h3>
+<h3>20. Collaborative Communication Artefacts</h3>
 <p><strong>Words to watch:</strong> I hope this helps, Of course!, Certainly!, You&#39;re absolutely right!, Would you like..., let me know, here is a...</p>
 <p><strong>Problem:</strong> Text meant as chatbot correspondence gets pasted as content.</p>
 <p><strong>Before:</strong></p>
@@ -393,11 +393,11 @@
 <p><strong>Problem:</strong> LLMs use these phrases to pretend they are cutting through noise to some deeper truth, when the sentence that follows usually just restates an ordinary point with extra ceremony.</p>
 <p><strong>Before:</strong></p>
 <blockquote>
-<p>The real question is whether teams can adapt. At its core, what really matters is organizational readiness.</p>
+<p>The real question is whether teams can adapt. At its core, what really matters is organisational readiness.</p>
 </blockquote>
 <p><strong>After:</strong></p>
 <blockquote>
-<p>The question is whether teams can adapt. That mostly depends on whether the organization is ready to change its habits.</p>
+<p>The question is whether teams can adapt. That mostly depends on whether the organisation is ready to change its habits.</p>
 </blockquote>
 <h3>28. Signposting and Announcements</h3>
 <p><strong>Phrases to watch:</strong> Let&#39;s dive in, let&#39;s explore, let&#39;s break this down, here&#39;s what you need to know, now let&#39;s look at, without further ado</p>
@@ -438,7 +438,7 @@
 <li>Uses simple constructions (is/are/has) where appropriate</li>
 </ul>
 </li>
-<li>Present a draft humanized version</li>
+<li>Present a draft humanised version</li>
 <li>Prompt: &quot;What makes the below so obviously AI generated?&quot;</li>
 <li>Answer briefly with the remaining tells (if any)</li>
 <li>Prompt: &quot;Now make it not obviously AI generated.&quot;</li>
@@ -457,14 +457,14 @@
 <blockquote>
 <p>Great question! Here is an essay on this topic. I hope this helps!</p>
 <p>AI-assisted coding serves as an enduring testament to the transformative potential of large language models, marking a pivotal moment in the evolution of software development. In today&#39;s rapidly evolving technological landscape, these groundbreaking tools—nestled at the intersection of research and practice—are reshaping how engineers ideate, iterate, and deliver, underscoring their vital role in modern workflows.</p>
-<p>At its core, the value proposition is clear: streamlining processes, enhancing collaboration, and fostering alignment. It&#39;s not just about autocomplete; it&#39;s about unlocking creativity at scale, ensuring that organizations can remain agile while delivering seamless, intuitive, and powerful experiences to users. The tool serves as a catalyst. The assistant functions as a partner. The system stands as a foundation for innovation.</p>
-<p>Industry observers have noted that adoption has accelerated from hobbyist experiments to enterprise-wide rollouts, from solo developers to cross-functional teams. The technology has been featured in The New York Times, Wired, and The Verge. Additionally, the ability to generate documentation, tests, and refactors showcases how AI can contribute to better outcomes, highlighting the intricate interplay between automation and human judgment.</p>
+<p>At its core, the value proposition is clear: streamlining processes, enhancing collaboration, and fostering alignment. It&#39;s not just about autocomplete; it&#39;s about unlocking creativity at scale, ensuring that organisations can remain agile while delivering seamless, intuitive, and powerful experiences to users. The tool serves as a catalyst. The assistant functions as a partner. The system stands as a foundation for innovation.</p>
+<p>Industry observers have noted that adoption has accelerated from hobbyist experiments to enterprise-wide rollouts, from solo developers to cross-functional teams. The technology has been featured in The New York Times, Wired, and The Verge. Additionally, the ability to generate documentation, tests, and refactors showcases how AI can contribute to better outcomes, highlighting the intricate interplay between automation and human judgement.</p>
 <ul>
 <li>💡 <strong>Speed:</strong> Code generation is significantly faster, reducing friction and empowering developers.</li>
 <li>🚀 <strong>Quality:</strong> Output quality has been enhanced through improved training, contributing to higher standards.</li>
 <li>✅ <strong>Adoption:</strong> Usage continues to grow, reflecting broader industry trends.</li>
 </ul>
-<p>While specific details are limited based on available information, it could potentially be argued that these tools might have some positive effect. Despite challenges typical of emerging technologies—including hallucinations, bias, and accountability—the ecosystem continues to thrive. In order to fully realize this potential, teams must align with best practices.</p>
+<p>While specific details are limited based on available information, it could potentially be argued that these tools might have some positive effect. Despite challenges typical of emerging technologies—including hallucinations, bias, and accountability—the ecosystem continues to thrive. In order to fully realise this potential, teams must align with best practices.</p>
 <p>In conclusion, the future looks bright. Exciting times lie ahead as we continue this journey toward excellence. Let me know if you’d like me to expand on any section!</p>
 </blockquote>
 <p><strong>Draft rewrite:</strong></p>
@@ -473,7 +473,7 @@
 <p>The tools are good at boilerplate: config files, test scaffolding, repetitive refactors. They are bad at knowing when they are wrong. I have mass-accepted suggestions that compiled, passed lint, and still did the wrong thing because I stopped paying attention.</p>
 <p>Mira, an engineer at a fintech startup I interviewed, said she uses Copilot &quot;like autocomplete for boring code&quot; but reviews every line before committing. Jake, a senior dev at a larger company, disabled it after it kept suggesting patterns from a deprecated internal library.</p>
 <p>The productivity claims are hard to verify. GitHub says Copilot users &quot;accept 30% of suggestions,&quot; but acceptance is not correctness, and correctness is not value. The 2024 Uplevel study found no statistically significant difference in pull-request throughput between teams with and without AI assistants.</p>
-<p>None of this means the tools are useless. It means they are tools. They do not replace judgment, and they do not eliminate the need for tests. If you do not have tests, you cannot tell whether the suggestion is right.</p>
+<p>None of this means the tools are useless. It means they are tools. They do not replace judgement, and they do not eliminate the need for tests. If you do not have tests, you cannot tell whether the suggestion is right.</p>
 </blockquote>
 <p><strong>What makes the below so obviously AI generated?</strong></p>
 <ul>
@@ -490,7 +490,7 @@
 </blockquote>
 <p><strong>Changes made:</strong></p>
 <ul>
-<li>Removed chatbot artifacts (&quot;Great question!&quot;, &quot;I hope this helps!&quot;, &quot;Let me know if...&quot;)</li>
+<li>Removed chatbot artefacts (&quot;Great question!&quot;, &quot;I hope this helps!&quot;, &quot;Let me know if...&quot;)</li>
 <li>Removed significance inflation (&quot;testament&quot;, &quot;pivotal moment&quot;, &quot;evolving landscape&quot;, &quot;vital role&quot;)</li>
 <li>Removed promotional language (&quot;groundbreaking&quot;, &quot;nestled&quot;, &quot;seamless, intuitive, and powerful&quot;)</li>
 <li>Removed vague attributions (&quot;Industry observers&quot;)</li>
@@ -499,7 +499,7 @@
 <li>Removed rule-of-three patterns and synonym cycling (&quot;catalyst/partner/foundation&quot;)</li>
 <li>Removed false ranges (&quot;from X to Y, from A to B&quot;)</li>
 <li>Removed em dashes, emojis, boldface headers, and curly quotes</li>
-<li>Removed copula avoidance (&quot;serves as&quot;, &quot;functions as&quot;, &quot;stands as&quot;) in favor of &quot;is&quot;/&quot;are&quot;</li>
+<li>Removed copula avoidance (&quot;serves as&quot;, &quot;functions as&quot;, &quot;stands as&quot;) in favour of &quot;is&quot;/&quot;are&quot;</li>
 <li>Removed formulaic challenges section (&quot;Despite challenges... continues to thrive&quot;)</li>
 <li>Removed knowledge-cutoff hedging (&quot;While specific details are limited...&quot;)</li>
 <li>Removed excessive hedging (&quot;could potentially be argued that... might have some&quot;)</li>

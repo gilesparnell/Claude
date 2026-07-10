@@ -1,6 +1,12 @@
 ---
 name: cloudflare-access-via-api
 title: Cloudflare Access via API, Not Dashboard
+icon: 🔐
+checks:
+  - Create Access apps and policies via the REST API, not the dashboard
+  - Scope each app to the client's exact path
+  - Policy allows exactly one email — nothing broader
+  - PASS is a 302 to the Access login; public paths stay 200
 scope: global
 category: learned
 description: "Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API — the dashboard UI reshuffles constantly; the API is stable and verifiable."

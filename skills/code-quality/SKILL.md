@@ -1,5 +1,22 @@
 ---
 name: code-quality
+title: Code Quality Review
+scope: global
+category: code
+icon: ✨
+version: 1.0
+triggers:
+  - review this code
+  - check code quality
+  - clean this up
+  - audit this file
+  - make this production-ready
+checks:
+  - Readability and naming over cleverness
+  - No dead code or duplication
+  - Errors handled at the boundaries
+  - Consistent with surrounding style
+  - Production-readiness confirmed before sign-off
 description: Use this skill when reviewing, auditing, or improving code quality. Triggers on requests like 'review this code', 'check code quality', 'clean this up', 'audit this file', or 'make this production-ready'.
 ---
 

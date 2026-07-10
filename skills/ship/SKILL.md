@@ -1,5 +1,21 @@
 ---
 name: ship
+title: Ship — Verified PR Ship Procedure
+scope: global
+category: workflow
+icon: 🚢
+version: 1.0
+triggers:
+  - ship this
+  - ship it
+  - push and PR
+  - open a PR and merge
+  - ready to ship
+checks:
+  - Tests and lint green before commit
+  - Commit, push, and open the PR
+  - VERIFY the merge before claiming done
+  - Not for WIP or draft pushes
 description: Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done. Triggers on 'ship this', 'ship it', 'push and PR', 'wrap up and ship', 'open a PR and merge', 'ready to ship'. Use when a branch is ready for production and the user wants a single-command procedure. Do NOT use for WIP pushes, draft PRs, or exploratory commits.
 ---
 

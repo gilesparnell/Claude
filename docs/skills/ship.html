@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ship — Skills — gilesparnell</title>
+<title>Ship — Verified PR Ship Procedure — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
 </head>
 <body>
@@ -29,15 +29,15 @@
 <main class="skill-page">
   <a class="skill-back" href="../skills.html">&larr; All skills</a>
   <div class="skill-page-head">
-    
+    <span class="skill-page-icon">🚢</span>
     <div>
-      <h1 class="skill-page-title">Ship</h1>
+      <h1 class="skill-page-title">Ship — Verified PR Ship Procedure</h1>
       <p class="skill-page-desc">Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done. Triggers on &#39;ship this&#39;, &#39;ship it&#39;, &#39;push and PR&#39;, &#39;wrap up and ship&#39;, &#39;open a PR and merge&#39;, &#39;ready to ship&#39;. Use when a branch is ready for production and the user wants a single-command procedure. Do NOT use for WIP pushes, draft PRs, or exploratory commits.</p>
-      
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
     </div>
   </div>
-  
-  
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>ship this</li><li>ship it</li><li>push and PR</li><li>open a PR and merge</li><li>ready to ship</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Tests and lint green before commit</li><li>Commit, push, and open the PR</li><li>VERIFY the merge before claiming done</li><li>Not for WIP or draft pushes</li></ul></section>
   <section class="skill-doc"><p>This skill terminates the &quot;claimed merged but wasn&#39;t&quot; failure mode. It is a procedure, not a script. Follow the steps in order; never skip the verification step at the end.</p>
 <h2>Runner announcement</h2>
 <p>Before step 1, state: <code>Runner: Claude — /ship procedure</code>. If the user has already delegated implementation to Codex for this branch, announce the switch: <code>Runner: Codex finished the build; Claude running /ship from here.</code></p>

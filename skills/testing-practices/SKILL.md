@@ -1,5 +1,20 @@
 ---
 name: testing-practices
+title: Testing Practices
+scope: global
+category: testing
+icon: ✅
+version: 1.0
+triggers:
+  - write tests for this
+  - add test coverage
+  - how do I test this
+  - set up testing
+checks:
+  - Test behaviour, not implementation
+  - Happy, sad, and edge cases per unit
+  - Consistent structure and naming
+  - Mock only at system boundaries
 description: Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something. Triggers on 'write tests for this', 'add test coverage', 'how do I test this', 'set up testing'.
 ---
 

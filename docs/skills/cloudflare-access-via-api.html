@@ -29,7 +29,7 @@
 <main class="skill-page">
   <a class="skill-back" href="../skills.html">&larr; All skills</a>
   <div class="skill-page-head">
-    
+    <span class="skill-page-icon">🔐</span>
     <div>
       <h1 class="skill-page-title">Cloudflare Access via API, Not Dashboard</h1>
       <p class="skill-page-desc">Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API — the dashboard UI reshuffles constantly; the API is stable and verifiable.</p>
@@ -37,7 +37,7 @@
     </div>
   </div>
   <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>cloudflare access setup</li><li>gate a static site by email</li><li>protect a pages.dev site</li><li>client portal login</li><li>zero trust application</li></ul></section>
-  
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Create Access apps and policies via the REST API, not the dashboard</li><li>Scope each app to the client&#39;s exact path</li><li>Policy allows exactly one email — nothing broader</li><li>PASS is a 302 to the Access login; public paths stay 200</li></ul></section>
   <section class="skill-doc"><p><strong>Extracted:</strong> 2026-07-08
 <strong>Context:</strong> Gating per-client status pages on Cloudflare Pages behind email one-time-PIN login. Two dashboard attempts failed on UI churn; the API path worked first time and is fully machine-verifiable.</p>
 <h2>Problem</h2>

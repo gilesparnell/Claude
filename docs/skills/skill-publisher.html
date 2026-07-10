@@ -29,338 +29,36 @@
 <main class="skill-page">
   <a class="skill-back" href="../skills.html">&larr; All skills</a>
   <div class="skill-page-head">
-    
+    <span class="skill-page-icon">📡</span>
     <div>
       <h1 class="skill-page-title">Skill Publisher</h1>
-      <p class="skill-page-desc">MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs, decisions, or templates. Use this skill whenever you have identified a reusable pattern worth preserving as a skill, or whenever a new skill/walkthrough has been added to the system by any means. Triggers on &#39;add this as a skill&#39;, &#39;save this as a skill&#39;, &#39;publish this skill&#39;, &#39;create a skill for this&#39;, &#39;add to the portal&#39;, &#39;new skill installed&#39;, &#39;create a walkthrough&#39;, &#39;add this to walkthroughs&#39;, &#39;publish this walkthrough&#39;. This skill is also MANDATORY post-step: after ANY skill creation or installation, this workflow MUST run to completion — git commit + push + portal updates are not optional.</p>
-      
+      <p class="skill-page-desc">The workflow for turning a reusable pattern into a published portal skill. Use whenever a skill or walkthrough is created, installed, or modified and needs to appear on the knowledge portal. Triggers on &#39;add this as a skill&#39;, &#39;publish this skill&#39;, &#39;add to the portal&#39;, &#39;create a walkthrough&#39;.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>tooling</span><span class="skill-badge"><span class="skill-badge-k">version</span>2.0</span></div>
     </div>
   </div>
-  
-  
-  <section class="skill-doc"><p>Use this skill to publish content to the GitHub Pages knowledge portal at gilesparnell/Claude. Covers skills, walkthroughs, and other portal content.</p>
-<p><strong>Portal URL:</strong> <a href="https://gilesparnell.github.io/Claude/">https://gilesparnell.github.io/Claude/</a>
-<strong>Repo:</strong> <code>&lt;claude-portal-repo&gt;</code> (local) / <code>gilesparnell/Claude</code> (remote)</p>
-<hr>
-<h2>Portal Structure</h2>
-<p>The portal has multiple content types, each with its own page and file location:</p>
-<table>
-<thead>
-<tr>
-<th>Content Type</th>
-<th>Portal Page</th>
-<th>Source Files</th>
-<th>How Cards Work</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Skills</strong></td>
-<td><code>docs/skills.html</code></td>
-<td><code>skills/&lt;slug&gt;/SKILL.md</code></td>
-<td>Auto-generated from frontmatter by GitHub Action</td>
-</tr>
-<tr>
-<td><strong>Walkthroughs</strong></td>
-<td><code>docs/walkthroughs.html</code></td>
-<td><code>docs/diagrams/&lt;slug&gt;.html</code></td>
-<td><strong>Manual</strong> — add card HTML + detail page</td>
-</tr>
-<tr>
-<td><strong>Templates</strong></td>
-<td><code>docs/templates.html</code></td>
-<td><code>project-templates/</code></td>
-<td>Manual</td>
-</tr>
-</tbody></table>
-<p><strong>Shared design system:</strong> <code>docs/portal.css</code> — all pages import this. Never create custom CSS.</p>
-<hr>
-<h2>Part 1: Publishing a Skill</h2>
-<h3>MANDATORY RULE</h3>
-<p><strong>Every skill that is created, downloaded, installed, or modified MUST be:</strong></p>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>add this as a skill</li><li>save this as a skill</li><li>publish this skill</li><li>create a walkthrough</li><li>add to the portal</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Every new or modified skill is committed AND added to the portal</li><li>Portal SKILL.md = frontmatter + full body; the Action renders the page</li><li>Never hand-edit the generated index or detail pages</li><li>Preview with npm test + npm run build before pushing</li></ul></section>
+  <section class="skill-doc"><p>The workflow for turning a reusable pattern into a published portal skill.</p>
+<h2>What it does</h2>
+<p>Every skill that is created, installed, or modified is committed and given a page on the
+portal. A skill lives in two places: the <strong>runtime <code>SKILL.md</code></strong> Claude reads when the skill
+fires, and the <strong>portal <code>SKILL.md</code></strong> (frontmatter + full body) that this site renders into a
+detail page.</p>
+<h2>The flow</h2>
 <ol>
-<li><strong>Committed to git</strong> — pushed to the <code>gilesparnell/Claude</code> repo</li>
-<li><strong>Added to the knowledge portal</strong> — portal stub in <code>&lt;claude-portal-repo&gt;/skills/&lt;slug&gt;/SKILL.md</code></li>
+<li><strong>Draft the runtime SKILL.md</strong> — write it as instructions to yourself: principles,
+checklist, examples, gotchas.</li>
+<li><strong>Pick a slug</strong> — lowercase, hyphenated, descriptive.</li>
+<li><strong>Add the portal SKILL.md</strong> — frontmatter (title, scope, category, icon, triggers, and up
+to four <code>checks</code>) followed by the full body.</li>
+<li><strong>Preview locally</strong> — run the portal&#39;s <code>npm test</code> and <code>npm run build</code>, then check the
+generated detail page looks right.</li>
+<li><strong>Commit and push the source.</strong> A GitHub Action regenerates the searchable index and the
+detail page automatically — the generated files are never edited by hand.</li>
+<li><strong>Verify</strong> the skill appears in Claude Code and its page is live on the portal.</li>
 </ol>
-<p><strong>This applies to ALL skill origins:</strong></p>
-<ul>
-<li>Skills you write from scratch</li>
-<li>Skills installed from plugins or marketplaces</li>
-<li>Skills downloaded or copied from external sources</li>
-<li>Skills generated by any AI agent (Claude, Codex, etc.)</li>
-<li>Skills modified or updated (commit the update + update portal stub version)</li>
-</ul>
-<h3>Two Formats — Always Create Both</h3>
-<h4>1. Runtime version — <code>~/.claude/skills/&lt;slug&gt;/SKILL.md</code></h4>
-<p>What Claude reads when the skill is invoked. Full markdown content.</p>
-<pre><code class="language-yaml">---
-name: &lt;slug&gt;
-description: Use this skill when... Triggers on &#39;&lt;phrase 1&gt;&#39;, &#39;&lt;phrase 2&gt;&#39;.
----
-
-# Skill Title
-
-[Full instructions, principles, checklists, examples, gotchas]
-</code></pre>
-<h4>2. Portal stub — <code>&lt;claude-portal-repo&gt;/skills/&lt;slug&gt;/SKILL.md</code></h4>
-<p>What the GitHub Pages portal renders as a card. Frontmatter-only.</p>
-<pre><code class="language-yaml">---
-title: Display Title
-scope: global | project
-category: code | workflow | frontend | saas | tooling | engagement
-icon: [emoji HTML entity]
-description: One sentence. What it does and when to use it.
-triggers:
-  - phrase that invokes this
-  - another trigger phrase
-checks-label: Principles | Steps | Checks | Rules
-checks:
-  - Key point 1
-  - Key point 2
-  - Key point 3
-  - Key point 4
-version: 1.0
----
-</code></pre>
-<h3>Scope Decision</h3>
-<table>
-<thead>
-<tr>
-<th>Scope</th>
-<th>Location</th>
-<th>When</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Global</strong></td>
-<td><code>~/.claude/skills/&lt;slug&gt;/</code></td>
-<td>Useful on any project</td>
-</tr>
-<tr>
-<td><strong>Repo-specific</strong></td>
-<td><code>&lt;project&gt;/.claude/skills/&lt;slug&gt;/</code></td>
-<td>References a specific tech stack, client, or workflow</td>
-</tr>
-</tbody></table>
-<p>The portal stub always goes in <code>&lt;claude-portal-repo&gt;/skills/&lt;slug&gt;/</code> regardless of scope.</p>
-<h3>Skill Step-by-Step</h3>
-<ol>
-<li><strong>Draft the runtime SKILL.md</strong> — write it as instructions to yourself: principles, checklist, examples, gotchas.</li>
-<li><strong>Choose a slug</strong> — lowercase, hyphenated, descriptive. <code>payment-webhooks</code> not <code>payments</code>.</li>
-<li><strong>Write the portal stub</strong> — 4 checks maximum. Pick the 4 most important points.</li>
-<li><strong>Place the runtime file</strong> in the correct scope location (global or repo-specific).</li>
-<li><strong>Place the portal stub</strong> in <code>&lt;claude-portal-repo&gt;/skills/&lt;slug&gt;/SKILL.md</code>.</li>
-<li><strong>Commit and push</strong> (see &quot;Git Push Protocol&quot; below).</li>
-<li><strong>Verify</strong> the skill appears in Claude Code&#39;s skill list (check system reminders).</li>
-</ol>
-<hr>
-<h2>Part 2: Publishing a Walkthrough</h2>
-<p>Walkthroughs are visual explainers — architecture diagrams, system flows, mental models. They require <strong>two things</strong>: a detail page and a card on the walkthroughs index.</p>
-<h3>Step 1: Create the detail page</h3>
-<p><strong>Location:</strong> <code>&lt;claude-portal-repo&gt;/docs/diagrams/&lt;slug&gt;.html</code></p>
-<p><strong>Template — copy this exactly and fill in the placeholders:</strong></p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-&lt;title&gt;[TITLE] — Parnell Systems Knowledge Portal&lt;/title&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;../portal.css&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;header class=&quot;site-header&quot;&gt;
-  &lt;div class=&quot;header-inner&quot;&gt;
-    &lt;div class=&quot;header-brand&quot;&gt;
-      &lt;div class=&quot;header-logo&quot;&gt;PS&lt;/div&gt;
-      &lt;span class=&quot;header-name&quot;&gt;Parnell Systems&lt;/span&gt;
-    &lt;/div&gt;
-    &lt;nav class=&quot;header-nav&quot;&gt;
-      &lt;a href=&quot;../index.html&quot;&gt;Home&lt;/a&gt;
-      &lt;a href=&quot;../skills.html&quot;&gt;Skills&lt;/a&gt;
-      &lt;a href=&quot;../walkthroughs.html&quot; class=&quot;active&quot;&gt;Walkthroughs&lt;/a&gt;
-      &lt;a href=&quot;../templates.html&quot;&gt;Templates&lt;/a&gt;
-      &lt;a href=&quot;../changelog.html&quot;&gt;Changelog&lt;/a&gt;
-    &lt;/nav&gt;
-    &lt;div class=&quot;header-right&quot;&gt;
-      &lt;a href=&quot;../walkthroughs.html&quot; class=&quot;gh-btn&quot;&gt;&amp;#8592; All walkthroughs&lt;/a&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/header&gt;
-
-&lt;div class=&quot;hero&quot;&gt;
-  &lt;div class=&quot;hero-inner&quot;&gt;
-    &lt;div class=&quot;hero-eyebrow&quot;&gt;Walkthrough &amp;mdash; [CATEGORY]&lt;/div&gt;
-    &lt;div class=&quot;hero-title&quot;&gt;[LINE 1]&lt;br&gt;&lt;em&gt;[LINE 2]&lt;/em&gt;&lt;/div&gt;
-    &lt;div class=&quot;hero-sub&quot;&gt;[1-2 sentence description]&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;wrap&quot; style=&quot;padding-top:40px;padding-bottom:64px&quot;&gt;
-
-  &lt;!-- CONTENT GOES HERE --&gt;
-  &lt;!-- Use: section-label, adr-grid, adr-card, inline SVG diagrams --&gt;
-  &lt;!-- See existing pages in docs/diagrams/ for patterns --&gt;
-
-&lt;/div&gt;
-
-&lt;footer class=&quot;site-footer&quot;&gt;
-  &lt;span&gt;gilesparnell &amp;middot; Walkthroughs&lt;/span&gt;
-  &lt;span&gt;Generated [MONTH YEAR] &amp;middot; &lt;a href=&quot;../walkthroughs.html&quot; style=&quot;color:var(--text3)&quot;&gt;Back to walkthroughs&lt;/a&gt;&lt;/span&gt;
-&lt;/footer&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p><strong>Available CSS classes for content sections:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Class</th>
-<th>Use For</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>section-label</code></td>
-<td>Section heading (uppercase, small)</td>
-</tr>
-<tr>
-<td><code>adr-grid</code> + <code>adr-card</code></td>
-<td>List of principle/rule cards with icon + title + desc</td>
-</tr>
-<tr>
-<td><code>adr-num</code></td>
-<td>Left column of adr-card (emoji or number)</td>
-</tr>
-<tr>
-<td><code>adr-body</code> &gt; <code>adr-title</code> + <code>adr-desc</code></td>
-<td>Right column content</td>
-</tr>
-<tr>
-<td>Inline <code>&lt;svg&gt;</code></td>
-<td>Diagrams — use portal.css colour variables</td>
-</tr>
-</tbody></table>
-<p><strong>Colour variables for SVG diagrams:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Use For</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--blue</code> / <code>--blue-bg</code> / <code>--blue-text</code> / <code>--blue-border</code></td>
-<td>Informational, neutral</td>
-</tr>
-<tr>
-<td><code>--teal</code> / <code>--teal-bg</code> / <code>--teal-text</code> / <code>--teal-border</code></td>
-<td>Positive, terminal, code</td>
-</tr>
-<tr>
-<td><code>--purple</code> / <code>--purple-bg</code> / <code>--purple-text</code> / <code>--purple-border</code></td>
-<td>Claude, AI, planning</td>
-</tr>
-<tr>
-<td><code>--amber</code> / <code>--amber-bg</code> / <code>--amber-text</code> / <code>--amber-border</code></td>
-<td>Warning, result</td>
-</tr>
-<tr>
-<td><code>--coral</code> / <code>--coral-bg</code> / <code>--coral-text</code> / <code>--coral-border</code></td>
-<td>Error, problem</td>
-</tr>
-<tr>
-<td><code>--green</code> / <code>--green-bg</code> / <code>--green-text</code> / <code>--green-border</code></td>
-<td>Success, tmux</td>
-</tr>
-</tbody></table>
-<p><strong>Dark mode:</strong> portal.css handles dark mode automatically via <code>@media(prefers-color-scheme:dark)</code>. Use CSS variables, not hardcoded colours, in inline styles. For SVG diagrams, hardcoded fills are OK (they&#39;re self-contained).</p>
-<h3>Step 2: Add a card to walkthroughs.html</h3>
-<p><strong>Location:</strong> <code>&lt;claude-portal-repo&gt;/docs/walkthroughs.html</code></p>
-<p><strong>Insert the card HTML BEFORE the <code>&lt;!-- EMPTY STATE --&gt;</code> comment.</strong> The empty state placeholder must always be last.</p>
-<p><strong>Card template:</strong></p>
-<pre><code class="language-html">    &lt;!-- [TITLE COMMENT] --&gt;
-    &lt;div class=&quot;wt-card&quot; data-category=&quot;[CATEGORY]&quot;&gt;
-      &lt;div class=&quot;wt-thumb&quot; style=&quot;background:var(--[COLOR]-bg);flex-direction:column;gap:4px;padding:16px;align-items:flex-start;justify-content:flex-start&quot;&gt;
-        &lt;!-- Thumbnail content: mini-diagram, code preview, or flow --&gt;
-        &lt;!-- Keep it visual — this is the card preview --&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;wt-body&quot;&gt;
-        &lt;div class=&quot;wt-title&quot;&gt;[Card Title]&lt;/div&gt;
-        &lt;div class=&quot;wt-desc&quot;&gt;[1-2 sentence description]&lt;/div&gt;
-        &lt;div class=&quot;wt-tags&quot;&gt;
-          &lt;span class=&quot;tag&quot;&gt;[tag1]&lt;/span&gt;
-          &lt;span class=&quot;tag&quot;&gt;[tag2]&lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;wt-footer&quot;&gt;
-        &lt;a href=&quot;diagrams/[slug].html&quot; class=&quot;wt-link&quot;&gt;Open walkthrough &amp;#8594;&lt;/a&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-</code></pre>
-<p><strong>data-category values</strong> (must match the filter nav buttons): <code>claude</code>, <code>tooling</code>, <code>architecture</code>, <code>saas</code>, <code>workflow</code></p>
-<p><strong>Thumbnail (wt-thumb):</strong> This is the visual preview on the card. It should be a mini-diagram or code preview — NOT just text. Look at existing cards for examples:</p>
-<ul>
-<li>Mono-spaced file tree for repo structure cards</li>
-<li>Flow arrows for workflow cards</li>
-<li>Small code pills for skills/tooling cards</li>
-</ul>
-<h3>Step 3: Update the stats</h3>
-<p>In <code>docs/walkthroughs.html</code>, update the hero stats count:</p>
-<pre><code class="language-html">&lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;stat-n&quot;&gt;[NEW COUNT]&lt;/span&gt;&lt;span class=&quot;stat-l&quot;&gt;Walkthroughs&lt;/span&gt;&lt;/div&gt;
-</code></pre>
-<h3>Step 4: Commit and push</h3>
-<p>See &quot;Git Push Protocol&quot; below.</p>
-<hr>
-<h2>Git Push Protocol</h2>
-<p><strong>This is the same for all portal content — skills, walkthroughs, decisions, templates.</strong></p>
-<pre><code class="language-bash">cd &lt;claude-portal-repo&gt;
-git pull --rebase origin main          # ALWAYS pull first
-git add [files]                        # Stage specific files
-git commit -m &quot;feat: add &lt;slug&gt; [skill|walkthrough|decision]&quot;
-git push origin main
-</code></pre>
-<p><strong>If the push is rejected</strong> (remote has newer commits):</p>
-<pre><code class="language-bash">git stash
-git pull --rebase origin main
-git stash pop
-git push origin main
-</code></pre>
-<p><strong>Do NOT force push.</strong> If conflicts arise, resolve them manually.</p>
-<hr>
-<h2>Completion Checklists</h2>
-<h3>Skill Checklist</h3>
-<ul>
-<li><input disabled="" type="checkbox"> Runtime SKILL.md exists in <code>~/.claude/skills/&lt;slug&gt;/</code> (or repo-scoped equivalent)</li>
-<li><input disabled="" type="checkbox"> Portal stub exists in <code>&lt;claude-portal-repo&gt;/skills/&lt;slug&gt;/SKILL.md</code></li>
-<li><input disabled="" type="checkbox"> Portal stub has correct frontmatter (title, scope, category, icon, description, triggers, checks, version)</li>
-<li><input disabled="" type="checkbox"> Changes committed to <code>gilesparnell/Claude</code> repo</li>
-<li><input disabled="" type="checkbox"> Changes pushed to <code>origin/main</code></li>
-<li><input disabled="" type="checkbox"> Skill appears in Claude Code&#39;s skill list (verify by checking system reminders)</li>
-</ul>
-<h3>Walkthrough Checklist</h3>
-<ul>
-<li><input disabled="" type="checkbox"> Detail page exists at <code>&lt;claude-portal-repo&gt;/docs/diagrams/&lt;slug&gt;.html</code></li>
-<li><input disabled="" type="checkbox"> Detail page uses portal.css (no custom CSS), has correct header/nav/footer</li>
-<li><input disabled="" type="checkbox"> Card added to <code>docs/walkthroughs.html</code> BEFORE the empty state placeholder</li>
-<li><input disabled="" type="checkbox"> Card has correct <code>data-category</code>, thumbnail, title, description, tags, link</li>
-<li><input disabled="" type="checkbox"> Hero stats count updated in <code>docs/walkthroughs.html</code></li>
-<li><input disabled="" type="checkbox"> Changes committed to <code>gilesparnell/Claude</code> repo</li>
-<li><input disabled="" type="checkbox"> Changes pushed to <code>origin/main</code></li>
-</ul>
-<p><strong>If any of these are incomplete, the task is not finished. Do not move on to other work.</strong></p>
-<hr>
-<h2>Gotchas</h2>
-<ul>
-<li>The <code>description</code> field in skill runtime frontmatter is what Claude Code uses for trigger matching — make it specific and include example trigger phrases in quotes</li>
-<li>Don&#39;t make skills too broad — <code>coding</code> is useless; <code>nextjs-api-routes</code> is useful</li>
-<li>If a skill is repo-specific, do NOT add a runtime version to <code>~/.claude/skills/</code> — it&#39;ll trigger incorrectly on other projects</li>
-<li>Portal stubs with more than 4 checks look cluttered — curate ruthlessly</li>
-<li>Keep the portal stub and runtime slug identical so they&#39;re easy to cross-reference</li>
-<li>Walkthrough cards MUST go before the <code>&lt;!-- EMPTY STATE --&gt;</code> comment in walkthroughs.html</li>
-<li>Walkthrough thumbnails should be visual (mini-diagrams), not plain text</li>
-<li>Always use <code>../portal.css</code> (relative path) in walkthrough detail pages</li>
-<li>SVG diagrams can use hardcoded fills but inline styles should use CSS variables where possible</li>
-</ul>
+<p>Walkthroughs and templates follow the same spirit: author the source, push, and the portal
+rebuilds itself.</p>
 </section>
   <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/skill-publisher/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
 </main>

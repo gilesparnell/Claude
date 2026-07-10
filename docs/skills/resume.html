@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resume — Skills — gilesparnell</title>
+<title>Resume — Load Context Before Continuing — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
 </head>
 <body>
@@ -29,15 +29,15 @@
 <main class="skill-page">
   <a class="skill-back" href="../skills.html">&larr; All skills</a>
   <div class="skill-page-head">
-    
+    <span class="skill-page-icon">📍</span>
     <div>
-      <h1 class="skill-page-title">Resume</h1>
+      <h1 class="skill-page-title">Resume — Load Context Before Continuing</h1>
       <p class="skill-page-desc">Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull. Triggers on &#39;continue&#39;, &#39;resume&#39;, &#39;where were we&#39;, &#39;catch me up&#39;, &#39;what&#39;s the latest&#39;, &#39;what were we doing&#39;. Use at the start of any session with no clear goal stated. Do NOT start implementation work before the user confirms a thread.</p>
-      
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
     </div>
   </div>
-  
-  
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>continue</li><li>resume</li><li>where were we</li><li>catch me up</li><li>what&#39;s the latest</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Read recent plans, handoff, git log, and open PRs</li><li>Summarise in exactly three bullets</li><li>Ask which thread to pull</li><li>Do NOT start work before the user confirms</li></ul></section>
   <section class="skill-doc"><p>This skill turns &quot;continue prior work&quot; from a speculative void into a specific thread pickup. It is the automation of the Project Status Catch-Up rule in the global CLAUDE.md.</p>
 <h2>Runner announcement</h2>
 <p>Before step 1, state: <code>Runner: Claude — /resume context load</code>. The work the user picks <em>after</em> the summary may be delegated to Codex per the routing rules, but the summary step itself is a judgement call that stays with Claude.</p>

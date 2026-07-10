@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tdd First — Skills — gilesparnell</title>
+<title>Test-First Development (TDD) — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
 </head>
 <body>
@@ -29,15 +29,15 @@
 <main class="skill-page">
   <a class="skill-back" href="../skills.html">&larr; All skills</a>
   <div class="skill-page-head">
-    
+    <span class="skill-page-icon">🧪</span>
     <div>
-      <h1 class="skill-page-title">Tdd First</h1>
+      <h1 class="skill-page-title">Test-First Development (TDD)</h1>
       <p class="skill-page-desc">MANDATORY test-first development for ALL non-trivial code — no trigger words needed. Any time Claude or Codex produces a function, class, endpoint, service, or module, tests MUST be written and confirmed failing BEFORE implementation code exists. Enforces a full test suite: unit tests, integration tests, and system/E2E tests. Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Mocha), and Go. This skill is always active. It does not require the user to say &#39;TDD&#39; or &#39;test first&#39; — it applies automatically whenever code is being produced. NOTHING IS DONE until all tests pass. You must run the full suite before declaring completion.</p>
-      
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>testing</span><span class="skill-badge"><span class="skill-badge-k">version</span>3.0</span></div>
     </div>
   </div>
-  
-  
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>writing a function or endpoint</li><li>building a feature</li><li>fixing a bug</li><li>always active for non-trivial code</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Tests written and confirmed RED before implementation</li><li>Unit, integration, and system layers covered</li><li>Never weaken a test to make it pass</li><li>Full suite green before declaring done</li></ul></section>
   <section class="skill-doc"><h2>Core Rule</h2>
 <p><strong>Never write implementation code before its tests exist and have been confirmed to fail.</strong></p>
 <p><strong>Never declare work complete until the full test suite passes.</strong></p>
@@ -56,13 +56,13 @@
 <li>Adding error handling for specific failure modes</li>
 <li>Implementing a feature from a plan or spec</li>
 <li>Fixing a bug (write the test that reproduces it FIRST)</li>
-<li>Modifying existing logic (write tests covering current behavior FIRST, then modify)</li>
+<li>Modifying existing logic (write tests covering current behaviour FIRST, then modify)</li>
 </ul>
 <p><strong>The ONLY exceptions — skip TDD for these and ONLY these:</strong></p>
 <ul>
 <li>Pure configuration files (env vars, tailwind config, tsconfig, pyproject.toml)</li>
 <li>CSS/styling-only changes with no logic</li>
-<li>Import rewiring or re-exports with no behavior</li>
+<li>Import rewiring or re-exports with no behaviour</li>
 <li>README or documentation edits</li>
 <li>One-line type alias additions</li>
 <li>Renaming files with no logic change</li>
@@ -331,13 +331,13 @@ go test ./...
 <p>For every unit of work, write tests at all applicable layers.</p>
 <h3>Unit Test Coverage (Per Function)</h3>
 <h4>Happy Path Tests</h4>
-<p>The expected behavior when inputs are valid and conditions are normal.</p>
+<p>The expected behaviour when inputs are valid and conditions are normal.</p>
 <pre><code>- What does this function return when given valid input?
 - What state change occurs on success?
 - What does the API respond with for a well-formed request?
 </code></pre>
 <h4>Sad Path Tests</h4>
-<p>The expected behavior when things go wrong.</p>
+<p>The expected behaviour when things go wrong.</p>
 <pre><code>- What happens with null/undefined/empty input?
 - What happens when a dependency fails (network, DB, API)?
 - What happens with malformed or out-of-range input?
@@ -524,9 +524,9 @@ go test ./path/to/... -v -run TestFunctionName
 <p><strong>Rules during implementation:</strong></p>
 <ul>
 <li>Write the <strong>minimum code</strong> to make the current failing test pass</li>
-<li>Do not add behavior that no test covers</li>
-<li>Do not optimize prematurely — correctness first</li>
-<li>If you realize you need more behavior, go back to Step 2 and write a test for it first</li>
+<li>Do not add behaviour that no test covers</li>
+<li>Do not optimise prematurely — correctness first</li>
+<li>If you realise you need more behaviour, go back to Step 2 and write a test for it first</li>
 </ul>
 <hr>
 <h2>Step 5: Confirm GREEN</h2>
@@ -557,7 +557,7 @@ go test ./path/to/... -v
 <li>Simplify logic</li>
 <li>Extract helpers if genuinely reused</li>
 </ul>
-<p><strong>After every refactor, run tests again.</strong> If they break, your refactor changed behavior — revert it.</p>
+<p><strong>After every refactor, run tests again.</strong> If they break, your refactor changed behaviour — revert it.</p>
 <hr>
 <h2>Step 7: Run the FULL Suite Before Declaring Done</h2>
 <p><strong>THIS IS MANDATORY. Nothing is &quot;done&quot; until the full test suite passes.</strong></p>
@@ -644,8 +644,8 @@ STEP 6 — FULL SUITE:
 </tr>
 <tr>
 <td>Tests that mirror implementation</td>
-<td>Refactoring breaks tests even when behavior is unchanged</td>
-<td>Test behavior and outputs, not internal method calls</td>
+<td>Refactoring breaks tests even when behaviour is unchanged</td>
+<td>Test behaviour and outputs, not internal method calls</td>
 </tr>
 <tr>
 <td><code>expect(result).toBeTruthy()</code></td>

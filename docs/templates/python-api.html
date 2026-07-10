@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>python-api / CLAUDE.md — Templates — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html" class="active">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../templates.html">&larr; All templates</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">📄</span>
+    <div>
+      <h1 class="skill-page-title">python-api / CLAUDE.md</h1>
+      <p class="skill-page-desc">A CLAUDE.md for a Python API service: project layout, dependency and testing conventions, and the guardrails Claude Code should respect when building endpoints and services.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">type</span>CLAUDE.md</span></div>
+    </div>
+  </div>
+  
+  
+  <section class="skill-doc"><h2>Overview</h2>
+<p>[Describe the API]</p>
+<h2>Tech Stack</h2>
+<ul>
+<li><strong>Language:</strong> Python 3.11+</li>
+<li><strong>Framework:</strong> [e.g. FastAPI / Django]</li>
+<li><strong>Database:</strong> [e.g. PostgreSQL via SQLAlchemy]</li>
+<li><strong>Testing:</strong> pytest</li>
+<li><strong>Deployment:</strong> [e.g. Docker / Railway]</li>
+</ul>
+<h2>Project Structure</h2>
+<pre><code>app/
+├── api/          # Route handlers / views
+├── models/       # Database models
+├── schemas/      # Pydantic schemas / serializers
+├── services/     # Business logic layer
+├── core/         # Config, database, security
+└── tests/        # Tests mirror app structure
+</code></pre>
+<h2>Python Conventions</h2>
+<ul>
+<li>Type hints everywhere — use <code>from __future__ import annotations</code></li>
+<li>Prefer dataclasses or Pydantic models over raw dicts for structured data</li>
+<li>Use <code>pathlib</code> not <code>os.path</code></li>
+<li>f-strings for string formatting</li>
+<li>Context managers for resource management</li>
+</ul>
+<h2>FastAPI Specifics (if applicable)</h2>
+<ul>
+<li>Put business logic in services, not route handlers</li>
+<li>Use dependency injection for DB sessions and auth</li>
+<li>Validate with Pydantic — don&#39;t do manual validation</li>
+<li>Return appropriate HTTP status codes, not just 200 always</li>
+</ul>
+<h2>Testing</h2>
+<ul>
+<li>Use <code>pytest</code> with <code>pytest-asyncio</code> for async tests</li>
+<li>Use fixtures for database setup/teardown</li>
+<li>Test the API layer with <code>httpx.AsyncClient</code></li>
+</ul>
+<h2>Active Skills</h2>
+<ul>
+<li><code>code-quality</code></li>
+<li><code>git-conventions</code></li>
+<li><code>testing-practices</code></li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/project-templates/python-api/CLAUDE.md">View <code>CLAUDE.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Templates</span>
+  <span>Generated from <code>project-templates/python-api/CLAUDE.md</code></span>
+</footer>
+</body>
+</html>

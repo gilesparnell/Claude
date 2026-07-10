@@ -62,8 +62,8 @@ function readWalkthroughs(DOCS) {
   return out;
 }
 
-// ── Templates (parsed from the hand-authored index) ─────────────────────────
-function readTemplates(DOCS) {
+// ── Templates: card metadata from templates.html + a page per CLAUDE.md ──────
+function readTemplates(ROOT, DOCS, TPL_OUT) {
   const html = read(path.join(DOCS, 'templates.html'));
   if (!html) return [];
   const out = [];
@@ -73,13 +73,26 @@ function readTemplates(DOCS) {
     const desc = b.match(/class="template-desc">([\s\S]*?)<\/div>/);
     const type = b.match(/class="template-type"[^>]*>([\s\S]*?)<\/div>/);
     const p = b.match(/class="template-path">([\s\S]*?)<\/div>/);
+    const relPath = p ? stripTags(p[1]) : '';
+    const title = stripTags(name[1]);
+    const descText = desc ? stripTags(desc[1]) : '';
+    // slug = the directory under project-templates/ (project-templates/<slug>/CLAUDE.md)
+    const slugMatch = relPath.match(/project-templates\/([^/]+)\//);
+    const slug = slugMatch ? slugMatch[1] : null;
+    let url = 'templates.html';
+    if (slug) {
+      fs.mkdirSync(TPL_OUT, { recursive: true });
+      const bodyHtml = lib.renderMarkdown(lib.stripLeadingH1(read(path.join(ROOT, relPath))));
+      fs.writeFileSync(path.join(TPL_OUT, `${slug}.html`), lib.renderTemplatePage(slug, { title, desc: descText }, bodyHtml));
+      url = `templates/${slug}.html`;
+    }
     out.push({
       type: 'template',
-      title: stripTags(name[1]),
-      desc: desc ? lib.oneLiner(stripTags(desc[1])) : '',
+      title,
+      desc: lib.oneLiner(descText),
       tags: type ? [stripTags(type[1])] : [],
-      url: 'templates.html',
-      meta: p ? stripTags(p[1]) : '',
+      url,
+      meta: relPath,
       published: true,
     });
   }
@@ -91,11 +104,12 @@ function build({ root } = {}) {
   const DOCS = path.join(ROOT, 'docs');
   const SKILLS = path.join(ROOT, 'skills');
   const SKILLS_OUT = path.join(DOCS, 'skills');
+  const TPL_OUT = path.join(DOCS, 'templates');
 
   const entries = [
     ...buildSkills(SKILLS, SKILLS_OUT),
     ...readWalkthroughs(DOCS),
-    ...readTemplates(DOCS),
+    ...readTemplates(ROOT, DOCS, TPL_OUT),
   ];
 
   const index = {

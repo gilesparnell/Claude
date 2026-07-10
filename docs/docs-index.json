@@ -10,7 +10,10 @@
       "type": "skill",
       "title": "Claude Code Workflow",
       "desc": "Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams.",
-      "tags": [],
+      "tags": [
+        "tooling",
+        "global"
+      ],
       "url": "skills/claude-code-workflow.html",
       "meta": "claude-code-workflow",
       "published": true
@@ -29,9 +32,12 @@
     },
     {
       "type": "skill",
-      "title": "Code Quality",
+      "title": "Code Quality Review",
       "desc": "Use this skill when reviewing, auditing, or improving code quality.",
-      "tags": [],
+      "tags": [
+        "code",
+        "global"
+      ],
       "url": "skills/code-quality.html",
       "meta": "code-quality",
       "published": true
@@ -40,7 +46,10 @@
       "type": "skill",
       "title": "Code Review",
       "desc": "Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass.",
-      "tags": [],
+      "tags": [
+        "code",
+        "global"
+      ],
       "url": "skills/code-review.html",
       "meta": "code-review",
       "published": true
@@ -59,9 +68,12 @@
     },
     {
       "type": "skill",
-      "title": "Find First 10",
+      "title": "Find Your First 10 Customers",
       "desc": "Build a concrete plan to manually find and personally close the first 10 customers for a new product, feature, or pricing tier.",
-      "tags": [],
+      "tags": [
+        "growth",
+        "global"
+      ],
       "url": "skills/find-first-10.html",
       "meta": "find-first-10",
       "published": true
@@ -70,7 +82,10 @@
       "type": "skill",
       "title": "Frontend Design",
       "desc": "Use this skill when building UI components, designing layouts, or making frontend styling decisions.",
-      "tags": [],
+      "tags": [
+        "design",
+        "global"
+      ],
       "url": "skills/frontend-design.html",
       "meta": "frontend-design",
       "published": true
@@ -79,7 +94,10 @@
       "type": "skill",
       "title": "Git Conventions",
       "desc": "Use this skill when creating commits, writing commit messages, preparing PRs, or when asked about git workflow.",
-      "tags": [],
+      "tags": [
+        "workflow",
+        "global"
+      ],
       "url": "skills/git-conventions.html",
       "meta": "git-conventions",
       "published": true
@@ -98,9 +116,12 @@
     },
     {
       "type": "skill",
-      "title": "Humanizer",
+      "title": "Humanizer — Remove AI Writing Patterns",
       "desc": "Remove signs of AI-generated writing from text.",
-      "tags": [],
+      "tags": [
+        "writing",
+        "global"
+      ],
       "url": "skills/humanizer.html",
       "meta": "humanizer",
       "published": true
@@ -143,9 +164,12 @@
     },
     {
       "type": "skill",
-      "title": "Resume",
+      "title": "Resume — Load Context Before Continuing",
       "desc": "Load context before resuming work — read recent plans, handoff log, git log, and open PRs, summarise in three bullets, then ask the user which thread to pull.",
-      "tags": [],
+      "tags": [
+        "workflow",
+        "global"
+      ],
       "url": "skills/resume.html",
       "meta": "resume",
       "published": true
@@ -176,9 +200,12 @@
     },
     {
       "type": "skill",
-      "title": "Ship",
+      "title": "Ship — Verified PR Ship Procedure",
       "desc": "Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done.",
-      "tags": [],
+      "tags": [
+        "workflow",
+        "global"
+      ],
       "url": "skills/ship.html",
       "meta": "ship",
       "published": true
@@ -186,8 +213,11 @@
     {
       "type": "skill",
       "title": "Skill Publisher",
-      "desc": "MANDATORY skill for publishing ANY content to the knowledge portal — skills, walkthroughs, decisions, or templates.",
-      "tags": [],
+      "desc": "The workflow for turning a reusable pattern into a published portal skill.",
+      "tags": [
+        "tooling",
+        "global"
+      ],
       "url": "skills/skill-publisher.html",
       "meta": "skill-publisher",
       "published": true
@@ -206,9 +236,12 @@
     },
     {
       "type": "skill",
-      "title": "Tdd First",
+      "title": "Test-First Development (TDD)",
       "desc": "MANDATORY test-first development for ALL non-trivial code — no trigger words needed.",
-      "tags": [],
+      "tags": [
+        "testing",
+        "global"
+      ],
       "url": "skills/tdd-first.html",
       "meta": "tdd-first",
       "published": true
@@ -217,16 +250,22 @@
       "type": "skill",
       "title": "Testing Practices",
       "desc": "Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something.",
-      "tags": [],
+      "tags": [
+        "testing",
+        "global"
+      ],
       "url": "skills/testing-practices.html",
       "meta": "testing-practices",
       "published": true
     },
     {
       "type": "skill",
-      "title": "Validate Problem",
+      "title": "Validate the Problem",
       "desc": "Customer-discovery prompt template for pressure-testing whether a problem is real before building a feature, product, or campaign.",
-      "tags": [],
+      "tags": [
+        "product",
+        "global"
+      ],
       "url": "skills/validate-problem.html",
       "meta": "validate-problem",
       "published": true
@@ -391,7 +430,7 @@
       "tags": [
         "markdown template"
       ],
-      "url": "templates.html",
+      "url": "templates/default.html",
       "meta": "project-templates/default/CLAUDE.md",
       "published": true
     },
@@ -402,7 +441,7 @@
       "tags": [
         "markdown template"
       ],
-      "url": "templates.html",
+      "url": "templates/nextjs.html",
       "meta": "project-templates/nextjs/CLAUDE.md",
       "published": true
     },
@@ -413,7 +452,7 @@
       "tags": [
         "markdown template"
       ],
-      "url": "templates.html",
+      "url": "templates/python-api.html",
       "meta": "project-templates/python-api/CLAUDE.md",
       "published": true
     }

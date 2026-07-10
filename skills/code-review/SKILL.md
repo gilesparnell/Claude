@@ -1,5 +1,20 @@
 ---
 name: code-review
+title: Code Review
+scope: global
+category: code
+icon: 🔍
+version: 1.0
+triggers:
+  - review this PR
+  - prepare this for review
+  - adversarial review
+  - fresh eyes on this
+checks:
+  - Adversarial pass — assume there is a bug
+  - Work through the full review checklist
+  - Feedback is specific and kind
+  - Claims verified against the diff
 description: Use this skill when preparing code for review, reviewing a PR, or doing an adversarial review pass. Triggers on 'review this PR', 'prepare this for review', 'adversarial review', 'fresh eyes on this'.
 ---
 

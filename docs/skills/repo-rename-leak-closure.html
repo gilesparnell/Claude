@@ -29,7 +29,7 @@
 <main class="skill-page">
   <a class="skill-back" href="../skills.html">&larr; All skills</a>
   <div class="skill-page-head">
-    
+    <span class="skill-page-icon">🔗</span>
     <div>
       <h1 class="skill-page-title">Repo Rename Leak-Vector Closure</h1>
       <p class="skill-page-desc">When renaming a GitHub repo to free its name for a new public repo, re-point every remote and hook BEFORE the new repo claims the name — or auto-pushes leak private content publicly.</p>
@@ -37,7 +37,7 @@
     </div>
   </div>
   <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>rename github repo</li><li>reuse repo name</li><li>split repo public private</li><li>gh repo rename</li></ul></section>
-  
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Re-point every remote and hook before the new repo claims the name</li><li>Hunt hardcoded references — unattended hooks are the killers</li><li>Verify no auto-push targets the freed name</li><li>Confirm the rename redirect routes nowhere sensitive</li></ul></section>
   <section class="skill-doc"><p><strong>Extracted:</strong> 2026-07-08
 <strong>Context:</strong> Splitting a private repo into a private operations repo plus a fresh-history public repo while keeping the original repo name (and its GitHub Pages URL) for the public one.</p>
 <h2>Problem</h2>
