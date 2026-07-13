@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Runtime &amp;amp; Runner Routing — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128256;</span>
+    <div>
+      <h1 class="skill-page-title">Runtime &amp;amp; Runner Routing</h1>
+      <p class="skill-page-desc">Route work to the right runner and runtime — Claude vs codex-cli switch rules and rationale, plus choosing between local Claude, claude-supervisor, Anthropic Routines, /loop, and desktop scheduled tasks.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>tooling</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>codex delegation</li><li>supervisor</li><li>schedule a routine</li><li>usage window hit</li><li>runner switch</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Runner switches only when work type changes, never because credits ran out</li><li>5h-window mid-task → supervisor; webhook/cron work → Routines</li><li>In-session polling → /loop; judgement and design → local Claude</li><li>Fix mis-routing in the plan, don&#39;t paper over it</li></ul></section>
+  <section class="skill-doc"><p>Companion detail to the always-loaded &quot;Claude vs Codex Routing&quot; summary in <code>~/.claude/CLAUDE.md</code> (the split table, tag format, and Runner announcements live there). This skill holds the revision rules, the rationale, and the runtime selection table.</p>
+<h2>When to revise the runner tag mid-execution</h2>
+<p>Mid-execution switches happen only when the <strong>work type changes</strong>, not when the tool feels slow or when one runner is temporarily rate-limited. Legitimate switches:</p>
+<ul>
+<li>Tagged <code>codex-delegate</code> but the spec turned out ambiguous → escalate to <code>claude</code>, update the plan, then continue</li>
+<li>Tagged <code>claude</code> but the design phase is done and the remaining work is mechanical → hand off to <code>codex-delegate</code></li>
+<li>Rate limit hit on one side → record in <code>docs/handoff/handoff.md</code> and resume on the other side only if the <em>work type</em> is appropriate for that runner</li>
+</ul>
+<p><strong>Never switch runners mid-unit because credits ran out.</strong> That&#39;s the symptom of bad routing at plan time. Fix the plan, don&#39;t paper over it.</p>
+<h2>Why the Claude/Codex rule exists</h2>
+<p>Claude (Opus/Sonnet) is significantly more expensive per token than Codex. When Claude&#39;s strengths (judgement, design, ambiguity) aren&#39;t needed, using Claude for execution is waste. The 5-hour usage window that keeps forcing supervisor scripts is a downstream symptom — the upstream fix is routing the work correctly in the first place. Tagging plans and announcing the runner in every update makes mis-routing visible, which is the only way to stop doing it.</p>
+<h2>Choosing a Runtime — Local Claude, Supervisor, Routines, /loop</h2>
+<p>The 5-hour usage window can hit during the day, not just at night. &quot;Out of credits mid-task&quot; is a frequent lived reality, not an edge case. Route work to the right runtime based on what kind of execution it needs, not on what time it is.</p>
+<table>
+<thead>
+<tr>
+<th>Runtime</th>
+<th>Where it runs</th>
+<th>Good for</th>
+<th>Not good for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Local Claude Code</strong> (interactive terminal)</td>
+<td>Laptop, terminal open</td>
+<td>Judgement, design, ambiguous debugging, planning</td>
+<td>Anything the moment you hit the 5h window</td>
+</tr>
+<tr>
+<td><strong>claude-supervisor</strong> (tmux + fresh <code>--print</code> runs)</td>
+<td>Laptop, tmux persists</td>
+<td>Long-running plan execution on local repos; uncommitted state; overnight grind; daytime grind when the window hits mid-task</td>
+<td>Scheduled triggers; webhook-driven work; work that needs to keep running when laptop is closed</td>
+</tr>
+<tr>
+<td><strong>Anthropic Routines</strong> (<a href="https://code.claude.com/docs/en/routines">docs</a>)</td>
+<td>Anthropic cloud</td>
+<td>Cron-scheduled runs, GitHub-webhook-triggered runs, API-triggered runs; work that survives laptop close; 15 runs/day on Max</td>
+<td>Work against uncommitted local state (Routines do a fresh clone); minute-level schedules (min interval is 1 hour)</td>
+</tr>
+<tr>
+<td><strong><code>/loop</code></strong> (inside an active Claude session)</td>
+<td>Your current session</td>
+<td>Polling during active work (&quot;check the deploy every 5 min&quot;); 1-minute minimum</td>
+<td>Unattended runs (dies when session ends); scheduled work beyond the session</td>
+</tr>
+<tr>
+<td><strong>Desktop scheduled tasks</strong> (Claude Code desktop app)</td>
+<td>Laptop, app open</td>
+<td>Local cron while the desktop app is running; 1-minute minimum</td>
+<td>Headless/scripted use; anything when the app is closed</td>
+</tr>
+</tbody></table>
+<p><strong>Routing heuristics:</strong></p>
+<ul>
+<li><strong>Hit the 5-hour window mid-day on a local plan?</strong> → kick it to the supervisor so it can auto-retry after the window resets. The daytime case is exactly the same shape as the overnight case; treat them the same.</li>
+<li><strong>Work that doesn&#39;t need local uncommitted state and fits in 15 runs/day?</strong> → prefer a Routine. Zero local infra, survives laptop close, officially maintained by Anthropic.</li>
+<li><strong>GitHub-webhook-triggered work</strong> (review on PR open, bump deps on release) → always a Routine, never a supervisor.</li>
+<li><strong>One-off scheduled task during an active session</strong> (watch this deploy) → <code>/loop</code>.</li>
+<li><strong>Interactive judgement + design</strong> → just Claude in the terminal; don&#39;t over-engineer.</li>
+</ul>
+<p><strong>Why this matters:</strong> building a supervisor doesn&#39;t fix the routing problem — it just papers over the symptom. If the same task keeps hitting the window, the upstream fix is either (a) routing the build portion to Codex per the Claude vs Codex Routing rule, or (b) moving scheduled/webhook parts of the work to Routines so they&#39;re not competing for the interactive window.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/runtime-routing/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/runtime-routing/SKILL.md</code></span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipping Discipline — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128674;</span>
+    <div>
+      <h1 class="skill-page-title">Shipping Discipline</h1>
+      <p class="skill-page-desc">The safety net for every deployed project — branch protection on main, never bypass hooks or CI, observability scaled to blast radius, and explicit human-applied database migrations.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>new repo setup</li><li>branch protection</li><li>database migration</li><li>wire up Sentry</li><li>health endpoint</li><li>pre-commit failing</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Branch protection on main in the first hour of any project</li><li>Never --no-verify; fix the failure, not the check</li><li>Observability scaled to project profile (Sentry / health / analytics)</li><li>Migrations explicit, idempotent, and verified with a query after apply</li></ul></section>
+  <section class="skill-doc"><p>These rules apply to every project that ships code to a deployed environment. They&#39;re the safety net that lets me move fast without breaking things — for myself, six months from now, late at night, on a sketchy WiFi connection, two beers in.</p>
+<h2>Branch protection on the default branch</h2>
+<p>Every project MUST have branch protection on <code>master</code> / <code>main</code> with the following rules enabled:</p>
+<ul>
+<li><strong>Require a pull request before merging</strong> — no direct pushes, even solo. Set required approvals to 0 if I&#39;m the only reviewer; the PR flow itself is what matters.</li>
+<li><strong>Require status checks to pass before merging</strong> — name the CI check explicitly (e.g. <code>Lint · Test · Build</code>). Merge button stays grey until CI is green.</li>
+<li><strong>Require branch to be up to date before merging</strong> — catches &quot;tests passed on the branch but break on master because of an unrelated merge in between&quot;.</li>
+<li><strong>Block force pushes</strong> — git history on the default branch is immutable.</li>
+<li><strong>Block deletions</strong> — the default branch can&#39;t be deleted.</li>
+</ul>
+<p>Set this up in the first hour of any new project, before the first PR lands. For existing projects without it, flag and offer to add it.</p>
+<p>How to set it up: GitHub Settings → Branches → Add classic branch protection rule (or Settings → Rules → Rulesets if I prefer the new UI). Verify with <code>gh api repos/&lt;owner&gt;/&lt;repo&gt;/rules/branches/&lt;branch&gt;</code> — should return a non-empty array with <code>pull_request</code>, <code>required_status_checks</code>, <code>non_fast_forward</code>, and <code>deletion</code> rule types.</p>
+<h2>Tests must pass before merge — no bypassing</h2>
+<p>Branch protection enforces &quot;CI green to merge&quot; at the GitHub level. The companion rule at the developer level: <strong>never bypass git hooks or CI</strong>.</p>
+<ul>
+<li><strong>Never</strong> use <code>git commit --no-verify</code> or <code>git push --no-verify</code> unless I have explicitly asked for it for a one-off reason</li>
+<li><strong>Never</strong> use <code>--no-gpg-sign</code> / <code>--no-edit</code> / similar to skip verification steps</li>
+<li>If a pre-commit hook is failing, <strong>fix the underlying issue</strong>, don&#39;t bypass the hook</li>
+<li>If a CI check is failing, <strong>fix the failure</strong>, don&#39;t disable the check</li>
+<li>If a test is flaky, fix the flake or quarantine it explicitly with a tracking issue, don&#39;t <code>.skip</code> it silently</li>
+</ul>
+<p>The whole point of having tests + hooks + CI is that they catch the things I&#39;d otherwise miss. Bypassing them defeats the purpose.</p>
+<h2>Observability — scaled to project size</h2>
+<p>The right level of observability depends on the project&#39;s blast radius and audience. Don&#39;t pre-emptively wire Sentry + PostHog + <code>/health</code> on a 50-line throwaway script. Don&#39;t ship a real-users app with zero error visibility either.</p>
+<p>Default by project profile:</p>
+<table>
+<thead>
+<tr>
+<th>Project profile</th>
+<th>Error tracking</th>
+<th>Health endpoint</th>
+<th>Product analytics</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Solo throwaway / prototype / &quot;just for me&quot;</td>
+<td>optional</td>
+<td>skip</td>
+<td>skip</td>
+</tr>
+<tr>
+<td>Small project, handful of trusted users I know personally</td>
+<td><strong>yes</strong> (Sentry)</td>
+<td>optional</td>
+<td>skip</td>
+</tr>
+<tr>
+<td>Real users I don&#39;t personally know</td>
+<td><strong>yes</strong></td>
+<td><strong>yes</strong> (where applicable)</td>
+<td>optional</td>
+</tr>
+<tr>
+<td>Anything with paid tier, business logic, or compliance exposure</td>
+<td><strong>yes</strong></td>
+<td><strong>yes</strong></td>
+<td><strong>yes</strong></td>
+</tr>
+</tbody></table>
+<p><strong>Default to the minimum needed for the project&#39;s profile.</strong> Adding observability later is cheap; ripping out unused instrumentation isn&#39;t free either (extra deps, extra config, extra bundle weight, an extra service to manage).</p>
+<p>When I do wire any of these, do them properly:</p>
+<p><strong>Error tracking</strong> (Sentry or equivalent) — when the project profile says yes:</p>
+<ul>
+<li>Initialised in the entry point (<code>main.jsx</code>, <code>_app.tsx</code>, etc.) before the framework mounts</li>
+<li><code>ignoreErrors</code> filter for known-benign noise (browser quirks, library internals) to protect the free-tier quota</li>
+<li><code>sendDefaultPii: false</code> — never send raw URLs/query params/form data</li>
+<li>Source maps uploaded so stack traces are readable in production</li>
+<li>User identified by ID only, never email or display name</li>
+</ul>
+<p><strong>Health endpoint</strong> (where applicable) — for any project with a backend dependency:</p>
+<ul>
+<li>Web frontends: a <code>/health</code> page that pings the backend and renders OK / DOWN + version + build time</li>
+<li>Backend services: a <code>/health</code> (or <code>/healthz</code>) HTTP endpoint returning JSON with status + version + dependency check results</li>
+<li>Trivial to add; useful for manual debugging even before any monitoring is wired</li>
+</ul>
+<p><strong>Product analytics</strong> (PostHog or equivalent) — only when there&#39;s a real product question to answer:</p>
+<ul>
+<li>Don&#39;t add this just because. Add it when you have a question like &quot;are people using feature X?&quot; that you can&#39;t answer any other way.</li>
+<li>MUST go through a thin wrapper module that enforces PII rules in one place — never call <code>posthog.capture</code> (or equivalent) directly from feature code</li>
+<li>PII strip on every track call: drop <code>email</code>, <code>name</code>, <code>*_text</code>, <code>display_name</code>, <code>phone</code>, etc. from properties before they hit the network</li>
+<li>User identified by Supabase/Auth0/etc. UUID, never email</li>
+<li><code>autocapture: false</code> and <code>disable_session_recording: true</code> by default — only track events I explicitly choose</li>
+</ul>
+<h2>Database migrations are explicit, never auto-applied on deploy</h2>
+<p>Database schema changes are the highest-blast-radius operation in any project. They MUST require an explicit human action to apply, never run automatically on deploy.</p>
+<ul>
+<li>Migrations live in version control (<code>supabase/migrations/</code>, <code>db/migrate/</code>, <code>prisma/migrations/</code>, etc.)</li>
+<li>They are written <strong>idempotently</strong> wherever possible — <code>DROP IF EXISTS</code> + <code>ADD</code>, <code>CREATE TABLE IF NOT EXISTS</code>, <code>ALTER TABLE ... ADD COLUMN IF NOT EXISTS</code>, etc.</li>
+<li><code>DO $$ ... EXCEPTION</code> blocks for Postgres so a partial-failure doesn&#39;t leave the schema in a wedged state</li>
+<li>After applying, <strong>always run a verification query</strong> (e.g. <code>SELECT conname FROM pg_constraint WHERE conrelid = &#39;...&#39;::regclass</code>) to confirm the migration actually landed — &quot;no rows returned&quot; on a DDL statement does NOT prove anything was added</li>
+<li>Document the apply steps in the PR description so future-me knows what to do</li>
+<li>For Supabase specifically: paste the migration into the Dashboard → SQL Editor → New Query → Run, then verify with the inspection query</li>
+</ul>
+<p>If a project DOES have automated migration apply (e.g. Rails, Django on a managed deploy pipeline), still verify the migration ran by checking the migration table after deploy.</p>
+<h2>When in doubt</h2>
+<p>If I&#39;m unsure whether one of these rules applies → apply it anyway. The cost of an unnecessary safety net is zero. The cost of skipping one is &quot;production was broken / data was lost / users saw a stack trace and I didn&#39;t know why.&quot;</p>
+<h2>Per-Project CLAUDE.md Snippets</h2>
+<p>Copy-paste blocks for per-project <code>CLAUDE.md</code> files, for projects with memory-pressure sensitive tests or background test watchers (vitest, jest --watch, etc.). Drop under <code>## Testing</code> or <code>## Development Workflow</code>:</p>
+<pre><code class="language-markdown">## Test Execution
+- Run tests sequentially (not in parallel) to avoid memory pressure and flaky results
+- Before running `git add -A` or `git status`, check for lingering background processes (vitest, dev servers) with `jobs` or `ps`
+- Kill stale background test processes before git operations
+</code></pre>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/shipping-discipline/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/shipping-discipline/SKILL.md</code></span>
+</footer>
+</body>
+</html>

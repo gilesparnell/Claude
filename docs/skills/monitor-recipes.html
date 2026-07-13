@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitor Recipes — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128225;</span>
+    <div>
+      <h1 class="skill-page-title">Monitor Recipes</h1>
+      <p class="skill-page-desc">Standard Monitor-tool recipes and rules — watch dev servers, deploys, and CI with event-driven monitors instead of polling, and compound what fires into promoted recipes.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>tooling</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>dev server start</li><li>watch this deploy</li><li>CI watcher</li><li>tail logs</li><li>set up a monitor</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Monitors over polling — free when silent, wake on matched events</li><li>Always pipe stderr with 2&gt;&amp;1 into the grep filter</li><li>Bounded tasks get timeout_ms, not persistent true</li><li>Log monitor outcomes to .learnings/monitors/ and promote weekly</li></ul></section>
+  <section class="skill-doc"><p>Prefer the native Monitor tool over polling, <code>/loop</code>, or re-running <code>run_in_background</code> checks. Monitors are free when silent — only wake on matched events.</p>
+<h2>When to start a monitor automatically</h2>
+<p>Start a persistent monitor without asking whenever I:</p>
+<ul>
+<li>Run a dev server (LiveKit agent, Next.js, Supabase local, etc.)</li>
+<li>Kick off a deploy to Vercel or a long build</li>
+<li>Open a PR and want status tracking</li>
+<li>Tail logs for a service I&#39;m actively debugging</li>
+</ul>
+<p>For bounded tasks (test runs, single deploys), use <code>timeout_ms</code> instead of <code>persistent: true</code> so the watcher auto-kills.</p>
+<h2>Standard monitor recipes (global defaults)</h2>
+<p><strong>Dev server (persistent, wake on errors only)</strong></p>
+<ul>
+<li>Command: <code>&lt;dev command&gt; 2&gt;&amp;1 | grep -iE &#39;error|warn|exception|trace|disconnect|ECONN&#39;</code></li>
+<li><code>persistent: true</code></li>
+<li>Always pipe stderr with <code>2&gt;&amp;1</code> — stderr alone does not trigger events.</li>
+</ul>
+<p><strong>Vercel deploy watcher (bounded)</strong></p>
+<ul>
+<li>Command: <code>vercel logs &lt;url&gt; --follow 2&gt;&amp;1 | grep -iE &#39;error|failed|5[0-9]{2}&#39;</code></li>
+<li><code>timeout_ms</code>: 600000 (10 min, adjust to deploy length)</li>
+</ul>
+<p><strong>PR / CI watcher (persistent)</strong></p>
+<ul>
+<li>Command: <code>while true; do gh pr status --json state,statusCheckRollup 2&gt;&amp;1 | grep -iE &#39;FAILURE|ERROR&#39;; sleep 60; done</code></li>
+<li><code>persistent: true</code></li>
+</ul>
+<h2>Monitor rules</h2>
+<ol>
+<li>Never poll with repeated prompts when a Monitor can do the job.</li>
+<li>Batch filter patterns with <code>grep -iE</code> — multi-line events within 200ms auto-group into one notification.</li>
+<li>Name monitors descriptively (<code>livekit-dev</code>, <code>vercel-sprints-deploy</code>) so I can see what&#39;s running.</li>
+<li>When a monitor fires, investigate the event first, then decide whether to keep the monitor running or tear it down.</li>
+<li>Don&#39;t start overlapping monitors on the same command — check existing monitors before launching a new one.</li>
+<li>If a filter is too noisy (firing on warnings I don&#39;t care about), tighten the regex rather than ignoring notifications.</li>
+</ol>
+<h2>Monitor learnings</h2>
+<p>When a monitor fires and I investigate the event, log the outcome to <code>.learnings/monitors/</code> using the template. Takes 30 seconds and compounds.</p>
+<h2>Monitor learnings → CLAUDE.md promotion</h2>
+<p>Weekly (or on-demand), scan <code>.learnings/monitors/*.md</code> and:</p>
+<ol>
+<li>Group entries by <code>monitor_name</code>.</li>
+<li>For each monitor, compute:<ul>
+<li>signal ratio = true_positive / (true_positive + false_positive + noise)</li>
+<li>false_negative count</li>
+</ul>
+</li>
+<li>Flag for promotion:<ul>
+<li>Monitors with signal ratio &lt; 0.5 over 5+ entries → filter is too loose, promote the tightened regex from the entries.</li>
+<li>Monitors with any false_negative → promote the missing pattern into the standard recipe in this skill.</li>
+<li>Monitors with signal ratio &gt; 0.8 over 5+ entries → promote as a canonical recipe (mark the entries <code>promoted: true</code>).</li>
+</ul>
+</li>
+<li>When promoting, update the relevant recipe in this skill and append a one-line changelog at the bottom.</li>
+<li>Never delete learnings entries — just flip <code>promoted: true</code>.</li>
+</ol>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/monitor-recipes/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/monitor-recipes/SKILL.md</code></span>
+</footer>
+</body>
+</html>

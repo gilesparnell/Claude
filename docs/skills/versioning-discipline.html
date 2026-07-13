@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Versioning Discipline — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128290;</span>
+    <div>
+      <h1 class="skill-page-title">Versioning Discipline</h1>
+      <p class="skill-page-desc">Every deployed project tracks a human-readable version, displays it in-app, and bumps it with a CHANGELOG entry in the same commit as every shipping PR.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>version bump</li><li>changelog entry</li><li>semver</li><li>release entry</li><li>in-app version display</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Bump version + CHANGELOG in the same commit as the code change</li><li>Display vX.Y.Z (sha7) in footer, /health, or --version</li><li>CHANGELOG entries have &quot;What&#39;s new&quot; then &quot;Under the hood</li><li>Extend recent entries as version ranges instead of diary-of-fixes headings</li></ul></section>
+  <section class="skill-doc"><p>Every project that ships code to a deployed environment MUST track a human-readable version and display it in-app. Every PR that ships code MUST bump that version and add a CHANGELOG entry <strong>in the same commit as the code change</strong>. This is non-negotiable.</p>
+<p>Why: I want to be able to look at a deployed app and tell, in two seconds, which version is running. &quot;Is this the version with the fix?&quot; is a real question and the answer should never require opening DevTools.</p>
+<h2>Source of truth for the version number</h2>
+<p>Find the project&#39;s canonical version field and bump that. Order of preference:</p>
+<table>
+<thead>
+<tr>
+<th>Project type</th>
+<th>Version lives in</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node / JS / TS</td>
+<td><code>package.json</code> <code>version</code> field</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>pyproject.toml</code> <code>[project] version</code> (or <code>setup.py</code> <code>version=</code>)</td>
+</tr>
+<tr>
+<td>Ruby gem</td>
+<td><code>lib/&lt;gem&gt;/version.rb</code> <code>VERSION</code> constant</td>
+</tr>
+<tr>
+<td>Rust</td>
+<td><code>Cargo.toml</code> <code>[package] version</code></td>
+</tr>
+<tr>
+<td>Go</td>
+<td>git tag (no in-tree version), CHANGELOG still applies</td>
+</tr>
+<tr>
+<td>Anything else</td>
+<td><code>VERSION</code> file at repo root, plain text</td>
+</tr>
+</tbody></table>
+<p>If the project is a frontend deployed to Vercel/Netlify/etc., <strong>also inject the build-time git SHA</strong> alongside the semver. Display them together as <code>vX.Y.Z (sha7)</code> so the semver gives a human-readable anchor and the SHA gives the unambiguous identifier.</p>
+<p>For Vite frontends, the pattern is in <code>vite.config.js</code>:</p>
+<pre><code class="language-js">import { readFileSync } from &#39;node:fs&#39;
+import { execSync } from &#39;node:child_process&#39;
+
+const pkg = JSON.parse(readFileSync(&#39;./package.json&#39;, &#39;utf8&#39;))
+const sha = process.env.VERCEL_GIT_COMMIT_SHA
+  || execSync(&#39;git rev-parse HEAD&#39;, { encoding: &#39;utf8&#39; }).trim()
+
+export default defineConfig({
+  define: {
+    __APP_SEMVER__: JSON.stringify(pkg.version),
+    __APP_VERSION__: JSON.stringify(sha),
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
+})
+</code></pre>
+<p>Copy the pattern above into a <code>src/lib/version.js</code>-style module.</p>
+<h2>Bump rules (semver)</h2>
+<ul>
+<li><strong>patch</strong> (<code>0.0.x</code>) — bug fix, copy tweak, dependency bump, refactor with no behaviour change</li>
+<li><strong>minor</strong> (<code>0.x.0</code>) — new feature, new page/route, new tracked event, new env var, new public API</li>
+<li><strong>major</strong> (<code>x.0.0</code>) — breaking change. Ask before bumping major.</li>
+</ul>
+<p>Don&#39;t be afraid of <code>1.0.0</code>. Semver 1.0 means &quot;stable interface, backwards-compatible changes go in 1.x&quot; — it does NOT mean &quot;complete forever&quot; or &quot;massive audience&quot;. A solo project with real users in production has earned 1.0.</p>
+<h2>CHANGELOG.md format</h2>
+<p>Every project gets a <code>CHANGELOG.md</code> at the repo root. Each release entry has <strong>two</strong> subsections, in this order:</p>
+<ol>
+<li><p><strong>What&#39;s new</strong> — customer-facing outcomes, written in the user&#39;s language. Things they&#39;ll notice, feel, or ask about. No file names, no function names, no architectural justification. If someone who has never seen the code read it, they should understand what changed for them.</p>
+</li>
+<li><p><strong>Under the hood</strong> — technical detail for future-me debugging. File paths, function names, rationale, links to issues, why-we-chose-X-over-Y. This section is rendered in a dimmer visual style on any in-app changelog page so the user-facing bullets dominate.</p>
+</li>
+</ol>
+<p>Template: reuse the <code>CHANGELOG.md</code> format from an existing project that follows this standard.</p>
+<blockquote>
+<p><strong>Good</strong> What&#39;s new bullet: <em>&quot;Job descriptions you paste now auto-format with one click&quot;</em> — outcome-focused, no code references.
+<strong>Bad</strong>: <em>&quot;Added auto-format function to JobDescriptionEditor.tsx&quot;</em> — names a file, not a user outcome.</p>
+</blockquote>
+<h2>When to create a new entry vs. extend an existing one</h2>
+<p><strong>Don&#39;t let the changelog become a diary of &quot;fixing the previous fix.&quot;</strong> If a PR lands within the same development burst as the one before it (rough rule: within the last ~72 hours, or still actively polishing a just-shipped feature), <strong>extend the previous entry in place</strong> instead of creating a new heading. Update the heading to a version range like <code>[0.10.0 → 0.10.3]</code> so the range tells the story of multi-stage delivery.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>New user-visible feature, new page, new tracked event</td>
+<td><strong>New entry</strong> with the current version as the heading</td>
+</tr>
+<tr>
+<td>Bug fix or polish on a feature shipped in the last ~72 hours</td>
+<td><strong>Extend the previous entry</strong>. Update the heading to a range (<code>[X.Y.Z → X.Y.Z+n]</code>). Fold new detail into the existing &quot;Under the hood&quot;.</td>
+</tr>
+<tr>
+<td>Bug fix in something that&#39;s been stable for weeks/months</td>
+<td><strong>New entry</strong> — this is a legit regression worth its own heading</td>
+</tr>
+<tr>
+<td>Pure dep bump / refactor with no user impact</td>
+<td><strong>Extend the previous entry</strong> with a one-line &quot;Under the hood&quot; note, or new entry if no recent one exists</td>
+</tr>
+</tbody></table>
+<p><code>package.json</code> still bumps on every PR so the footer always shows the exact deploy. The CHANGELOG collapses related churn into a single narrative. The version in the footer may be higher than the most recent heading in the changelog — that&#39;s expected, the range in the heading signals the span.</p>
+<p><strong>Rule of thumb:</strong> reading the /changelog page for the first time should feel like reading a product newsletter, not a commit log. Each entry answers &quot;what did this release do for me?&quot; — not &quot;what bug did Claude accidentally ship last week?&quot;</p>
+<h2>In-app display</h2>
+<p>Display the version somewhere unambiguous and persistent:</p>
+<ul>
+<li><strong>Web frontend</strong>: small monospace text in the page footer, low contrast, doesn&#39;t compete with content. Format: <code>vX.Y.Z (sha7)</code></li>
+<li><strong><code>/health</code> endpoint</strong> (if it exists): include version + build timestamp in the response</li>
+<li><strong>Backend service / CLI</strong>: log the version on startup; expose it via <code>--version</code> flag and/or a <code>/version</code> endpoint</li>
+<li><strong>Mobile app</strong>: standard &quot;About&quot; screen + crash report metadata</li>
+</ul>
+<h2>When you can skip the bump</h2>
+<p>ONLY skip the version bump for PRs that touch:</p>
+<ul>
+<li>Documentation only (README, CHANGELOG itself, project CLAUDE.md)</li>
+<li>Repository-meta files (.gitignore, .editorconfig)</li>
+<li>Local-only tooling that doesn&#39;t ship (test helpers that aren&#39;t run in CI)</li>
+</ul>
+<p>If you&#39;re unsure → bump. The cost of an unnecessary patch bump is zero. The cost of a deploy that doesn&#39;t update the version is &quot;I can&#39;t tell what&#39;s running.&quot;</p>
+<h2>Bootstrap step for new projects</h2>
+<p>When starting a new project (or onboarding to one without versioning):</p>
+<ol>
+<li>Set the version source (<code>package.json</code> etc.) to a starting value:<ul>
+<li>Brand new project → <code>0.1.0</code></li>
+<li>Project that&#39;s already in real use → <code>0.9.0</code> or <code>1.0.0</code> depending on stability</li>
+</ul>
+</li>
+<li>Create <code>CHANGELOG.md</code> at repo root with the conventions header + first entry</li>
+<li>Wire the version into the build-time injection (Vite <code>define</code>, Webpack <code>DefinePlugin</code>, etc.)</li>
+<li>Add the version display to the footer / health endpoint / CLI</li>
+<li>Add this rule (and the bump-on-every-PR commitment) to the project&#39;s local <code>CLAUDE.md</code> so it&#39;s discoverable from the project root, not just the global one</li>
+</ol>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/versioning-discipline/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/versioning-discipline/SKILL.md</code></span>
+</footer>
+</body>
+</html>

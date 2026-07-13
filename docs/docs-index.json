@@ -1,11 +1,23 @@
 {
   "counts": {
-    "skill": 24,
+    "skill": 30,
     "walkthrough": 12,
     "template": 3,
     "unpublished_skills": 0
   },
   "entries": [
+    {
+      "type": "skill",
+      "title": "Adoption Triage",
+      "desc": "Accept/reject/defer triage before adopting any recommendation set — insights reports, audits, best-practice lists — plus the CLAUDE.md growth brake that keeps global rules lean.",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/adoption-triage.html",
+      "meta": "adoption-triage",
+      "published": true
+    },
     {
       "type": "skill",
       "title": "Claude Code Workflow",
@@ -128,6 +140,30 @@
     },
     {
       "type": "skill",
+      "title": "Monitor Recipes",
+      "desc": "Standard Monitor-tool recipes and rules — watch dev servers, deploys, and CI with event-driven monitors instead of polling, and compound what fires into promoted recipes.",
+      "tags": [
+        "tooling",
+        "global"
+      ],
+      "url": "skills/monitor-recipes.html",
+      "meta": "monitor-recipes",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Plan Execution Continuity",
+      "desc": "Two living files per project — docs/decisions/decisions.md and docs/handoff/handoff.md — so a fresh Claude or Codex session can resume mid-plan after token-limit resets,…",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/plan-continuity.html",
+      "meta": "plan-continuity",
+      "published": true
+    },
+    {
+      "type": "skill",
       "title": "Plan Progress Tracker",
       "desc": "Generates a visual HTML progress diagram for active project plans.",
       "tags": [
@@ -176,6 +212,18 @@
     },
     {
       "type": "skill",
+      "title": "Runtime &amp; Runner Routing",
+      "desc": "Route work to the right runner and runtime — Claude vs codex-cli switch rules and rationale, plus choosing between local Claude, claude-supervisor, Anthropic Routines, /loop, and…",
+      "tags": [
+        "tooling",
+        "global"
+      ],
+      "url": "skills/runtime-routing.html",
+      "meta": "runtime-routing",
+      "published": true
+    },
+    {
+      "type": "skill",
       "title": "SaaS Patterns",
       "desc": "Production-grade SaaS patterns. Tenant isolation, plan gating, usage tracking, idempotent ops, soft deletes, and onboarding principles.",
       "tags": [
@@ -208,6 +256,18 @@
       ],
       "url": "skills/ship.html",
       "meta": "ship",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Shipping Discipline",
+      "desc": "The safety net for every deployed project — branch protection on main, never bypass hooks or CI, observability scaled to blast radius, and explicit human-applied database…",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/shipping-discipline.html",
+      "meta": "shipping-discipline",
       "published": true
     },
     {
@@ -280,6 +340,18 @@
       ],
       "url": "skills/verification-before-completion.html",
       "meta": "verification-before-completion",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Versioning Discipline",
+      "desc": "Every deployed project tracks a human-readable version, displays it in-app, and bumps it with a CHANGELOG entry in the same commit as every shipping PR.",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/versioning-discipline.html",
+      "meta": "versioning-discipline",
       "published": true
     },
     {

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Execution Continuity — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128203;</span>
+    <div>
+      <h1 class="skill-page-title">Plan Execution Continuity</h1>
+      <p class="skill-page-desc">Two living files per project — docs/decisions/decisions.md and docs/handoff/handoff.md — so a fresh Claude or Codex session can resume mid-plan after token-limit resets, restarts, or runner handoffs.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>plan execution</li><li>handoff entry</li><li>decision log</li><li>session ending mid-task</li><li>runner switch</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>decisions.md — append every non-trivial choice with date + rationale</li><li>handoff.md — newest entry at top, written for the next session</li><li>Always write a handoff entry at session end, even mid-unit</li><li>Never batch updates at session end — log incrementally</li></ul></section>
+  <section class="skill-doc"><p>When working through a detailed plan (e.g. via <code>/ce:work-beta</code>, the <code>claude-supervisor</code> tool, or any multi-step implementation), maintain two living files per project so a fresh session — Claude or Codex — can resume without the previous run&#39;s context. These files exist to survive token-limit resets, session restarts, the claude-supervisor auto-restart flow, and runner handoffs.</p>
+<h2>Files</h2>
+<p><strong><code>docs/decisions/decisions.md</code></strong> — project-local decision log for in-flight plan work.</p>
+<ul>
+<li>Append an entry whenever a non-trivial choice is made: tool/library selection, API shape, data model, scope cut, trade-off resolution, rejected alternative, runner-routing change</li>
+<li>Each entry: date (Australia/Sydney), one-line title, 2–4 sentence rationale, link(s) to relevant files/PRs</li>
+<li>Cheap and fast — these are tactical decisions within the current plan, not architectural ADRs</li>
+<li><strong>Promote to a cross-project decision record</strong> (kept in a separate private repo) only when the decision has impact outside this project or establishes a long-lived architectural pattern. Never merge the two — project-local stays project-local</li>
+</ul>
+<blockquote>
+<p>Example: <code>## 2026-05-10 AEST — Chose Zod for API validation</code> — Zod over Yup: first-class TS inference, smaller bundle. Yup rejected: type wrapping overhead. See <code>app/api/generate-profile/route.ts</code>.</p>
+</blockquote>
+<p><strong><code>docs/handoff/handoff.md</code></strong> — running log of significant completed work, written as a handoff to the next session.</p>
+<ul>
+<li>Append an entry every time a significant piece of work is finished (a plan phase, a feature, a non-trivial fix, a milestone, a runner switch)</li>
+<li>Each entry: date (Australia/Sydney), what was completed, current runner, what&#39;s next, any gotchas / in-progress state a fresh session would need to resume safely</li>
+<li><strong>Newest entry at the top</strong> so a fresh session reads the most recent first</li>
+<li>Structured so a new Claude <em>or</em> Codex session can read the most recent entry and pick up the plan mid-flight</li>
+</ul>
+<blockquote>
+<p>Example: <code>## 2026-05-10 AEST — Phase 2 complete</code> — Runner: Claude→Codex. Units 4–6 done. Next: Unit 7 — CVPreview reads from Supabase on load. Gotcha: RLS not yet enabled on <code>profiles</code> table — don&#39;t ship Unit 8 before that&#39;s done.</p>
+</blockquote>
+<h2>When to update</h2>
+<ul>
+<li><strong>During plan execution</strong>: after every completed unit, before moving to the next, decide whether this completion warrants a handoff entry or a decisions entry (or both)</li>
+<li><strong>At session end</strong> (approaching token limits, <code>/compact</code>, <code>claude-supervisor</code> restart, or mid-task stop): always append a handoff entry describing current state and the next step, <strong>even if mid-unit</strong>. This is exactly the state that gets lost on a token-limit kill</li>
+<li><strong>On runner switch</strong>: log both the decision (in <code>decisions.md</code>) and the handoff state (in <code>handoff.md</code>) before the switch fires</li>
+<li><strong>Never batch at session end</strong> — update incrementally as work lands. Deferred sweeps are exactly what fails when the session dies unexpectedly</li>
+</ul>
+<h2>Relationship to architecture decision records</h2>
+<p><code>docs/decisions/decisions.md</code> = project-local, tactical. Cross-project architectural decisions live in a separate private repo. Never merge the two. <code>claude-supervisor</code> reads both files via <code>HANDOFF_FILE</code> / <code>DECISIONS_FILE</code> config on every fresh run.</p>
+<h2>Skip when</h2>
+<ul>
+<li>Single-file throwaway edits / typo fixes with no plan</li>
+<li>Pure research or questions that don&#39;t result in code</li>
+<li>Project has no <code>/docs/</code> directory AND no plan — don&#39;t create scaffolding just to write one entry; wait until there&#39;s a plan</li>
+</ul>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/plan-continuity/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/plan-continuity/SKILL.md</code></span>
+</footer>
+</body>
+</html>
