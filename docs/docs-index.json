@@ -1,6 +1,6 @@
 {
   "counts": {
-    "skill": 23,
+    "skill": 24,
     "walkthrough": 12,
     "template": 3,
     "unpublished_skills": 0
@@ -280,6 +280,18 @@
       ],
       "url": "skills/verification-before-completion.html",
       "meta": "verification-before-completion",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Visualise",
+      "desc": "Diagram-first explanations — whenever a process, architecture, plan status, or data flow is being explained, produce a rendered Mermaid diagram alongside the prose.",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/visualise.html",
+      "meta": "visualise",
       "published": true
     },
     {

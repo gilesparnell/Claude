@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visualise — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128506;</span>
+    <div>
+      <h1 class="skill-page-title">Visualise</h1>
+      <p class="skill-page-desc">Diagram-first explanations — whenever a process, architecture, plan status, or data flow is being explained, produce a rendered Mermaid diagram alongside the prose.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>diagram this</li><li>visualise</li><li>map this</li><li>show me the flow</li><li>where are we in the plan</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Source of truth is a .mmd file committed with the project (design/ folder)</li><li>Status is visual — solid = in place, dashed amber = planned</li><li>Terminal sessions render via local HTML opened in the browser (no side panel in a CLI)</li><li>Max ~15 nodes per diagram; split rather than cram</li></ul></section>
+  <section class="skill-doc"><p>Giles is a visual person. When an explanation describes structure — a process, a pipeline, an architecture, plan progress, how components relate — draw it. Prose carries the reasoning; the diagram carries the shape.</p>
+<h2>When to fire</h2>
+<ul>
+<li>Explaining any multi-step process, workflow, pipeline, or data flow</li>
+<li>Plan status and &quot;where are we&quot; answers — render workstreams/phases as a diagram, not only a table</li>
+<li>Architecture explanations: how services, repos, or components relate</li>
+<li>Triage/decision outcomes with structure worth seeing (accept/reject flows, routing splits)</li>
+<li>Explicit asks: &quot;diagram&quot;, &quot;visualise&quot;, &quot;map&quot;, &quot;show me&quot;</li>
+</ul>
+<p>Skip when the content is genuinely linear or trivial (a 3-item list does not need a flowchart).</p>
+<h2>Conventions</h2>
+<ol>
+<li><strong>Source of truth is a <code>.mmd</code> file</strong>, committed with the project — in the project&#39;s <code>design/</code> folder if one exists, otherwise the scratchpad. The reference example is <code>claude/claude-radar/design/process-map.mmd</code>.</li>
+<li><strong>Status encoding (Deep Ocean palette):</strong> solid nodes = in place/done; dashed amber = planned (<code>classDef planned stroke-dasharray:5 5,stroke:#d9a441</code>); teal <code>#38bfa0</code> for emphasis edges and loops. Existing vs planned must be visually distinct — gaps read as choices.</li>
+<li><strong>Keep it scannable:</strong> ~15 nodes max per diagram. Split into multiple diagrams rather than cramming one.</li>
+<li>Normal commit gates apply — never auto-commit the files.</li>
+</ol>
+<h2>Delivery — pick by environment</h2>
+<ul>
+<li><strong>Terminal CLI session (ghostty etc.) — the default:</strong> terminals cannot render diagrams and there is no side panel. Wrap the Mermaid source in an HTML template with the Mermaid CDN module, save it next to the <code>.mmd</code>, run <code>open &lt;file&gt;.html</code> (macOS) so it opens in the browser, and say so in the reply.</li>
+<li><strong>Claude Code web / desktop app / IDE extension:</strong> a side panel exists there — <code>SendUserFile</code> with <code>display: render</code> on the <code>.mmd</code> works directly.</li>
+<li><strong>Durable or shareable page</strong> (capability maps, dashboards): publish an Artefact instead. The Artefact CSP blocks the Mermaid CDN — pre-render to SVG first (<code>npx -y @mermaid-js/mermaid-cli -i in.mmd -o out.svg</code>) and inline the SVG, or hand-build the page.</li>
+</ul>
+<h2>HTML preview template</h2>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;DIAGRAM TITLE&lt;/title&gt;
+&lt;style&gt;
+  body { margin: 0; background: #0a0c10; min-height: 100vh; display: grid;
+         place-items: center; padding: 32px; box-sizing: border-box; }
+  .mermaid { max-width: 100%; }
+&lt;/style&gt;
+&lt;pre class=&quot;mermaid&quot;&gt;
+%% paste the .mmd content here
+&lt;/pre&gt;
+&lt;script type=&quot;module&quot;&gt;
+  import mermaid from &quot;https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs&quot;;
+  mermaid.initialize({ startOnLoad: true, theme: &quot;dark&quot; });
+&lt;/script&gt;
+</code></pre>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/visualise/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/visualise/SKILL.md</code></span>
+</footer>
+</body>
+</html>
