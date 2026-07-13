@@ -58,7 +58,7 @@ export default defineConfig({
   },
 })
 ```
-WLC's `src/lib/version.js` is the reference implementation — copy that pattern.
+Copy the pattern above into a `src/lib/version.js`-style module.
 
 ## Bump rules (semver)
 
@@ -76,7 +76,7 @@ Every project gets a `CHANGELOG.md` at the repo root. Each release entry has **t
 
 2. **Under the hood** — technical detail for future-me debugging. File paths, function names, rationale, links to issues, why-we-chose-X-over-Y. This section is rendered in a dimmer visual style on any in-app changelog page so the user-facing bullets dominate.
 
-Template: see WLC `CHANGELOG.md` for the reference format.
+Template: reuse the `CHANGELOG.md` format from an existing project that follows this standard.
 
 > **Good** What's new bullet: *"Job descriptions you paste now auto-format with one click"* — outcome-focused, no code references.
 > **Bad**: *"Added auto-format function to JobDescriptionEditor.tsx"* — names a file, not a user outcome.
@@ -124,5 +124,3 @@ When starting a new project (or onboarding to one without versioning):
 3. Wire the version into the build-time injection (Vite `define`, Webpack `DefinePlugin`, etc.)
 4. Add the version display to the footer / health endpoint / CLI
 5. Add this rule (and the bump-on-every-PR commitment) to the project's local `CLAUDE.md` so it's discoverable from the project root, not just the global one
-
-Reference implementation: WLC repo.
