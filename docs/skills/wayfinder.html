@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wayfinder — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#129517;</span>
+    <div>
+      <h1 class="skill-page-title">Wayfinder</h1>
+      <p class="skill-page-desc">Plan work too big for one agent session as a shared map of investigation tickets on the issue tracker, resolved one per session until the way to the destination is clear.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.1</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>wayfinder</li><li>chart a map for</li><li>this is too big for one session</li><li>work through the map</li></ul></section>
+  <section class="skill-checks"><h2>Principles</h2><ul class="skill-check-list"><li>Plan, don&#39;t do — tickets resolve decisions, not deliverables</li><li>One ticket per session, claimed by assignment before any work</li><li>Fog of war — ticket only what you can phrase sharply; the rest stays in Not yet specified</li><li>Refer to tickets by name, never bare issue numbers</li></ul></section>
+  <section class="skill-doc"><p>Installed from <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> v1.1.0 (8 Jul 2026), unmodified. Part of the Wayfinder cluster: <code>grilling</code>, <code>domain-modeling</code>, <code>prototype</code>, <code>setup-matt-pocock-skills</code>.</p>
+<p>A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the <strong>destination</strong> isn&#39;t visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a <strong>shared map</strong> on the repo&#39;s issue tracker, then works its tickets one at a time until the route is clear.</p>
+<h2>The Map</h2>
+<p>A single issue labelled <code>wayfinder:map</code> — the canonical artefact. Its tickets are child issues. The map is an <strong>index</strong>, not a store: Destination, Notes, Decisions so far (one gist line per closed ticket), Not yet specified (in-scope fog too dim to ticket), Out of scope (consciously ruled out).</p>
+<h2>Tickets</h2>
+<p>Child issues, each holding one question sized to a single agent session, labelled <code>wayfinder:&lt;type&gt;</code>:</p>
+<ul>
+<li><strong>Research</strong> (AFK) — reading docs/APIs; produces a linked markdown summary</li>
+<li><strong>Prototype</strong> (HITL) — cheap concrete artefact to react to, via /prototype</li>
+<li><strong>Grilling</strong> (HITL) — conversation via /grilling and /domain-modelling; the default</li>
+<li><strong>Task</strong> (HITL or AFK) — manual work that unblocks a decision (provisioning, data moves)</li>
+</ul>
+<p>A session <strong>claims</strong> a ticket by assigning it before any work. Blocking uses the tracker&#39;s native dependency edges; the <strong>frontier</strong> is the open, unblocked, unclaimed children.</p>
+<h2>Invocation</h2>
+<p><strong>Chart the map</strong> (one session): name the destination via grilling, map the frontier breadth-first, create the map + specifiable tickets, wire blocking in a second pass, stop.</p>
+<p><strong>Work through the map</strong> (per session): load the low-res map, choose or take the next frontier ticket, claim it, resolve it with the skills the Notes name, post a resolution comment, close it, append to Decisions so far, graduate newly-sharp fog into tickets. <strong>Never resolve more than one ticket per session.</strong></p>
+<p>Full text lives in the runtime skill at <code>~/.claude/skills/wayfinder/SKILL.md</code>.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/wayfinder/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/wayfinder/SKILL.md</code></span>
+</footer>
+</body>
+</html>

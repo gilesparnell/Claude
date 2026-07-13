@@ -1,6 +1,6 @@
 {
   "counts": {
-    "skill": 30,
+    "skill": 35,
     "walkthrough": 12,
     "template": 3,
     "unpublished_skills": 0
@@ -68,6 +68,18 @@
     },
     {
       "type": "skill",
+      "title": "Domain Modelling",
+      "desc": "Actively build and sharpen a project's domain model — challenge fuzzy terms, stress-test with edge-case scenarios, and write the glossary (CONTEXT.md) and ADRs the moment they…",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills/domain-modeling.html",
+      "meta": "domain-modeling",
+      "published": true
+    },
+    {
+      "type": "skill",
       "title": "End-to-End Feature Test",
       "desc": "Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a…",
       "tags": [
@@ -124,6 +136,18 @@
       ],
       "url": "skills/github-pages-portal.html",
       "meta": "github-pages-portal",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Grilling",
+      "desc": "Relentless one-question-at-a-time interview to stress-test a plan or design until shared understanding is reached.",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/grilling.html",
+      "meta": "grilling",
       "published": true
     },
     {
@@ -188,6 +212,18 @@
     },
     {
       "type": "skill",
+      "title": "Prototype",
+      "desc": "Build a throwaway prototype to answer a design question — an interactive terminal app for logic/state questions, or multiple switchable UI variations for look-and-feel questions.",
+      "tags": [
+        "code",
+        "global"
+      ],
+      "url": "skills/prototype.html",
+      "meta": "prototype",
+      "published": true
+    },
+    {
+      "type": "skill",
       "title": "Repo Rename Leak-Vector Closure",
       "desc": "When renaming a GitHub repo to free its name for a new public repo, re-point every remote and hook BEFORE the new repo claims the name — or auto-pushes leak private content…",
       "tags": [
@@ -244,6 +280,18 @@
       ],
       "url": "skills/security-review.html",
       "meta": "security-review",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Setup Matt Pocock Skills",
+      "desc": "One-time per-repo configuration for the Wayfinder cluster — records which issue tracker the repo uses (GitHub/GitLab/local markdown) and where domain docs live, in…",
+      "tags": [
+        "tooling",
+        "global"
+      ],
+      "url": "skills/setup-matt-pocock-skills.html",
+      "meta": "setup-matt-pocock-skills",
       "published": true
     },
     {
@@ -364,6 +412,18 @@
       ],
       "url": "skills/visualise.html",
       "meta": "visualise",
+      "published": true
+    },
+    {
+      "type": "skill",
+      "title": "Wayfinder",
+      "desc": "Plan work too big for one agent session as a shared map of investigation tickets on the issue tracker, resolved one per session until the way to the destination is clear.",
+      "tags": [
+        "workflow",
+        "global"
+      ],
+      "url": "skills/wayfinder.html",
+      "meta": "wayfinder",
       "published": true
     },
     {

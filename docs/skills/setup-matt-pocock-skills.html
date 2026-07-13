@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setup Matt Pocock Skills — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128295;</span>
+    <div>
+      <h1 class="skill-page-title">Setup Matt Pocock Skills</h1>
+      <p class="skill-page-desc">One-time per-repo configuration for the Wayfinder cluster — records which issue tracker the repo uses (GitHub/GitLab/local markdown) and where domain docs live, in docs/agents/*.md.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>tooling</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.1</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>setup matt pocock skills</li><li>configure wayfinder for this repo</li><li>set up the issue tracker config</li></ul></section>
+  <section class="skill-checks"><h2>Steps</h2><ul class="skill-check-list"><li>Explore the repo first (remote, CLAUDE.md, existing docs/agents/)</li><li>One section, one answer — lead with the recommended choice</li><li>Records choices in docs/agents/issue-tracker.md and domain.md</li><li>Edits the existing CLAUDE.md/AGENTS.md; never creates a duplicate</li></ul></section>
+  <section class="skill-doc"><p>Installed from <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> v1.1.0, unmodified. Configuration wizard for the Wayfinder cluster — run once per repo before first use of <code>wayfinder</code>.</p>
+<p>Scaffolds the per-repo configuration the engineering skills assume: <strong>issue tracker</strong> (GitHub via <code>gh</code> by default; GitLab and local-markdown supported — seed templates ship with the runtime skill), <strong>triage labels</strong> (skipped here — the <code>triage</code> skill is not installed), and <strong>domain docs</strong> layout (single-context <code>CONTEXT.md</code> + <code>docs/adr/</code> for almost every repo).</p>
+<p>Choices are recorded in <code>docs/agents/issue-tracker.md</code> and <code>docs/agents/domain.md</code>, with a pointer block added to the repo&#39;s existing <code>CLAUDE.md</code>. Prompt-driven: explore, present findings, confirm, then write.</p>
+<p>Full text at <code>~/.claude/skills/setup-matt-pocock-skills/SKILL.md</code>.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/setup-matt-pocock-skills/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/setup-matt-pocock-skills/SKILL.md</code></span>
+</footer>
+</body>
+</html>

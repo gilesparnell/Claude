@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#9889;</span>
+    <div>
+      <h1 class="skill-page-title">Prototype</h1>
+      <p class="skill-page-desc">Build a throwaway prototype to answer a design question — an interactive terminal app for logic/state questions, or multiple switchable UI variations for look-and-feel questions.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.1</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>prototype this</li><li>does this state model feel right</li><li>what should this look like</li><li>sanity-check this logic</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Throwaway from day one, clearly named as a prototype</li><li>One command to run; no persistence; skip the polish</li><li>Surface the full state after every action or variant switch</li><li>Capture the verdict, commit the prototype to a throwaway branch, keep only the decision on main</li></ul></section>
+  <section class="skill-doc"><p>Installed from <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> v1.1.0, unmodified. Part of the Wayfinder cluster. Branch guides ship with the runtime skill: <code>LOGIC.md</code>, <code>UI.md</code>.</p>
+<p>A prototype is <strong>throwaway code that answers a question</strong>. The question decides the shape: &quot;does this logic/state model feel right?&quot; → tiny interactive terminal app pushing the state machine through hard cases; &quot;what should this look like?&quot; → several radically different UI variations on one route, switchable via URL param.</p>
+<p>Note for this setup: prototypes are explicit spike/throwaway work — the recognised exemption from tdd-first. The validated decision folds into real code (which does get TDD); the prototype itself is committed to a throwaway branch and linked from the relevant issue as a primary source.</p>
+<p>Full text at <code>~/.claude/skills/prototype/SKILL.md</code>.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/prototype/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/prototype/SKILL.md</code></span>
+</footer>
+</body>
+</html>

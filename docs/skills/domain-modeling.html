@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain Modelling — Skills — gilesparnell</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html" class="active">Skills</a>
+      <a href="../walkthroughs.html">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="skill-page">
+  <a class="skill-back" href="../skills.html">&larr; All skills</a>
+  <div class="skill-page-head">
+    <span class="skill-page-icon">&#128218;</span>
+    <div>
+      <h1 class="skill-page-title">Domain Modelling</h1>
+      <p class="skill-page-desc">Actively build and sharpen a project&#39;s domain model — challenge fuzzy terms, stress-test with edge-case scenarios, and write the glossary (CONTEXT.md) and ADRs the moment they crystallise.</p>
+      <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.1</span></div>
+    </div>
+  </div>
+  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>pin down the terminology</li><li>domain model</li><li>ubiquitous language</li><li>record an architectural decision</li></ul></section>
+  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Challenge terms that conflict with the CONTEXT.md glossary immediately</li><li>Update CONTEXT.md inline as terms resolve — never batch</li><li>CONTEXT.md is a glossary only, devoid of implementation detail</li><li>ADRs only when hard-to-reverse AND surprising AND a real trade-off</li></ul></section>
+  <section class="skill-doc"><p>Installed from <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> v1.1.0, unmodified. Part of the Wayfinder cluster. Supporting formats ship with the runtime skill: <code>CONTEXT-FORMAT.md</code>, <code>ADR-FORMAT.md</code>.</p>
+<p>Actively build and sharpen the project&#39;s domain model while designing: challenge terms against the existing glossary, propose precise canonical terms for vague ones, stress-test relationships with concrete edge-case scenarios, and cross-reference claims against the code — surfacing contradictions.</p>
+<p><code>CONTEXT.md</code> lives at the repo root (or per-context in monorepos via <code>CONTEXT-MAP.md</code>), created lazily when the first term resolves. ADRs go to <code>docs/adr/</code> and are offered sparingly: only when the decision is hard to reverse, surprising without context, and the result of a real trade-off.</p>
+<p>Full text at <code>~/.claude/skills/domain-modeling/SKILL.md</code>.</p>
+</section>
+  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/domain-modeling/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+</main>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Skills</span>
+  <span>Generated from <code>skills/domain-modeling/SKILL.md</code></span>
+</footer>
+</body>
+</html>
