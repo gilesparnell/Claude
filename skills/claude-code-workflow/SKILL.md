@@ -4,7 +4,7 @@ title: Claude Code Workflow
 scope: global
 category: tooling
 icon: 🪟
-version: 1.0
+version: 1.1
 triggers:
   - set up my dev environment
   - tmux workflow
@@ -29,7 +29,6 @@ description: >
 
 A visual guide to replacing chaotic terminal tabs with structured, named, isolated Claude Code sessions using tmux + git worktrees + Agent Teams.
 
----
 
 ## The Problem
 
@@ -60,7 +59,6 @@ A visual guide to replacing chaotic terminal tabs with structured, named, isolat
 └──────────────────────────────────────────────────────────────┘
 ```
 
----
 
 ## Layer 1: tmux — Replace Tabs with Named Windows
 
@@ -80,7 +78,7 @@ brew install tmux    # macOS
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│ [parnell] 1:dev*  2:claude  3:agent2              13:42      │
+│ [myproj] 1:dev*  2:claude  3:agent2              13:42      │
 ├─────────────────────────┬────────────────────────────────────┤
 │                         │                                    │
 │  VITE v6.0.0 ready      │  ~/my-project                 │
@@ -103,7 +101,7 @@ Create `scripts/tmux-dev.sh` in your project:
 
 ```bash
 #!/bin/bash
-SESSION="${1:-parnell}"
+SESSION="${1:-myproj}"
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 tmux has-session -t "$SESSION" 2>/dev/null && tmux kill-session -t "$SESSION"
@@ -142,7 +140,6 @@ chmod +x scripts/tmux-dev.sh
 └─────────────────────┴────────────────────────────────────────┘
 ```
 
----
 
 ## Layer 2: Git Worktrees — Isolated File Systems
 
@@ -191,11 +188,10 @@ claude --worktree
 │ New feature (multi-file)     │ Quick copy/content edit       │
 │ Bug fix while feature WIP    │ Running commands (build/test) │
 │ Refactoring that might break │ Research / asking questions   │
-│ Anything you'll PR separately│ Business ops (ops/)          │
+│ Anything you'll PR separately│ Business ops (ai-os/)        │
 └──────────────────────────────┴───────────────────────────────┘
 ```
 
----
 
 ## Layer 3: Agent Teams — Coordinated Parallel Agents
 
@@ -255,7 +251,6 @@ source ~/.zshrc
 └──────────────────────────────┴───────────────────────────────┘
 ```
 
----
 
 ## Session Scoping Rules
 
@@ -287,7 +282,6 @@ Every Claude Code session gets ONE clear purpose. Name it. Scope it.
             (don't reuse sessions for different work)
 ```
 
----
 
 ## Daily Workflow — The Complete Picture
 
@@ -295,11 +289,11 @@ Every Claude Code session gets ONE clear purpose. Name it. Scope it.
 ┌──────────────────────────────────────────────────────────────┐
 │  MORNING                                                     │
 │                                                              │
-│  $ cd ~/code/my-project                                      │
+│  $ cd ~/code/my-project                    │
 │  $ ./scripts/tmux-dev.sh                                     │
 │                                                              │
 │  ┌─────────────────────────────────────────────────────────┐ │
-│  │ tmux: [parnell]  1:dev*  2:claude  3:agent2            │ │
+│  │ tmux: [myproj]  1:dev*  2:claude  3:agent2            │ │
 │  └─────────────────────────────────────────────────────────┘ │
 │                                                              │
 │  Ctrl+B → 2 (switch to claude window)                        │
@@ -314,12 +308,11 @@ Every Claude Code session gets ONE clear purpose. Name it. Scope it.
 │                                                              │
 │  Ctrl+B → 1 (check dev server anytime)                       │
 │  Ctrl+B → d (detach — go get coffee)                         │
-│  $ tmux attach -t parnell (come back later)                  │
+│  $ tmux attach -t myproj (come back later)                  │
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
 ```
 
----
 
 ## Tools Worth Knowing
 
@@ -333,14 +326,51 @@ Every Claude Code session gets ONE clear purpose. Name it. Scope it.
 
 **Recommendation:** Start with raw tmux + `claude --worktree`. Graduate to dmux when you're regularly running 3+ parallel agents.
 
----
+
+## Renaming Sessions and Windows
+
+Names are the whole point of tmux over anonymous tabs — keep them accurate as work shifts:
+
+```
+tmux rename-session -t old-name new-name   # From any shell
+Ctrl+B $                                    # Rename current session (inside tmux)
+Ctrl+B ,                                    # Rename current window (inside tmux)
+```
+
+Rename when a session's purpose changes (e.g. `feature-auth` finished, now grinding `bugfix-rls`) — a stale name is worse than no name.
+
+## tmux Inside VS Code
+
+VS Code windows die with the lid; tmux sessions don't. Combining them: the VS Code integrated terminal attaches to a persistent tmux session, so closing the window never loses terminal state.
+
+**Manual:** in any VS Code terminal, `tmux attach -t <name>` (or `tmux new -A -s <name>` to attach-or-create). All `Ctrl+B` keys work normally in the integrated terminal.
+
+**Automatic (recommended):** add a terminal profile to VS Code `settings.json` that attaches every integrated terminal to a per-project session named after the workspace folder:
+
+```json
+"terminal.integrated.profiles.osx": {
+  "tmux-project": {
+    "path": "tmux",
+    "args": ["new-session", "-A", "-s", "vscode-${workspaceFolderBasename}"]
+  }
+},
+"terminal.integrated.defaultProfile.osx": "tmux-project"
+```
+
+`-A` = attach if the session exists, create if not. Each project window gets its own session (`vscode-my-app`, `vscode-api-server`); reopening a project rejoins yesterday's terminal exactly. Long-running processes started there (dev servers, watchers) survive the window closing.
+
+**Boundaries:** the Claude Code *panel* (Cmd+Esc) is not a terminal and doesn't live in tmux — this applies to the integrated terminal only. The supervisor keeps its own sessions (attach with `tmux attach -t <supervisor-session>` from any terminal, including VS Code's). Don't nest: if a terminal prompt already shows a tmux status bar, don't `tmux attach` again inside it.
 
 ## Quick Reference
 
 ```
-tmux new -s parnell          # Create named session
-tmux attach -t parnell       # Reattach
+tmux new -s myproj          # Create named session
+tmux new -A -s myproj       # Attach if exists, create if not
+tmux attach -t myproj       # Reattach
 tmux ls                      # List sessions
+tmux rename-session -t a b   # Rename session a → b
+Ctrl+B $                     # Rename current session
+Ctrl+B ,                     # Rename current window
 Ctrl+B d                     # Detach
 Ctrl+B 1/2/3                 # Switch windows
 Ctrl+B %                     # Split pane vertical
