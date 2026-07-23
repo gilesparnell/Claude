@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude System Walkthroughs — gilesparnell / Parnell Systems</title>
+<link rel="stylesheet" href="../portal.css">
+<style>
+  .cwt{
+    --bg:#0a0c10; --surface:#12151c; --raised:#1a1e28;
+    --text:#e8eaf0; --dim:#8b92a8; --faint:#4a5068;
+    --teal:#38bfa0; --amber:#d9a441; --coral:#e0596b; --green:#4caf7d;
+    --border:rgba(255,255,255,0.08); --radius:14px;
+    --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:22px 0 8px;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .sw{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--border);background:var(--surface);flex-shrink:0}
+  .sw.teal{border-color:var(--teal)} .sw.amber{border-style:dashed;border-color:var(--amber)}
+  .sw.coral{border-color:var(--coral)} .sw.green{border-color:var(--green)}
+  .sw.auto{background:repeating-linear-gradient(45deg,var(--raised),var(--raised) 3px,var(--surface) 3px,var(--surface) 6px)}
+
+  section.uc{margin-top:56px;border-top:1px solid var(--border);padding-top:34px}
+  .uc-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .uc-num{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--teal);opacity:.55}
+  .cwt h2{font-size:clamp(1.25rem,2.4vw,1.7rem);letter-spacing:-.02em}
+  .uc-intro{color:var(--dim);max-width:78ch;margin-bottom:6px;font-size:.93rem}
+  .uc-intro code, .steps code, .node code{font-family:var(--mono);font-size:.86em;background:var(--raised);padding:1px 6px;border-radius:5px;color:#c7cdde;white-space:nowrap}
+  .steps{margin:14px 0 24px;padding-left:0;counter-reset:s;list-style:none;max-width:82ch}
+  .steps li{counter-increment:s;position:relative;padding:7px 0 7px 44px;font-size:.92rem;color:#c4c9d8}
+  .steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:8px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(56,191,160,.35);border-radius:6px;padding:2px 6px}
+  .steps li strong{color:var(--text)}
+
+  /* diagram */
+  .diagram{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.015),transparent 60%);border:1px solid var(--border);border-radius:20px;padding:26px 26px 30px;margin-top:10px;overflow:hidden}
+  .diagram svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+  .lanes{position:relative;z-index:2;display:grid;gap:56px}
+  .lane{display:flex;flex-direction:column;gap:34px;min-width:0}
+  .lane-title{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);border-bottom:1px dashed rgba(255,255,255,.12);padding-bottom:8px;margin-bottom:-8px}
+  .node{position:relative;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:13px 15px 12px;box-shadow:0 10px 28px rgba(0,0,0,.35)}
+  .node .kind{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+  .node h3{font-size:.98rem;letter-spacing:-.01em;margin-bottom:3px;line-height:1.3}
+  .node .stack{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-bottom:6px;word-break:break-all}
+  .node ul{list-style:none;margin-top:2px}
+  .node ul li{font-size:.8rem;color:var(--dim);padding-left:14px;position:relative;margin-top:3px}
+  .node ul li::before{content:'·';position:absolute;left:2px;color:var(--teal)}
+  .chip{font-family:var(--mono);font-size:9px;letter-spacing:.08em;padding:2.5px 8px;border-radius:100px;border:1px solid;white-space:nowrap}
+  .chip.auto{color:var(--teal);border-color:rgba(56,191,160,.5)}
+  .chip.manual{color:var(--amber);border-color:rgba(217,164,65,.5)}
+  .chip.mandatory{color:#d8b4ff;border-color:rgba(190,140,255,.45)}
+  .chip.gap{color:var(--coral);border-color:rgba(224,89,107,.55)}
+  .chip.strength{color:var(--green);border-color:rgba(76,175,125,.5)}
+  .n-entry{border-color:var(--teal)}
+  .n-auto{background:repeating-linear-gradient(45deg,#141824,#141824 4px,var(--surface) 4px,var(--surface) 9px)}
+  .n-caution{border-style:dashed;border-color:var(--amber)}
+  .n-risk{border-color:var(--coral)}
+  .n-good{border-color:rgba(76,175,125,.65)}
+  .wire-label{position:absolute;z-index:3;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--dim);background:#0d1016;border:1px solid var(--border);border-radius:6px;padding:2px 7px;transform:translate(-50%,-50%);white-space:nowrap}
+  .callout{margin-top:18px;border-left:3px solid var(--coral);background:rgba(224,89,107,.06);border-radius:0 12px 12px 0;padding:12px 16px;font-size:.88rem;color:#d5cfd6;max-width:90ch}
+  .callout.ok{border-left-color:var(--green);background:rgba(76,175,125,.06)}
+  .callout strong{color:var(--text)}
+  @media(max-width:940px){.lanes{grid-template-columns:1fr !important}.diagram svg.wires,.wire-label{display:none}.lane{gap:14px}}</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Operations</div>
+    <div class="hero-title">Three flows that keep the system alive<br><em>skills &middot; redesign &middot; recovery</em></div>
+    <div class="hero-sub">How a new skill reaches the knowledge portal, how a portal redesign ships safely, and the one command that rebuilds the whole Claude setup on a fresh machine. Facts verified against the live repos, 23 Jul 2026.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:24px;padding-bottom:64px">
+<div class="cwt">
+  <div class="legend">
+    <span><span class="sw teal"></span>entry / you act</span>
+    <span><span class="sw auto"></span>automatic — no action needed</span>
+    <span><span class="sw amber"></span>manual / caution</span>
+    <span><span class="sw coral"></span>risk or gap</span>
+    <span><span class="sw green"></span>safety net in place</span>
+  </div>
+
+  <!-- ============================= UC 1 ============================= -->
+<section class="uc" id="uc1">
+  <div class="uc-head"><span class="uc-num">01</span><h2>I add a new skill — how does it reach the knowledge portal?</h2></div>
+  <p class="uc-intro">A skill exists in <strong>two copies</strong>: the runtime one Claude actually reads (<code>~/.claude/skills/</code>) and the portal one in the public repo. The <code>skill-publisher</code> skill is the mandatory bridge between them — it fires after <em>any</em> skill is created or installed, whatever the origin. Once you push, everything downstream is automatic.</p>
+  <ol class="steps">
+    <li><strong>Skill lands on your machine</strong> — written from scratch, installed from a plugin/marketplace, or generated by an agent. Runtime home: <code>~/.claude/skills/&lt;slug&gt;/SKILL.md</code>.</li>
+    <li><strong>skill-publisher runs</strong> (Claude does this — it's a mandatory post-step). It creates the portal copy in the portal repo clone at <code>skills/&lt;slug&gt;/SKILL.md</code> with portal frontmatter plus the full body.</li>
+    <li><strong>Preview locally:</strong> <code>npm test</code> + <code>npm run build</code> in the clone.</li>
+    <li><strong>Commit + push</strong> to <code>gilesparnell/Claude</code>. A pre-commit scan blocks pricing / client / ADR terms — if it fires, stop and reassess, never bypass.</li>
+    <li><strong>Hands off from here:</strong> the <code>build-portal.yml</code> Action regenerates the index and the skill's detail page and auto-commits; GitHub Pages redeploys. Your card appears at <code>gilesparnell.github.io/Claude/skills.html</code> in ~a minute.</li>
+  </ol>
+
+  <div class="diagram" id="d1">
+    <svg class="wires"></svg>
+    <div class="lanes" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="lane">
+        <div class="lane-title">Your laptop</div>
+        <div class="node n-entry" id="d1-new">
+          <div class="kind">entry · any origin</div>
+          <h3>New skill appears</h3>
+          <ul><li>written · installed · plugin · agent-made</li></ul>
+        </div>
+        <div class="node" id="d1-runtime">
+          <div class="kind">runtime copy <span class="chip auto">claude reads this</span></div>
+          <h3>~/.claude/skills/&lt;slug&gt;/</h3>
+          <div class="stack">SKILL.md — full instructions</div>
+        </div>
+        <div class="node" id="d1-pub">
+          <div class="kind">workflow <span class="chip mandatory">mandatory</span></div>
+          <h3>skill-publisher</h3>
+          <ul><li>creates portal copy + frontmatter</li><li><code>npm test</code> · <code>npm run build</code> preview</li></ul>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-title">gilesparnell/Claude · public repo</div>
+        <div class="node" id="d1-portalcopy">
+          <div class="kind">portal source</div>
+          <h3>skills/&lt;slug&gt;/SKILL.md</h3>
+          <div class="stack">claude-public clone → push</div>
+          <ul><li>pre-commit scan: pricing/client/ADR blocked</li></ul>
+        </div>
+        <div class="node n-auto" id="d1-action">
+          <div class="kind">github action <span class="chip auto">auto</span></div>
+          <h3>build-portal.yml</h3>
+          <ul><li>runs <code>build-docs-index.js</code></li><li>writes docs-index.json + detail page</li><li>auto-commits <code>[skip ci]</code></li></ul>
+        </div>
+        <div class="node n-risk" id="d1-warn">
+          <div class="kind">rule <span class="chip gap">never</span></div>
+          <h3>Don't hand-edit generated files</h3>
+          <ul><li><code>docs/skills/*</code> + <code>docs-index.json</code> are overwritten on every push</li></ul>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-title">Live + safety net</div>
+        <div class="node n-auto" id="d1-pages">
+          <div class="kind">deploy <span class="chip auto">auto</span></div>
+          <h3>GitHub Pages</h3>
+          <div class="stack">~30–60s propagation</div>
+        </div>
+        <div class="node n-good" id="d1-live">
+          <div class="kind">result <span class="chip strength">done</span></div>
+          <h3>Card live on the portal</h3>
+          <div class="stack">/Claude/skills.html + detail page</div>
+        </div>
+        <div class="node n-good" id="d1-sync">
+          <div class="kind">backup <span class="chip auto">session end</span></div>
+          <h3>Private ops repo auto-sync</h3>
+          <ul><li>runtime copy mirrored to private repo</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= UC 2 ============================= -->
+<section class="uc" id="uc2">
+  <div class="uc-head"><span class="uc-num">02</span><h2>I want to redesign the knowledge portal's look &amp; feel</h2></div>
+  <p class="uc-intro">Decided 23 Jul 2026: the Knowledge portal lives in <strong><code>gilesparnell/Claude</code> only</strong> — never add <code>Claude/</code> pages to the hub repo. The design contract (<code>docs/DESIGN-HANDOVER.md</code>) applies: Claude Design owns look-and-feel, Claude Code owns content. The trap to brief around: most portal pages are <em>generated</em> by the Action on every push — restyling the generated HTML gets overwritten within one push. The design must land in the <strong>stylesheet and the generator's template</strong>.</p>
+  <ol class="steps">
+    <li><strong>Brief Claude Design</strong> with the repo (<code>gilesparnell/Claude</code>) and the three design surfaces: <code>docs/portal.css</code> (shared system, all pages import it), the hand-authored shells (<code>docs/skills.html</code>, <code>walkthroughs.html</code>, <code>templates.html</code>), and the HTML template inside <code>scripts/build-docs-index.js</code>. Say explicitly: never style <code>docs/skills/*</code> or <code>docs/templates/*</code> directly.</li>
+    <li><strong>Claude Design exports</strong> those files to an export folder (same pattern as today's site redesign).</li>
+    <li><strong>Claude Code pulls the export in</strong>, updates tests that assert the old markup, then runs <code>npm test</code> + <code>npm run build</code> — this regenerates every detail page under the new template, locally, before anything ships.</li>
+    <li><strong>Commit + push.</strong> The Action re-runs the same build in CI, auto-commits, Pages deploys.</li>
+    <li><strong>Verify live</strong> — curl the portal pages and eyeball skills, walkthroughs, templates and one detail page of each type.</li>
+  </ol>
+
+  <div class="diagram" id="d2">
+    <svg class="wires"></svg>
+    <div class="lanes" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="lane">
+        <div class="lane-title">Claude Design · design tool</div>
+        <div class="node n-entry" id="d2-brief">
+          <div class="kind">entry · you</div>
+          <h3>Brief the redesign</h3>
+          <ul><li>repo: gilesparnell/Claude</li><li>contract: DESIGN-HANDOVER.md rules</li></ul>
+        </div>
+        <div class="node" id="d2-surfaces">
+          <div class="kind">design surfaces</div>
+          <h3>The three legit targets</h3>
+          <ul><li><code>docs/portal.css</code> — shared system</li><li>page shells: skills/walkthroughs/templates.html</li><li>template inside <code>build-docs-index.js</code></li></ul>
+        </div>
+        <div class="node n-risk" id="d2-trap">
+          <div class="kind">trap <span class="chip gap">clobbered</span></div>
+          <h3>Styling generated HTML</h3>
+          <ul><li><code>docs/skills/*</code>, <code>docs/templates/*</code> are rebuilt by the Action on every push — direct styling survives one push at most</li></ul>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-title">Your laptop · claude-public clone</div>
+        <div class="node" id="d2-export">
+          <div class="kind">handoff</div>
+          <h3>Export folder → clone</h3>
+          <div class="stack">Claude Code copies files in</div>
+        </div>
+        <div class="node" id="d2-build">
+          <div class="kind">local build <span class="chip manual">verify first</span></div>
+          <h3>npm test · npm run build</h3>
+          <ul><li>update tests asserting old markup</li><li>all detail pages regenerate under new template</li></ul>
+        </div>
+        <div class="node" id="d2-push">
+          <div class="kind">ship</div>
+          <h3>Commit + push to main</h3>
+          <div class="stack">pre-commit scan runs</div>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-title">GitHub → live</div>
+        <div class="node n-auto" id="d2-action">
+          <div class="kind">github action <span class="chip auto">auto</span></div>
+          <h3>build-portal.yml re-runs</h3>
+          <ul><li>same build in CI · auto-commit</li></ul>
+        </div>
+        <div class="node n-auto" id="d2-pages">
+          <div class="kind">deploy <span class="chip auto">auto</span></div>
+          <h3>GitHub Pages</h3>
+        </div>
+        <div class="node n-good" id="d2-verify">
+          <div class="kind">verify <span class="chip strength">evidence</span></div>
+          <h3>Live check</h3>
+          <ul><li>curl each portal page + one detail page per type</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout"><strong>Guard rails already in place from today:</strong> the hub repo's own generator is locked (<code>TEMPLATE_IS_STALE</code>) until its Console template lands, and <code>DESIGN-HANDOVER.md</code> now tells Claude Design to restyle Knowledge <em>in the portal repo</em> — never as <code>Claude/</code> pages inside the hub repo. The portal's equivalent risk is the trap card above: design in the generator, not the output.</div>
+</section>
+
+<!-- ============================= UC 3 ============================= -->
+<section class="uc" id="uc3">
+  <div class="uc-head"><span class="uc-num">03</span><h2>I lose this laptop — rebuilding my Claude setup from GitHub</h2></div>
+  <p class="uc-intro">This is the strongest of the three stories, and since 23 Jul 2026 it is <strong>one command</strong>. A private ops repo is a live mirror of <code>~/.claude</code> — global CLAUDE.md, identity files, skills, hooks, session-hooks, memory, settings — auto-synced at session end (verified byte-identical with your machine). Its <code>scripts/recover.sh</code> chains the whole restore; preview it any time with <code>--dry-run</code>.</p>
+  <ol class="steps">
+    <li><strong>New machine:</strong> install Claude Code and the <code>gh</code> CLI, then <code>gh auth login</code> to the gilesparnell account.</li>
+    <li><strong>Run the one command</strong> — clone the private ops repo and run its <code>scripts/recover.sh</code> (the exact command is the first thing in that repo's SETUP.md). It runs <code>install.sh</code> (restores <code>~/.claude</code> — rules, identity, 30+ skills, hooks, session-hooks, memory, settings), clones britfix from its own repo, and clones the working repos (hub site, knowledge portal). Covered by a 9-check test suite (<code>scripts/recover.test.sh</code>).</li>
+    <li><strong>Manual re-auth</strong> (OAuth can't be scripted — the script prints this checklist): Telegram plugin, Compound Engineering plugin, MCP servers (<code>uvx workspace-mcp --single-user</code> for Google Workspace, Supabase on first use).</li>
+    <li><strong>Smoke test:</strong> open a Claude session in a project and confirm it greets you with your rules (timezone, TDD, routing) and remembers project context.</li>
+  </ol>
+
+  <div class="diagram" id="d3">
+    <svg class="wires"></svg>
+    <div class="lanes" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="lane">
+        <div class="lane-title">New machine</div>
+        <div class="node n-entry" id="d3-start">
+          <div class="kind">entry</div>
+          <h3>Fresh macOS</h3>
+          <ul><li>install Claude Code + gh</li><li><code>gh auth login</code></li></ul>
+        </div>
+        <div class="node n-entry" id="d3-clone">
+          <div class="kind">the one command <span class="chip strength">tested</span></div>
+          <h3>Clone ops repo → recover.sh</h3>
+          <ul><li>single chained command (see step 02)</li><li><code>--dry-run</code> previews every step</li></ul>
+        </div>
+        <div class="node" id="d3-install">
+          <div class="kind">recover.sh chains</div>
+          <h3>install.sh · britfix · repos</h3>
+          <ul><li>britfix ← its own repo</li></ul>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-title">Restored ~/.claude</div>
+        <div class="node n-good" id="d3-restored">
+          <div class="kind">outcome <span class="chip strength">full context</span></div>
+          <h3>Setup back, intelligence intact</h3>
+          <ul><li>global CLAUDE.md — all rules</li><li>identity/ — who you are, voice</li><li>skills (30+) · hooks · settings.json</li><li>project memory — what Claude learned</li></ul>
+        </div>
+        <div class="node n-caution" id="d3-reauth">
+          <div class="kind">manual <span class="chip manual">oauth</span></div>
+          <h3>Re-authenticate</h3>
+          <ul><li>Telegram · Compound Engineering</li><li>MCP: google-workspace · supabase</li></ul>
+        </div>
+        <div class="node n-risk" id="d3-gap">
+          <div class="kind">remaining gap <span class="chip gap">lost with laptop</span></div>
+          <h3>Not in any repo</h3>
+          <ul><li>trading reader build sources (Cowork-only; reader HTML itself is committed + self-contained)</li><li>closed 23 Jul: tools/session-hooks now mirrored; britfix scripted</li></ul>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-title">Working repos + safety net</div>
+        <div class="node" id="d3-repos">
+          <div class="kind">content</div>
+          <h3>Clone working repos</h3>
+          <ul><li>gilesparnell.github.io — hub + personal</li><li>claude-public — portal + skills</li><li>project repos as needed</li></ul>
+        </div>
+        <div class="node n-good" id="d3-smoke">
+          <div class="kind">verify <span class="chip strength">evidence</span></div>
+          <h3>Smoke test a session</h3>
+          <ul><li>rules fire · memory recalls · skills load</li></ul>
+        </div>
+        <div class="node n-good" id="d3-sync">
+          <div class="kind">why this works <span class="chip auto">session end</span></div>
+          <h3>Auto-sync keeps the mirror fresh</h3>
+          <ul><li>last: today 6:11 pm AEST</li><li>CLAUDE.md + identity verified identical</li><li>worst case ≈ one session of drift</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout ok"><strong>The command to remember lives at the top of the private ops repo&#8217;s SETUP.md</strong> — clone + <code>recover.sh</code> chains everything, with <code>--dry-run</code> to preview. Fixed 23 Jul 2026: SETUP.md's stale clone URL (it pointed at the public repo from before the July 8 split), the stale session-hooks mirror, and britfix recovery — all committed to the ops repo and covered by <code>scripts/recover.test.sh</code>.</div>
+  <div class="callout ok"><strong>Standing rule now in memory:</strong> anything that exists only on this machine or in an ephemeral session gets flagged and offered a home in GitHub — that's how the two gaps above were caught.</div>
+</section>
+
+
+</div>
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span>Generated July 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
+</footer>
+
+<script>
+  const EDGES = {
+    d1: [
+      ['d1-new','d1-runtime','saved locally','v'],
+      ['d1-runtime','d1-pub','triggers','v'],
+      ['d1-pub','d1-portalcopy','copy','h'],
+      ['d1-portalcopy','d1-action','git push','v'],
+      ['d1-action','d1-pages','on success','h'],
+      ['d1-pages','d1-live','deploys','v']
+    ],
+    d2: [
+      ['d2-brief','d2-surfaces','scope','v'],
+      ['d2-surfaces','d2-export','design work → export','h'],
+      ['d2-export','d2-build','copy in','v'],
+      ['d2-build','d2-push','all green','v'],
+      ['d2-push','d2-action','push','h'],
+      ['d2-action','d2-pages','auto-commit','v'],
+      ['d2-pages','d2-verify','live','v']
+    ],
+    d3: [
+      ['d3-start','d3-clone','authed','v'],
+      ['d3-clone','d3-install','cloned','v'],
+      ['d3-install','d3-restored','installs','h'],
+      ['d3-restored','d3-reauth','then','v'],
+      ['d3-reauth','d3-repos','ready to work','h'],
+      ['d3-repos','d3-smoke','finally','v']
+    ]
+  };
+  function draw(){
+    document.querySelectorAll('.wire-label').forEach(e=>e.remove());
+    for(const [dia,edges] of Object.entries(EDGES)){
+      const box=document.getElementById(dia); if(!box) continue;
+      const svg=box.querySelector('svg.wires');
+      if(getComputedStyle(svg).display==='none'){svg.innerHTML='';continue;}
+      const br=box.getBoundingClientRect();
+      let defs=`<defs><marker id="ar-${dia}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5a6378"/></marker></defs>`;
+      let paths='';
+      for(const [f,t,label,mode] of edges){
+        const a=document.getElementById(f), b=document.getElementById(t);
+        if(!a||!b) continue;
+        const ra=a.getBoundingClientRect(), rb=b.getBoundingClientRect();
+        let x1,y1,x2,y2,d;
+        if(mode==='v'){
+          x1=ra.left-br.left+ra.width/2; y1=ra.bottom-br.top;
+          x2=rb.left-br.left+rb.width/2; y2=rb.top-br.top;
+          const my=(y1+y2)/2;
+          d=`M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2-3}`;
+        }else{
+          const ltr = rb.left>ra.left;
+          x1=(ltr?ra.right:ra.left)-br.left; y1=ra.top-br.top+ra.height/2;
+          x2=(ltr?rb.left:rb.right)-br.left; y2=rb.top-br.top+rb.height/2;
+          const mx=(x1+x2)/2;
+          d=`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2+(ltr?-3:3)},${y2}`;
+        }
+        paths+=`<path d="${d}" fill="none" stroke="#3a4356" stroke-width="1.6" marker-end="url(#ar-${dia})"/>`;
+        const lb=document.createElement('div');
+        lb.className='wire-label'; lb.textContent=label;
+        lb.style.left=((x1+x2)/2)+'px'; lb.style.top=((y1+y2)/2)+'px';
+        box.appendChild(lb);
+      }
+      svg.setAttribute('viewBox',`0 0 ${br.width} ${br.height}`);
+      svg.innerHTML=defs+paths;
+    }
+  }
+  addEventListener('load',draw); addEventListener('resize',()=>{clearTimeout(window.__t);window.__t=setTimeout(draw,150)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+</script>
+</body>
+</html>
