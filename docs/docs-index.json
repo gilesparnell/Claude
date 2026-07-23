@@ -1,7 +1,7 @@
 {
   "counts": {
     "skill": 35,
-    "walkthrough": 12,
+    "walkthrough": 13,
     "template": 3,
     "unpublished_skills": 0
   },
@@ -424,6 +424,18 @@
       ],
       "url": "skills/wayfinder.html",
       "meta": "wayfinder",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Claude System Walkthroughs: Skills, Redesign, Recovery",
+      "desc": "Three operational flows with diagrams: publishing a new skill to the portal, shipping a portal redesign without clobbering generated pages, and the one-command disaster recovery…",
+      "tags": [
+        "claude",
+        "operations",
+        "recovery"
+      ],
+      "url": "diagrams/claude-system-walkthroughs.html",
       "published": true
     },
     {
