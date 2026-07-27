@@ -1,7 +1,7 @@
 {
   "counts": {
     "skill": 35,
-    "walkthrough": 13,
+    "walkthrough": 14,
     "template": 3,
     "unpublished_skills": 0
   },
@@ -541,6 +541,18 @@
         "lifecycle"
       ],
       "url": "diagrams/development-lifecycle.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Getting Started: Cowork & Claude Code",
+      "desc": "Non-technical onboarding guide — Cowork as the daily driver for spreadsheets, docs and research; Claude Code as the power tool.",
+      "tags": [
+        "claude",
+        "cowork",
+        "onboarding"
+      ],
+      "url": "diagrams/getting-started-cowork-claude-code.html",
       "published": true
     },
     {
