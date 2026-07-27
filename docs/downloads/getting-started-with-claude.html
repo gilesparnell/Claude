@@ -126,14 +126,14 @@
   <div class="tldr">
     <div class="label">The short version</div>
     <p><strong>Open Cowork for almost everything.</strong> It reads and writes files in folders you choose, connects to Google Drive and Gmail, and shows you every step it takes before anything is final.</p>
-    <p><strong>Claude Code is the power tool.</strong> It runs in a terminal, and it's what Giles uses to build things. You don't need it day to day — think of it as the workshop out the back that Giles sets up when a job calls for it.</p>
+    <p><strong>Claude Code is the power tool.</strong> It runs in a terminal and is built for automation. You don't need it day to day — think of it as the workshop out the back, there for jobs that should run on their own.</p>
   </div>
 
   <h2>The two tools</h2>
   <p class="lede">Both are Claude underneath — same intelligence, different workbench.</p>
 
 <div class="figure" style="margin:22px auto 28px;max-width:440px">
-<svg viewBox="0 0 380 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration comparing Claude Cowork, the everyday assistant for files and email that you review, with Claude Code, the workshop for automation that Giles runs" style="width:100%;height:auto;display:block">
+<svg viewBox="0 0 380 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration comparing Claude Cowork, the everyday assistant for files and email that you review, with Claude Code, the workshop for jobs that run on their own" style="width:100%;height:auto;display:block">
   <defs>
     <marker id="arrT" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
       <path d="M0,0 L9,4 L0,8 Z" fill="#0e8f83"/>
@@ -261,7 +261,7 @@
     <circle cx="68" cy="812.5" r="4"/>
     <path d="M60.5 823 a7.5 7.5 0 0 1 15 0"/>
   </g>
-  <text x="92" y="813" font-size="13.5" font-weight="650" fill="#0e2233">Giles runs this part</text>
+  <text x="92" y="813" font-size="13.5" font-weight="650" fill="#0e2233">It runs by itself</text>
   <text x="92" y="831" font-size="11.5" fill="#4a5d6b">You say what you need, then review the result</text>
 
   <!-- rule of thumb -->
@@ -292,7 +292,7 @@
         <li>Deeper automation: custom skills, scheduled jobs, repeatable workflows</li>
         <li>More capability, but fewer guardrails — a wrong approval can overwrite files</li>
         <li>Needs someone comfortable fixing it when it misbehaves</li>
-        <li>This is Giles' territory — ask him before going here</li>
+        <li>One to grow into once Cowork feels easy — not the place to start</li>
       </ul>
     </div>
   </div>
@@ -306,17 +306,17 @@
     <tr><td>Draft or polish a doc, report or email</td><td><span class="who">Cowork</span></td></tr>
     <tr><td>Research a topic and turn it into a summary</td><td><span class="who">Cowork</span></td></tr>
     <tr><td>Work through a whole folder of files at once</td><td><span class="who">Cowork</span></td></tr>
-    <tr><td>Set up something that runs automatically every week</td><td><span class="who code">Claude Code, with Giles</span></td></tr>
-    <tr><td>Build a small tool, tracker or website</td><td><span class="who code">Claude Code, with Giles</span></td></tr>
+    <tr><td>Set up something that runs automatically every week</td><td><span class="who code">Claude Code (advanced)</span></td></tr>
+    <tr><td>Build a small tool, tracker or website</td><td><span class="who code">Claude Code (advanced)</span></td></tr>
   </table>
   </div>
-  <p class="section-note">Honest rule of thumb: if the job is <em>done once and reviewed by you</em>, it's Cowork. If the job should <em>keep happening on its own</em>, it's Claude Code — and that's a "talk to Giles" moment, not a solo mission.</p>
+  <p class="section-note">Honest rule of thumb: if the job is <em>done once and reviewed by you</em>, it's Cowork. If the job should <em>keep happening on its own</em>, it's Claude Code — get comfortable in Cowork first, then step up when you're ready.</p>
 
   <h2>How Claude reaches your files</h2>
   <p>Three connections matter, and they're set up once:</p>
   <p><strong>1. Folders on your computer.</strong> You choose which folders Cowork can see. It can read, edit and create files there — nothing outside them. Keep one working folder (say, <em>Documents/Claude</em>) and drop files in when you want Claude on them.</p>
   <p><strong>2. Google Drive connector.</strong> Lets Claude <em>read</em> your Docs and Sheets, and save new files to Drive. One catch: it can't edit an existing Google Sheet or Doc — reading only.</p>
-  <p><strong>3. The Google workspace connection (Giles sets this up).</strong> This is the piece that lets Claude actually <em>update</em> existing Sheets and Docs, and prepare Gmail drafts. It runs through your machine, so:</p>
+  <p><strong>3. The Google workspace connection (a one-time setup).</strong> This is the piece that lets Claude actually <em>update</em> existing Sheets and Docs, and prepare Gmail drafts. It runs through your machine, so:</p>
   <div class="callout"><strong>Keep the Claude desktop app open</strong> when you're working with Google Sheets or Docs. The Google connection runs locally — if the app is closed, Claude can read Drive but can't make edits.</div>
 
   <h2>Common scenarios</h2>
@@ -354,12 +354,12 @@
 
   <div class="scenario">
     <div class="top"><h3>A report you need every single week</h3><span class="pill both">Starts in Cowork → Claude Code</span></div>
-    <p>Do it in Cowork the first few times until the format is right. Once it's routine, that's the signal to automate — Giles can set up Claude Code to produce it on schedule, and you just review the result.</p>
-    <div class="prompt"><span class="say">Try saying</span>(to Giles) "I've done this same Monday report in Cowork three weeks running — same steps every time. Can we automate it?"</div>
+    <p>Do it in Cowork the first few times until the format is right. Once it's routine, that's the signal to automate — Claude Code can produce it on schedule, and you just review the result.</p>
+    <div class="prompt"><span class="say">Try saying</span>"I've done this same Monday report three weeks running — same steps every time. Set up a repeatable way to produce it each week."</div>
   </div>
 
   <h2>Four habits that make Claude much better</h2>
-  <p class="lede">These come straight from how Giles works with Claude every day. They work in Cowork, Claude Code, and plain chat.</p>
+  <p class="lede">They work in Cowork, Claude Code, and plain chat — and they cost nothing to adopt.</p>
 
   <div class="habit">
     <h3>1. Ask for evidence, not reassurance</h3>
@@ -389,7 +389,7 @@
   <div class="fix">
     <div class="row">
       <div class="symptom">"I can't access your Google account" / Sheets edits stop working</div>
-      <div class="remedy">The Google connection has dropped — it happens periodically and it's a two-minute fix. Message Giles.</div>
+      <div class="remedy">The Google connection has dropped — it happens periodically. Reconnect it from Claude's Settings &rarr; Connectors; it takes two minutes.</div>
     </div>
     <div class="row">
       <div class="symptom">"You've reached your usage limit"</div>
@@ -406,11 +406,11 @@
   </div>
 
   <h2>Going further</h2>
-  <p>Giles keeps a public library of the workflows, skills and guides behind his Claude setup — including deeper walkthroughs of how the pieces fit together:</p>
+  <p>There's a public library of the workflows, skills and deeper walkthroughs behind this setup:</p>
   <p><a href="https://gilesparnell.github.io/Claude/">gilesparnell.github.io/Claude</a></p>
 
   <div class="footer">
-    Written by Giles Parnell &middot; Parnell Systems &middot; Built with Claude, naturally.
+    Built with Claude, naturally.
   </div>
 
 </div>
