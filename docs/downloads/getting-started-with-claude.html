@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started with Claude — Cowork &amp; Claude Code</title>
+<style>
+  :root{
+    --navy:#0e2233;
+    --navy2:#16344d;
+    --teal:#0e8f83;
+    --teal-bg:#e8f5f3;
+    --teal-dark:#0a6e65;
+    --amber-bg:#fdf3e0;
+    --amber-border:#e8c98a;
+    --amber-text:#8a5f14;
+    --ink:#1d2b36;
+    --ink2:#4a5d6b;
+    --ink3:#7b8b96;
+    --line:#dde5ea;
+    --bg:#f7f9fa;
+    --card:#ffffff;
+    --code-bg:#f0f4f6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;
+  }
+  .page{max-width:760px;margin:0 auto;padding:0 20px 72px}
+
+  /* Header */
+  .hero{background:var(--navy);color:#fff;padding:48px 20px 44px;margin-bottom:36px}
+  .hero-inner{max-width:760px;margin:0 auto}
+  .hero .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fc6bf;font-weight:600;margin-bottom:14px}
+  .hero h1{font-size:30px;line-height:1.25;font-weight:700;letter-spacing:-.01em;margin-bottom:14px}
+  .hero p{color:#b8c9d4;font-size:17px;max-width:56ch}
+
+  h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:52px 0 8px;color:var(--navy)}
+  h2 + p.lede{color:var(--ink2);margin-bottom:20px}
+  h3{font-size:16px;font-weight:650;margin-bottom:6px;color:var(--navy)}
+  p{margin-bottom:14px}
+  strong{font-weight:650;color:var(--navy)}
+  .section-note{color:var(--ink2)}
+
+  /* TLDR */
+  .tldr{background:var(--teal-bg);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:20px 22px;margin:0 0 8px}
+  .tldr .label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--teal-dark);margin-bottom:8px}
+  .tldr p{margin-bottom:10px}
+  .tldr p:last-child{margin-bottom:0}
+
+  /* Two tools */
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0 6px}
+  @media(max-width:640px){.tools{grid-template-columns:1fr}}
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px}
+  .tool .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .tool.cowork .kicker{color:var(--teal-dark)}
+  .tool.code .kicker{color:#6b5fa8}
+  .tool h3{font-size:18px;margin-bottom:10px}
+  .tool ul{list-style:none;margin-top:12px}
+  .tool li{padding:7px 0 7px 26px;position:relative;border-top:1px solid var(--line);font-size:15px;color:var(--ink2)}
+  .tool li::before{content:"";position:absolute;left:4px;top:15px;width:7px;height:7px;border-radius:50%}
+  .tool.cowork li::before{background:var(--teal)}
+  .tool.code li::before{background:#6b5fa8}
+  .badge{display:inline-block;font-size:12px;font-weight:650;padding:3px 10px;border-radius:99px;margin-bottom:12px}
+  .badge.daily{background:var(--teal-bg);color:var(--teal-dark)}
+  .badge.power{background:#efedf7;color:#5a4f96}
+
+  /* Decision table */
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0 6px;font-size:15px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13.5px}
+  td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  td:first-child{color:var(--ink2)}
+  td .who{font-weight:650;color:var(--teal-dark);white-space:nowrap}
+  td .who.code{color:#5a4f96}
+  .table-scroll{overflow-x:auto}
+
+  /* Scenario cards */
+  .scenario{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+  .scenario .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .scenario .pill{font-size:12px;font-weight:650;padding:3px 10px;border-radius:99px;white-space:nowrap}
+  .pill.cowork{background:var(--teal-bg);color:var(--teal-dark)}
+  .pill.code{background:#efedf7;color:#5a4f96}
+  .pill.both{background:#fdf3e0;color:#8a5f14}
+  .scenario p{font-size:15px;color:var(--ink2);margin-bottom:10px}
+  .prompt{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--ink);font-style:normal;margin-top:4px}
+  .prompt .say{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--ink3);display:block;margin-bottom:5px;font-style:normal}
+
+  /* Habits */
+  .habit{border-top:1px solid var(--line);padding:16px 0}
+  .habit:first-of-type{border-top:none}
+  .habit h3{font-size:15.5px}
+  .habit p{font-size:15px;color:var(--ink2);margin-bottom:8px}
+  .habit .prompt{margin-top:0}
+
+  /* Callout */
+  .callout{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:10px;padding:16px 18px;margin:18px 0;font-size:15px}
+  .callout strong{color:var(--amber-text)}
+
+  /* Fix list */
+  .fix{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 22px;margin:18px 0}
+  .fix .row{padding:14px 0;border-top:1px solid var(--line)}
+  .fix .row:first-child{border-top:none}
+  .fix .symptom{font-weight:650;color:var(--navy);font-size:15px}
+  .fix .remedy{font-size:15px;color:var(--ink2);margin-top:3px}
+
+  a{color:var(--teal-dark);text-decoration:none;font-weight:550}
+  a:hover{text-decoration:underline}
+
+  .footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Getting started guide</div>
+    <h1>Working with Claude:<br>Cowork &amp; Claude Code</h1>
+    <p>How to get real work done with Claude — spreadsheets, documents, research, and everything in between. Which tool to open, how to ask, and what to do when something breaks.</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="tldr">
+    <div class="label">The short version</div>
+    <p><strong>Open Cowork for almost everything.</strong> It reads and writes files in folders you choose, connects to Google Drive and Gmail, and shows you every step it takes before anything is final.</p>
+    <p><strong>Claude Code is the power tool.</strong> It runs in a terminal, and it's what Giles uses to build things. You don't need it day to day — think of it as the workshop out the back that Giles sets up when a job calls for it.</p>
+  </div>
+
+  <h2>The two tools</h2>
+  <p class="lede">Both are Claude underneath — same intelligence, different workbench.</p>
+
+  <div class="tools">
+    <div class="tool cowork">
+      <div class="kicker">Claude Cowork</div>
+      <span class="badge daily">Your daily driver</span>
+      <h3>An assistant that works in your files</h3>
+      <ul>
+        <li>Reads, edits and creates files in folders you designate — Word, Excel, PDF, text</li>
+        <li>Connects to Google Drive, Gmail and Sheets</li>
+        <li>Shows every step and file it touches, so you can review before trusting</li>
+        <li>Keeps working on long tasks even after you close the laptop</li>
+        <li>No terminal, no setup beyond pointing it at a folder</li>
+      </ul>
+    </div>
+    <div class="tool code">
+      <div class="kicker">Claude Code</div>
+      <span class="badge power">The power tool</span>
+      <h3>An agent that builds and automates</h3>
+      <ul>
+        <li>Runs in a terminal — built for developers</li>
+        <li>Deeper automation: custom skills, scheduled jobs, repeatable workflows</li>
+        <li>More capability, but fewer guardrails — a wrong approval can overwrite files</li>
+        <li>Needs someone comfortable fixing it when it misbehaves</li>
+        <li>This is Giles' territory — ask him before going here</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Which one, when</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>You want to…</th><th>Use</th></tr>
+    <tr><td>Read, summarise or compare documents and PDFs</td><td><span class="who">Cowork</span></td></tr>
+    <tr><td>Update a spreadsheet, tidy data, add formulas</td><td><span class="who">Cowork</span></td></tr>
+    <tr><td>Draft or polish a doc, report or email</td><td><span class="who">Cowork</span></td></tr>
+    <tr><td>Research a topic and turn it into a summary</td><td><span class="who">Cowork</span></td></tr>
+    <tr><td>Work through a whole folder of files at once</td><td><span class="who">Cowork</span></td></tr>
+    <tr><td>Set up something that runs automatically every week</td><td><span class="who code">Claude Code, with Giles</span></td></tr>
+    <tr><td>Build a small tool, tracker or website</td><td><span class="who code">Claude Code, with Giles</span></td></tr>
+  </table>
+  </div>
+  <p class="section-note">Honest rule of thumb: if the job is <em>done once and reviewed by you</em>, it's Cowork. If the job should <em>keep happening on its own</em>, it's Claude Code — and that's a "talk to Giles" moment, not a solo mission.</p>
+
+  <h2>How Claude reaches your files</h2>
+  <p>Three connections matter, and they're set up once:</p>
+  <p><strong>1. Folders on your computer.</strong> You choose which folders Cowork can see. It can read, edit and create files there — nothing outside them. Keep one working folder (say, <em>Documents/Claude</em>) and drop files in when you want Claude on them.</p>
+  <p><strong>2. Google Drive connector.</strong> Lets Claude <em>read</em> your Docs and Sheets, and save new files to Drive. One catch: it can't edit an existing Google Sheet or Doc — reading only.</p>
+  <p><strong>3. The Google workspace connection (Giles sets this up).</strong> This is the piece that lets Claude actually <em>update</em> existing Sheets and Docs, and prepare Gmail drafts. It runs through your machine, so:</p>
+  <div class="callout"><strong>Keep the Claude desktop app open</strong> when you're working with Google Sheets or Docs. The Google connection runs locally — if the app is closed, Claude can read Drive but can't make edits.</div>
+
+  <h2>Common scenarios</h2>
+  <p class="lede">The situations you'll actually hit, which tool to open, and how to ask. Being specific about the outcome you want is 80% of getting a good result.</p>
+
+  <div class="scenario">
+    <div class="top"><h3>Update a spreadsheet with new numbers</h3><span class="pill cowork">Cowork</span></div>
+    <p>Claude reads the sheet, makes the changes, and shows you what it did. Always name the exact file and tab.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Open the sheet called <em>2026 Budget</em>, go to the July tab, and add these figures: … Then tell me which cells you changed."</div>
+  </div>
+
+  <div class="scenario">
+    <div class="top"><h3>Turn messy notes into a polished document</h3><span class="pill cowork">Cowork</span></div>
+    <p>Drop the notes (or a voice-memo transcript) into your Claude folder and describe the audience and format you want.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Take <em>meeting-notes.txt</em> from my Claude folder and turn it into a one-page summary for the team — plain language, decisions first, action items at the end."</div>
+  </div>
+
+  <div class="scenario">
+    <div class="top"><h3>Make sense of a pile of documents</h3><span class="pill cowork">Cowork</span></div>
+    <p>Point Claude at a folder and ask for exactly the comparison or extraction you need. It will work through every file and cite which one each finding came from.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Read every PDF in the <em>Invoices</em> folder, pull out the supplier, date and amount from each, and build me a spreadsheet with one row per invoice."</div>
+  </div>
+
+  <div class="scenario">
+    <div class="top"><h3>Draft emails you'd actually send</h3><span class="pill cowork">Cowork</span></div>
+    <p>With the Gmail connection, Claude can read a thread and prepare a draft — it lands in your Drafts folder, and nothing sends without you.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Find the latest email thread with the school about the excursion, and draft a short, friendly reply confirming attendance. Save it as a draft for me to check."</div>
+  </div>
+
+  <div class="scenario">
+    <div class="top"><h3>Research something properly</h3><span class="pill cowork">Cowork</span></div>
+    <p>Claude can search, read, compare and write up findings in one go. Say what decision the research is for — you'll get answers instead of a book report.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Compare the three CRM options in <em>shortlist.xlsx</em> for a small business: monthly effort to run, what each is best at, and which you'd pick for someone non-technical. One page."</div>
+  </div>
+
+  <div class="scenario">
+    <div class="top"><h3>A report you need every single week</h3><span class="pill both">Starts in Cowork → Claude Code</span></div>
+    <p>Do it in Cowork the first few times until the format is right. Once it's routine, that's the signal to automate — Giles can set up Claude Code to produce it on schedule, and you just review the result.</p>
+    <div class="prompt"><span class="say">Try saying</span>(to Giles) "I've done this same Monday report in Cowork three weeks running — same steps every time. Can we automate it?"</div>
+  </div>
+
+  <h2>Four habits that make Claude much better</h2>
+  <p class="lede">These come straight from how Giles works with Claude every day. They work in Cowork, Claude Code, and plain chat.</p>
+
+  <div class="habit">
+    <h3>1. Ask for evidence, not reassurance</h3>
+    <p>Claude sometimes says "done" optimistically. Make it prove the work before you trust it.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Before you tell me it's finished, show me the exact cells you changed and their new values."</div>
+  </div>
+
+  <div class="habit">
+    <h3>2. Start sessions with a catch-up</h3>
+    <p>Each new conversation starts fresh. Rather than re-explaining, ask Claude to rebuild context from your files first.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Catch me up: read the project folder and tell me in three bullets where things stand before we continue."</div>
+  </div>
+
+  <div class="habit">
+    <h3>3. Ask for a picture</h3>
+    <p>When an explanation gets long, a diagram is faster. Claude can draw the process instead of describing it.</p>
+    <div class="prompt"><span class="say">Try saying</span>"That's a lot of words — show me this as a simple diagram instead."</div>
+  </div>
+
+  <div class="habit">
+    <h3>4. De-AI the writing</h3>
+    <p>First drafts from any AI share the same tells — too enthusiastic, too many lists, words nobody uses. Ask for a pass in your own voice.</p>
+    <div class="prompt"><span class="say">Try saying</span>"Rewrite that the way I'd actually say it — shorter sentences, no buzzwords, warm but direct."</div>
+  </div>
+
+  <h2>When something breaks</h2>
+  <div class="fix">
+    <div class="row">
+      <div class="symptom">"I can't access your Google account" / Sheets edits stop working</div>
+      <div class="remedy">The Google connection has dropped — it happens periodically and it's a two-minute fix. Message Giles.</div>
+    </div>
+    <div class="row">
+      <div class="symptom">"You've reached your usage limit"</div>
+      <div class="remedy">Cowork uses your allowance faster than normal chat. It resets after a few hours — not broken, just resting. Save long jobs for one focused session rather than lots of small ones.</div>
+    </div>
+    <div class="row">
+      <div class="symptom">Claude edited the wrong thing</div>
+      <div class="remedy">Don't panic — Cowork lists every file it touched. Check the step log, and ask Claude to reverse the change. Version history in Google Docs/Sheets has your back too.</div>
+    </div>
+    <div class="row">
+      <div class="symptom">The result is generic or misses the point</div>
+      <div class="remedy">Usually a prompt problem, not a Claude problem. Add the three things it can't guess: the audience, the format you want, and what "good" looks like.</div>
+    </div>
+  </div>
+
+  <h2>Going further</h2>
+  <p>Giles keeps a public library of the workflows, skills and guides behind his Claude setup — including deeper walkthroughs of how the pieces fit together:</p>
+  <p><a href="https://gilesparnell.github.io/Claude/">gilesparnell.github.io/Claude</a></p>
+
+  <div class="footer">
+    Written by Giles Parnell &middot; Parnell Systems &middot; Built with Claude, naturally.
+  </div>
+
+</div>
+
+</body>
+</html>

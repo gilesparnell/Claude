@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started: Cowork &amp; Claude Code — Parnell Systems Knowledge Portal</title>
+<link rel="stylesheet" href="../portal.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </div>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Walkthrough &mdash; Claude</div>
+    <div class="hero-title">Getting started:<br><em>Cowork &amp; Claude Code</em></div>
+    <div class="hero-sub">A non-technical onboarding guide. Cowork is the daily driver for documents, spreadsheets and research; Claude Code is the power tool for building and automation. When to open which, how to ask, and what to do when something breaks.</div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+
+  <div class="section-label">The short version</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#128994;</div>
+      <div class="adr-body">
+        <div class="adr-title">Open Cowork for almost everything</div>
+        <div class="adr-desc">It reads and writes files in folders you choose, connects to Google Drive and Gmail, shows every step it takes, and keeps working on long tasks after you close the laptop. No terminal, no setup beyond pointing it at a folder.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128296;</div>
+      <div class="adr-body">
+        <div class="adr-title">Claude Code is the power tool</div>
+        <div class="adr-desc">Terminal-based, built for developers. Deeper automation &mdash; custom skills, scheduled jobs, repeatable workflows &mdash; but fewer guardrails. It's the workshop out the back: brilliant when a job calls for it, not where a non-technical user starts.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:40px">Which one, when</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#128202;</div>
+      <div class="adr-body">
+        <div class="adr-title">Done once, reviewed by you &rarr; Cowork</div>
+        <div class="adr-desc">Summarising documents, updating spreadsheets, drafting reports and emails, researching a decision, working through a folder of PDFs. If a human checks the result, Cowork is the right bench.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#9881;&#65039;</div>
+      <div class="adr-body">
+        <div class="adr-title">Keeps happening on its own &rarr; Claude Code</div>
+        <div class="adr-desc">Weekly reports on a schedule, small tools and trackers, anything that should run without you. That's a "talk to whoever runs your setup" moment, not a solo mission.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:40px">How Claude reaches your files</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">1</div>
+      <div class="adr-body">
+        <div class="adr-title">Folders on your computer</div>
+        <div class="adr-desc">You choose which folders Cowork can see; it can read, edit and create files there and nowhere else. Keep one working folder and drop files in when you want Claude on them.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">2</div>
+      <div class="adr-body">
+        <div class="adr-title">Google Drive connector</div>
+        <div class="adr-desc">Lets Claude read Docs and Sheets and save new files to Drive. The catch: it cannot edit an existing Google Sheet or Doc &mdash; reading only.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">3</div>
+      <div class="adr-body">
+        <div class="adr-title">The Google workspace connection</div>
+        <div class="adr-desc">A local MCP server that unlocks editing existing Sheets and Docs and preparing Gmail drafts. It runs through your machine, so keep the desktop app open when working with Google files &mdash; and note it only works in local sessions, not remote or scheduled ones.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:40px">Common scenarios</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#128200;</div>
+      <div class="adr-body">
+        <div class="adr-title">Update a spreadsheet &mdash; Cowork</div>
+        <div class="adr-desc">Name the exact file and tab: <em>"Open the 2026 Budget sheet, go to the July tab, add these figures, then tell me which cells you changed."</em></div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128221;</div>
+      <div class="adr-body">
+        <div class="adr-title">Messy notes into a polished doc &mdash; Cowork</div>
+        <div class="adr-desc">Drop the notes in your Claude folder and name the audience and format: <em>"Turn meeting-notes.txt into a one-page summary for the team &mdash; decisions first, action items last."</em></div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128194;</div>
+      <div class="adr-body">
+        <div class="adr-title">Make sense of a pile of documents &mdash; Cowork</div>
+        <div class="adr-desc"><em>"Read every PDF in the Invoices folder, pull out supplier, date and amount, and build a spreadsheet with one row per invoice."</em> Claude cites which file each finding came from.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#9993;&#65039;</div>
+      <div class="adr-body">
+        <div class="adr-title">Draft emails &mdash; Cowork</div>
+        <div class="adr-desc">With the Gmail connection, Claude reads a thread and prepares a reply that lands in your Drafts folder. Nothing sends without you.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128269;</div>
+      <div class="adr-body">
+        <div class="adr-title">Research a decision &mdash; Cowork</div>
+        <div class="adr-desc">Say what the research is for, not just the topic: <em>"Compare the three options in shortlist.xlsx for a small business and tell me which you'd pick for someone non-technical. One page."</em></div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128260;</div>
+      <div class="adr-body">
+        <div class="adr-title">A report you need every week &mdash; both</div>
+        <div class="adr-desc">Do it in Cowork until the format is right. Once it's the same steps three weeks running, that's the signal to automate it in Claude Code &mdash; and just review the result.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:40px">Four habits that make Claude much better</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#9989;</div>
+      <div class="adr-body">
+        <div class="adr-title">Ask for evidence, not reassurance</div>
+        <div class="adr-desc"><em>"Before you tell me it's finished, show me the exact cells you changed and their new values."</em> The same habit behind the <a href="../skills/verification-before-completion.html">verification-before-completion</a> skill.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128260;</div>
+      <div class="adr-body">
+        <div class="adr-title">Start sessions with a catch-up</div>
+        <div class="adr-desc">Each conversation starts fresh. <em>"Read the project folder and tell me in three bullets where things stand before we continue."</em> See the <a href="../skills/resume.html">resume</a> skill.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128506;&#65039;</div>
+      <div class="adr-body">
+        <div class="adr-title">Ask for a picture</div>
+        <div class="adr-desc">When an explanation gets long: <em>"Show me this as a simple diagram instead."</em> The <a href="../skills/visualise.html">visualise</a> skill exists because this works.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#9997;&#65039;</div>
+      <div class="adr-body">
+        <div class="adr-title">De-AI the writing</div>
+        <div class="adr-desc">First drafts share the same tells &mdash; too enthusiastic, too many lists. <em>"Rewrite that the way I'd actually say it &mdash; shorter sentences, no buzzwords."</em> See the <a href="../skills/humanizer.html">humanizer</a> skill.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:40px">When something breaks</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#128268;</div>
+      <div class="adr-body">
+        <div class="adr-title">"I can't access your Google account"</div>
+        <div class="adr-desc">The workspace connection has dropped &mdash; it happens periodically and re-authenticating takes two minutes. Message whoever set up your connection.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#9203;</div>
+      <div class="adr-body">
+        <div class="adr-title">"You've reached your usage limit"</div>
+        <div class="adr-desc">Cowork uses your allowance faster than normal chat. It resets after a few hours &mdash; not broken, just resting. Prefer one focused session over many small ones.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#8617;&#65039;</div>
+      <div class="adr-body">
+        <div class="adr-title">Claude edited the wrong thing</div>
+        <div class="adr-desc">Cowork lists every file it touched. Check the step log, ask Claude to reverse the change, and remember Google's version history has your back.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#127919;</div>
+      <div class="adr-body">
+        <div class="adr-title">The result is generic</div>
+        <div class="adr-desc">Usually a prompt problem. Add the three things Claude can't guess: the audience, the format you want, and what "good" looks like.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:40px">Sendable version</div>
+  <p style="color:var(--text3);font-size:14px;line-height:1.7">A fully self-contained copy of this guide &mdash; single HTML file, no dependencies, renders on a phone &mdash; lives at <a href="../downloads/getting-started-with-claude.html">downloads/getting-started-with-claude.html</a>. Send it over WhatsApp or email as-is.</p>
+
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span>Generated July 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
+</footer>
+
+</body>
+</html>
