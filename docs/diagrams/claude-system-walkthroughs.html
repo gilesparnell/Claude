@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude System Walkthroughs — gilesparnell / Parnell Systems</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 <style>
   .cwt{
     --bg:#0a0c10; --surface:#12151c; --raised:#1a1e28;
@@ -62,15 +63,18 @@
   @media(max-width:940px){.lanes{grid-template-columns:1fr !important}.diagram svg.wires,.wire-label{display:none}.lane{gap:14px}}</style>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="../index.html" class="header-brand">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
       <div class="header-logo">PS</div>
       <span class="header-name">Parnell Systems</span>
     </a>
     <nav class="header-nav">
       <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
       <a href="../skills.html">Skills</a>
       <a href="../walkthroughs.html" class="active">Walkthroughs</a>
       <a href="../templates.html">Templates</a>
@@ -82,15 +86,12 @@
   </div>
 </header>
 
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Walkthrough &mdash; Operations</div>
-    <div class="hero-title">Three flows that keep the system alive<br><em>skills &middot; redesign &middot; recovery</em></div>
-    <div class="hero-sub">How a new skill reaches the knowledge portal, how a portal redesign ships safely, and the one command that rebuilds the whole Claude setup on a fresh machine. Facts verified against the live repos, 23 Jul 2026.</div>
-  </div>
-</div>
-
-<div class="wrap" style="padding-top:24px;padding-bottom:64px">
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="walkthroughs"></aside>
+  <main class="dock-main">
+    <div class="main-title">Three flows that keep the system alive skills &middot; redesign &middot; recovery</div>
+    <div class="main-sub">How a new skill reaches the knowledge portal, how a portal redesign ships safely, and the one command that rebuilds the whole Claude setup on a fresh machine. Facts verified against the live repos, 23 Jul 2026.</div>
+    <div style="margin-top:8px">
 <div class="cwt">
   <div class="legend">
     <span><span class="sw teal"></span>entry / you act</span>
@@ -323,6 +324,8 @@
 
 
 </div>
+    </div>
+  </main>
 </div>
 
 <footer class="site-footer">
@@ -396,6 +399,11 @@
   }
   addEventListener('load',draw); addEventListener('resize',()=>{clearTimeout(window.__t);window.__t=setTimeout(draw,150)});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+</script>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
 </script>
 </body>
 </html>

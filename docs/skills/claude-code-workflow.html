@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Code Workflow — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">🪟</span>
-    <div>
-      <h1 class="skill-page-title">Claude Code Workflow</h1>
-      <p class="skill-page-desc">Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams. Use when setting up parallel sessions, onboarding to Claude Code workflows, or when terminal tabs are getting chaotic. Triggers on &#39;set up my dev environment&#39;, &#39;tmux workflow&#39;, &#39;parallel sessions&#39;, &#39;worktree setup&#39;, &#39;agent teams setup&#39;, &#39;too many tabs&#39;.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Claude Code Workflow</div>
+    <div class="main-sub">Visual guide to structuring your Claude Code development environment with tmux, git worktrees, and Agent Teams. Use when setting up parallel sessions, onboarding to Claude Code workflows, or when terminal tabs are getting chaotic. Triggers on &#39;set up my dev environment&#39;, &#39;tmux workflow&#39;, &#39;parallel sessions&#39;, &#39;worktree setup&#39;, &#39;agent teams setup&#39;, &#39;too many tabs&#39;.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">🪟</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>tooling</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.1</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>set up my dev environment</li><li>tmux workflow</li><li>parallel sessions</li><li>worktree setup</li><li>agent teams setup</li><li>too many tabs</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Named tmux windows replace ad-hoc terminal tabs</li><li>Git worktrees isolate parallel work streams</li><li>One Claude session per worktree</li><li>Primary and parallel agent slots kept separate</li></ul></section>
-  <section class="skill-doc"><p>A visual guide to replacing chaotic terminal tabs with structured, named, isolated Claude Code sessions using tmux + git worktrees + Agent Teams.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>set up my dev environment</li><li>tmux workflow</li><li>parallel sessions</li><li>worktree setup</li><li>agent teams setup</li><li>too many tabs</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Named tmux windows replace ad-hoc terminal tabs</li><li>Git worktrees isolate parallel work streams</li><li>One Claude session per worktree</li><li>Primary and parallel agent slots kept separate</li></ul></section>
+      <section class="skill-doc"><p>A visual guide to replacing chaotic terminal tabs with structured, named, isolated Claude Code sessions using tmux + git worktrees + Agent Teams.</p>
 <h2>The Problem</h2>
 <pre><code>┌──────────────────────────────────────────────────────────────┐
 │  Ghostty Tab Bar                                             │
@@ -337,12 +339,19 @@ claude --resume              # Resume named session
 claude --continue            # Continue most recent session
 </code></pre>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/claude-code-workflow/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/claude-code-workflow/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/claude-code-workflow/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

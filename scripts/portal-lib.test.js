@@ -20,6 +20,18 @@ test('renderTemplatePage: complete doc rendering title, description, and body', 
   assert.match(html, /template body/);
 });
 
+test('renderTemplatePage: uses the portal dock chrome', () => {
+  const html = renderTemplatePage('nextjs', { title: 'nextjs / CLAUDE.md', desc: 'A CLAUDE.md tuned for Next.js.' }, '<p>template body</p>');
+  assert.match(html, /<script defer src="\.\.\/portal-shell\.js"><\/script>/);
+  assert.match(html, /class="mesh-bg"/);
+  assert.match(html, /<aside class="dock-side" id="portal-side" data-page="templates"><\/aside>/);
+  assert.match(html, /class="dock-main"/);
+  assert.match(html, /<div class="main-title">nextjs \/ CLAUDE\.md<\/div>/);
+  assert.match(html, /<div class="main-sub">A CLAUDE\.md tuned for Next\.js\.<\/div>/);
+  assert.match(html, /<div style="margin-top:8px">/);
+  assert.doesNotMatch(html, /class="hero"/);
+});
+
 test('renderTemplatePage: source link points at the CLAUDE.md file, not a SKILL.md', () => {
   const html = renderTemplatePage('nextjs', { title: 'x', desc: 'y' }, '');
   assert.match(html, /project-templates\/nextjs\/CLAUDE\.md/);
@@ -132,6 +144,18 @@ test('renderSkillPage: is a complete HTML document using the shared stylesheet',
   assert.match(html, /<\/html>/i);
 });
 
+test('renderSkillPage: uses the portal dock chrome', () => {
+  const html = renderSkillPage('security-review', richFm, '<p>body text</p>');
+  assert.match(html, /<script defer src="\.\.\/portal-shell\.js"><\/script>/);
+  assert.match(html, /class="mesh-bg"/);
+  assert.match(html, /<aside class="dock-side" id="portal-side" data-page="skills"><\/aside>/);
+  assert.match(html, /class="dock-main"/);
+  assert.match(html, /<div class="main-title">Security Review<\/div>/);
+  assert.match(html, /<div class="main-sub">Comprehensive security review for web apps\.<\/div>/);
+  assert.match(html, /<div style="margin-top:8px">/);
+  assert.doesNotMatch(html, /class="hero"/);
+});
+
 test('renderSkillPage: renders title, description, and the markdown body', () => {
   const html = renderSkillPage('security-review', richFm, '<p>body text</p>');
   assert.match(html, /Security Review/);
@@ -159,6 +183,6 @@ test('renderSkillPage: links back to the SKILL.md source', () => {
 
 test('renderSkillPage: escapes HTML-special characters in the title', () => {
   const html = renderSkillPage('x', { title: 'A & B <script>', description: 'd' }, '');
-  assert.doesNotMatch(html, /<script>/);
+  assert.doesNotMatch(html, /A & B <script>/);
   assert.match(html, /A &amp; B/);
 });

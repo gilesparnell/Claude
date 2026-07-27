@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verification Before Completion — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">✅</span>
-    <div>
-      <h1 class="skill-page-title">Verification Before Completion</h1>
-      <p class="skill-page-desc">Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success assertions. Evidence before claims, always. Adapted from obra/superpowers.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Verification Before Completion</div>
+    <div class="main-sub">Prevents premature completion claims. Use before claiming work is done, fixed, or passing — requires running verification commands and confirming output before making any success assertions. Evidence before claims, always. Adapted from obra/superpowers.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">✅</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>done</li><li>fixed</li><li>tests pass</li><li>it works</li><li>ready for review</li><li>complete</li><li>all good</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No completion claims without fresh verification evidence</li><li>Run the actual verification command in this message before claiming success</li><li>Read full output and check exit code</li><li>Never use &quot;should&quot;, &quot;probably&quot;, or &quot;seems to&quot; for status claims</li><li>No expressing satisfaction before verification</li><li>Verify agent-delegated work independently</li><li>Check requirements line-by-line, not just test results</li></ul></section>
-  <section class="skill-doc"><h2>The Iron Law</h2>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>done</li><li>fixed</li><li>tests pass</li><li>it works</li><li>ready for review</li><li>complete</li><li>all good</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No completion claims without fresh verification evidence</li><li>Run the actual verification command in this message before claiming success</li><li>Read full output and check exit code</li><li>Never use &quot;should&quot;, &quot;probably&quot;, or &quot;seems to&quot; for status claims</li><li>No expressing satisfaction before verification</li><li>Verify agent-delegated work independently</li><li>Check requirements line-by-line, not just test results</li></ul></section>
+      <section class="skill-doc"><h2>The Iron Law</h2>
 <pre><code>NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
 </code></pre>
 <p>If you haven&#39;t run the verification command in this message, you cannot claim it passes.</p>
@@ -176,12 +178,19 @@ NEVER trust agent reports without independent verification
 <h2>The Bottom Line</h2>
 <p>Run the command. Read the output. THEN claim the result. This is non-negotiable.</p>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/verification-before-completion/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/verification-before-completion/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/verification-before-completion/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

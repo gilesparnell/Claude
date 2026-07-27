@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Runtime &amp;amp; Runner Routing — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">&#128256;</span>
-    <div>
-      <h1 class="skill-page-title">Runtime &amp;amp; Runner Routing</h1>
-      <p class="skill-page-desc">Route work to the right runner and runtime — Claude vs codex-cli switch rules and rationale, plus choosing between local Claude, claude-supervisor, Anthropic Routines, /loop, and desktop scheduled tasks.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Runtime &amp;amp; Runner Routing</div>
+    <div class="main-sub">Route work to the right runner and runtime — Claude vs codex-cli switch rules and rationale, plus choosing between local Claude, claude-supervisor, Anthropic Routines, /loop, and desktop scheduled tasks.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">&#128256;</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>tooling</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>codex delegation</li><li>supervisor</li><li>schedule a routine</li><li>usage window hit</li><li>runner switch</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Runner switches only when work type changes, never because credits ran out</li><li>5h-window mid-task → supervisor; webhook/cron work → Routines</li><li>In-session polling → /loop; judgement and design → local Claude</li><li>Fix mis-routing in the plan, don&#39;t paper over it</li></ul></section>
-  <section class="skill-doc"><p>Companion detail to the always-loaded &quot;Claude vs Codex Routing&quot; summary in <code>~/.claude/CLAUDE.md</code> (the split table, tag format, and Runner announcements live there). This skill holds the revision rules, the rationale, and the runtime selection table.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>codex delegation</li><li>supervisor</li><li>schedule a routine</li><li>usage window hit</li><li>runner switch</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Runner switches only when work type changes, never because credits ran out</li><li>5h-window mid-task → supervisor; webhook/cron work → Routines</li><li>In-session polling → /loop; judgement and design → local Claude</li><li>Fix mis-routing in the plan, don&#39;t paper over it</li></ul></section>
+      <section class="skill-doc"><p>Companion detail to the always-loaded &quot;Claude vs Codex Routing&quot; summary in <code>~/.claude/CLAUDE.md</code> (the split table, tag format, and Runner announcements live there). This skill holds the revision rules, the rationale, and the runtime selection table.</p>
 <h2>When to revise the runner tag mid-execution</h2>
 <p>Mid-execution switches happen only when the <strong>work type changes</strong>, not when the tool feels slow or when one runner is temporarily rate-limited. Legitimate switches:</p>
 <ul>
@@ -101,12 +103,19 @@
 </ul>
 <p><strong>Why this matters:</strong> building a supervisor doesn&#39;t fix the routing problem — it just papers over the symptom. If the same task keeps hitting the window, the upstream fix is either (a) routing the build portion to Codex per the Claude vs Codex Routing rule, or (b) moving scheduled/webhook parts of the work to Routines so they&#39;re not competing for the interactive window.</p>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/runtime-routing/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/runtime-routing/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/runtime-routing/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

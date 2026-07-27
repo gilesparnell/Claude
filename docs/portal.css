@@ -1,29 +1,29 @@
-/* Parnell Systems Knowledge Portal — Deep Ocean Tech Design System */
+/* Parnell Systems Knowledge Portal — "1C Console" theme (aligned with gilesparnell.github.io hub) */
 /* portal.css — imported by all pages */
 
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --bg:#0a0c10;
-  --bg2:#12151c;
-  --bg3:#1a1e28;
-  --text:#e8eaf0;
-  --text2:#8b92a8;
-  --text3:#4a5068;
-  --border:rgba(255,255,255,0.06);
-  --border2:rgba(255,255,255,0.1);
-  --accent:#38bfa0;
-  --accent-light:#5edcb8;
-  --accent-glow:rgba(56,191,160,0.18);
-  --font-display:'Satoshi',system-ui,sans-serif;
-  --font-body:'Outfit',system-ui,sans-serif;
+  --bg:#0a0910;
+  --bg2:#131019;
+  --bg3:#1b1725;
+  --text:#efedf6;
+  --text2:#9a95b0;
+  --text3:#6d6885;
+  --border:rgba(255,255,255,0.10);
+  --border2:rgba(255,255,255,0.14);
+  --accent:#a58cff;
+  --accent-light:#bfaeff;
+  --accent-deep:#6b46d6;
+  --accent-glow:rgba(139,108,240,0.22);
+  --font-display:'Space Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-body:'Space Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
   --font:var(--font-body);
-  --mono:'SF Mono','Fira Code','Cascadia Code',monospace;
-  --radius:10px;
-  --radius-lg:20px;
+  --mono:'Space Mono',ui-monospace,monospace;
+  --radius:12px;
+  --radius-lg:18px;
 
   --blue:#6199e6;   --blue-bg:rgba(97,153,230,0.12);   --blue-text:#6199e6;   --blue-border:rgba(97,153,230,0.25);
   --teal:#38bfa0;   --teal-bg:rgba(56,191,160,0.12);   --teal-text:#38bfa0;   --teal-border:rgba(56,191,160,0.25);
@@ -41,10 +41,10 @@ code{font-family:var(--mono);font-size:0.9em;background:rgba(255,255,255,0.06);p
 /* ── MESH BACKGROUND ── */
 .mesh-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .mesh-bg .blob{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
-.mesh-bg .blob:nth-child(1){width:650px;height:650px;background:hsla(168,55%,32%,0.35);top:-12%;left:-8%;animation:drift1 20s ease-in-out infinite alternate}
-.mesh-bg .blob:nth-child(2){width:500px;height:500px;background:hsla(335,45%,28%,0.25);top:5%;right:-12%;animation:drift2 24s ease-in-out infinite alternate}
-.mesh-bg .blob:nth-child(3){width:580px;height:580px;background:hsla(215,55%,28%,0.28);bottom:-18%;left:25%;animation:drift3 28s ease-in-out infinite alternate}
-.mesh-bg .blob:nth-child(4){width:400px;height:400px;background:hsla(40,50%,30%,0.15);bottom:10%;right:5%;animation:drift4 22s ease-in-out infinite alternate}
+.mesh-bg .blob:nth-child(1){width:650px;height:650px;background:hsla(258,62%,42%,0.30);top:-12%;left:-8%;animation:drift1 20s ease-in-out infinite alternate}
+.mesh-bg .blob:nth-child(2){width:500px;height:500px;background:hsla(276,50%,34%,0.22);top:5%;right:-12%;animation:drift2 24s ease-in-out infinite alternate}
+.mesh-bg .blob:nth-child(3){width:580px;height:580px;background:hsla(236,55%,36%,0.24);bottom:-18%;left:25%;animation:drift3 28s ease-in-out infinite alternate}
+.mesh-bg .blob:nth-child(4){width:400px;height:400px;background:hsla(300,40%,32%,0.12);bottom:10%;right:5%;animation:drift4 22s ease-in-out infinite alternate}
 @keyframes drift1{to{transform:translate(90px,70px) scale(1.08)}}
 @keyframes drift2{to{transform:translate(-70px,90px) scale(0.92)}}
 @keyframes drift3{to{transform:translate(50px,-60px) scale(1.12)}}
@@ -72,7 +72,7 @@ code{font-family:var(--mono);font-size:0.9em;background:rgba(255,255,255,0.06);p
 @media(max-width:680px){.site-header{padding:0 20px}}
 .header-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
 .header-brand{display:flex;align-items:center;gap:10px}
-.header-logo{width:28px;height:28px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#0a0c10;font-size:13px;font-weight:700;letter-spacing:-0.02em;flex-shrink:0;font-family:var(--font-display)}
+.header-logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-deep));display:flex;align-items:center;justify-content:center;color:#0a0910;font-size:13px;font-weight:700;letter-spacing:-0.02em;flex-shrink:0;font-family:var(--font-display)}
 .header-name{font-size:14px;font-weight:600;letter-spacing:-0.01em;color:var(--text);font-family:var(--font-display)}
 .header-nav{display:flex;gap:0}
 .header-nav a{font-size:13px;color:var(--text3);padding:8px 14px;border-radius:7px;transition:all 0.15s;font-weight:500}

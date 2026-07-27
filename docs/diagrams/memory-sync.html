@@ -5,17 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Memory Sync — gilesparnell / Parnell Systems</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="../index.html" class="header-brand">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
       <div class="header-logo">PS</div>
       <span class="header-name">Parnell Systems</span>
     </a>
     <nav class="header-nav">
       <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
       <a href="../skills.html">Skills</a>
       <a href="../walkthroughs.html" class="active">Walkthroughs</a>
       <a href="../templates.html">Templates</a>
@@ -27,15 +31,12 @@
   </div>
 </header>
 
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Walkthrough &mdash; Tooling</div>
-    <div class="hero-title">Memory Sync<br><em>How Claude remembers you</em></div>
-    <div class="hero-sub">Claude writes memory files locally during sessions. A Stop hook auto-commits them to GitHub so a fresh session — on any machine or account — starts with full context.</div>
-  </div>
-</div>
-
-<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="walkthroughs"></aside>
+  <main class="dock-main">
+    <div class="main-title">Memory Sync How Claude remembers you</div>
+    <div class="main-sub">Claude writes memory files locally during sessions. A Stop hook auto-commits them to GitHub so a fresh session — on any machine or account — starts with full context.</div>
+    <div style="margin-top:8px">
 
   <!-- ── SECTION 1: THE PROBLEM ── -->
   <div class="section-label">The Problem</div>
@@ -292,6 +293,8 @@
     <text x="573" y="70" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#444">+ re-auth plugins (Telegram, Compound Engineering)</text>
   </svg>
 
+    </div>
+  </main>
 </div>
 
 <footer style="text-align:center;padding:32px;font-size:12px;color:var(--text3);border-top:1px solid var(--border)">
@@ -300,5 +303,10 @@
   <span style="color:var(--text3)">A Stop-hook shell script wires this together in your own repo.</span>
 </footer>
 
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

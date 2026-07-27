@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shipping Discipline — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">&#128674;</span>
-    <div>
-      <h1 class="skill-page-title">Shipping Discipline</h1>
-      <p class="skill-page-desc">The safety net for every deployed project — branch protection on main, never bypass hooks or CI, observability scaled to blast radius, and explicit human-applied database migrations.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Shipping Discipline</div>
+    <div class="main-sub">The safety net for every deployed project — branch protection on main, never bypass hooks or CI, observability scaled to blast radius, and explicit human-applied database migrations.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">&#128674;</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>new repo setup</li><li>branch protection</li><li>database migration</li><li>wire up Sentry</li><li>health endpoint</li><li>pre-commit failing</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Branch protection on main in the first hour of any project</li><li>Never --no-verify; fix the failure, not the check</li><li>Observability scaled to project profile (Sentry / health / analytics)</li><li>Migrations explicit, idempotent, and verified with a query after apply</li></ul></section>
-  <section class="skill-doc"><p>These rules apply to every project that ships code to a deployed environment. They&#39;re the safety net that lets me move fast without breaking things — for myself, six months from now, late at night, on a sketchy WiFi connection, two beers in.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>new repo setup</li><li>branch protection</li><li>database migration</li><li>wire up Sentry</li><li>health endpoint</li><li>pre-commit failing</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Branch protection on main in the first hour of any project</li><li>Never --no-verify; fix the failure, not the check</li><li>Observability scaled to project profile (Sentry / health / analytics)</li><li>Migrations explicit, idempotent, and verified with a query after apply</li></ul></section>
+      <section class="skill-doc"><p>These rules apply to every project that ships code to a deployed environment. They&#39;re the safety net that lets me move fast without breaking things — for myself, six months from now, late at night, on a sketchy WiFi connection, two beers in.</p>
 <h2>Branch protection on the default branch</h2>
 <p>Every project MUST have branch protection on <code>master</code> / <code>main</code> with the following rules enabled:</p>
 <ul>
@@ -142,12 +144,19 @@
 - Kill stale background test processes before git operations
 </code></pre>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/shipping-discipline/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/shipping-discipline/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/shipping-discipline/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

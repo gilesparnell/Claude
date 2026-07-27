@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plan Execution Continuity — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">&#128203;</span>
-    <div>
-      <h1 class="skill-page-title">Plan Execution Continuity</h1>
-      <p class="skill-page-desc">Two living files per project — docs/decisions/decisions.md and docs/handoff/handoff.md — so a fresh Claude or Codex session can resume mid-plan after token-limit resets, restarts, or runner handoffs.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Plan Execution Continuity</div>
+    <div class="main-sub">Two living files per project — docs/decisions/decisions.md and docs/handoff/handoff.md — so a fresh Claude or Codex session can resume mid-plan after token-limit resets, restarts, or runner handoffs.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">&#128203;</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>plan execution</li><li>handoff entry</li><li>decision log</li><li>session ending mid-task</li><li>runner switch</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>decisions.md — append every non-trivial choice with date + rationale</li><li>handoff.md — newest entry at top, written for the next session</li><li>Always write a handoff entry at session end, even mid-unit</li><li>Never batch updates at session end — log incrementally</li></ul></section>
-  <section class="skill-doc"><p>When working through a detailed plan (e.g. via <code>/ce:work-beta</code>, the <code>claude-supervisor</code> tool, or any multi-step implementation), maintain two living files per project so a fresh session — Claude or Codex — can resume without the previous run&#39;s context. These files exist to survive token-limit resets, session restarts, the claude-supervisor auto-restart flow, and runner handoffs.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>plan execution</li><li>handoff entry</li><li>decision log</li><li>session ending mid-task</li><li>runner switch</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>decisions.md — append every non-trivial choice with date + rationale</li><li>handoff.md — newest entry at top, written for the next session</li><li>Always write a handoff entry at session end, even mid-unit</li><li>Never batch updates at session end — log incrementally</li></ul></section>
+      <section class="skill-doc"><p>When working through a detailed plan (e.g. via <code>/ce:work-beta</code>, the <code>claude-supervisor</code> tool, or any multi-step implementation), maintain two living files per project so a fresh session — Claude or Codex — can resume without the previous run&#39;s context. These files exist to survive token-limit resets, session restarts, the claude-supervisor auto-restart flow, and runner handoffs.</p>
 <h2>Files</h2>
 <p><strong><code>docs/decisions/decisions.md</code></strong> — project-local decision log for in-flight plan work.</p>
 <ul>
@@ -76,12 +78,19 @@
 <li>Project has no <code>/docs/</code> directory AND no plan — don&#39;t create scaffolding just to write one entry; wait until there&#39;s a plan</li>
 </ul>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/plan-continuity/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/plan-continuity/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/plan-continuity/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

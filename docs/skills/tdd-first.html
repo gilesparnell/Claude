@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Test-First Development (TDD) — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">🧪</span>
-    <div>
-      <h1 class="skill-page-title">Test-First Development (TDD)</h1>
-      <p class="skill-page-desc">MANDATORY test-first development for ALL non-trivial code — no trigger words needed. Any time Claude or Codex produces a function, class, endpoint, service, or module, tests MUST be written and confirmed failing BEFORE implementation code exists. Enforces a full test suite: unit tests, integration tests, and system/E2E tests. Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Mocha), and Go. This skill is always active. It does not require the user to say &#39;TDD&#39; or &#39;test first&#39; — it applies automatically whenever code is being produced. NOTHING IS DONE until all tests pass. You must run the full suite before declaring completion.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Test-First Development (TDD)</div>
+    <div class="main-sub">MANDATORY test-first development for ALL non-trivial code — no trigger words needed. Any time Claude or Codex produces a function, class, endpoint, service, or module, tests MUST be written and confirmed failing BEFORE implementation code exists. Enforces a full test suite: unit tests, integration tests, and system/E2E tests. Supports TypeScript (Vitest/Jest), Python (pytest), Node.js (Jest/Mocha), and Go. This skill is always active. It does not require the user to say &#39;TDD&#39; or &#39;test first&#39; — it applies automatically whenever code is being produced. NOTHING IS DONE until all tests pass. You must run the full suite before declaring completion.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">🧪</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>testing</span><span class="skill-badge"><span class="skill-badge-k">version</span>3.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>writing a function or endpoint</li><li>building a feature</li><li>fixing a bug</li><li>always active for non-trivial code</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Tests written and confirmed RED before implementation</li><li>Unit, integration, and system layers covered</li><li>Never weaken a test to make it pass</li><li>Full suite green before declaring done</li></ul></section>
-  <section class="skill-doc"><h2>Core Rule</h2>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>writing a function or endpoint</li><li>building a feature</li><li>fixing a bug</li><li>always active for non-trivial code</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Tests written and confirmed RED before implementation</li><li>Unit, integration, and system layers covered</li><li>Never weaken a test to make it pass</li><li>Full suite green before declaring done</li></ul></section>
+      <section class="skill-doc"><h2>Core Rule</h2>
 <p><strong>Never write implementation code before its tests exist and have been confirmed to fail.</strong></p>
 <p><strong>Never declare work complete until the full test suite passes.</strong></p>
 <p>This is not a suggestion. This is not opt-in. This is the mandatory workflow for every piece of non-trivial code produced in any session — whether the user asks for TDD or not.</p>
@@ -728,12 +730,19 @@ STEP 6 — FULL SUITE:
 └──────────────────────────────────────────────┘
 </code></pre>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/tdd-first/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/tdd-first/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/tdd-first/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>nextjs / CLAUDE.md — Templates — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html" class="active">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../templates.html" class="gh-btn">&larr; All templates</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../templates.html">&larr; All templates</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">📄</span>
-    <div>
-      <h1 class="skill-page-title">nextjs / CLAUDE.md</h1>
-      <p class="skill-page-desc">A CLAUDE.md tuned for a modern Next.js App Router app: TypeScript, a service layer for business logic, thin API routes, and AI features behind a single wrapper. Adjust the stack rows to match your project.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="templates"></aside>
+  <main class="dock-main">
+    <div class="main-title">nextjs / CLAUDE.md</div>
+    <div class="main-sub">A CLAUDE.md tuned for a modern Next.js App Router app: TypeScript, a service layer for business logic, thin API routes, and AI features behind a single wrapper. Adjust the stack rows to match your project.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">📄</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">type</span>CLAUDE.md</span></div>
-    </div>
-  </div>
-  
-  
-  <section class="skill-doc"><h2>Overview</h2>
+      
+      
+      <section class="skill-doc"><h2>Overview</h2>
 <p>A starting-point CLAUDE.md for a modern Next.js SaaS application: App Router,
 TypeScript, a service layer for business logic, and AI features behind a thin
 wrapper. Copy this into a new project and adjust the stack rows to match reality.</p>
@@ -91,12 +93,19 @@ wrapper. Copy this into a new project and adjust the stack rows to match reality
 <li>code-review</li>
 </ul>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/project-templates/nextjs/CLAUDE.md">View <code>CLAUDE.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/project-templates/nextjs/CLAUDE.md">View <code>CLAUDE.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Templates</span>
   <span>Generated from <code>project-templates/nextjs/CLAUDE.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

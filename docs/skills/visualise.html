@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Visualise — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">&#128506;</span>
-    <div>
-      <h1 class="skill-page-title">Visualise</h1>
-      <p class="skill-page-desc">Diagram-first explanations — whenever a process, architecture, plan status, or data flow is being explained, produce a rendered Mermaid diagram alongside the prose.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Visualise</div>
+    <div class="main-sub">Diagram-first explanations — whenever a process, architecture, plan status, or data flow is being explained, produce a rendered Mermaid diagram alongside the prose.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">&#128506;</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>diagram this</li><li>visualise</li><li>map this</li><li>show me the flow</li><li>where are we in the plan</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Source of truth is a .mmd file committed with the project (design/ folder)</li><li>Status is visual — solid = in place, dashed amber = planned</li><li>Terminal sessions render via local HTML opened in the browser (no side panel in a CLI)</li><li>Max ~15 nodes per diagram; split rather than cram</li></ul></section>
-  <section class="skill-doc"><p>Giles is a visual person. When an explanation describes structure — a process, a pipeline, an architecture, plan progress, how components relate — draw it. Prose carries the reasoning; the diagram carries the shape.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>diagram this</li><li>visualise</li><li>map this</li><li>show me the flow</li><li>where are we in the plan</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Source of truth is a .mmd file committed with the project (design/ folder)</li><li>Status is visual — solid = in place, dashed amber = planned</li><li>Terminal sessions render via local HTML opened in the browser (no side panel in a CLI)</li><li>Max ~15 nodes per diagram; split rather than cram</li></ul></section>
+      <section class="skill-doc"><p>Giles is a visual person. When an explanation describes structure — a process, a pipeline, an architecture, plan progress, how components relate — draw it. Prose carries the reasoning; the diagram carries the shape.</p>
 <h2>When to fire</h2>
 <ul>
 <li>Explaining any multi-step process, workflow, pipeline, or data flow</li>
@@ -79,12 +81,19 @@
 &lt;/script&gt;
 </code></pre>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/visualise/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/visualise/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/visualise/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

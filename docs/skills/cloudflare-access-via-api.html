@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloudflare Access via API, Not Dashboard — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">🔐</span>
-    <div>
-      <h1 class="skill-page-title">Cloudflare Access via API, Not Dashboard</h1>
-      <p class="skill-page-desc">Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API — the dashboard UI reshuffles constantly; the API is stable and verifiable.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Cloudflare Access via API, Not Dashboard</div>
+    <div class="main-sub">Set up Cloudflare Access gates (per-client path policies, OTP login) via the REST API — the dashboard UI reshuffles constantly; the API is stable and verifiable.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">🔐</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>learned</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>cloudflare access setup</li><li>gate a static site by email</li><li>protect a pages.dev site</li><li>client portal login</li><li>zero trust application</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Create Access apps and policies via the REST API, not the dashboard</li><li>Scope each app to the client&#39;s exact path</li><li>Policy allows exactly one email — nothing broader</li><li>PASS is a 302 to the Access login; public paths stay 200</li></ul></section>
-  <section class="skill-doc"><p><strong>Extracted:</strong> 2026-07-08
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>cloudflare access setup</li><li>gate a static site by email</li><li>protect a pages.dev site</li><li>client portal login</li><li>zero trust application</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Create Access apps and policies via the REST API, not the dashboard</li><li>Scope each app to the client&#39;s exact path</li><li>Policy allows exactly one email — nothing broader</li><li>PASS is a 302 to the Access login; public paths stay 200</li></ul></section>
+      <section class="skill-doc"><p><strong>Extracted:</strong> 2026-07-08
 <strong>Context:</strong> Gating per-client status pages on Cloudflare Pages behind email one-time-PIN login. Two dashboard attempts failed on UI churn; the API path worked first time and is fully machine-verifiable.</p>
 <h2>Problem</h2>
 <p>Cloudflare&#39;s dashboard reorganises constantly (Pages → Workers merge, Zero Trust → &quot;Cloudflare One&quot; rebrand). UI instructions rot within months, and some controls (the Pages &quot;Enable Access policy&quot; toggle) have been removed entirely. Meanwhile client-gating needs to be <em>provably</em> correct — a mis-scoped policy exposes client data.</p>
@@ -73,12 +75,19 @@ curl -X POST &quot;.../accounts/$ACCT/access/apps/$APP_ID/policies&quot; -d &#39
 <h2>When to Use</h2>
 <p>Any &quot;give this one person a login to this one page&quot; requirement on static hosting; any Cloudflare Zero Trust setup where dashboard instructions don&#39;t match what you see; verifying an Access gate actually enforces before content ships.</p>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/cloudflare-access-via-api/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/cloudflare-access-via-api/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/cloudflare-access-via-api/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

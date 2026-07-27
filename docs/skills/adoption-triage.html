@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adoption Triage — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">&#9878;</span>
-    <div>
-      <h1 class="skill-page-title">Adoption Triage</h1>
-      <p class="skill-page-desc">Accept/reject/defer triage before adopting any recommendation set — insights reports, audits, best-practice lists — plus the CLAUDE.md growth brake that keeps global rules lean.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Adoption Triage</div>
+    <div class="main-sub">Accept/reject/defer triage before adopting any recommendation set — insights reports, audits, best-practice lists — plus the CLAUDE.md growth brake that keeps global rules lean.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">&#9878;</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>adopt these recommendations</li><li>implement these suggestions</li><li>add these best practices</li><li>insights report</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Triage against current state before any plan — never a flat to-do list</li><li>The reject column must exist; empty means missed overlap</li><li>Present the triage first, then plan from accepted items only</li><li>Additions of &gt;20 lines to CLAUDE.md require paired removals or a skill</li></ul></section>
-  <section class="skill-doc"><p>When I ask to adopt any recommendation set — <code>/insights</code> reports, audit outputs, third-party suggestions, &quot;these best practices&quot;, anything that arrives as a list of things to add — <strong>do not produce a flat to-do list</strong>. Produce an explicit <strong>accept / reject / defer</strong> triage against current state first. The plan follows the triage, not the other way round.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>adopt these recommendations</li><li>implement these suggestions</li><li>add these best practices</li><li>insights report</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Triage against current state before any plan — never a flat to-do list</li><li>The reject column must exist; empty means missed overlap</li><li>Present the triage first, then plan from accepted items only</li><li>Additions of &gt;20 lines to CLAUDE.md require paired removals or a skill</li></ul></section>
+      <section class="skill-doc"><p>When I ask to adopt any recommendation set — <code>/insights</code> reports, audit outputs, third-party suggestions, &quot;these best practices&quot;, anything that arrives as a list of things to add — <strong>do not produce a flat to-do list</strong>. Produce an explicit <strong>accept / reject / defer</strong> triage against current state first. The plan follows the triage, not the other way round.</p>
 <h2>Pre-flight triage rule</h2>
 <p>For any &quot;adopt X&quot; / &quot;add these&quot; / &quot;implement these recommendations&quot; request:</p>
 <ol>
@@ -56,12 +58,19 @@
 <li>Candidates to migrate out when the file grows: long procedural sections that read like a checklist are better as invokable skills than as always-loaded prose (Versioning Discipline, Shipping Discipline, and others were migrated to skills on 2026-07-13 under exactly this rule).</li>
 </ul>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/adoption-triage/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/adoption-triage/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/adoption-triage/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Testing Practices — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">✅</span>
-    <div>
-      <h1 class="skill-page-title">Testing Practices</h1>
-      <p class="skill-page-desc">Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something. Triggers on &#39;write tests for this&#39;, &#39;add test coverage&#39;, &#39;how do I test this&#39;, &#39;set up testing&#39;.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Testing Practices</div>
+    <div class="main-sub">Use this skill when writing tests, setting up test infrastructure, or when asked about how to test something. Triggers on &#39;write tests for this&#39;, &#39;add test coverage&#39;, &#39;how do I test this&#39;, &#39;set up testing&#39;.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">✅</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>testing</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>write tests for this</li><li>add test coverage</li><li>how do I test this</li><li>set up testing</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Test behaviour, not implementation</li><li>Happy, sad, and edge cases per unit</li><li>Consistent structure and naming</li><li>Mock only at system boundaries</li></ul></section>
-  <section class="skill-doc"><h2>Testing Philosophy</h2>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>write tests for this</li><li>add test coverage</li><li>how do I test this</li><li>set up testing</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Test behaviour, not implementation</li><li>Happy, sad, and edge cases per unit</li><li>Consistent structure and naming</li><li>Mock only at system boundaries</li></ul></section>
+      <section class="skill-doc"><h2>Testing Philosophy</h2>
 <p>Tests are documentation. A good test suite tells the story of how the system is supposed to behave.</p>
 <ul>
 <li>Test <strong>behaviour</strong>, not implementation — if you can refactor without changing tests, you&#39;re testing the right thing</li>
@@ -101,12 +103,19 @@
 <li>Keep test files next to the code they test, not in a separate <code>__tests__</code> folder (unless the framework requires it)</li>
 </ul>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/testing-practices/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/testing-practices/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/testing-practices/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

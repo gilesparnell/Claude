@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The mvanhorn Workflow</title>
+<link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -303,11 +305,42 @@
     white-space: nowrap;
   }
 </style>
+<style>
+.site-header,.dock,.site-footer{--bg:#0a0c10;--surface:#11141c;--text:#f5f7fb;--text2:#a4adbc;--text3:#6f7a8b;--border:rgba(255,255,255,0.08);--accent:#38bfa0;}
+body{max-width:none;margin:0;padding:0 0 80px;}
+.dock{margin-top:0;}
+.dock-main{padding-top:32px;}
+</style>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
-<h1>The mvanhorn Workflow</h1>
-<p class="subtitle">"No IDE. Just plan.md files and voice."</p>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&larr; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="walkthroughs"></aside>
+  <main class="dock-main">
+    <div class="main-title">The mvanhorn Workflow</div>
+    <div class="main-sub">&quot;No IDE. Just plan.md files and voice.&quot;</div>
+    <div style="margin-top:8px">
 
 <div class="diagram">
 
@@ -483,5 +516,19 @@
   </div>
 
 </div>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span><a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
+</footer>
+
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

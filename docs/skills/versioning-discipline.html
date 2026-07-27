@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Versioning Discipline — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">&#128290;</span>
-    <div>
-      <h1 class="skill-page-title">Versioning Discipline</h1>
-      <p class="skill-page-desc">Every deployed project tracks a human-readable version, displays it in-app, and bumps it with a CHANGELOG entry in the same commit as every shipping PR.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Versioning Discipline</div>
+    <div class="main-sub">Every deployed project tracks a human-readable version, displays it in-app, and bumps it with a CHANGELOG entry in the same commit as every shipping PR.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">&#128290;</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>workflow</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>version bump</li><li>changelog entry</li><li>semver</li><li>release entry</li><li>in-app version display</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Bump version + CHANGELOG in the same commit as the code change</li><li>Display vX.Y.Z (sha7) in footer, /health, or --version</li><li>CHANGELOG entries have &quot;What&#39;s new&quot; then &quot;Under the hood</li><li>Extend recent entries as version ranges instead of diary-of-fixes headings</li></ul></section>
-  <section class="skill-doc"><p>Every project that ships code to a deployed environment MUST track a human-readable version and display it in-app. Every PR that ships code MUST bump that version and add a CHANGELOG entry <strong>in the same commit as the code change</strong>. This is non-negotiable.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>version bump</li><li>changelog entry</li><li>semver</li><li>release entry</li><li>in-app version display</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Bump version + CHANGELOG in the same commit as the code change</li><li>Display vX.Y.Z (sha7) in footer, /health, or --version</li><li>CHANGELOG entries have &quot;What&#39;s new&quot; then &quot;Under the hood</li><li>Extend recent entries as version ranges instead of diary-of-fixes headings</li></ul></section>
+      <section class="skill-doc"><p>Every project that ships code to a deployed environment MUST track a human-readable version and display it in-app. Every PR that ships code MUST bump that version and add a CHANGELOG entry <strong>in the same commit as the code change</strong>. This is non-negotiable.</p>
 <p>Why: I want to be able to look at a deployed app and tell, in two seconds, which version is running. &quot;Is this the version with the fix?&quot; is a real question and the answer should never require opening DevTools.</p>
 <h2>Source of truth for the version number</h2>
 <p>Find the project&#39;s canonical version field and bump that. Order of preference:</p>
@@ -170,12 +172,19 @@ export default defineConfig({
 <li>Add this rule (and the bump-on-every-PR commitment) to the project&#39;s local <code>CLAUDE.md</code> so it&#39;s discoverable from the project root, not just the global one</li>
 </ol>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/versioning-discipline/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/versioning-discipline/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/versioning-discipline/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

@@ -119,6 +119,7 @@ function renderDocPage(opts) {
 
   const trig = triggers.filter(Boolean);
   const chk = checks.filter(Boolean);
+  const dataPage = activeNav === 'Templates' ? 'templates' : 'skills';
   const triggersSection = trig.length
     ? `<section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list">${trig.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>`
     : '';
@@ -126,6 +127,7 @@ function renderDocPage(opts) {
     ? `<section class="skill-checks"><h2>${esc(checksLabel)}</h2><ul class="skill-check-list">${chk.map((c) => `<li>${esc(c)}</li>`).join('')}</ul></section>`
     : '';
   const bodySection = bodyHtml ? `<section class="skill-doc">${bodyHtml}</section>` : '';
+  const badgeSection = badges ? `<div class="skill-badges">${badges}</div>` : '';
   const nav = NAV.map(([href, label]) => `<a href="${href}"${label === activeNav ? ' class="active"' : ''}>${label}</a>`).join('\n      ');
 
   return `<!DOCTYPE html>
@@ -135,6 +137,7 @@ function renderDocPage(opts) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${esc(title)} — ${esc(activeNav)} — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -148,29 +151,37 @@ function renderDocPage(opts) {
     <nav class="header-nav">
       ${nav}
     </nav>
+    <div class="header-right">
+      <a href="${backHref}" class="gh-btn">&larr; ${esc(backLabel)}</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="${backHref}">&larr; ${esc(backLabel)}</a>
-  <div class="skill-page-head">
-    ${icon}
-    <div>
-      <h1 class="skill-page-title">${esc(title)}</h1>
-      ${desc ? `<p class="skill-page-desc">${esc(desc)}</p>` : ''}
-      ${badges ? `<div class="skill-badges">${badges}</div>` : ''}
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="${dataPage}"></aside>
+  <main class="dock-main">
+    <div class="main-title">${esc(title)}</div>
+    <div class="main-sub">${esc(desc)}</div>
+    <div style="margin-top:8px">
+      ${icon}
+      ${badgeSection}
+      ${triggersSection}
+      ${checksSection}
+      ${bodySection}
+      <div class="skill-source"><a href="${sourceHref}">View <code>${esc(sourceLabel)}</code> source &rarr;</a></div>
     </div>
-  </div>
-  ${triggersSection}
-  ${checksSection}
-  ${bodySection}
-  <div class="skill-source"><a href="${sourceHref}">View <code>${esc(sourceLabel)}</code> source &rarr;</a></div>
-</main>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; ${esc(activeNav)}</span>
   <span>Generated from <code>${esc(sourcePath)}</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>
 `;

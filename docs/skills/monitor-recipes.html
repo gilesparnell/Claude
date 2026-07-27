@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monitor Recipes — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">&#128225;</span>
-    <div>
-      <h1 class="skill-page-title">Monitor Recipes</h1>
-      <p class="skill-page-desc">Standard Monitor-tool recipes and rules — watch dev servers, deploys, and CI with event-driven monitors instead of polling, and compound what fires into promoted recipes.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Monitor Recipes</div>
+    <div class="main-sub">Standard Monitor-tool recipes and rules — watch dev servers, deploys, and CI with event-driven monitors instead of polling, and compound what fires into promoted recipes.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">&#128225;</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>tooling</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>dev server start</li><li>watch this deploy</li><li>CI watcher</li><li>tail logs</li><li>set up a monitor</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Monitors over polling — free when silent, wake on matched events</li><li>Always pipe stderr with 2&gt;&amp;1 into the grep filter</li><li>Bounded tasks get timeout_ms, not persistent true</li><li>Log monitor outcomes to .learnings/monitors/ and promote weekly</li></ul></section>
-  <section class="skill-doc"><p>Prefer the native Monitor tool over polling, <code>/loop</code>, or re-running <code>run_in_background</code> checks. Monitors are free when silent — only wake on matched events.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>dev server start</li><li>watch this deploy</li><li>CI watcher</li><li>tail logs</li><li>set up a monitor</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Monitors over polling — free when silent, wake on matched events</li><li>Always pipe stderr with 2&gt;&amp;1 into the grep filter</li><li>Bounded tasks get timeout_ms, not persistent true</li><li>Log monitor outcomes to .learnings/monitors/ and promote weekly</li></ul></section>
+      <section class="skill-doc"><p>Prefer the native Monitor tool over polling, <code>/loop</code>, or re-running <code>run_in_background</code> checks. Monitors are free when silent — only wake on matched events.</p>
 <h2>When to start a monitor automatically</h2>
 <p>Start a persistent monitor without asking whenever I:</p>
 <ul>
@@ -95,12 +97,19 @@
 <li>Never delete learnings entries — just flip <code>promoted: true</code>.</li>
 </ol>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/monitor-recipes/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/monitor-recipes/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/monitor-recipes/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

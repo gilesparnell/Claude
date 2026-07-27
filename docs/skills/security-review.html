@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Security Review — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">🔒</span>
-    <div>
-      <h1 class="skill-page-title">Security Review</h1>
-      <p class="skill-page-desc">Comprehensive security review for web applications. Use when implementing auth, handling user input, working with secrets, creating API endpoints, or touching sensitive features. Covers OWASP Top 10, secrets management, input validation, SQL injection, XSS, CSRF, and rate limiting. Adapted from everything-claude-code.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Security Review</div>
+    <div class="main-sub">Comprehensive security review for web applications. Use when implementing auth, handling user input, working with secrets, creating API endpoints, or touching sensitive features. Covers OWASP Top 10, secrets management, input validation, SQL injection, XSS, CSRF, and rate limiting. Adapted from everything-claude-code.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">🔒</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>security review</li><li>is this secure</li><li>authentication</li><li>handling user input</li><li>API endpoint</li><li>secrets</li><li>vulnerability</li><li>OWASP</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No hardcoded secrets — all in environment variables</li><li>All user inputs validated with schemas (whitelist, not blacklist)</li><li>All database queries use parameterised queries — no string concatenation</li><li>Tokens stored in httpOnly cookies, not localStorage</li><li>Authorisation checks before every sensitive operation</li><li>User-provided HTML sanitised before rendering</li><li>CSRF tokens on state-changing operations</li><li>Rate limiting on all API endpoints</li><li>Error messages never expose internal details</li><li>No secrets or sensitive data in logs</li><li>Dependencies checked for known vulnerabilities</li></ul></section>
-  <section class="skill-doc"><h2>When to Activate</h2>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>security review</li><li>is this secure</li><li>authentication</li><li>handling user input</li><li>API endpoint</li><li>secrets</li><li>vulnerability</li><li>OWASP</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No hardcoded secrets — all in environment variables</li><li>All user inputs validated with schemas (whitelist, not blacklist)</li><li>All database queries use parameterised queries — no string concatenation</li><li>Tokens stored in httpOnly cookies, not localStorage</li><li>Authorisation checks before every sensitive operation</li><li>User-provided HTML sanitised before rendering</li><li>CSRF tokens on state-changing operations</li><li>Rate limiting on all API endpoints</li><li>Error messages never expose internal details</li><li>No secrets or sensitive data in logs</li><li>Dependencies checked for known vulnerabilities</li></ul></section>
+      <section class="skill-doc"><h2>When to Activate</h2>
 <ul>
 <li>Implementing authentication or authorisation</li>
 <li>Handling user input or file uploads</li>
@@ -150,12 +152,19 @@ RIGHT:  supabase.from(&#39;users&#39;).select(&#39;*&#39;).eq(&#39;email&#39;, u
 <li><a href="https://portswigger.net/web-security">Web Security Academy</a></li>
 </ul>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/security-review/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/security-review/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/security-review/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

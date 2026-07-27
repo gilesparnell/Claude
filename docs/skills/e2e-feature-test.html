@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>End-to-End Feature Test — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">🧪</span>
-    <div>
-      <h1 class="skill-page-title">End-to-End Feature Test</h1>
-      <p class="skill-page-desc">Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a pass/fail report. Use after building a feature with both frontend and backend components. Triggers on &#39;test this feature end to end&#39;, &#39;e2e test&#39;, &#39;full feature test&#39;, &#39;usability test this&#39;, &#39;test the whole feature&#39;, &#39;browser and backend test&#39;.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">End-to-End Feature Test</div>
+    <div class="main-sub">Full end-to-end feature testing — generates an exhaustive test matrix, drives the browser UI via agent-browser, verifies backend state (database, API responses), and produces a pass/fail report. Use after building a feature with both frontend and backend components. Triggers on &#39;test this feature end to end&#39;, &#39;e2e test&#39;, &#39;full feature test&#39;, &#39;usability test this&#39;, &#39;test the whole feature&#39;, &#39;browser and backend test&#39;.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">🧪</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>e2e test</li><li>end to end test</li><li>full feature test</li><li>usability test</li><li>test the whole feature</li><li>browser and backend test</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Never claim a test passes without screenshot or command output evidence</li><li>Always verify backend state after frontend actions (database, API, logs)</li><li>Re-snapshot after every navigation or DOM mutation</li><li>Test both happy path AND failure/edge cases</li><li>Close the browser session when done</li></ul></section>
-  <section class="skill-doc"><p>Full-stack feature testing that drives the browser UI and verifies backend state in a single workflow.</p>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>e2e test</li><li>end to end test</li><li>full feature test</li><li>usability test</li><li>test the whole feature</li><li>browser and backend test</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>Never claim a test passes without screenshot or command output evidence</li><li>Always verify backend state after frontend actions (database, API, logs)</li><li>Re-snapshot after every navigation or DOM mutation</li><li>Test both happy path AND failure/edge cases</li><li>Close the browser session when done</li></ul></section>
+      <section class="skill-doc"><p>Full-stack feature testing that drives the browser UI and verifies backend state in a single workflow.</p>
 <h2>Use <code>agent-browser</code> Only For Browser Automation</h2>
 <p>This workflow uses the <code>agent-browser</code> CLI exclusively. Do not use any alternative browser automation system, browser MCP integration, or built-in browser-control tool.</p>
 <h2>Prerequisites</h2>
@@ -388,12 +390,19 @@ All screenshots saved to: `./e2e-screenshots/[feature-name]/`
 <li><strong>Fail fast, fix fast</strong> — When something fails, offer to fix it immediately rather than accumulating a list of problems</li>
 </ol>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/e2e-feature-test/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/e2e-feature-test/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/e2e-feature-test/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

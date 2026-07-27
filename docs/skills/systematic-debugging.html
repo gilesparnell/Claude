@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Systematic Debugging — Skills — gilesparnell</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
 <div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
@@ -23,22 +24,23 @@
       <a href="../templates.html">Templates</a>
       <a href="../changelog.html">Changelog</a>
     </nav>
+    <div class="header-right">
+      <a href="../skills.html" class="gh-btn">&larr; All skills</a>
+    </div>
   </div>
 </header>
 
-<main class="skill-page">
-  <a class="skill-back" href="../skills.html">&larr; All skills</a>
-  <div class="skill-page-head">
-    <span class="skill-page-icon">🔍</span>
-    <div>
-      <h1 class="skill-page-title">Systematic Debugging</h1>
-      <p class="skill-page-desc">Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour — before proposing fixes. Enforces evidence gathering, pattern analysis, hypothesis testing, and defence-in-depth validation. Adapted from obra/superpowers.</p>
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="skills"></aside>
+  <main class="dock-main">
+    <div class="main-title">Systematic Debugging</div>
+    <div class="main-sub">Root-cause-first debugging methodology. Use when encountering any bug, test failure, or unexpected behaviour — before proposing fixes. Enforces evidence gathering, pattern analysis, hypothesis testing, and defence-in-depth validation. Adapted from obra/superpowers.</div>
+    <div style="margin-top:8px">
+      <span class="skill-page-icon">🔍</span>
       <div class="skill-badges"><span class="skill-badge"><span class="skill-badge-k">scope</span>global</span><span class="skill-badge"><span class="skill-badge-k">category</span>code</span><span class="skill-badge"><span class="skill-badge-k">version</span>1.0</span></div>
-    </div>
-  </div>
-  <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>bug</li><li>test failure</li><li>unexpected behaviour</li><li>debugging</li><li>why is this broken</li><li>it doesn&#39;t work</li><li>fix this</li></ul></section>
-  <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No fixes without root cause investigation first</li><li>Read error messages completely before acting</li><li>Reproduce consistently before hypothesising</li><li>One hypothesis at a time — smallest possible change</li><li>Create a failing test before implementing a fix</li><li>If 3+ fixes fail, question the architecture</li><li>Trace bugs backward through the call stack to find the source</li><li>Add defence-in-depth validation at every layer</li></ul></section>
-  <section class="skill-doc"><h2>The Iron Law</h2>
+      <section class="skill-triggers"><h2>When it fires</h2><ul class="skill-trigger-list"><li>bug</li><li>test failure</li><li>unexpected behaviour</li><li>debugging</li><li>why is this broken</li><li>it doesn&#39;t work</li><li>fix this</li></ul></section>
+      <section class="skill-checks"><h2>Rules</h2><ul class="skill-check-list"><li>No fixes without root cause investigation first</li><li>Read error messages completely before acting</li><li>Reproduce consistently before hypothesising</li><li>One hypothesis at a time — smallest possible change</li><li>Create a failing test before implementing a fix</li><li>If 3+ fixes fail, question the architecture</li><li>Trace bugs backward through the call stack to find the source</li><li>Add defence-in-depth validation at every layer</li></ul></section>
+      <section class="skill-doc"><h2>The Iron Law</h2>
 <pre><code>NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
 </code></pre>
 <p>If you haven&#39;t completed Phase 1, you cannot propose fixes.</p>
@@ -184,12 +186,19 @@
 </tr>
 </tbody></table>
 </section>
-  <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/systematic-debugging/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
-</main>
+      <div class="skill-source"><a href="https://github.com/gilesparnell/Claude/blob/main/skills/systematic-debugging/SKILL.md">View <code>SKILL.md</code> source &rarr;</a></div>
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <span>gilesparnell &middot; Skills</span>
   <span>Generated from <code>skills/systematic-debugging/SKILL.md</code></span>
 </footer>
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>

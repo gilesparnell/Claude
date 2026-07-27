@@ -5,17 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wave Execute Workflow — Parnell Systems Knowledge Portal</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-brand">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
       <div class="header-logo">PS</div>
       <span class="header-name">Parnell Systems</span>
-    </div>
+    </a>
     <nav class="header-nav">
       <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
       <a href="../skills.html">Skills</a>
       <a href="../walkthroughs.html" class="active">Walkthroughs</a>
       <a href="../templates.html">Templates</a>
@@ -27,15 +31,12 @@
   </div>
 </header>
 
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Walkthrough &mdash; Workflow</div>
-    <div class="hero-title">Wave Execute<br><em>Parallel Plan Execution</em></div>
-    <div class="hero-sub">Go from idea to shipped feature using brainstorm &rarr; plan &rarr; wave-execute. Tasks grouped by dependency, dispatched to fresh agents in parallel. No context rot.</div>
-  </div>
-</div>
-
-<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="walkthroughs"></aside>
+  <main class="dock-main">
+    <div class="main-title">Wave Execute Parallel Plan Execution</div>
+    <div class="main-sub">Go from idea to shipped feature using brainstorm &rarr; plan &rarr; wave-execute. Tasks grouped by dependency, dispatched to fresh agents in parallel. No context rot.</div>
+    <div style="margin-top:8px">
 
   <!-- ── DIAGRAM 1: THE PIPELINE ── -->
   <div class="section-label">The Pipeline</div>
@@ -264,6 +265,8 @@
     Every agent spawned by <code style="background:var(--bg2);padding:2px 6px;border-radius:4px;font-size:11px">/wave-execute</code> inherits your global skills. They don't just execute tasks &mdash; they execute them to your standards.
   </div>
 
+    </div>
+  </main>
 </div>
 
 <footer class="site-footer">
@@ -271,5 +274,10 @@
   <span>Adapted from <a href="https://github.com/gsd-build/get-shit-done" style="color:var(--text3)">GSD</a> wave execution pattern</span>
 </footer>
 
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>
