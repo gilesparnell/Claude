@@ -10,6 +10,10 @@
  * data-type  → which entry type the list shows: all|skill|walkthrough|decision|template
  */
 (function () {
+  // Resolve all portal assets/links against this script's own location, so the
+  // shell works from subdirectory pages (docs/diagrams/, docs/skills/) too.
+  const BASE = new URL('.', document.currentScript.src);
+  const abs = (u) => new URL(u, BASE).href;
   const TYPE_META = {
     skill:       { label: 'Skills',       page: 'skills.html',       color: 'var(--blue)' },
     walkthrough: { label: 'Walkthroughs', page: 'walkthroughs.html', color: 'var(--purple)' },
@@ -42,7 +46,7 @@
     TYPE_ORDER.forEach((t) => (counts[t] = DATA.entries.filter((e) => e.type === t).length));
 
     const navItem = (href, key, label, color, count) =>
-      `<a class="nav-item ${activePage === key ? 'active' : ''}" href="${href}">
+      `<a class="nav-item ${activePage === key ? 'active' : ''}" href="${abs(href)}">
         <span class="dot" style="background:${color}"></span><span>${label}</span>
         <span class="n">${count}</span></a>`;
 
@@ -56,7 +60,7 @@
     const top = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 18);
     const tags = top.map(([t]) => {
       if (listEl) return `<button class="tag-chip ${activeTag === t ? 'active' : ''}" data-tag="${esc(t)}">${esc(t)}</button>`;
-      return `<a class="tag-chip" href="all.html?tag=${encodeURIComponent(t)}">${esc(t)}</a>`;
+      return `<a class="tag-chip" href="${abs('all.html')}?tag=${encodeURIComponent(t)}">${esc(t)}</a>`;
     }).join('');
 
     side.innerHTML =
@@ -100,7 +104,7 @@
         const tags = (e.tags || []).slice(0, 4).map((x) => `<span class="rtag">${esc(x)}</span>`).join('');
         const unpub = e.published === false ? '<span class="badge-unpub">unpublished</span>' : '';
         const right = e.date ? `<span class="rdate">${esc(e.date)}</span>` : (e.meta && e.type !== 'skill' ? `<span class="rdate">${esc(e.meta)}</span>` : '');
-        h += `<a class="row" href="${esc(e.url)}">
+        h += `<a class="row" href="${esc(abs(e.url))}">
           <span class="rdot" style="background:${TYPE_META[t].color}"></span>
           <div class="rbody"><div class="rtitle">${esc(e.title)} ${unpub}</div>
           <div class="rdesc">${esc(e.desc)}</div><div class="rmeta">${tags}${right}</div></div></a>`;
@@ -113,7 +117,7 @@
   let pagefind = null, pfTried = false, cmdSel = 0, cmdItems = [], cmdTimer;
   async function initPagefind() {
     if (pfTried) return; pfTried = true;
-    try { pagefind = await import('./pagefind/pagefind.js'); await pagefind.options({}); }
+    try { pagefind = await import(abs('pagefind/pagefind.js')); await pagefind.options({}); }
     catch (e) { pagefind = null; }
   }
   function overlay() { return document.getElementById('cmdk'); }
@@ -132,13 +136,13 @@
 
   async function runCmd(q) {
     q = (q || '').trim();
-    const idx = indexMatches(q).map((e) => ({ title: e.title, url: e.url, sub: e.desc, type: e.type, color: TYPE_META[e.type].color }));
+    const idx = indexMatches(q).map((e) => ({ title: e.title, url: abs(e.url), sub: e.desc, type: e.type, color: TYPE_META[e.type].color }));
     let pf = [];
     if (q && pagefind) {
       try {
         const s = await pagefind.search(q);
         const data = await Promise.all(s.results.slice(0, 5).map((r) => r.data()));
-        pf = data.map((d) => ({ title: (d.meta && d.meta.title) || d.url.replace(/^.*\//, ''), url: d.url.replace(/^\//, ''), sub: (d.excerpt || '').replace(/<[^>]+>/g, ''), type: 'page', color: 'var(--text3)' }));
+        pf = data.map((d) => ({ title: (d.meta && d.meta.title) || d.url.replace(/^.*\//, ''), url: abs(d.url.replace(/^\//, '')), sub: (d.excerpt || '').replace(/<[^>]+>/g, ''), type: 'page', color: 'var(--text3)' }));
       } catch (e) {}
     }
     const seen = new Set(idx.map((i) => i.url));
@@ -198,7 +202,7 @@
     const filter = document.getElementById('portal-filter');
     if (filter) filter.addEventListener('input', (e) => { query = e.target.value.trim(); renderList(); });
 
-    fetch('docs-index.json').then((r) => r.json()).then((d) => {
+    fetch(abs('docs-index.json')).then((r) => r.json()).then((d) => {
       DATA = d;
       // Keep any home-page hero stats in sync with the single source of truth.
       if (d.counts) {

@@ -5,17 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Getting Started: Cowork &amp; Claude Code — Parnell Systems Knowledge Portal</title>
 <link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
 </head>
 <body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="header-brand">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
       <div class="header-logo">PS</div>
       <span class="header-name">Parnell Systems</span>
-    </div>
+    </a>
     <nav class="header-nav">
       <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
       <a href="../skills.html">Skills</a>
       <a href="../walkthroughs.html" class="active">Walkthroughs</a>
       <a href="../templates.html">Templates</a>
@@ -27,15 +30,12 @@
   </div>
 </header>
 
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Walkthrough &mdash; Claude</div>
-    <div class="hero-title">Getting started:<br><em>Cowork &amp; Claude Code</em></div>
-    <div class="hero-sub">A non-technical onboarding guide. Cowork is the daily driver for documents, spreadsheets and research; Claude Code is the power tool for building and automation. When to open which, how to ask, and what to do when something breaks.</div>
-  </div>
-</div>
-
-<div class="wrap" style="padding-top:40px;padding-bottom:64px">
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="walkthroughs"></aside>
+  <main class="dock-main">
+    <div class="main-title">Getting Started: Cowork &amp; Claude Code</div>
+    <div class="main-sub">A non-technical onboarding guide. Cowork is the daily driver for documents, spreadsheets and research; Claude Code is the power tool for building and automation. When to open which, how to ask, and what to do when something breaks.</div>
+    <div style="margin-top:8px">
 
   <div class="section-label">The short version</div>
   <div class="adr-grid">
@@ -211,6 +211,8 @@
   <div class="section-label" style="margin-top:40px">Sendable version</div>
   <p style="color:var(--text3);font-size:14px;line-height:1.7">A fully self-contained copy of this guide &mdash; single HTML file, no dependencies, renders on a phone &mdash; lives at <a href="../downloads/getting-started-with-claude.html">downloads/getting-started-with-claude.html</a>. Send it over WhatsApp or email as-is.</p>
 
+    </div>
+  </main>
 </div>
 
 <footer class="site-footer">
@@ -218,5 +220,10 @@
   <span>Generated July 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
 </footer>
 
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
 </body>
 </html>
