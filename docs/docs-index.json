@@ -545,14 +545,14 @@
     },
     {
       "type": "walkthrough",
-      "title": "Getting Started: Cowork & Claude Code",
-      "desc": "Non-technical onboarding guide — Cowork as the daily driver for spreadsheets, docs and research; Claude Code as the power tool.",
+      "title": "Getting to Know Claude",
+      "desc": "The reading-order index for the non-technical onboarding series — what each doc is for and why it exists, growing one doc at a time.",
       "tags": [
         "claude",
-        "cowork",
-        "onboarding"
+        "onboarding",
+        "series"
       ],
-      "url": "diagrams/getting-started-cowork-claude-code.html",
+      "url": "diagrams/getting-to-know-claude.html",
       "published": true
     },
     {
