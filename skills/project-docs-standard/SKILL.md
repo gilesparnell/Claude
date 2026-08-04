@@ -3,158 +3,82 @@ title: Project Documentation Standard
 scope: global
 category: workflow
 icon: &#128218;
-description: Mandatory documentation structure for every project. Ensures consistent docs/ folder with requirements, design, plans, tracking, user guides, API reference, decisions, and a project portal page. Enforced during ce:plan and ce:work.
+description: Mandatory documentation standard v2 — full artefact set (use-case stories, domain model, sequence diagrams, API contracts, architecture overview, ADRs, runbook) canonical as markdown+SVG in the repo, rendered to a Deep Ocean HTML site by a tested build script.
 triggers:
-  - new project
-  - project setup
-  - create project docs
-  - docs structure
+  - project docs
+  - documentation site
   - documentation standard
-  - set up docs
-  - project kickoff
-checks-label: Required docs
+  - plan-progress dashboard
+  - ADR
+  - runbook
+  - doc standard
+checks-label: Rules
 checks:
-  - docs/index.html — project portal page (Deep Ocean Tech design)
-  - docs/requirements/ — PRDs, feature specs, acceptance criteria
-  - docs/design/ — architecture diagrams, system design, data models
-  - docs/plans/ — build plans with implementation waves
-  - docs/diagrams/ — visual progress tracking (plan-tracker output)
-  - docs/user-guide/ — end-user documentation and onboarding
-  - docs/api/ — API reference, endpoints, schemas (if applicable)
-  - docs/decisions/ — per-project architecture decision records
-  - docs/brainstorms/ — discovery notes, alternatives considered
-  - CHANGELOG.md — what shipped and when
-version: 1.0
+  - Markdown + SVG in-repo are canonical; HTML is generated, never hand-edited
+  - Reverse-engineer drafts from code; the owner supplies intent and rationale
+  - Sequence diagrams draw known defects in — a diagram that hides them lies
+  - Gate before content — never publish private docs before the access gate is verified
+version: 2.0
 ---
 
-# Project Documentation Standard
+# Project Documentation Standard v2
 
-Every Parnell Systems project MUST have a consistent `docs/` folder structure. This standard applies to all projects — internal, client, and personal.
+Every project gets a complete documentation set. **Markdown + SVG in the repo are canonical; HTML is generated output, never hand-edited** (a short list of hand-built exceptions: the architecture and domain-model SVGs, the plan-progress dashboard, the user guide).
 
-## When This Applies
-
-- **Project kickoff**: Create the full structure immediately
-- **ce:plan**: Every plan MUST include a "Documentation" section listing which docs will be created or updated
-- **ce:work**: Documentation tasks are part of the work, not a follow-up
-- **Feature completion**: User guides and API docs updated before declaring "done"
-
-## Required Directory Structure
+## The artefact set
 
 ```
-project-root/
-├── docs/
-│   ├── index.html          ← Project portal page (matches hub design)
-│   ├── requirements/       ← PRDs, feature specs, acceptance criteria
-│   │   └── *.md
-│   ├── design/             ← Architecture, system design, data models
-│   │   └── *.md
-│   ├── plans/              ← Build plans, implementation waves
-│   │   └── YYYY-MM-DD-*.md
-│   ├── diagrams/           ← Visual progress, architecture diagrams
-│   │   └── *.html
-│   ├── user-guide/         ← End-user docs, onboarding, how-tos
-│   │   └── *.md or *.html
-│   ├── api/                ← API reference (if project has an API)
-│   │   └── *.md
-│   ├── decisions/          ← Per-project ADRs
-│   │   └── ADR-NNN-*.md
-│   └── brainstorms/        ← Discovery notes, alternatives explored
-│       └── YYYY-MM-DD-*.md
-├── CHANGELOG.md            ← What shipped and when
-└── ...
+<repo>/
+├── README.md                     # front door, ≤60 lines: one-liner, stack, quickstart,
+│                                 # linked Documentation table. Nothing else.
+├── CONTEXT.md                    # domain glossary
+└── docs/
+    ├── product/use-cases.md      # stories by actor, each traceable to shipped code or a plan
+    ├── architecture/
+    │   ├── overview.md           # narrative + architecture.svg + tech table w/ ADR links
+    │   ├── domain-model.md/.svg  # business concepts — NOT the DB schema
+    │   ├── data-model.md         # ERD + table notes, GENERATED from a captured schema snapshot
+    │   ├── schema-snapshot.sql   # authoritative DDL with provenance header
+    │   ├── sequences/NN-*.md     # 3–6 key flows, mermaid source, file:line cited
+    │   └── api/                  # openapi.yaml + api-contracts.md (incl. RLS semantics
+    │                             # when the database IS the API)
+    ├── decisions/
+    │   ├── decisions.md          # tactical in-flight log
+    │   └── adr/NNNN-*.md         # promoted long-lived decisions + index
+    ├── operations/runbook.md     # deploy, env, migrations, backup/restore, incidents
+    ├── diagrams/plan-progress.html
+    └── plans/ · handoff/
 ```
 
-## Document Types
+## Authoring rules (pilot-proven, Aug 2026)
 
-### 1. Project Portal (`docs/index.html`)
-- Uses the Deep Ocean Tech design system (same as gilesparnell.github.io)
-- Glassmorphism cards, mesh background, Satoshi + Outfit fonts
-- Auto-discovers sections based on which docs/ subdirectories have content
-- Links back to hub portal via PS logo
-- Created at project kickoff, updated as docs accumulate
+1. **Reverse-engineer drafts from code**; the owner supplies intent. Observed derivability: schema→ERD ~100%, routes→OpenAPI ~90%, config→tech inventory ~80%, flows→sequences ~60%, domain model ~50%, stories ~30%, tech rationale 0% — that last one is an owner session, recorded in ADRs.
+2. **Capture the schema from the live database**, not from migrations — migrations lie by omission (the pilot found four tables with no migration source). Commit the snapshot with a provenance header.
+3. **Sequence diagrams draw defects in.** Known bugs and wrinkles appear on the diagram, marked as such.
+4. **ADRs stay minimal** (1–3 sentences + optional consequences) and must pass a qualification test: hard to reverse, surprising without context, a real trade-off. Tactical calls stay in decisions.md.
+5. **SVGs carry explicit width/height** — viewBox alone renders thumbnail-sized on GitHub.
+6. **Render-verify every mermaid block** before commit (and never put `;` inside sequence-note text).
+7. **Every artefact cites its sources** (file:line); every claim must be traceable.
 
-### 2. Requirements (`docs/requirements/`)
-- One file per feature or PRD
-- Format: `YYYY-MM-DD-feature-name-requirements.md`
-- Must include: problem statement, success criteria, scope boundaries, out-of-scope
-- Created during `ce:brainstorm` or discovery phase
+## Publication rule
 
-### 3. Design Docs (`docs/design/`)
-- Architecture diagrams, data models, system design
-- Format: `feature-name-design.md`
-- Must include: context, decision drivers, chosen approach, alternatives considered
-- Created during `ce:plan` or when making significant technical decisions
+- Build script renders docs/ to a self-contained dark-theme HTML site (TDD'd; markdown via `marked`; mermaid pre-rendered to SVG; output gitignored and disposable).
+- **Public repo → GitHub Pages** from /docs, sanitised.
+- **Private repo → an access-gated internal portal.** In-repo markdown needs no gate — repo visibility is the protection; the gate is for the rendered site.
 
-### 4. Build Plans (`docs/plans/`)
-- Implementation plans with waves/phases
-- Format: `YYYY-MM-DD-NNN-plan-name.md`
-- Created by `ce:plan`, tracked by `plan-tracker`
-- Must include: scope, implementation units, dependencies, verification criteria
+### ⛔ Gate before content
 
-### 5. Progress Diagrams (`docs/diagrams/`)
-- Visual HTML dashboards showing plan progress
-- Generated by the `plan-tracker` skill
-- Self-contained HTML with dark theme
+**Never push private content to a publicly-reachable host before the access gate over that exact path is created AND verified** (private window → login challenge; wrong-identity attempt rejected). A gate on one path proves nothing about a sibling path. Verify the gate against a placeholder, then deploy real content.
 
-### 6. User Guides (`docs/user-guide/`)
-- End-user documentation, onboarding flows, how-tos
-- Written when UI features ship — not as a follow-up
-- Can be markdown or HTML
+## Replication checklist
 
-### 7. API Reference (`docs/api/`)
-- Endpoint documentation, request/response schemas, auth
-- Only required for projects with an API
-- Updated when endpoints are added or changed
-
-### 8. Architecture Decisions (`docs/decisions/`)
-- Per-project ADRs — "why we built it this way"
-- Format: `ADR-NNN-title.md`
-- Frontmatter: title, status (proposed/accepted/deprecated), date, tags
-- Created when making non-obvious technical choices
-
-### 9. Brainstorms (`docs/brainstorms/`)
-- Discovery notes, alternatives considered, meeting notes
-- Output from `ce:brainstorm` sessions
-- Format: `YYYY-MM-DD-topic-requirements.md`
-
-### 10. Changelog (`CHANGELOG.md`)
-- What shipped and when
-- Updated with each significant release or feature completion
-- Format: Keep a Changelog (keepachangelog.com)
-
-## Integration with Planning Skills
-
-### During `ce:plan`
-Every plan MUST include a **Documentation** section that lists:
-1. Which existing docs need updating
-2. Which new docs will be created
-3. The project portal page update (if new sections are added)
-
-### During `ce:work`
-Documentation tasks are NOT optional follow-ups. They are part of the implementation:
-- User guide updates ship with the feature
-- API docs update when endpoints change
-- ADRs written when decisions are made (not retroactively)
-- Changelog updated before declaring work complete
-
-### During `ce:brainstorm`
-Output goes to `docs/brainstorms/` (already the default) AND requirements go to `docs/requirements/`.
-
-## Project Portal Design
-
-The `docs/index.html` for each project follows the Deep Ocean Tech design system:
-- Animated mesh gradient background
-- Glassmorphism section cards
-- Each section card only appears if that docs/ subdirectory has content
-- Status badge showing project state (Active, Maintenance, Archived)
-- Quick stats (doc count, last updated, completion %)
-- PS logo links back to hub portal (gilesparnell.github.io)
-- GitHub icon links to repo
-
-## Enforcement
-
-- **ce:plan** must reference this skill and include documentation tasks
-- **ce:work** must not mark a feature complete without updating relevant docs
-- **plan-tracker** generates progress diagrams into docs/diagrams/
-- **skill-publisher** updates the Knowledge Portal when skills change
-- Missing docs in a PR review is a blocking issue
+1. Snapshot schema → data model
+2. Route/config extraction → API contracts + tech inventory
+3. Flow traces → sequence diagrams (pick 3–6 by user value)
+4. Stories draft → owner review gate
+5. Domain model + architecture SVGs (hand-built)
+6. ADR seed → owner rationale session gate
+7. Runbook consolidation (the README often already holds pieces — move, don't duplicate)
+8. README front door rewrite LAST, when link targets exist
+9. Copy build script + tests; verify gate, then wire publication
+10. plan-progress dashboard + correct stale plan frontmatter while there
