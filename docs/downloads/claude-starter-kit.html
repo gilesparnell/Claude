@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Making Claude Yours — the Starter Kit</title>
+<style>
+  :root{
+    --navy:#0e2233;
+    --navy2:#16344d;
+    --teal:#0e8f83;
+    --teal-bg:#e8f5f3;
+    --teal-dark:#0a6e65;
+    --amber-bg:#fdf3e0;
+    --amber-border:#e8c98a;
+    --amber-text:#8a5f14;
+    --violet:#6b5fa8;
+    --violet-bg:#efedf7;
+    --ink:#1d2b36;
+    --ink2:#4a5d6b;
+    --ink3:#7b8b96;
+    --line:#dde5ea;
+    --bg:#f7f9fa;
+    --card:#ffffff;
+    --code-bg:#f0f4f6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;
+  }
+  .page{max-width:760px;margin:0 auto;padding:0 20px 72px}
+
+  .hero{background:var(--navy);color:#fff;padding:48px 20px 44px;margin-bottom:36px}
+  .hero-inner{max-width:760px;margin:0 auto}
+  .hero .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fc6bf;font-weight:600;margin-bottom:14px}
+  .hero h1{font-size:30px;line-height:1.25;font-weight:700;letter-spacing:-.01em;margin-bottom:14px}
+  .hero p{color:#b8c9d4;font-size:17px;max-width:56ch}
+
+  h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:52px 0 8px;color:var(--navy)}
+  h2 + p.lede{color:var(--ink2);margin-bottom:20px}
+  h3{font-size:16px;font-weight:650;margin-bottom:6px;color:var(--navy)}
+  p{margin-bottom:14px}
+  strong{font-weight:650;color:var(--navy)}
+
+  .tldr{background:var(--teal-bg);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:20px 22px;margin:0 0 8px}
+  .tldr .label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--teal-dark);margin-bottom:8px}
+  .tldr p{margin-bottom:10px}
+  .tldr p:last-child{margin-bottom:0}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0 6px;font-size:15px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13.5px}
+  td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  td:first-child{font-weight:650;color:var(--navy);white-space:nowrap}
+  .table-scroll{overflow-x:auto}
+
+  .paste{background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:10px 0 6px;font-size:14px;line-height:1.65;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink)}
+  .paste-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--teal-dark);margin:18px 0 0}
+  .paste-where{font-size:13.5px;color:var(--ink3);margin:4px 0 0}
+
+  .prompt{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--ink);margin-top:4px;margin-bottom:14px}
+  .prompt .say{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--ink3);display:block;margin-bottom:5px}
+
+  .callout{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:10px;padding:16px 18px;margin:18px 0;font-size:15px}
+  .callout strong{color:var(--amber-text)}
+
+  .skillbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+  .skillbox .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--teal-dark);margin-bottom:4px}
+  .skillbox h3{font-size:18px;margin-bottom:8px}
+  .skillbox p.when{font-size:15px;color:var(--ink2)}
+
+  .day{border-top:1px solid var(--line);padding:14px 0}
+  .day:first-of-type{border-top:none}
+  .day h3{font-size:15.5px}
+  .day p{font-size:15px;color:var(--ink2);margin-bottom:6px}
+
+  a{color:var(--teal-dark);text-decoration:none;font-weight:550}
+  a:hover{text-decoration:underline}
+
+  .footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Starter kit · Level 2</div>
+    <h1>Making Claude Yours</h1>
+    <p>Out of the box, Claude is a very bright temp on their first morning: capable, but it doesn't know you, your standards, or your job. This kit fixes that in about twenty minutes — everything below is copy-paste, no technical setup, distilled from a year of daily use.</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="tldr">
+    <div class="label">The short version</div>
+    <p><strong>You'll set up three layers.</strong> First, a set of <strong>ground rules</strong> so Claude works to your standards every session (no invented facts, evidence before "done", drafts stay drafts). Second, a short <strong>who-I-am brief</strong> so it stops giving generic answers. Third, three <strong>repeatable routines</strong> — stress-test a plan, triage a recommendation list, and prove-it's-done checking.</p>
+    <p>Everything pastes into Claude's settings or a Project. Start with layer 1 — it pays off in the first hour.</p>
+  </div>
+
+  <h2>The three layers</h2>
+  <p class="lede">Same Claude underneath — each layer just gives it more of your context.</p>
+
+  <div class="table-scroll">
+  <table>
+    <thead><tr><th>Layer</th><th>What it does</th><th>Where it lives</th></tr></thead>
+    <tbody>
+      <tr><td>1 · Ground rules</td><td>Standards Claude follows in every conversation — accuracy, honesty about uncertainty, your writing style.</td><td>Settings &rarr; Profile &rarr; the "preferences" box (applies everywhere).</td></tr>
+      <tr><td>2 · Who-I-am brief</td><td>Your role, systems, rhythms, and pet peeves — so answers fit your world instead of a generic one.</td><td>Same preferences box, below the rules — or a Project's instructions.</td></tr>
+      <tr><td>3 · Routines</td><td>Repeatable procedures you invoke on demand: "grill this plan", "triage these recommendations", "prove it's done".</td><td>One Project per routine, or paste when needed.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Layer 1 — the ground rules</h2>
+  <p class="lede">These are the safeguards that matter most in an operations job, where a made-up number or a "done" that wasn't checked costs real money. Paste the block below as-is; edit anything that doesn't fit.</p>
+
+  <div class="paste-label">Copy everything in this box</div>
+  <p class="paste-where">Into: Settings &rarr; Profile &rarr; "What preferences should Claude consider in responses?"</p>
+  <div class="paste">Ground rules — follow these in every conversation:
+
+1. Never invent facts, figures, names, or links. If you're not sure,
+   say you're not sure and tell me how we could check.
+2. When you say a task is done or checked, show me what you checked.
+   "Should be right" is not the same as "I verified it".
+3. When you pull a number from a document I've given you, tell me
+   where in the document it came from.
+4. All dates and times in Australia/Sydney time, written plainly
+   (e.g. "3pm Tuesday 12 Aug") — never UTC or raw timestamps.
+5. Drafts stay drafts. Never treat an email, message, or document as
+   sent/final without me explicitly saying so, and always confirm
+   who the audience is before polishing something to send.
+6. If my plan or request has a problem, say so directly before doing
+   the work. I'd rather hear the objection than get polite output.
+7. If I ask for something big, propose the smallest useful version
+   first and check it's what I meant before building the lot.
+8. When you need information from me, ask one or two questions at a
+   time, not a wall of them.
+9. Writing style: plain English, short sentences, no buzzwords
+   (avoid "leverage", "seamless", "delve", "streamline", "robust"),
+   no exclamation marks, don't over-use bullet points. Warm but
+   direct. Write like a competent colleague, not a brochure.
+10. Begin bigger jobs with a one-line plan of what you're about to
+    do, so I can redirect you before the work, not after.</div>
+
+  <div class="callout"><strong>Why these ten:</strong> they're the distilled version of rules a heavy daily user built up over a year — most of them exist because their absence caused a real mess at least once. Rule 1 and 2 are the ones that matter most: they turn Claude from confidently-plausible to actually-reliable.</div>
+
+  <h2>Layer 2 — the who-I-am brief</h2>
+  <p class="lede">Fill in the brackets, delete lines that don't apply, and paste it below your ground rules. Two minutes of this saves you re-explaining your job in every chat.</p>
+
+  <div class="paste-label">Copy, fill in, then paste</div>
+  <p class="paste-where">Into: the same preferences box, underneath the ground rules</p>
+  <div class="paste">About me:
+
+- I'm an operations manager at [company/industry — e.g. "a 40-person
+  logistics firm"]. My patch covers [e.g. rostering, supplier
+  management, reporting, compliance].
+- Team: [size and shape — e.g. "6 direct reports across warehouse
+  and admin"].
+- Tools I live in: [e.g. Excel/Google Sheets, Xero, a warehouse
+  system called X]. Assume spreadsheets are central to my life.
+- My week's rhythm: [e.g. "Monday ops review, Thursday supplier
+  calls, monthly board report"].
+- Right now the priorities are: [top 2–3 — e.g. "reducing overtime
+  spend, onboarding a new 3PL, cleaning up our reporting"].
+- Formats I like: [e.g. "one-page summaries, tables over prose,
+  numbers with sources"].
+- Pet peeves: [e.g. "long preambles, being told something is 'exciting'"].</div>
+
+  <h2>Layer 3 — three routines for operations work</h2>
+  <p class="lede">These are trimmed-down versions of "skills" from a larger library — repeatable procedures you can trigger with one line. The simplest way to use each: create a Project with the routine's name, paste the block into the Project's instructions, and start a chat in that Project whenever you need it. (No Projects on your plan? Just paste the block at the start of a conversation.)</p>
+
+  <div class="skillbox">
+    <div class="kicker">Routine 1</div>
+    <h3>Grill my plan</h3>
+    <p class="when"><strong>Use when:</strong> you've drafted a plan — a rollout, a restructure, a new supplier, a process change — and want it stress-tested <em>before</em> your boss or team finds the holes.</p>
+    <div class="paste">You are stress-testing my plan. Your job is to find the holes,
+not to reassure me.
+
+- Ask me ONE question at a time, then wait for my answer.
+- Hunt for: assumptions I haven't tested, missing owners, fuzzy
+  numbers, deadlines that collide with real calendars, steps that
+  depend on people who haven't agreed yet, and what happens if the
+  riskiest step fails.
+- Don't accept vague answers — push once with a sharper follow-up.
+- After around 8–10 questions, stop and give me: the three biggest
+  risks, what the plan gets right, and the one change that would
+  most improve it.</div>
+  </div>
+
+  <div class="skillbox">
+    <div class="kicker">Routine 2</div>
+    <h3>Triage these recommendations</h3>
+    <p class="when"><strong>Use when:</strong> a consultant report, audit, or review lands on your desk with 30 recommendations, and "adopt them all" is not a plan.</p>
+    <div class="paste">I'm going to give you a list of recommendations (from a report,
+audit, or review). Triage them with me before anything is adopted.
+
+For each recommendation, place it in one of three buckets:
+- ACCEPT — clear value, we can own it, effort is justified. Say
+  who'd likely own it and what "done" looks like.
+- REJECT — doesn't fit our context, duplicates something we do,
+  or cost outweighs benefit. Say why in one sentence.
+- DEFER — worth doing but not now. Say what should trigger
+  revisiting it.
+
+Rules: challenge vague recommendations ("improve communication" is
+not actionable — flag it). Never let more than a third land in
+ACCEPT without pushing back on our capacity. Finish with a summary
+table I can take to a meeting.</div>
+  </div>
+
+  <div class="skillbox">
+    <div class="kicker">Routine 3</div>
+    <h3>Prove it's done</h3>
+    <p class="when"><strong>Use when:</strong> finishing any piece of work with Claude — a reconciled spreadsheet, a report, an analysis — and you want the checking to be systematic instead of vibes.</p>
+    <div class="paste">Before we call this piece of work finished, run a verification
+pass:
+
+1. List every claim or number in the output that could be wrong.
+2. For each, tell me how it was checked: which source, which cell,
+   which document — or admit it wasn't checked.
+3. Recompute any totals independently and confirm they match.
+4. Flag anything that relies on an assumption I haven't confirmed.
+5. Only after that, give a one-line verdict: "verified", or
+   "verified except for X".
+
+Never tell me something is done, correct, or reconciled without
+having done this pass in the same conversation.</div>
+  </div>
+
+  <p>Two more worth having: the <a href="https://gilesparnell.github.io/Claude/skills/humanizer.html">Humanizer</a> — a fuller version of "de-AI the writing" that strips the tells from anything Claude drafts — and the Career Compass, a guided career-discovery interview (ask the person who sent you this page; it's a file they can share).</p>
+
+  <h2>A first week that builds the habit</h2>
+  <p class="lede">Twenty minutes of setup, then one small real thing per day.</p>
+
+  <div class="day">
+    <h3>Day 1 — install layers 1 and 2</h3>
+    <p>Paste the ground rules and your filled-in brief. Then test it: ask Claude something about your own job and notice the answer already fits your world.</p>
+  </div>
+  <div class="day">
+    <h3>Day 2 — one real task, with evidence</h3>
+    <p>Pick something from today's actual to-do list — tidy a spreadsheet, summarise a document. When it's finished, use the habit that matters most:</p>
+    <div class="prompt"><span class="say">Try saying</span>"Before we call that done — what did you check, and what could still be wrong?"</div>
+  </div>
+  <div class="day">
+    <h3>Day 3 — set up your Projects</h3>
+    <p>Create one Project per recurring workstream (e.g. "Weekly ops report", "Supplier reviews") and put the standing context in its instructions — the format you want, where the data comes from, who reads it. Add the three routine Projects while you're there.</p>
+  </div>
+  <div class="day">
+    <h3>Day 4 — grill something real</h3>
+    <p>Take a plan you're actually working on and run Routine 1 on it. This is the day most people get convinced.</p>
+  </div>
+  <div class="day">
+    <h3>Day 5 — automate the report you dread</h3>
+    <p>Take your most repetitive weekly output and build it once with Claude, saving the winning prompt in that Project's instructions. Next week it's a five-minute job.</p>
+  </div>
+
+  <h2>What to ignore for now</h2>
+  <p>The wider library this kit comes from includes developer tooling — Claude Code, terminals, git, MCP servers. None of it is needed for any of the above. If Claude's answers ever mention those, "let's do this without any developer tools" steers it back.</p>
+  <p>When you're ready for more: the basics guide that pairs with this page is <a href="getting-started-with-claude.html">Getting Started with Claude</a>, and the full public library lives at <a href="https://gilesparnell.github.io/Claude/">gilesparnell.github.io/Claude</a>.</p>
+
+  <div class="footer">
+    Built with Claude, naturally. · Pairs with <a href="getting-started-with-claude.html">Getting Started with Claude</a>
+  </div>
+
+</div>
+
+</body>
+</html>
