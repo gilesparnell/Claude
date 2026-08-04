@@ -201,7 +201,7 @@
     {
       "type": "skill",
       "title": "Project Documentation Standard",
-      "desc": "Mandatory documentation structure for every project.",
+      "desc": "Mandatory documentation standard v2 — full artefact set (use-case stories, domain model, sequence diagrams, API contracts, architecture overview, ADRs, runbook) canonical as…",
       "tags": [
         "workflow",
         "global"
