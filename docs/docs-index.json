@@ -1,7 +1,7 @@
 {
   "counts": {
     "skill": 35,
-    "walkthrough": 14,
+    "walkthrough": 15,
     "template": 3,
     "unpublished_skills": 0
   },
@@ -589,6 +589,18 @@
         "agents"
       ],
       "url": "diagrams/subagents-vs-agent-teams.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Claude's Dynamic Workflows",
+      "desc": "Inside the Workflow tool: pipeline vs parallel, adversarial verify and judge-panel patterns, and the concurrency caps that keep a fan-out from running away.",
+      "tags": [
+        "claude",
+        "claude-code",
+        "agents"
+      ],
+      "url": "diagrams/claude-dynamic-workflows.html",
       "published": true
     },
     {

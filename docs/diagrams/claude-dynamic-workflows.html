@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude's Dynamic Workflows — Parnell Systems Knowledge Portal</title>
+<link rel="stylesheet" href="../portal.css">
+<script defer src="../portal-shell.js"></script>
+</head>
+<body>
+<div class="mesh-bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://gilesparnell.github.io/" class="header-brand">
+      <div class="header-logo">PS</div>
+      <span class="header-name">Parnell Systems</span>
+    </a>
+    <nav class="header-nav">
+      <a href="../index.html">Home</a>
+      <a href="../all.html">All Docs</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../walkthroughs.html" class="active">Walkthroughs</a>
+      <a href="../templates.html">Templates</a>
+      <a href="../changelog.html">Changelog</a>
+    </nav>
+    <div class="header-right">
+      <a href="../walkthroughs.html" class="gh-btn">&#8592; All walkthroughs</a>
+    </div>
+  </div>
+</header>
+
+<div class="dock">
+  <aside class="dock-side" id="portal-side" data-page="walkthroughs"></aside>
+  <main class="dock-main">
+    <div class="main-title">Claude's Dynamic Workflows</div>
+    <div class="main-sub">The Workflow tool runs a deterministic script that orchestrates many subagents &mdash; pipeline vs parallel, the quality patterns worth stealing, and the guardrails that keep it from running away.</div>
+    <div style="margin-top:8px">
+
+  <div class="section-label">What a dynamic workflow actually is</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#128220;</div>
+      <div class="adr-body">
+        <div class="adr-title">A script, not another agent</div>
+        <div class="adr-desc">Workflow runs plain JavaScript &mdash; loops, conditionals, fan-out are ordinary code, not something a model decides on the fly. The script calls <code>agent()</code>, <code>parallel()</code> and <code>pipeline()</code> to spawn and sequence subagents. It runs in the background: a task notification arrives when it finishes, and <code>/workflows</code> shows live progress.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128274;</div>
+      <div class="adr-body">
+        <div class="adr-title">Opt-in, never the default</div>
+        <div class="adr-desc">It only fires on explicit signal &mdash; the word "ultracode" in a prompt, ultracode switched on for the session, a direct ask to "use a workflow" or "fan out agents," or a skill whose instructions call for it. Everything else gets a single <code>Agent</code> call or none at all. A workflow can spawn dozens of subagents; that scale needs the user's say-so, not an inference.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128207;</div>
+      <div class="adr-body">
+        <div class="adr-title">Scale to what was actually asked</div>
+        <div class="adr-desc">"Find any bugs" &rarr; a handful of finders, one verification vote each. "Thoroughly audit this" or "be comprehensive" &rarr; a larger finder pool, a 3&ndash;5 vote adversarial pass, a synthesis stage. The size guideline is configurable per session (default: keep it under ~15 agents) &mdash; a guideline, not a hard ceiling.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">The core building blocks</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">agent()</div>
+      <div class="adr-body">
+        <div class="adr-title">Spawn one subagent</div>
+        <div class="adr-desc">Returns the subagent's final text as a string &mdash; or, with <code>opts.schema</code> set, a validated object. Schema forces the subagent to call a structured-output tool, so the parent gets typed data back instead of prose to parse. <code>opts.phase</code> and <code>opts.label</code> control where it lands in the progress tree; <code>opts.isolation:'worktree'</code> gives it its own git worktree when agents will edit files in parallel and would otherwise collide.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">pipeline()</div>
+      <div class="adr-body">
+        <div class="adr-title">The default: no barrier between stages</div>
+        <div class="adr-desc">Every item runs through all stages independently. Item A can be in stage 3 while item B is still finishing stage 1 &mdash; wall-clock time is set by the slowest single item's full chain, not by the sum of each stage's slowest item. This is the shape almost all multi-stage work should take.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">parallel()</div>
+      <div class="adr-body">
+        <div class="adr-title">A genuine barrier</div>
+        <div class="adr-desc">Runs a set of thunks concurrently and awaits every one before returning. Correct only when stage N truly needs the complete set of stage N&minus;1 results at once &mdash; deduplicating findings, an early-exit on a zero count, or a prompt that references "the other results." A thunk that throws resolves to <code>null</code> rather than failing the whole call.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">phase() / log()</div>
+      <div class="adr-body">
+        <div class="adr-title">Narration, not logic</div>
+        <div class="adr-desc"><code>phase(title)</code> groups every subsequent <code>agent()</code> call under a titled heading in the live progress view. <code>log(message)</code> prints a one-line narrator update above the tree. Neither affects control flow &mdash; they exist purely so a human watching <code>/workflows</code> can follow along.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="figure" style="margin:32px auto 8px;max-width:680px">
+  <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gantt-style comparison: pipeline runs three items through review then verify stages independently and finishes at 60 units; parallel forces every item to finish review before any item starts verify, finishing at 100 units" style="width:100%;height:auto;display:block">
+    <defs>
+      <pattern id="idleHatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--text3);stroke-width:1.4;opacity:0.4"/>
+      </pattern>
+    </defs>
+
+    <!-- ============ CHART 1: pipeline() ============ -->
+    <text x="70" y="16" font-size="13" font-weight="700" style="fill:var(--text)">pipeline(dims, review, verify) &mdash; no barrier</text>
+
+    <text x="64" y="47" text-anchor="end" font-size="11.5" style="fill:var(--text2)">bugs</text>
+    <rect x="70" y="34" width="55" height="18" rx="3" style="fill:var(--purple)"/>
+    <rect x="125" y="34" width="275" height="18" rx="3" style="fill:var(--teal)"/>
+
+    <text x="64" y="75" text-anchor="end" font-size="11.5" style="fill:var(--text2)">perf</text>
+    <rect x="70" y="62" width="275" height="18" rx="3" style="fill:var(--purple)"/>
+    <rect x="345" y="62" width="55" height="18" rx="3" style="fill:var(--teal)"/>
+
+    <text x="64" y="103" text-anchor="end" font-size="11.5" style="fill:var(--text2)">security</text>
+    <rect x="70" y="90" width="82.5" height="18" rx="3" style="fill:var(--purple)"/>
+    <rect x="152.5" y="90" width="82.5" height="18" rx="3" style="fill:var(--teal)"/>
+
+    <line x1="70" y1="116" x2="620" y2="116" style="stroke:rgba(255,255,255,0.12);stroke-width:1"/>
+    <text x="70" y="128" font-size="10.5" style="fill:var(--text3)">0</text>
+    <text x="345" y="128" text-anchor="middle" font-size="10.5" style="fill:var(--text3)">50</text>
+    <text x="620" y="128" text-anchor="end" font-size="10.5" style="fill:var(--text3)">100</text>
+
+    <line x1="400" y1="28" x2="400" y2="112" style="stroke:var(--teal);stroke-width:1.5;stroke-dasharray:4,3"/>
+    <text x="405" y="24" font-size="11" font-weight="600" style="fill:var(--teal-text)">all done at 60</text>
+
+    <!-- ============ CHART 2: parallel() ============ -->
+    <text x="70" y="160" font-size="13" font-weight="700" style="fill:var(--text)">parallel(dims &#8594; review) then parallel(&#8594; verify) &mdash; barrier</text>
+
+    <text x="64" y="191" text-anchor="end" font-size="11.5" style="fill:var(--text2)">bugs</text>
+    <rect x="70" y="178" width="55" height="18" rx="3" style="fill:var(--purple)"/>
+    <rect x="125" y="178" width="220" height="18" rx="3" fill="url(#idleHatch)" style="stroke:var(--text3);stroke-dasharray:3,2;opacity:0.6"/>
+    <rect x="345" y="178" width="275" height="18" rx="3" style="fill:var(--teal)"/>
+
+    <text x="64" y="219" text-anchor="end" font-size="11.5" style="fill:var(--text2)">perf</text>
+    <rect x="70" y="206" width="275" height="18" rx="3" style="fill:var(--purple)"/>
+    <rect x="345" y="206" width="55" height="18" rx="3" style="fill:var(--teal)"/>
+    <rect x="400" y="206" width="220" height="18" rx="3" fill="url(#idleHatch)" style="stroke:var(--text3);stroke-dasharray:3,2;opacity:0.6"/>
+
+    <text x="64" y="247" text-anchor="end" font-size="11.5" style="fill:var(--text2)">security</text>
+    <rect x="70" y="234" width="82.5" height="18" rx="3" style="fill:var(--purple)"/>
+    <rect x="152.5" y="234" width="192.5" height="18" rx="3" fill="url(#idleHatch)" style="stroke:var(--text3);stroke-dasharray:3,2;opacity:0.6"/>
+    <rect x="345" y="234" width="82.5" height="18" rx="3" style="fill:var(--teal)"/>
+    <rect x="427.5" y="234" width="192.5" height="18" rx="3" fill="url(#idleHatch)" style="stroke:var(--text3);stroke-dasharray:3,2;opacity:0.6"/>
+
+    <line x1="70" y1="260" x2="620" y2="260" style="stroke:rgba(255,255,255,0.12);stroke-width:1"/>
+    <text x="70" y="272" font-size="10.5" style="fill:var(--text3)">0</text>
+    <text x="345" y="272" text-anchor="middle" font-size="10.5" style="fill:var(--text3)">50</text>
+    <text x="620" y="272" text-anchor="end" font-size="10.5" style="fill:var(--text3)">100</text>
+
+    <line x1="345" y1="172" x2="345" y2="256" style="stroke:var(--amber);stroke-width:1.5;stroke-dasharray:4,3"/>
+    <text x="350" y="168" font-size="11" font-weight="600" style="fill:var(--amber-text)">barrier &mdash; wait for slowest</text>
+    <line x1="620" y1="172" x2="620" y2="256" style="stroke:var(--coral);stroke-width:1.5;stroke-dasharray:4,3"/>
+    <text x="615" y="168" text-anchor="end" font-size="11" font-weight="600" style="fill:var(--coral-text)">all done at 100</text>
+
+    <!-- legend -->
+    <rect x="70" y="286" width="12" height="12" rx="2" style="fill:var(--purple)"/>
+    <text x="87" y="296" font-size="11" style="fill:var(--text2)">stage 1 (review)</text>
+    <rect x="210" y="286" width="12" height="12" rx="2" style="fill:var(--teal)"/>
+    <text x="227" y="296" font-size="11" style="fill:var(--text2)">stage 2 (verify)</text>
+    <rect x="350" y="286" width="12" height="12" rx="2" fill="url(#idleHatch)" style="stroke:var(--text3)"/>
+    <text x="367" y="296" font-size="11" style="fill:var(--text2)">idle &mdash; blocked on the barrier</text>
+  </svg>
+  </div>
+  <p style="text-align:center;font-size:12px;color:var(--text3);margin:6px 0 0">Same three items, same per-item durations. <code>pipeline()</code> lets each item run its own chain start to finish; <code>parallel()</code> forces every item to clear stage 1 before any item starts stage 2. Here that difference is 60 units versus 100.</p>
+
+  <div class="section-label" style="margin-top:44px">When a barrier is actually justified</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num" style="color:var(--teal-text)">&#10003;</div>
+      <div class="adr-body">
+        <div class="adr-title">Stage N genuinely needs all of stage N&minus;1</div>
+        <div class="adr-desc">Deduplicating or merging findings across the full result set before expensive downstream work; an early-exit when the total count is zero ("0 bugs found &rarr; skip verification entirely"); a prompt that explicitly compares one item against "the other findings."</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num" style="color:var(--coral-text)">&#10007;</div>
+      <div class="adr-body">
+        <div class="adr-title">Reasons that don't actually justify one</div>
+        <div class="adr-desc">"I need to flatten or map the results first" &mdash; do that transform inside a pipeline stage, no barrier required. "The stages are conceptually separate" &mdash; that's what <code>pipeline()</code> already models. "It's cleaner code" &mdash; the latency is real: if five finders run and the slowest takes 3&times; the fastest, a barrier wastes two-thirds of the fast finders' idle time.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:44px">Quality patterns worth stealing</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#9878;&#65039;</div>
+      <div class="adr-body">
+        <div class="adr-title">Adversarial verify</div>
+        <div class="adr-desc">Spawn N independent sceptics per finding, each prompted to try to <em>refute</em> it, defaulting to "refuted" when uncertain. Kill the finding if a majority refute. Stops plausible-but-wrong findings from surviving on the strength of one confident agent.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#127919;</div>
+      <div class="adr-body">
+        <div class="adr-title">Perspective-diverse verify</div>
+        <div class="adr-desc">When a finding can fail in more than one way, give each verifier a distinct lens &mdash; correctness, security, performance, does-it-actually-reproduce &mdash; instead of N identical refuters. Diversity catches failure modes redundancy can't.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#127942;</div>
+      <div class="adr-body">
+        <div class="adr-title">Judge panel</div>
+        <div class="adr-desc">Generate N independent attempts from different angles &mdash; MVP-first, risk-first, user-first &mdash; score them with parallel judges, then synthesise from the winner while grafting the best ideas from runners-up. Beats iterating on a single attempt when the solution space is genuinely wide.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128260;</div>
+      <div class="adr-body">
+        <div class="adr-title">Loop-until-dry</div>
+        <div class="adr-desc">For unknown-size discovery &mdash; bugs, edge cases, issues &mdash; keep spawning finders until K consecutive rounds turn up nothing new that isn't already in the seen set. A fixed <code>while count &lt; N</code> loop misses whatever's in the tail.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128270;</div>
+      <div class="adr-body">
+        <div class="adr-title">Multi-modal sweep</div>
+        <div class="adr-desc">Parallel agents each search a different way &mdash; by container, by content, by entity, by time &mdash; blind to what the others surface. Useful whenever one search angle alone won't find everything.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128064;</div>
+      <div class="adr-body">
+        <div class="adr-title">Completeness critic + no silent caps</div>
+        <div class="adr-desc">A final agent asks "what's missing &mdash; a modality not run, a claim not verified, a source not read?" &mdash; its output becomes the next round. And if a workflow bounds coverage (top-N, no retry, a sample), <code>log()</code> what was dropped; a silent cap reads as "covered everything" when it didn't.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:44px">The canonical shape: review &#8594; verify, no wasted wall-clock</div>
+  <pre style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px 20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--text2)"><span style="color:var(--text3)">// each dimension verifies as soon as ITS review completes &mdash; 'bugs' findings
+// start verifying while 'perf' is still being reviewed. No barrier, no wasted time.</span>
+const results = await pipeline(
+  DIMENSIONS,
+  d =&gt; agent(d.prompt, { label: <span style="color:var(--teal-text)">`review:${d.key}`</span>, phase: <span style="color:var(--teal-text)">'Review'</span>, schema: FINDINGS_SCHEMA }),
+  review =&gt; parallel(review.findings.map(f =&gt; () =&gt;
+    agent(<span style="color:var(--teal-text)">`Adversarially verify: ${f.title}`</span>, { label: <span style="color:var(--teal-text)">`verify:${f.file}`</span>, phase: <span style="color:var(--teal-text)">'Verify'</span>, schema: VERDICT_SCHEMA })
+      .then(v =&gt; ({ ...f, verdict: v }))
+  ))
+)
+
+const confirmed = results.flat().filter(Boolean).filter(f =&gt; f.verdict?.isReal)
+return { confirmed }</pre>
+
+  <div class="section-label" style="margin-top:44px">Guardrails and limits</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#9200;</div>
+      <div class="adr-body">
+        <div class="adr-title">Concurrency and lifetime caps</div>
+        <div class="adr-desc">At most <code>min(16, cores &minus; 2)</code> agents run concurrently per workflow &mdash; excess calls queue and run as slots free up, so passing 100 items still completes, just throttled. Total agent count across a workflow's life is capped at 1000, a backstop against a runaway loop. A single <code>parallel()</code>/<code>pipeline()</code> call caps at 4096 items.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128190;</div>
+      <div class="adr-body">
+        <div class="adr-title">Resume from a run ID</div>
+        <div class="adr-desc">A paused, killed, or edited workflow can be relaunched with its prior <code>runId</code>. The longest unchanged prefix of <code>agent()</code> calls returns cached results instantly; only the first edited call and everything after it re-runs live. Same script, same args &rarr; a full cache hit.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#128176;</div>
+      <div class="adr-body">
+        <div class="adr-title">Token budget as a hard ceiling</div>
+        <div class="adr-desc">When the user gives a target ("+500k"), <code>budget.total</code>/<code>budget.spent()</code>/<code>budget.remaining()</code> are available inside the script for loop-until-budget patterns. It's enforced, not advisory &mdash; once spend hits the target, further <code>agent()</code> calls throw.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#9888;&#65039;</div>
+      <div class="adr-body">
+        <div class="adr-title">Plain JS, no wall-clock inside the script</div>
+        <div class="adr-desc">Scripts are JavaScript, not TypeScript &mdash; type annotations and generics fail to parse. <code>Date.now()</code>, <code>Math.random()</code>, and argless <code>new Date()</code> all throw, because they'd break resume determinism. Pass timestamps in via <code>args</code> and stamp results after the workflow returns.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:44px">Single agent, or a workflow?</div>
+  <div class="adr-grid">
+    <div class="adr-card">
+      <div class="adr-num">&#129513;</div>
+      <div class="adr-body">
+        <div class="adr-title">One <code>Agent</code> call</div>
+        <div class="adr-desc">The default for everything: a self-contained lookup, a scoped fix, one investigation whose answer feeds the next step directly. No opt-in needed, no progress tree to watch.</div>
+      </div>
+    </div>
+    <div class="adr-card">
+      <div class="adr-num">&#127760;</div>
+      <div class="adr-body">
+        <div class="adr-title">A <code>Workflow</code> script</div>
+        <div class="adr-desc">Comprehensiveness across many independent pieces, confidence from adversarial cross-checking before committing to a finding, or scale one context window can't hold &mdash; and always because the user asked for that scale, in their own words or by having ultracode on.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:44px">Related</div>
+  <p style="color:var(--text3);font-size:14px;line-height:1.7">For the difference between this and a live multi-agent <em>team</em> working the same session, see <a href="subagents-vs-agent-teams.html">Sub-agents &amp; Agent Teams</a>. For picking between local Claude, a workflow, and other runners entirely, see the <a href="../skills/runtime-routing.html">runtime-routing</a> skill.</p>
+
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <span>gilesparnell &middot; Walkthroughs</span>
+  <span>Generated August 2026 &middot; <a href="../walkthroughs.html" style="color:var(--text3)">Back to walkthroughs</a></span>
+</footer>
+
+<script>
+document.querySelectorAll('.card,.skill-card,.adr-card,.template-card,.wt-card,.feed').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mouse-x',(e.clientX-r.left)+'px');el.style.setProperty('--mouse-y',(e.clientY-r.top)+'px');});
+});
+</script>
+</body>
+</html>
