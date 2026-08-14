@@ -1,7 +1,7 @@
 {
   "counts": {
     "skill": 35,
-    "walkthrough": 15,
+    "walkthrough": 16,
     "template": 3,
     "unpublished_skills": 0
   },
@@ -553,6 +553,19 @@
         "series"
       ],
       "url": "downloads/getting-to-know-claude.html",
+      "published": true
+    },
+    {
+      "type": "walkthrough",
+      "title": "Claude Playbooks",
+      "desc": "Standalone Claude Skills, grouped by what they're for — not a reading order.",
+      "tags": [
+        "claude",
+        "skills",
+        "career",
+        "testing"
+      ],
+      "url": "downloads/claude-playbooks.html",
       "published": true
     },
     {

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Playbooks — Standalone Skills</title>
+<style>
+  :root{
+    --navy:#0e2233;
+    --teal:#0e8f83;
+    --teal-bg:#e8f5f3;
+    --teal-dark:#0a6e65;
+    --amber-bg:#fdf3e0;
+    --amber-border:#e8c98a;
+    --amber-text:#8a5f14;
+    --ink:#1d2b36;
+    --ink2:#4a5d6b;
+    --ink3:#7b8b96;
+    --line:#dde5ea;
+    --bg:#f7f9fa;
+    --card:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;
+  }
+  .page{max-width:760px;margin:0 auto;padding:0 20px 72px}
+
+  .hero{background:var(--navy);color:#fff;padding:48px 20px 44px;margin-bottom:36px}
+  .hero-inner{max-width:760px;margin:0 auto}
+  .hero nav{font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .hero nav a{color:#8fc6bf;text-decoration:none;font-weight:600}
+  .hero nav a:hover{text-decoration:underline}
+  .hero nav .dim{color:#8fa8b8}
+  .hero nav .sep{color:#4a6a80}
+  .hero .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fc6bf;font-weight:600;margin-bottom:14px}
+  .hero h1{font-size:30px;line-height:1.25;font-weight:700;letter-spacing:-.01em;margin-bottom:14px}
+  .hero p{color:#b8c9d4;font-size:17px;max-width:56ch}
+
+  h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:52px 0 8px;color:var(--navy)}
+  h2 + p.lede{color:var(--ink2);margin-bottom:20px}
+  h3{font-size:16px;font-weight:650;margin-bottom:6px;color:var(--navy)}
+  p{margin-bottom:14px}
+  strong{font-weight:650;color:var(--navy)}
+
+  .tldr{background:var(--teal-bg);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:20px 22px;margin:0 0 8px}
+  .tldr .label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--teal-dark);margin-bottom:8px}
+  .tldr p{margin-bottom:10px}
+  .tldr p:last-child{margin-bottom:0}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0 6px;font-size:15px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13.5px}
+  td{padding:13px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+  td.num{color:var(--ink3);font-weight:650;white-space:nowrap}
+  td.doc{white-space:nowrap}
+  td.doc a{font-weight:650}
+  .table-scroll{overflow-x:auto}
+
+  .callout{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:10px;padding:16px 18px;margin:18px 0;font-size:15px}
+  .callout strong{color:var(--amber-text)}
+
+  .habit{border-top:1px solid var(--line);padding:16px 0}
+  .habit:first-of-type{border-top:none}
+  .habit h3{font-size:15.5px}
+  .habit p{font-size:15px;color:var(--ink2);margin-bottom:0}
+
+  a{color:var(--teal-dark);text-decoration:none;font-weight:550}
+  a:hover{text-decoration:underline}
+
+  .footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <nav>
+      <a href="../index.html" style="color:#8fc6bf;font-weight:600">Home</a>
+      <span class="sep">&middot;</span>
+      <span class="dim">Standalone playbooks</span>
+      <span class="sep">&middot;</span>
+      <a href="getting-to-know-claude.html">Getting to Know Claude series &#8594;</a>
+    </nav>
+    <div class="eyebrow">Grab whichever one fits &mdash; no reading order</div>
+    <h1>Claude Playbooks</h1>
+    <p>Unlike the <a href="getting-to-know-claude.html" style="color:#cfe6e2">Getting to Know Claude</a> series, these aren't read in sequence. Each one is a self-contained Claude Skill for a specific situation &mdash; take the one that matches yours and ignore the rest.</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="tldr">
+    <div class="label">What a "skill" is</div>
+    <p>A Claude Skill is a text file that tells Claude how to run a specific job &mdash; a workflow, a checklist, a way of thinking through a problem &mdash; so you don't have to re-explain it every time. Add it once, then just start talking about the thing it's for.</p>
+  </div>
+
+  <h2>Career &amp; life</h2>
+  <p class="lede">One skill: a structured, multi-session conversation for working out what you actually want to do next.</p>
+
+  <div class="table-scroll">
+  <table>
+    <thead><tr><th>Skill</th><th>What it's for</th><th>Get it</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="doc">Career Compass<br>Role Discovery</td>
+        <td>Works through energy (what drains you vs. what lights you up), values and non-negotiables, and strengths &mdash; then generates a shortlist of role archetypes and stress-tests each one before you commit. Built for a career pivot, a burnout recovery, or just genuine uncertainty about what's next. Takes several sittings; it saves progress and picks up where you left off.</td>
+        <td class="doc"><a href="career-compass-role-discovery.zip">Download (.zip) &#8594;</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout"><strong>How to add it:</strong> unzip it, then either upload the folder as a Skill in Claude.ai (Settings &rarr; Capabilities &rarr; Skills), or drop it into your Claude Code skills folder if that's what you use. Once it's added, just open a chat and start talking about your career situation &mdash; Claude will pick it up and start with Stage 0.</div>
+
+  <h2>Software development discipline</h2>
+  <p class="lede">Six skills that all enforce the same underlying habit: don't claim something works until you've proven it. Written for Claude Code, not general chat &mdash; if you're not writing code with Claude, skip this section.</p>
+
+  <div class="table-scroll">
+  <table>
+    <thead><tr><th>Skill</th><th>What it's for</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="doc">Test-First Development</td>
+        <td>Tests are written and confirmed <em>failing</em> before any implementation code exists &mdash; for every function, endpoint, or module. Always on; doesn't need to be asked for.</td>
+        <td class="doc"><a href="../skills/tdd-first.html">View skill &#8594;</a></td>
+      </tr>
+      <tr>
+        <td class="doc">Verification Before Completion</td>
+        <td>Blocks premature "done" claims. Before Claude says something is fixed, working, or passing, it has to run the verification command and show the output first. Evidence before claims, always.</td>
+        <td class="doc"><a href="../skills/verification-before-completion.html">View skill &#8594;</a></td>
+      </tr>
+      <tr>
+        <td class="doc">Testing Practices</td>
+        <td>How to actually set up and write tests &mdash; structure, coverage, infrastructure &mdash; for whenever the ask is "write tests for this" or "how do I test this."</td>
+        <td class="doc"><a href="../skills/testing-practices.html">View skill &#8594;</a></td>
+      </tr>
+      <tr>
+        <td class="doc">End-to-End Feature Test</td>
+        <td>After a feature is built, drives it through the browser like a real user, checks the backend state actually changed, and produces a pass/fail report &mdash; not just "the unit tests are green."</td>
+        <td class="doc"><a href="../skills/e2e-feature-test.html">View skill &#8594;</a></td>
+      </tr>
+      <tr>
+        <td class="doc">Systematic Debugging</td>
+        <td>Root-cause-first methodology for any bug or test failure &mdash; gather evidence, find the pattern, test the hypothesis &mdash; before proposing a fix. The discipline that keeps "verify before completion" honest when something's actually broken.</td>
+        <td class="doc"><a href="../skills/systematic-debugging.html">View skill &#8594;</a></td>
+      </tr>
+      <tr>
+        <td class="doc">Code Quality Review</td>
+        <td>A last pass before calling code production-ready &mdash; reviewing, auditing, and cleaning up, on top of tests already passing.</td>
+        <td class="doc"><a href="../skills/code-quality.html">View skill &#8594;</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="lede">These six are grouped here because they all answer the same question &mdash; <em>how do you know it actually works?</em> &mdash; not because they're the whole library. The full set, including git and release-discipline skills, is in the <a href="../skills.html">Skills Library</a>.</p>
+
+  <div class="footer">
+    Built with Claude, naturally. &middot; Part of the <a href="https://gilesparnell.github.io/Claude/">Parnell Systems knowledge library</a>
+  </div>
+
+</div>
+
+</body>
+</html>
