@@ -746,11 +746,10 @@
   "review": {
     "models": { "cursor": "gemini-4-argon-high", "codex": "gpt-6.1-sol", "gemini": "gemini-3.5-flash" },
     "default_reviewers": ["cursor"]
-  },
-  "model_overrides": { "gsd-plan-checker": "sonnet" }
+  }
 }</pre>
     </div>
-    <p class="fw-hint">For a project that already exists, set the same keys with /gsd-config, or edit .planning/config.json. Use an absolute path in code_review_command: /gsd-ship does not expand ~.</p>
+    <p class="fw-hint">For a project that already exists, set the same keys with /gsd-config, or edit .planning/config.json. Use an absolute path in code_review_command: /gsd-ship does not expand ~. Keep model_overrides (such as a stronger plan-checker) in each project's own config: in defaults.json it triggers a warning on every command once a project exists.</p>
 
     <!-- 10 -->
     <div class="fw-sub" id="s10">10 &middot; Starting your own project <a class="back" href="#contents">&uarr; contents</a></div>
