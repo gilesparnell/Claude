@@ -7,26 +7,36 @@
 <link rel="stylesheet" href="portal.css">
 <script defer src="portal-shell.js"></script>
 <style>
+  html{scroll-behavior:smooth;}
   .fw-card{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg2);
     padding:26px 28px 28px;margin-bottom:28px;}
+  @media (max-width:560px){.fw-card{padding:20px 16px 22px;}}
   .fw-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:6px;}
   .fw-name{font-size:20px;font-weight:700;color:var(--text);}
   .fw-tag{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;
     padding:3px 9px;border-radius:100px;margin-left:10px;vertical-align:middle;}
   .fw-tag.live{color:var(--green-text);background:var(--green-bg);border:1px solid var(--green-border);}
-  .fw-tag.dead{color:var(--coral-text);background:var(--coral-bg);border:1px solid var(--coral-border);}
-  .fw-desc{font-size:13.5px;line-height:1.65;color:var(--text2);max-width:62ch;margin:6px 0 16px;}
+  .fw-desc{font-size:13.5px;line-height:1.65;color:var(--text2);max-width:66ch;margin:6px 0 16px;}
+  .fw-desc b{color:var(--text);}
+  .fw-desc code,.fw-note code,.fw-compare code,.fw-step code{font-family:var(--mono);font-size:11.5px;color:var(--accent-light);
+    background:var(--bg);padding:1px 5px;border-radius:4px;}
   .fw-facts{display:flex;gap:22px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--text2);
     padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:20px;}
   .fw-facts b{color:var(--text);font-weight:600;}
   .fw-install{font-family:var(--mono);font-size:12.5px;background:var(--bg);border:1px solid var(--border2);
-    border-radius:7px;padding:10px 14px;color:var(--text);margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+    border-radius:7px;padding:10px 14px;color:var(--text);margin-bottom:22px;overflow-x:auto;white-space:nowrap;}
   .fw-warn{display:flex;gap:12px;align-items:flex-start;padding:13px 16px;border-radius:10px;margin-bottom:22px;
     background:var(--coral-bg);border:1px solid var(--coral-border);}
   .fw-warn .ico{color:var(--coral-text);font-size:15px;line-height:1.3;}
   .fw-warn p{font-size:13px;line-height:1.55;color:var(--text);margin:0;}
   .fw-warn b{color:var(--coral-text);}
-  .fw-sub{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:26px 0 12px;}
+  .fw-warn code{font-family:var(--mono);font-size:11.5px;}
+  .fw-sub{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);
+    margin:38px 0 12px;scroll-margin-top:24px;}
+  .fw-sub .back{float:right;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.02em;
+    text-transform:none;color:var(--text3);text-decoration:none;}
+  .fw-sub .back:hover{color:var(--accent);}
+  .fw-sub.star{color:var(--purple-text);}
   .fw-q{border-left:3px solid var(--purple-border);background:var(--bg);border-radius:0 8px 8px 0;
     padding:11px 16px;margin-bottom:9px;}
   .fw-q .n{font-family:var(--mono);font-size:11px;color:var(--purple-text);font-weight:700;margin-right:6px;}
@@ -35,10 +45,101 @@
   .fw-compare{font-size:13px;line-height:1.65;color:var(--text2);background:var(--bg);border:1px solid var(--border);
     border-radius:10px;padding:16px 18px;margin-top:8px;}
   .fw-compare b{color:var(--text);}
-  svg.fw-diagram{width:100%;height:auto;display:block;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin:6px 0 8px;}
+  .fw-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  svg.fw-diagram{width:100%;min-width:700px;height:auto;display:block;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin:6px 0 8px;}
   .fw-node-lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;}
   .fw-node-t{font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;}
-  .fw-node-d{font-family:'Space Grotesk',sans-serif;font-size:8.6px;}
+  .fw-node-d{font-family:'Space Grotesk',sans-serif;font-size:9px;}
+  .fw-hint{font-family:var(--mono);font-size:10.5px;color:var(--text3);margin:0 0 10px;}
+
+  /* contents */
+  .fw-toc{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin:4px 0 26px;}
+  .fw-toc h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--text3);margin:0 0 12px;font-weight:700;}
+  .fw-toc ol{margin:0;padding-left:20px;columns:2;column-gap:36px;}
+  @media (max-width:660px){.fw-toc ol{columns:1;}}
+  .fw-toc li{margin:0 0 7px;break-inside:avoid;font-size:13px;color:var(--text2);}
+  .fw-toc a{color:var(--accent-light);text-decoration:none;}
+  .fw-toc a:hover{text-decoration:underline;}
+
+  /* problem / fix */
+  .fw-pf{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:4px 0 8px;}
+  @media (max-width:700px){.fw-pf{grid-template-columns:1fr;}}
+  .fw-pf > div{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+  .fw-pf h5{margin:0 0 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;}
+  .fw-pf .p h5{color:var(--coral-text);} .fw-pf .f h5{color:var(--green-text);}
+  .fw-pf ul{margin:0;padding-left:16px;font-size:13px;color:var(--text2);line-height:1.6;}
+  .fw-pf li{margin:4px 0;} .fw-pf li b{color:var(--text);}
+
+  /* terminal mock */
+  .fw-term{background:#0d1117;border:1px solid var(--border2);border-radius:10px;overflow:hidden;margin:6px 0 10px;}
+  .fw-term .bar{display:flex;gap:6px;align-items:center;padding:9px 12px;background:#161b22;border-bottom:1px solid #30363d;}
+  .fw-term .bar i{width:10px;height:10px;border-radius:50%;background:#30363d;display:inline-block;}
+  .fw-term .bar span{font-family:var(--mono);font-size:10.5px;color:#8b949e;margin-left:8px;}
+  .fw-term pre{margin:0;padding:14px 16px;font-family:var(--mono);font-size:12px;line-height:1.65;color:#c9d1d9;
+    overflow-x:auto;white-space:pre;}
+  .fw-term .u{color:#7ee787;} .fw-term .c{color:#8b949e;} .fw-term .f{color:#79c0ff;} .fw-term .w{color:#e3b341;} .fw-term .r{color:#ff7b72;}
+
+  /* tables */
+  .fw-tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:4px 0 10px;}
+  table.fw-table{width:100%;border-collapse:collapse;font-size:12.8px;min-width:560px;}
+  table.fw-table th{background:var(--bg3);color:var(--text);text-align:left;padding:9px 12px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    font-weight:700;border-bottom:1px solid var(--border2);}
+  table.fw-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2);
+    line-height:1.55;vertical-align:top;}
+  table.fw-table td b{color:var(--text);font-weight:600;}
+  table.fw-table tr:last-child td{border-bottom:none;}
+  table.fw-table code{font-family:var(--mono);font-size:11.5px;color:var(--accent-light);
+    background:var(--bg);padding:1px 5px;border-radius:4px;white-space:nowrap;}
+  table.fw-table td.wrapfirst code{white-space:normal;}
+
+  .fw-chip{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;padding:2px 7px;border-radius:100px;white-space:nowrap;}
+  .fw-chip.req{color:var(--green-text);background:var(--green-bg);border:1px solid var(--green-border);}
+  .fw-chip.rec{color:var(--blue-text);background:var(--blue-bg);border:1px solid var(--blue-border);}
+  .fw-chip.opt{color:var(--amber-text);background:var(--amber-bg);border:1px solid var(--amber-border);}
+  .fw-chip.now{color:var(--coral-text);background:var(--coral-bg);border:1px solid var(--coral-border);}
+  .fw-chip.done{color:var(--green-text);background:var(--green-bg);border:1px solid var(--green-border);}
+  .fw-chip.todo{color:var(--text3);background:var(--bg3);border:1px solid var(--border);}
+  .fw-chip.rej{color:var(--coral-text);background:var(--coral-bg);border:1px solid var(--coral-border);}
+  .fw-chip.inc{color:var(--green-text);background:var(--green-bg);border:1px solid var(--green-border);}
+
+  /* gate grid */
+  .fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:4px 0 8px;}
+  @media (max-width:760px){.fw-grid{grid-template-columns:1fr;}}
+  .fw-gate{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .fw-gate.block{border-left:3px solid var(--coral);}
+  .fw-gate.advise{border-left:3px solid var(--amber);}
+  .fw-gate.determ{border-left:3px solid var(--teal);}
+  .fw-gate .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--text3);font-weight:700;display:block;margin-bottom:5px;}
+  .fw-gate h5{margin:0 0 7px;font-size:13.5px;color:var(--text);font-weight:600;}
+  .fw-gate ul{margin:0;padding-left:15px;font-size:12.3px;color:var(--text2);line-height:1.5;}
+  .fw-gate li{margin:3px 0;}
+  .fw-gate code{font-family:var(--mono);font-size:11px;color:var(--accent-light);}
+
+  /* stat tiles */
+  .fw-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:8px 0 12px;}
+  @media (max-width:760px){.fw-stats{grid-template-columns:repeat(2,1fr);}}
+  .fw-stat{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .fw-stat .v{font-family:var(--font-display),sans-serif;font-size:26px;font-weight:700;color:var(--text);line-height:1.1;}
+  .fw-stat .k{font-size:12px;color:var(--text2);line-height:1.45;margin-top:6px;}
+  .fw-stat .s{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;display:block;}
+
+  /* numbered start steps */
+  .fw-steps{counter-reset:st;display:grid;gap:10px;margin:6px 0 10px;}
+  .fw-step{counter-increment:st;position:relative;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+    padding:13px 16px 13px 54px;font-size:13px;line-height:1.6;color:var(--text2);}
+  .fw-step::before{content:counter(st);position:absolute;left:16px;top:12px;width:24px;height:24px;border-radius:50%;
+    background:var(--purple-bg);border:1px solid var(--purple-border);color:var(--purple-text);
+    font-family:var(--mono);font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .fw-step b{color:var(--text);}
+
+  .fw-note{font-size:12.5px;line-height:1.6;color:var(--text2);background:var(--bg);
+    border-left:3px solid var(--teal-border);border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;}
+  .fw-note b{color:var(--teal-text);}
+  .fw-note.purple{border-left-color:var(--purple-border);} .fw-note.purple b{color:var(--purple-text);}
 </style>
 </head>
 <body>
@@ -75,133 +176,533 @@
     <div class="main-sub">Spec-driven development systems for Claude Code &mdash; run and read first-hand, not summarised from someone else's take.</div>
     <div style="margin-top:8px">
 
-  <div class="fw-card">
+  <div class="fw-card" id="gsd-core">
     <div class="fw-head">
       <div><span class="fw-name">GSD Core</span><span class="fw-tag live">ACTIVE</span></div>
     </div>
-    <p class="fw-desc">A meta-prompting, context-engineering and spec-driven development system built for Claude Code (and a dozen other agent runtimes). The pitch: most of the failure modes in long AI-driven builds &mdash; context rot, forgotten decisions, code that "works" but was never actually checked &mdash; are structural, so fix them with structure rather than discipline alone.</p>
+    <p class="fw-desc">A set of slash commands for Claude Code that turn "build me X" into a fixed sequence: agree the decisions, write a plan, have the plan checked, build it in small committed steps, then prove it does what you asked. Each step writes a plain Markdown file, and the next step reads it. Claude never has to remember anything between sessions, because it's all on disc.</p>
 
     <div class="fw-facts">
       <span>Repo: <b>open-gsd/gsd-core</b></span>
-      <span>Created <b>22 May 2026</b></span>
-      <span>Stars <b>~9,300</b></span>
-      <span>Last push <b>10 Sep 2026</b></span>
+      <span>Runs on: <b>Claude Code, Codex, Gemini CLI, Cursor + others</b></span>
+      <span>Running here: <b>v1.13.0</b></span>
     </div>
+
+    <div class="fw-install">npx -y @opengsd/gsd-core@latest --claude --local</div>
 
     <div class="fw-warn">
       <span class="ico">&#9888;</span>
-      <p><b>Every article ranking GSD by star count is pointing at the wrong repo.</b> The 64,500-star original &mdash; <code>gsd-build/get-shit-done</code> &mdash; is <b>archived</b>, dead since 31 May 2026. Development moved to <code>open-gsd/gsd-core</code>, a lower-profile repo with real, near-daily commits. Verified directly against both repos' GitHub metadata, not a comparison article's cached summary.</p>
+      <p><b>Install from the right repo.</b> Articles ranking GSD by star count point at <code>gsd-build/get-shit-done</code>, which was archived on 31 May 2026. Development moved to <code>open-gsd/gsd-core</code>. The command above installs the live one.</p>
     </div>
 
-    <div class="fw-install">
-      <span>npx -y @opengsd/gsd-core@latest --claude --local</span>
+    <nav class="fw-toc" id="contents">
+      <h4>On this page</h4>
+      <ol>
+        <li><a href="#s01">Why bother: the problem it fixes</a></li>
+        <li><a href="#s02">The whole flow on one page</a></li>
+        <li><a href="#s03">What it looks like in the terminal</a></li>
+        <li><a href="#s04">Getting a second AI to check the work</a></li>
+        <li><a href="#s05">The phase loop, step by step</a></li>
+        <li><a href="#s06">What each step writes to disc</a></li>
+        <li><a href="#s07">Gates, and which ones actually block</a></li>
+        <li><a href="#s08">A real build: an IBKR options dashboard</a></li>
+        <li><a href="#s09">Starting your own project</a></li>
+        <li><a href="#s10">Command quick reference</a></li>
+      </ol>
+    </nav>
+
+    <!-- 01 -->
+    <div class="fw-sub" id="s01">01 &middot; Why bother: the problem it fixes <a class="back" href="#contents">&uarr; contents</a></div>
+    <div class="fw-pf">
+      <div class="p">
+        <h5>Without it &mdash; a long chat with Claude</h5>
+        <ul>
+          <li><b>Decisions get lost.</b> You agreed something 40 messages ago; the context window dropped it.</li>
+          <li><b>"Done" means "finished typing".</b> The code runs, and nobody checked it answers the question you asked.</li>
+          <li><b>One model checks its own work.</b> It has the same blind spots writing the test as writing the code.</li>
+          <li><b>Starting a new session means re-explaining</b> everything from scratch.</li>
+        </ul>
+      </div>
+      <div class="f">
+        <h5>With it &mdash; a fixed loop, written down</h5>
+        <ul>
+          <li><b>Decisions are numbered</b> (D-01, D-02&hellip;) and every plan has to reference them, or the plan is rejected.</li>
+          <li><b>Each phase ends with a check against its goal</b>, with you in the loop, and fix plans written for anything that fails.</li>
+          <li><b>A different AI can review the plans</b> before a line of code exists (section 04).</li>
+          <li><b>A fresh session reads <code>STATE.md</code></b> and carries on where the last one stopped.</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="fw-sub">01 &middot; The flow, read from the actual command files</div>
+    <!-- 02 -->
+    <div class="fw-sub" id="s02">02 &middot; The whole flow on one page <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-hint">On a phone, scroll the diagram sideways.</p>
+    <div class="fw-scroll">
+    <svg class="fw-diagram" viewBox="0 0 900 700" role="img" aria-label="GSD Core flow: install, then gsd-new-project produces PROJECT.md, REQUIREMENTS.md and ROADMAP.md through a questioning to research to requirements to roadmap sequence; then each phase runs discuss, optional spec, plan, optional cross-AI review, execute, verify and ship in a loop.">
 
-    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-    <svg class="fw-diagram" viewBox="0 0 900 560" role="img" aria-label="GSD Core flow: install, then /gsd:new-project produces PROJECT.md, REQUIREMENTS.md, ROADMAP.md and STATE.md through a questioning to research to requirements to roadmap sequence; then each phase runs spec-phase, discuss-phase, plan-phase, execute-phase and ship in a loop.">
+      <defs><marker id="fwarrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--border2)"/></marker></defs>
 
-      <!-- install -->
-      <rect x="30" y="20" width="220" height="46" rx="8" fill="var(--bg3)" stroke="var(--border2)"/>
-      <text x="140" y="40" text-anchor="middle" class="fw-node-lab" fill="var(--text3)">STEP 0</text>
-      <text x="140" y="55" text-anchor="middle" class="fw-node-t" fill="var(--text)">npx @opengsd/gsd-core install</text>
+      <rect x="30" y="20" width="240" height="46" rx="8" fill="var(--bg3)" stroke="var(--border2)"/>
+      <text x="150" y="40" text-anchor="middle" class="fw-node-lab" fill="var(--text3)">STEP 0</text>
+      <text x="150" y="55" text-anchor="middle" class="fw-node-t" fill="var(--text)">npx @opengsd/gsd-core install</text>
 
-      <line x1="140" y1="66" x2="140" y2="96" stroke="var(--border2)" stroke-width="1.5"/>
+      <line x1="150" y1="66" x2="150" y2="96" stroke="var(--border2)" stroke-width="1.5"/>
 
-      <!-- new-project -->
       <rect x="30" y="98" width="840" height="112" rx="10" fill="var(--purple-bg)" stroke="var(--purple-border)"/>
-      <text x="50" y="120" class="fw-node-lab" fill="var(--purple-text)">/gsd:new-project &mdash; one command, one repo, run once</text>
+      <text x="50" y="120" class="fw-node-lab" fill="var(--purple-text)">/gsd-new-project &mdash; run once per repo (or /gsd-onboard for code that already exists)</text>
 
       <g font-family="'Space Grotesk',sans-serif">
         <rect x="50" y="132" width="180" height="60" rx="7" fill="var(--bg)" stroke="var(--border)"/>
         <text x="140" y="155" text-anchor="middle" class="fw-node-t" fill="var(--text)">Questioning</text>
         <text x="140" y="172" text-anchor="middle" class="fw-node-d" fill="var(--text2)">rough idea in, gaps surfaced</text>
-
         <text x="240" y="168" fill="var(--text3)" font-size="16">&#8594;</text>
-
         <rect x="258" y="132" width="180" height="60" rx="7" fill="var(--bg)" stroke="var(--border)"/>
         <text x="348" y="155" text-anchor="middle" class="fw-node-t" fill="var(--text)">Research</text>
         <text x="348" y="172" text-anchor="middle" class="fw-node-d" fill="var(--text2)">optional, domain-scoped</text>
-
         <text x="448" y="168" fill="var(--text3)" font-size="16">&#8594;</text>
-
         <rect x="466" y="132" width="180" height="60" rx="7" fill="var(--bg)" stroke="var(--border)"/>
         <text x="556" y="155" text-anchor="middle" class="fw-node-t" fill="var(--text)">Requirements</text>
         <text x="556" y="172" text-anchor="middle" class="fw-node-d" fill="var(--text2)">REQUIREMENTS.md written</text>
-
         <text x="656" y="168" fill="var(--text3)" font-size="16">&#8594;</text>
-
         <rect x="674" y="132" width="176" height="60" rx="7" fill="var(--bg)" stroke="var(--border)"/>
         <text x="762" y="155" text-anchor="middle" class="fw-node-t" fill="var(--text)">Roadmap</text>
-        <text x="762" y="172" text-anchor="middle" class="fw-node-d" fill="var(--text2)">phases sequenced</text>
+        <text x="762" y="172" text-anchor="middle" class="fw-node-d" fill="var(--text2)">work split into phases</text>
       </g>
 
-      <line x1="450" y1="210" x2="450" y2="240" stroke="var(--border2)" stroke-width="1.5"/>
-      <text x="450" y="234" text-anchor="middle" class="fw-node-lab" fill="var(--text3)">then, for every phase &mdash; repeats</text>
+      <line x1="450" y1="210" x2="450" y2="244" stroke="var(--border2)" stroke-width="1.5"/>
+      <text x="450" y="238" text-anchor="middle" class="fw-node-lab" fill="var(--text3)">then, for every phase on the roadmap &mdash; repeats</text>
 
-      <!-- per-phase loop -->
-      <rect x="30" y="250" width="840" height="270" rx="10" fill="var(--bg3)" stroke="var(--border2)" stroke-dasharray="4 3"/>
-      <text x="50" y="274" class="fw-node-lab" fill="var(--text3)">spec-phase &#8594; discuss-phase &#8594; plan-phase &#8594; execute-phase &#8594; ship</text>
+      <rect x="30" y="252" width="840" height="378" rx="10" fill="var(--bg3)" stroke="var(--border2)" stroke-dasharray="4 3"/>
+      <text x="50" y="276" class="fw-node-lab" fill="var(--text3)">dashed border = optional step &middot; solid = always run</text>
 
       <g font-family="'Space Grotesk',sans-serif">
-        <rect x="50" y="290" width="380" height="92" rx="8" fill="var(--amber-bg)" stroke="var(--amber-border)"/>
-        <text x="66" y="310" class="fw-node-lab" fill="var(--amber-text)">SPEC-PHASE</text>
-        <text x="66" y="330" class="fw-node-t" fill="var(--text)">Socratic interview, up to 6 rounds</text>
-        <text x="66" y="348" class="fw-node-d" fill="var(--text2)">scored on 4 weighted ambiguity dimensions</text>
-        <text x="66" y="362" class="fw-node-d" fill="var(--text2)">gate: score &le; 0.20, every dimension met</text>
-        <text x="66" y="376" class="fw-node-d" fill="var(--text2)">output: falsifiable SPEC.md</text>
+        <rect x="50" y="292" width="380" height="92" rx="8" fill="var(--blue-bg)" stroke="var(--blue-border)"/>
+        <text x="66" y="312" class="fw-node-lab" fill="var(--blue-text)">1 &middot; DISCUSS-PHASE</text>
+        <text x="66" y="332" class="fw-node-t" fill="var(--text)">Claude asks about the grey areas</text>
+        <text x="66" y="350" class="fw-node-d" fill="var(--text2)">skips anything already decided</text>
+        <text x="66" y="364" class="fw-node-d" fill="var(--text2)">new ideas are parked for later, not quietly built</text>
+        <text x="66" y="378" class="fw-node-d" fill="var(--text2)">output: CONTEXT.md, decisions D-01..D-NN</text>
 
-        <rect x="470" y="290" width="380" height="92" rx="8" fill="var(--blue-bg)" stroke="var(--blue-border)"/>
-        <text x="486" y="310" class="fw-node-lab" fill="var(--blue-text)">DISCUSS-PHASE</text>
-        <text x="486" y="330" class="fw-node-t" fill="var(--text)">Remaining grey areas, deep-dived</text>
-        <text x="486" y="348" class="fw-node-d" fill="var(--text2)">skips anything already decided</text>
-        <text x="486" y="362" class="fw-node-d" fill="var(--text2)">scope creep &#8594; parked, not absorbed</text>
-        <text x="486" y="376" class="fw-node-d" fill="var(--text2)">output: CONTEXT.md</text>
+        <rect x="470" y="292" width="380" height="92" rx="8" fill="var(--amber-bg)" stroke="var(--amber-border)" stroke-dasharray="5 3"/>
+        <text x="486" y="312" class="fw-node-lab" fill="var(--amber-text)">SPEC-PHASE &mdash; optional</text>
+        <text x="486" y="332" class="fw-node-t" fill="var(--text)">Pins down exactly what "done" means</text>
+        <text x="486" y="350" class="fw-node-d" fill="var(--text2)">scores how vague the scope still is</text>
+        <text x="486" y="364" class="fw-node-d" fill="var(--text2)">keeps asking until the score is low enough</text>
+        <text x="486" y="378" class="fw-node-d" fill="var(--text2)">output: SPEC.md with testable statements</text>
 
-        <rect x="50" y="398" width="380" height="92" rx="8" fill="var(--teal-bg)" stroke="var(--teal-border)"/>
-        <text x="66" y="418" class="fw-node-lab" fill="var(--teal-text)">PLAN-PHASE</text>
-        <text x="66" y="438" class="fw-node-t" fill="var(--text)">Research &#8594; plan &#8594; verify loop</text>
-        <text x="66" y="456" class="fw-node-d" fill="var(--text2)">tracer-first: one thin vertical slice</text>
-        <text x="66" y="470" class="fw-node-d" fill="var(--text2)">before any expansion task</text>
-        <text x="66" y="484" class="fw-node-d" fill="var(--text2)">output: PLAN.md</text>
+        <rect x="50" y="400" width="380" height="92" rx="8" fill="var(--teal-bg)" stroke="var(--teal-border)"/>
+        <text x="66" y="420" class="fw-node-lab" fill="var(--teal-text)">2 &middot; PLAN-PHASE</text>
+        <text x="66" y="440" class="fw-node-t" fill="var(--text)">Research &#8594; plan &#8594; checker</text>
+        <text x="66" y="458" class="fw-node-d" fill="var(--text2)">a separate checker agent can reject the plan</text>
+        <text x="66" y="472" class="fw-node-d" fill="var(--text2)">up to 3 rewrite rounds</text>
+        <text x="66" y="486" class="fw-node-d" fill="var(--text2)">output: one PLAN.md per chunk of work</text>
 
-        <rect x="470" y="398" width="380" height="92" rx="8" fill="var(--green-bg)" stroke="var(--green-border)"/>
-        <text x="486" y="418" class="fw-node-lab" fill="var(--green-text)">EXECUTE &#8594; VERIFY &#8594; SHIP</text>
-        <text x="486" y="438" class="fw-node-t" fill="var(--text)">Fresh-context executors</text>
-        <text x="486" y="456" class="fw-node-d" fill="var(--text2)">200k-token budget each, parallel waves</text>
-        <text x="486" y="470" class="fw-node-d" fill="var(--text2)">verify writes fix plans before "done"</text>
-        <text x="486" y="484" class="fw-node-d" fill="var(--text2)">output: PR, repeat next phase</text>
+        <rect x="470" y="400" width="380" height="92" rx="8" fill="var(--purple-bg)" stroke="var(--purple-border)" stroke-dasharray="5 3"/>
+        <text x="486" y="420" class="fw-node-lab" fill="var(--purple-text)">CROSS-AI REVIEW &mdash; optional, see section 04</text>
+        <text x="486" y="440" class="fw-node-t" fill="var(--text)">A different AI audits the plans</text>
+        <text x="486" y="458" class="fw-node-d" fill="var(--text2)">Codex / Gemini / Cursor / local models</text>
+        <text x="486" y="472" class="fw-node-d" fill="var(--text2)">findings folded back with plan-phase --reviews</text>
+        <text x="486" y="486" class="fw-node-d" fill="var(--text2)">output: REVIEWS.md</text>
+
+        <rect x="50" y="508" width="380" height="92" rx="8" fill="var(--green-bg)" stroke="var(--green-border)"/>
+        <text x="66" y="528" class="fw-node-lab" fill="var(--green-text)">3 &middot; EXECUTE-PHASE</text>
+        <text x="66" y="548" class="fw-node-t" fill="var(--text)">Fresh agents build each plan</text>
+        <text x="66" y="566" class="fw-node-d" fill="var(--text2)">each starts with a clean context window</text>
+        <text x="66" y="580" class="fw-node-d" fill="var(--text2)">one git commit per task</text>
+        <text x="66" y="594" class="fw-node-d" fill="var(--text2)">output: the code, SUMMARY.md</text>
+
+        <rect x="470" y="508" width="380" height="92" rx="8" fill="var(--navy-bg)" stroke="var(--navy-border)"/>
+        <text x="486" y="528" class="fw-node-lab" fill="var(--navy-text)">4 &middot; VERIFY &#8594; REVIEW &#8594; SHIP</text>
+        <text x="486" y="548" class="fw-node-t" fill="var(--text)">Did it meet the goal, not just finish?</text>
+        <text x="486" y="566" class="fw-node-d" fill="var(--text2)">you test it; failures become fix plans</text>
+        <text x="486" y="580" class="fw-node-d" fill="var(--text2)">code review, security review, lessons learned</text>
+        <text x="486" y="594" class="fw-node-d" fill="var(--text2)">output: VERIFICATION.md, UAT.md, PR</text>
       </g>
 
-      <line x1="240" y1="382" x2="240" y2="398" stroke="var(--border2)" stroke-width="1.5"/>
-      <line x1="660" y1="382" x2="660" y2="398" stroke="var(--border2)" stroke-width="1.5"/>
-      <path d="M 430 336 L 470 336" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwarrow)"/>
-      <path d="M 430 444 L 470 444" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwarrow)"/>
-      <defs><marker id="fwarrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--border2)"/></marker></defs>
+      <line x1="240" y1="384" x2="240" y2="400" stroke="var(--border2)" stroke-width="1.5"/>
+      <line x1="240" y1="492" x2="240" y2="508" stroke="var(--border2)" stroke-width="1.5"/>
+      <path d="M 430 338 L 470 338" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwarrow)"/>
+      <path d="M 430 446 L 470 446" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwarrow)"/>
+      <path d="M 430 554 L 470 554" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwarrow)"/>
 
-      <text x="450" y="545" text-anchor="middle" class="fw-node-lab" fill="var(--text3)">every artefact is a plain Markdown file, committed &mdash; a fresh session reads STATE.md and continues, no re-explaining</text>
+      <text x="450" y="660" text-anchor="middle" class="fw-node-lab" fill="var(--text3)">every output is a plain Markdown file, committed to git &mdash; a new session reads STATE.md and carries on</text>
+      <text x="450" y="680" text-anchor="middle" class="fw-node-lab" fill="var(--text3)">smallest useful loop: discuss &#8594; plan &#8594; execute &#8594; verify</text>
     </svg>
     </div>
 
-    <div class="fw-sub">02 &middot; Applied to a real, half-formed set of requirements</div>
-    <p class="fw-desc" style="margin-bottom:14px;">The kind of thing <code>spec-phase</code>'s ambiguity scoring is built to catch, worked against an actual draft &mdash; an IBKR trading dashboard, requirements written before running GSD at all:</p>
+    <!-- 03 -->
+    <div class="fw-sub" id="s03">03 &middot; What it looks like in the terminal <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-desc" style="margin-bottom:12px;">One phase, condensed from a real run. You type the green lines. Everything else is Claude, its subagents, or files landing in <code>.planning/</code>.</p>
 
-    <div class="fw-q"><span class="n">01</span><span class="t">"Potential profit on existing calls and puts"</span>
-      <div class="d">Unrealised mark-to-market, or premium captured toward max profit? Different numbers.</div></div>
-    <div class="fw-q"><span class="n">02</span><span class="t">"Max puts sellable without liquidation risk"</span>
-      <div class="d">The broker's own margin ceiling (what actually triggers liquidation), or a self-imposed cash-secured ceiling the broker doesn't enforce at all? Conflating the two is the single most expensive ambiguity on the list.</div></div>
-    <div class="fw-q"><span class="n">03</span><span class="t">"Capital required to stay safe with broker"</span>
-      <div class="d">Restating #02, or a genuinely third figure &mdash; Maintenance Margin?</div></div>
-    <div class="fw-q"><span class="n">04</span><span class="t">"Income from options, week by week"</span>
-      <div class="d">Realised only, or does it move with unrealised swings on positions still open?</div></div>
-    <div class="fw-q"><span class="n">05</span><span class="t">"Annualised extrapolation as % return"</span>
-      <div class="d">Against total account value, or capital actually deployed that week? On this account those two bases moved between roughly 3% and 96% deployed within a single session &mdash; the choice changes the answer enormously.</div></div>
-    <div class="fw-q"><span class="n">06</span><span class="t">Google Auth on a single-user localhost tool</span>
-      <div class="d">Solving a real need (reachable off-machine), or default habit? Exactly the shape <code>discuss-phase</code> is built to redirect to a deferred list rather than silently build.</div></div>
+    <div class="fw-term">
+      <div class="bar"><i></i><i></i><i></i><span>claude &mdash; ibkr-dashboard</span></div>
+<pre><span class="u">&gt; /gsd-discuss-phase 2</span>
+<span class="c">  Grey area: when should the screen say the data is out of date?</span>
+<span class="c">  ...you answer in plain English; nothing is built yet...</span>
+<span class="f">  wrote .planning/phases/02-live-home-screen/02-CONTEXT.md  (decisions D-01 .. D-22)</span>
 
-    <div class="fw-sub">03 &middot; Against what's already in place here</div>
-    <div class="fw-compare">A lot of this is already running, piecemeal, as global rules &mdash; <b>Explore/Plan subagents</b> for research, <b>plan-continuity</b>'s <code>docs/handoff/handoff.md</code> for cross-session memory, <b>tdd-first</b> and <b>verification-before-completion</b> always on. The real delta isn't the ideas, it's the <b>enforcement mechanism</b>: GSD wires actual hooks and a CLI around phase transitions, so a gate can be structurally blocked rather than followed by convention. And on code review specifically, this site's own reviewer roster &mdash; <code>security-sentinel</code>, <code>architecture-strategist</code>, <code>performance-oracle</code>, the language-specific reviewers &mdash; is deeper than GSD's single generic verify step. The honest read: worth running for real on one project, not worth assuming it replaces what's already working.</div>
+<span class="u">&gt; /gsd-plan-phase 2</span>
+<span class="c">  researcher  &rarr; 02-RESEARCH.md</span>
+<span class="c">  planner     &rarr; 02-01-PLAN.md .. 02-12-PLAN.md</span>
+<span class="c">  checker     &rarr; every decision referenced? every requirement owned?  </span><span class="u">pass</span>
+
+<span class="u">&gt; /gsd-review --phase 2 --cursor</span>
+<span class="w">  cursor (a non-Claude model) reviewing 12 plans...</span>
+<span class="f">  wrote 02-REVIEWS.md  </span><span class="r">HIGH concerns found</span>
+
+<span class="u">&gt; /gsd-plan-phase 2 --reviews</span>
+<span class="c">  planner revises; each finding marked incorporated / deferred / rejected, with a reason</span>
+
+<span class="u">&gt; /gsd-execute-phase 2</span>
+<span class="c">  wave 1 ... wave 7   fresh agent per plan, one commit per task</span>
+
+<span class="u">&gt; /gsd-code-review 2</span>   <span class="c">&rarr; 02-REVIEW.md   8 findings</span>
+<span class="u">&gt; /gsd-code-review 2 --fix</span><span class="c">  &rarr; 8 fixed, 8 commits</span>
+
+<span class="u">&gt; /gsd-verify-work 2</span>
+<span class="c">  Test 1: In IB Gateway's settings, Read-Only API is ticked. Does it match?</span>
+<span class="u">&gt; pass</span></pre>
+    </div>
+
+    <!-- 04 -->
+    <div class="fw-sub star" id="s04">04 &middot; Getting a second AI to check the work <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-desc" style="margin-bottom:14px;">This is the part with no equivalent in a normal Claude chat. When the same model writes the plan and checks the plan, it shares its own blind spots. GSD sends the finished plans to a <b>different AI, from a different company, running in its own command-line tool</b>. Its findings come back as a file, and Claude has to answer every one in writing before any code gets built.</p>
+
+    <p class="fw-hint">On a phone, scroll the diagram sideways.</p>
+    <div class="fw-scroll">
+    <svg class="fw-diagram" viewBox="0 0 900 470" role="img" aria-label="Cross-AI review flow. Claude writes plans. gsd-review sends the same plans to Codex, Gemini and Cursor in parallel, each in its own CLI. Their findings are collected into REVIEWS.md, ranked high, medium and low. gsd-plan-phase with the reviews flag sends them back to Claude, which revises the plans and records each finding as incorporated, deferred or rejected with a reason. The convergence command repeats this until no high concerns remain. After execution, code review checks the actual code and the fix flag applies the fixes.">
+      <defs>
+        <marker id="fwa2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--border2)"/></marker>
+        <marker id="fwa3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--purple-border)"/></marker>
+      </defs>
+
+      <text x="30" y="30" class="fw-node-lab" fill="var(--text3)">before any code exists &mdash; reviewing the plan</text>
+
+      <!-- Claude planner -->
+      <rect x="30" y="46" width="190" height="120" rx="9" fill="var(--teal-bg)" stroke="var(--teal-border)"/>
+      <text x="46" y="68" class="fw-node-lab" fill="var(--teal-text)">CLAUDE</text>
+      <text x="46" y="90" class="fw-node-t" fill="var(--text)">Writes the plans</text>
+      <text x="46" y="110" class="fw-node-d" fill="var(--text2)">/gsd-plan-phase 2</text>
+      <text x="46" y="126" class="fw-node-d" fill="var(--text2)">02-01-PLAN.md</text>
+      <text x="46" y="140" class="fw-node-d" fill="var(--text2)">02-02-PLAN.md &hellip;</text>
+      <text x="46" y="154" class="fw-node-d" fill="var(--text2)">+ the decisions they rest on</text>
+
+      <!-- fan out -->
+      <path d="M 220 106 C 260 106 260 66 300 66" fill="none" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <path d="M 220 106 L 300 106" fill="none" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <path d="M 220 106 C 260 106 260 146 300 146" fill="none" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <text x="232" y="226" class="fw-node-d" fill="var(--text3)">/gsd-review --phase 2 &middot; same prompt to each, in parallel</text>
+
+      <!-- reviewers -->
+      <g>
+        <rect x="302" y="46" width="200" height="38" rx="7" fill="var(--purple-bg)" stroke="var(--purple-border)"/>
+        <text x="316" y="62" class="fw-node-t" fill="var(--text)">Codex CLI</text>
+        <text x="316" y="76" class="fw-node-d" fill="var(--text2)">OpenAI models</text>
+        <rect x="302" y="87" width="200" height="38" rx="7" fill="var(--purple-bg)" stroke="var(--purple-border)"/>
+        <text x="316" y="103" class="fw-node-t" fill="var(--text)">Gemini CLI</text>
+        <text x="316" y="117" class="fw-node-d" fill="var(--text2)">Google models</text>
+        <rect x="302" y="128" width="200" height="38" rx="7" fill="var(--purple-bg)" stroke="var(--purple-border)"/>
+        <text x="316" y="144" class="fw-node-t" fill="var(--text)">Cursor agent</text>
+        <text x="316" y="158" class="fw-node-d" fill="var(--text2)">pick any model it offers</text>
+      </g>
+      <text x="302" y="190" class="fw-node-d" fill="var(--text3)">also: OpenCode, Qwen, CodeRabbit,</text>
+      <text x="302" y="203" class="fw-node-d" fill="var(--text3)">Ollama / LM Studio running locally</text>
+
+      <!-- fan in -->
+      <path d="M 502 65 C 540 65 540 106 578 106" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+      <path d="M 502 106 L 578 106" fill="none" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <path d="M 502 147 C 540 147 540 106 578 106" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+
+      <!-- REVIEWS.md -->
+      <rect x="580" y="46" width="290" height="120" rx="9" fill="var(--bg3)" stroke="var(--border2)"/>
+      <text x="596" y="68" class="fw-node-lab" fill="var(--text3)">02-REVIEWS.md</text>
+      <text x="596" y="90" class="fw-node-t" fill="var(--text)">Findings, one section per reviewer</text>
+      <rect x="596" y="102" width="44" height="16" rx="8" fill="var(--coral-bg)" stroke="var(--coral-border)"/>
+      <text x="618" y="113" text-anchor="middle" class="fw-node-lab" fill="var(--coral-text)">HIGH</text>
+      <rect x="646" y="102" width="56" height="16" rx="8" fill="var(--amber-bg)" stroke="var(--amber-border)"/>
+      <text x="674" y="113" text-anchor="middle" class="fw-node-lab" fill="var(--amber-text)">MEDIUM</text>
+      <rect x="708" y="102" width="40" height="16" rx="8" fill="var(--blue-bg)" stroke="var(--blue-border)"/>
+      <text x="728" y="113" text-anchor="middle" class="fw-node-lab" fill="var(--blue-text)">LOW</text>
+      <text x="596" y="138" class="fw-node-d" fill="var(--text2)">each points at a specific plan and line</text>
+      <text x="596" y="152" class="fw-node-d" fill="var(--text2)">+ where reviewers agree, when there are two or more</text>
+
+      <!-- back to planner -->
+      <path d="M 725 166 L 725 250" fill="none" stroke="var(--purple-border)" stroke-width="1.5" marker-end="url(#fwa3)"/>
+      <text x="735" y="214" class="fw-node-d" fill="var(--purple-text)">/gsd-plan-phase 2 --reviews</text>
+
+      <rect x="530" y="252" width="340" height="104" rx="9" fill="var(--teal-bg)" stroke="var(--teal-border)"/>
+      <text x="546" y="274" class="fw-node-lab" fill="var(--teal-text)">CLAUDE &mdash; REVISES</text>
+      <text x="546" y="294" class="fw-node-t" fill="var(--text)">Answers every finding in writing</text>
+      <rect x="546" y="306" width="88" height="16" rx="8" fill="var(--green-bg)" stroke="var(--green-border)"/>
+      <text x="590" y="317" text-anchor="middle" class="fw-node-lab" fill="var(--green-text)">incorporated</text>
+      <rect x="640" y="306" width="64" height="16" rx="8" fill="var(--amber-bg)" stroke="var(--amber-border)"/>
+      <text x="672" y="317" text-anchor="middle" class="fw-node-lab" fill="var(--amber-text)">deferred</text>
+      <rect x="710" y="306" width="64" height="16" rx="8" fill="var(--coral-bg)" stroke="var(--coral-border)"/>
+      <text x="742" y="317" text-anchor="middle" class="fw-node-lab" fill="var(--coral-text)">rejected</text>
+      <text x="546" y="342" class="fw-node-d" fill="var(--text2)">each with its reason, kept in the plan as a ledger</text>
+
+      <!-- convergence loop -->
+      <path d="M 530 304 C 140 304 125 250 125 170" fill="none" stroke="var(--purple-border)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#fwa3)"/>
+      <rect x="150" y="262" width="300" height="40" rx="7" fill="var(--bg)" stroke="var(--purple-border)" stroke-dasharray="4 3"/>
+      <text x="164" y="279" class="fw-node-t" fill="var(--purple-text)">/gsd-plan-review-convergence 2</text>
+      <text x="164" y="294" class="fw-node-d" fill="var(--text2)">runs this loop for you until no HIGH concerns remain</text>
+
+      <!-- after code -->
+      <line x1="30" y1="384" x2="870" y2="384" stroke="var(--border)" stroke-dasharray="3 4"/>
+      <text x="30" y="404" class="fw-node-lab" fill="var(--text3)">after the code is written &mdash; reviewing the code</text>
+
+      <rect x="30" y="414" width="250" height="44" rx="8" fill="var(--green-bg)" stroke="var(--green-border)"/>
+      <text x="44" y="432" class="fw-node-t" fill="var(--text)">/gsd-execute-phase 2</text>
+      <text x="44" y="448" class="fw-node-d" fill="var(--text2)">code + tests, one commit per task</text>
+      <path d="M 280 436 L 318 436" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <rect x="320" y="414" width="250" height="44" rx="8" fill="var(--navy-bg)" stroke="var(--navy-border)"/>
+      <text x="334" y="432" class="fw-node-t" fill="var(--text)">/gsd-code-review 2</text>
+      <text x="334" y="448" class="fw-node-d" fill="var(--text2)">bugs, security, quality &rarr; REVIEW.md</text>
+      <path d="M 570 436 L 608 436" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <rect x="610" y="414" width="260" height="44" rx="8" fill="var(--navy-bg)" stroke="var(--navy-border)"/>
+      <text x="624" y="432" class="fw-node-t" fill="var(--text)">/gsd-code-review 2 --fix</text>
+      <text x="624" y="448" class="fw-node-d" fill="var(--text2)">applies each fix as its own commit</text>
+    </svg>
+    </div>
+
+    <p class="fw-desc" style="margin-top:18px;margin-bottom:10px;"><b>What it caught on a real build.</b> These numbers come from the dashboard in section 08, and the review files are in that project's repo.</p>
+    <div class="fw-stats">
+      <div class="fw-stat"><span class="s">Phase 1 &middot; Codex</span><div class="v">13</div><div class="k">findings on five plans, each citing a file and line</div></div>
+      <div class="fw-stat"><span class="s">Phase 1 &middot; outcome</span><div class="v">10 / 3</div><div class="k">incorporated / rejected, every rejection reasoned in writing</div></div>
+      <div class="fw-stat"><span class="s">Phase 2 &middot; Cursor</span><div class="v">2 rounds</div><div class="k">round 2 deliberately on a different model family</div></div>
+      <div class="fw-stat"><span class="s">Phase 2 &middot; code review</span><div class="v">8 / 8</div><div class="k">findings fixed after the build, one commit each</div></div>
+    </div>
+
+    <div class="fw-tablewrap">
+    <table class="fw-table">
+      <thead><tr><th style="width:34%">A finding from the review</th><th style="width:14%">Decision</th><th>Why it mattered</th></tr></thead>
+      <tbody>
+        <tr><td><b>The sign of <code>avg_cost</code> is never pinned down.</b> Is a sold option's cost stored as a credit or a debit?</td>
+            <td><span class="fw-chip inc">incorporated</span></td>
+            <td>Left open, the break-even price would have been calculated backwards, and the tests would still have passed because they used the same wrong assumption. No amount of Claude re-reading its own plan was going to find this one.</td></tr>
+        <tr><td><b>Rename the test-first commit convention.</b></td>
+            <td><span class="fw-chip rej">rejected</span></td>
+            <td>The rename would have erased the "test written and failing first" evidence the project's rules require. The useful half of the point was kept. A reviewer finding is input, not an order.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="fw-sub" style="margin-top:26px;">Turning it on</div>
+    <p class="fw-desc" style="margin-bottom:10px;">Install at least one other AI's command-line tool and log in (Codex CLI, Gemini CLI, or Cursor's <code>cursor-agent</code>). GSD detects whichever are installed. Then pin the models and pick a default in <code>.planning/config.json</code>:</p>
+    <div class="fw-term">
+      <div class="bar"><i></i><i></i><i></i><span>.planning/config.json</span></div>
+<pre>"review": {
+  "models": {
+    "codex":  "gpt-6.1-sol",
+    "gemini": "gemini-3.5-flash",
+    "cursor": "gemini-4-argon-high"
+  },
+  "default_reviewers": ["cursor"]
+}</pre>
+    </div>
+    <p class="fw-desc" style="margin-bottom:6px;">After that it's two commands per phase: <code>/gsd-review --phase N</code> (or <code>--codex</code>, <code>--gemini</code>, <code>--all</code>), then <code>/gsd-plan-phase N --reviews</code>. Or hand the whole loop over with <code>/gsd-plan-review-convergence N</code>.</p>
+
+    <div class="fw-grid" style="margin-top:14px;">
+      <div class="fw-gate advise">
+        <span class="lab">Lesson</span>
+        <h5>Use a different model family each round</h5>
+        <ul><li>Round 2 should look at the fixes with fresh eyes, not the same ones that suggested them</li></ul>
+      </div>
+      <div class="fw-gate advise">
+        <span class="lab">Lesson</span>
+        <h5>Cheap tiers fail on big plan sets</h5>
+        <ul><li>Codex on a ChatGPT Plus plan and Gemini's free tier both failed on a large plan set; Cursor handled it</li><li>A reviewer that can't run is recorded as a failure, not quietly dropped</li></ul>
+      </div>
+      <div class="fw-gate advise">
+        <span class="lab">Lesson</span>
+        <h5>Spend it where mistakes cost money</h5>
+        <ul><li>Roughly 8 minutes per reviewer per phase</li><li>Worth it for maths, money and login code; skip it for cosmetic work</li></ul>
+      </div>
+    </div>
+
+    <div class="fw-note purple"><b>The checker matters more than the planner.</b> GSD's default setup put its own internal plan-checker on the cheapest model. That checker said "all findings incorporated" while missing all three rejections. Run on a stronger model, it found one fix had reached only 7 of the 11 places it needed to. Set <code>model_overrides</code> so the checker isn't the weakest link.</div>
+
+    <!-- 05 -->
+    <div class="fw-sub" id="s05">05 &middot; The phase loop, step by step <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-desc" style="margin-bottom:14px;">Nine possible steps per phase. Two are genuinely required. The rest are checks you add when a phase is risky, vague, or expensive to get wrong.</p>
+
+    <div class="fw-tablewrap">
+    <table class="fw-table">
+      <thead><tr><th style="width:4%">#</th><th style="width:26%">Step</th><th>Why you'd run it</th><th style="width:13%">Weight</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="wrapfirst"><code>/gsd-discuss-phase N</code></td>
+            <td>Captures design decisions as numbered <b>D-NN</b> records. Everything after is checked against them, so a decision never captured is never built.</td>
+            <td><span class="fw-chip rec">recommended</span></td></tr>
+        <tr><td>2</td><td class="wrapfirst"><code>/gsd-spec-phase N</code></td>
+            <td>Scores how vague the scope still is and pins down <i>what</i> the phase delivers. Worth it when "done" is still fuzzy after discussion.</td>
+            <td><span class="fw-chip opt">optional</span></td></tr>
+        <tr><td>3</td><td class="wrapfirst"><code>/gsd-plan-phase N</code></td>
+            <td>Researches, writes the plans, and runs a checker over them. The core command.</td>
+            <td><span class="fw-chip req">required</span></td></tr>
+        <tr><td>4</td><td class="wrapfirst"><code>/gsd-review --phase N</code><br><code>/gsd-plan-phase N --reviews</code></td>
+            <td>A different AI audits the plans, then the findings are folded back in. See section 04.</td>
+            <td><span class="fw-chip rec">recommended</span></td></tr>
+        <tr><td>5</td><td class="wrapfirst"><code>/gsd-execute-phase N</code></td>
+            <td>Builds the plans in dependency order, one commit per task.</td>
+            <td><span class="fw-chip req">required</span></td></tr>
+        <tr><td>6</td><td class="wrapfirst"><code>/gsd-code-review N</code><br><code>/gsd-secure-phase N</code></td>
+            <td>Checks over the code just written: bugs and quality, then whether the security risks the plan named were actually handled.</td>
+            <td><span class="fw-chip opt">optional</span></td></tr>
+        <tr><td>7</td><td class="wrapfirst"><code>/gsd-verify-work N</code></td>
+            <td>You test it, one check at a time, against the phase's <i>goal</i>. Anything that fails gets diagnosed and a fix plan written automatically.</td>
+            <td><span class="fw-chip rec">recommended</span></td></tr>
+        <tr><td>8</td><td class="wrapfirst"><code>/gsd-extract-learnings N</code></td>
+            <td>Pulls decisions, lessons and surprises out of the finished phase so later phases inherit them.</td>
+            <td><span class="fw-chip opt">optional</span></td></tr>
+        <tr><td>9</td><td class="wrapfirst"><code>/gsd-ship N</code></td>
+            <td>Opens the pull request with a body built from the requirements and verification.</td>
+            <td><span class="fw-chip opt">optional</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- 06 -->
+    <div class="fw-sub" id="s06">06 &middot; What each step writes to disc <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-desc" style="margin-bottom:14px;">Every phase gets a folder under <code>.planning/phases/NN-name/</code>. Files build up in this order, and each step reads the ones before it.</p>
+
+    <div class="fw-tablewrap">
+    <table class="fw-table">
+      <thead><tr><th style="width:28%">File</th><th style="width:24%">Written by</th><th>Carries</th></tr></thead>
+      <tbody>
+        <tr><td><code>NN-CONTEXT.md</code></td><td>discuss-phase</td><td>Numbered decisions <b>D-01&hellip;D-NN</b></td></tr>
+        <tr><td><code>NN-SPEC.md</code></td><td>spec-phase</td><td>Edge cases, things it must never do, vagueness score</td></tr>
+        <tr><td><code>NN-RESEARCH.md</code></td><td>plan-phase</td><td>Findings about the library or API, open questions</td></tr>
+        <tr><td><code>NN-MM-PLAN.md</code></td><td>plan-phase</td><td>The plans themselves, one per chunk of work</td></tr>
+        <tr><td><code>NN-REVIEWS.md</code></td><td>review</td><td>Second-AI findings and where reviewers agree</td></tr>
+        <tr><td><code>NN-MM-SUMMARY.md</code></td><td>execute-phase</td><td>What was actually built, and the commits</td></tr>
+        <tr><td><code>NN-REVIEW.md</code></td><td>code-review</td><td>Bugs and quality issues in the finished code</td></tr>
+        <tr><td><code>NN-VERIFICATION.md</code></td><td>verifier</td><td>Did it meet the goal, and what's left for a human</td></tr>
+        <tr><td><code>NN-UAT.md</code></td><td>verify-work</td><td>Your test results, pass by pass</td></tr>
+        <tr><td><code>NN-LEARNINGS.md</code></td><td>extract-learnings</td><td>Lessons carried into later phases</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- 07 -->
+    <div class="fw-sub" id="s07">07 &middot; Gates, and which ones actually block <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-desc" style="margin-bottom:14px;">Not every check stops the run. Knowing which ones really block saves arguing with the ones that don't.</p>
+
+    <div class="fw-grid">
+      <div class="fw-gate block">
+        <span class="lab">Blocking</span>
+        <h5>Decision coverage</h5>
+        <ul>
+          <li>Every <code>D-NN</code> must be referenced by a plan</li>
+          <li>Won't mark a phase planned if a decision was silently dropped</li>
+        </ul>
+      </div>
+      <div class="fw-gate block">
+        <span class="lab">Blocking</span>
+        <h5>API coverage</h5>
+        <ul>
+          <li>Every capability of an external API is marked "use" or "opt out, because&hellip;"</li>
+          <li>Testing won't start until the list is complete</li>
+        </ul>
+      </div>
+      <div class="fw-gate block">
+        <span class="lab">Blocking</span>
+        <h5>Phase completion</h5>
+        <ul>
+          <li>A phase isn't complete until every human test has passed and verification is current</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fw-grid">
+      <div class="fw-gate advise">
+        <span class="lab">Advisory</span>
+        <h5>Plan-checker</h5>
+        <ul>
+          <li>~12 checks over the plan set</li>
+          <li>Blockers force a rewrite, up to 3 rounds</li>
+        </ul>
+      </div>
+      <div class="fw-gate advise">
+        <span class="lab">Advisory</span>
+        <h5>Requirements coverage</h5>
+        <ul>
+          <li>Every requirement assigned to a plan</li>
+          <li>Offers re-plan / defer / accept</li>
+        </ul>
+      </div>
+      <div class="fw-gate determ">
+        <span class="lab">Scripted, no AI</span>
+        <h5>Verify-command probes</h5>
+        <ul>
+          <li>Do the test commands in each plan actually exist and run?</li>
+          <li>These return exit codes, not opinions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fw-note"><b>Scripted beats clever.</b> When an AI-driven check disagrees with a scripted one, believe the script.</div>
+
+    <!-- 08 -->
+    <div class="fw-sub" id="s08">08 &middot; A real build: an IBKR options dashboard <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-desc" style="margin-bottom:14px;">A read-only web app on a live Interactive Brokers account. It answers one question IBKR's own screens don't: <b>if every put I've sold gets exercised, does my cash cover it?</b> The requirements were drafted before GSD was installed. Here's the kind of vagueness the questioning step pulled out of them:</p>
+
+    <div class="fw-q"><span class="n">01</span><span class="t">"Max puts sellable without liquidation risk"</span>
+      <div class="d">The broker's own margin limit (what actually triggers liquidation), or a self-imposed cash-secured limit the broker doesn't enforce at all? Mixing those two up is the most expensive ambiguity on the list.</div></div>
+    <div class="fw-q"><span class="n">02</span><span class="t">"Potential profit on existing calls and puts"</span>
+      <div class="d">Today's paper profit if closed now, or how much of the premium has been earned toward the maximum? Different numbers.</div></div>
+    <div class="fw-q"><span class="n">03</span><span class="t">"Income from options, week by week"</span>
+      <div class="d">Only closed trades, or does it move with open positions too?</div></div>
+    <div class="fw-q"><span class="n">04</span><span class="t">"Annualised % return"</span>
+      <div class="d">Against the whole account, or only the cash tied up that week? On this account, the share of cash in use swung between roughly 3% and 96% in a single session, so the choice changes the answer enormously.</div></div>
+
+    <p class="fw-desc" style="margin-top:18px;margin-bottom:12px;">That became a seven-phase roadmap, with one phase (a strike-price advisor) inserted mid-way. Status as of 23 Oct 2026:</p>
+    <div class="fw-tablewrap">
+    <table class="fw-table">
+      <thead><tr><th style="width:5%">#</th><th style="width:46%">Phase</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Core risk maths &mdash; pure functions, no live connection</td><td><span class="fw-chip done">complete &middot; 21 Oct</span></td></tr>
+        <tr><td>2</td><td>Live home screen &mdash; connection, leverage ratio, out-of-date warnings</td><td><span class="fw-chip now">built &middot; in user testing</span></td></tr>
+        <tr><td>2.1</td><td>Strike advisor</td><td><span class="fw-chip todo">added, not started</span></td></tr>
+        <tr><td>3&ndash;7</td><td>Income feed, phone access, position detail, charts, reconnect hardening</td><td><span class="fw-chip todo">not started</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="fw-stats">
+      <div class="fw-stat"><span class="s">Plans written</span><div class="v">19</div><div class="k">across the first two phases</div></div>
+      <div class="fw-stat"><span class="s">Commits</span><div class="v">205</div><div class="k">one per task, so any step can be undone</div></div>
+      <div class="fw-stat"><span class="s">Test files</span><div class="v">47</div><div class="k">each test written and failing before its code</div></div>
+      <div class="fw-stat"><span class="s">Second-AI rounds</span><div class="v">3</div><div class="k">Codex on phase 1, Cursor twice on phase 2</div></div>
+    </div>
+
+    <!-- 09 -->
+    <div class="fw-sub" id="s09">09 &middot; Starting your own project <a class="back" href="#contents">&uarr; contents</a></div>
+    <div class="fw-steps">
+      <div class="fw-step"><b>Install into the repo.</b> <code>npx -y @opengsd/gsd-core@latest --claude --local</code>. Commands appear in Claude Code as <code>/gsd-&hellip;</code>.</div>
+      <div class="fw-step"><b>Describe the project.</b> <code>/gsd-new-project</code> for a fresh idea, or <code>/gsd-onboard</code> if there's already code. Answer the questions properly: this is where most of the value is.</div>
+      <div class="fw-step"><b>Run the first phase:</b> <code>/gsd-discuss-phase 1</code> &rarr; <code>/gsd-plan-phase 1</code> &rarr; <code>/gsd-execute-phase 1</code> &rarr; <code>/gsd-verify-work 1</code>.</div>
+      <div class="fw-step"><b>Add a second AI before the phase that matters.</b> Install Codex, Gemini or Cursor's CLI, set <code>review.default_reviewers</code>, and run <code>/gsd-review</code> between plan and execute. For a trading tool, that's the phase where the maths or the money logic gets written.</div>
+      <div class="fw-step"><b>Lost? <code>/gsd-progress</code> or <code>/gsd-next</code>.</b> Both read the files on disc and tell you the next command. After a <code>/clear</code> or a new session, start here.</div>
+    </div>
+
+    <!-- 10 -->
+    <div class="fw-sub" id="s10">10 &middot; Command quick reference <a class="back" href="#contents">&uarr; contents</a></div>
+    <div class="fw-tablewrap">
+    <table class="fw-table">
+      <thead><tr><th style="width:30%">Command</th><th>Use it when</th></tr></thead>
+      <tbody>
+        <tr><td><code>/gsd-progress</code></td><td>"Where am I, what's next?"</td></tr>
+        <tr><td><code>/gsd-next</code></td><td>Reads the project state and runs the right next step</td></tr>
+        <tr><td><code>/gsd-quick</code></td><td>Small one-off task, still tracked and committed</td></tr>
+        <tr><td><code>/gsd-fast "&lt;task&gt;"</code></td><td>Trivial change, no subagents</td></tr>
+        <tr><td><code>/gsd-debug "&lt;symptom&gt;"</code></td><td>A bug hunt that survives <code>/clear</code></td></tr>
+        <tr><td><code>/gsd-review --phase N</code></td><td>Second-AI review of the plans</td></tr>
+        <tr><td><code>/gsd-plan-review-convergence N</code></td><td>Review &rarr; revise &rarr; review, until clean</td></tr>
+        <tr><td><code>/gsd-code-review N --fix</code></td><td>Review the built code and apply the fixes</td></tr>
+        <tr><td><code>/gsd-capture</code></td><td>Park an idea without derailing the current phase</td></tr>
+        <tr><td><code>/gsd-config</code></td><td>Turn checks on and off; pick which model runs each agent</td></tr>
+        <tr><td><code>/gsd-help --full</code></td><td>Every command, every flag</td></tr>
+      </tbody>
+    </table>
+    </div>
 
   </div>
 
