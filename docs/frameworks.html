@@ -206,8 +206,9 @@
         <li><a href="#s06">What each step writes to disc</a></li>
         <li><a href="#s07">Gates, and which ones actually block</a></li>
         <li><a href="#s08">A real build: an IBKR options dashboard</a></li>
-        <li><a href="#s09">Starting your own project</a></li>
-        <li><a href="#s10">Command quick reference</a></li>
+        <li><a href="#s09">Switches worth turning on</a></li>
+        <li><a href="#s10">Starting your own project</a></li>
+        <li><a href="#s11">Command quick reference</a></li>
       </ol>
     </nav>
 
@@ -451,17 +452,21 @@
       <line x1="30" y1="384" x2="870" y2="384" stroke="var(--border)" stroke-dasharray="3 4"/>
       <text x="30" y="404" class="fw-node-lab" fill="var(--text3)">after the code is written &mdash; reviewing the code</text>
 
-      <rect x="30" y="414" width="250" height="44" rx="8" fill="var(--green-bg)" stroke="var(--green-border)"/>
-      <text x="44" y="432" class="fw-node-t" fill="var(--text)">/gsd-execute-phase 2</text>
-      <text x="44" y="448" class="fw-node-d" fill="var(--text2)">code + tests, one commit per task</text>
-      <path d="M 280 436 L 318 436" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
-      <rect x="320" y="414" width="250" height="44" rx="8" fill="var(--navy-bg)" stroke="var(--navy-border)"/>
-      <text x="334" y="432" class="fw-node-t" fill="var(--text)">/gsd-code-review 2</text>
-      <text x="334" y="448" class="fw-node-d" fill="var(--text2)">bugs, security, quality &rarr; REVIEW.md</text>
-      <path d="M 570 436 L 608 436" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
-      <rect x="610" y="414" width="260" height="44" rx="8" fill="var(--navy-bg)" stroke="var(--navy-border)"/>
-      <text x="624" y="432" class="fw-node-t" fill="var(--text)">/gsd-code-review 2 --fix</text>
-      <text x="624" y="448" class="fw-node-d" fill="var(--text2)">applies each fix as its own commit</text>
+      <rect x="30" y="414" width="190" height="44" rx="8" fill="var(--green-bg)" stroke="var(--green-border)"/>
+      <text x="42" y="432" class="fw-node-t" fill="var(--text)">/gsd-execute-phase 2</text>
+      <text x="42" y="448" class="fw-node-d" fill="var(--text2)">code + tests, a commit per task</text>
+      <path d="M 220 436 L 243 436" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <rect x="245" y="414" width="190" height="44" rx="8" fill="var(--navy-bg)" stroke="var(--navy-border)"/>
+      <text x="257" y="432" class="fw-node-t" fill="var(--text)">/gsd-code-review 2</text>
+      <text x="257" y="448" class="fw-node-d" fill="var(--text2)">Claude: bugs, security, quality</text>
+      <path d="M 435 436 L 458 436" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <rect x="460" y="414" width="190" height="44" rx="8" fill="var(--navy-bg)" stroke="var(--navy-border)"/>
+      <text x="472" y="432" class="fw-node-t" fill="var(--text)">/gsd-code-review 2 --fix</text>
+      <text x="472" y="448" class="fw-node-d" fill="var(--text2)">each fix as its own commit</text>
+      <path d="M 650 436 L 673 436" stroke="var(--border2)" stroke-width="1.5" marker-end="url(#fwa2)"/>
+      <rect x="675" y="414" width="195" height="44" rx="8" fill="var(--purple-bg)" stroke="var(--purple-border)"/>
+      <text x="687" y="432" class="fw-node-t" fill="var(--text)">/gsd-ship 2</text>
+      <text x="687" y="448" class="fw-node-d" fill="var(--text2)">a second AI reads the whole diff</text>
     </svg>
     </div>
 
@@ -500,7 +505,24 @@
   "default_reviewers": ["cursor"]
 }</pre>
     </div>
-    <p class="fw-desc" style="margin-bottom:6px;">After that it's two commands per phase: <code>/gsd-review --phase N</code> (or <code>--codex</code>, <code>--gemini</code>, <code>--all</code>), then <code>/gsd-plan-phase N --reviews</code>. Or hand the whole loop over with <code>/gsd-plan-review-convergence N</code>.</p>
+    <p class="fw-desc" style="margin-bottom:6px;">After that it's two commands per phase: <code>/gsd-review --phase N</code> (or <code>--codex</code>, <code>--gemini</code>, <code>--all</code>), then <code>/gsd-plan-phase N --reviews</code>. Or hand the whole loop over with <code>/gsd-plan-review-convergence N</code>. That command refuses to run until <code>workflow.plan_review_convergence</code> is set to <code>true</code> (section 09).</p>
+
+    <div class="fw-sub" style="margin-top:26px;">A second AI on the code, too</div>
+    <p class="fw-desc" style="margin-bottom:10px;">Plan reviews catch design mistakes. They can't see bugs that only appear once code exists, and GSD's built-in code review is Claude checking Claude. <code>/gsd-ship</code> has a hook for this: set <code>workflow.code_review_command</code> and the whole diff is piped to that command, which must answer with JSON containing <code>"verdict": "APPROVED"</code> or <code>"REVISE"</code>. GSD doesn't include a command that talks to another AI, so I wrote a small one: <a href="downloads/gsd_cross_ai_review.py" style="color:var(--accent-light)">gsd_cross_ai_review.py</a>. It hands the diff to Cursor's CLI in read-only mode and returns the verdict. If anything goes wrong it reports a failure; it never quietly approves.</p>
+    <p class="fw-desc" style="margin-bottom:10px;">Its first live test was a deliberately planted bug: a short put's break-even changed from <i>strike &minus; premium</i> to <i>strike + premium</i>. It took 31 seconds:</p>
+    <div class="fw-term">
+      <div class="bar"><i></i><i></i><i></i><span>diff &rarr; gsd_cross_ai_review.py &rarr; cursor-agent</span></div>
+<pre><span class="u">$ git diff main...HEAD | python3 gsd_cross_ai_review.py --model gemini-4-argon-high</span>
+{
+  "verdict": <span class="r">"REVISE"</span>,
+  "confidence": 100,
+  "summary": "...changed from `strike - premium` to `strike + premium`,
+              which is the formula for a call option rather than a put option.",
+  "issues": [{ "severity": <span class="r">"high"</span>, "file": "calc.py",
+               "suggestion": "Keep `return strike - premium`." }]
+}</pre>
+    </div>
+    <p class="fw-hint">The command <code>/gsd-ship</code> really runs builds a fuller prompt (diff stats, phase state, the JSON shape it wants) and pipes that in. The one-liner above shows the idea.</p>
 
     <div class="fw-grid" style="margin-top:14px;">
       <div class="fw-gate advise">
@@ -674,17 +696,75 @@
     </div>
 
     <!-- 09 -->
-    <div class="fw-sub" id="s09">09 &middot; Starting your own project <a class="back" href="#contents">&uarr; contents</a></div>
+    <div class="fw-sub" id="s09">09 &middot; Switches worth turning on <a class="back" href="#contents">&uarr; contents</a></div>
+    <p class="fw-desc" style="margin-bottom:14px;">Out of the box, GSD runs the core loop and leaves several of its best checks off or waiting to be run by hand. These are the eight I switched on for the dashboard, ordered by how much they're worth on something that touches real money. "Automatic" means GSD runs it at that point in the loop once the setting is on.</p>
+
+    <div class="fw-tablewrap">
+    <table class="fw-table">
+      <thead><tr><th style="width:4%">#</th><th style="width:24%">What</th><th style="width:30%">How to turn it on</th><th>What you get</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><b>Security review</b></td>
+            <td class="wrapfirst"><code>workflow.security_enforcement: true</code><br><span class="fw-chip req">automatic</span> after testing</td>
+            <td>Checks every risk named in the plans was actually dealt with in the code. Open high-severity risks block the phase from shipping. Run <code>/gsd-secure-phase N</code> for phases that closed before it was on.</td></tr>
+        <tr><td>2</td><td><b>Second AI on the code</b></td>
+            <td class="wrapfirst"><code>workflow.code_review_command</code><br><span class="fw-chip req">automatic</span> at <code>/gsd-ship</code></td>
+            <td>The whole diff goes to a different AI before the pull request opens (section 04). Needs a bridge script such as <a href="downloads/gsd_cross_ai_review.py" style="color:var(--accent-light)">this one</a>.</td></tr>
+        <tr><td>3</td><td><b>Review &rarr; revise loop</b></td>
+            <td class="wrapfirst"><code>workflow.plan_review_convergence: true</code><br><span class="fw-chip rec">command</span></td>
+            <td>Unlocks <code>/gsd-plan-review-convergence N</code>, which repeats review and revision until no HIGH concerns remain, and the <code>--converge</code> option on <code>/gsd-next</code> and <code>/gsd-autonomous</code>.</td></tr>
+        <tr><td>4</td><td><b>Lessons carried forward</b></td>
+            <td class="wrapfirst"><code>/gsd-extract-learnings N</code><br><span class="fw-chip rec">command</span> after each phase</td>
+            <td>Writes <code>LEARNINGS.md</code>: decisions, surprises and patterns from the phase, read by the planner for later phases. No setting; make it a habit when a phase closes.</td></tr>
+        <tr><td>5</td><td><b>Pin down "done" first</b></td>
+            <td class="wrapfirst"><code>/gsd-spec-phase N</code><br><span class="fw-chip rec">command</span> before planning</td>
+            <td>Worth it on any phase with a fixed external contract (a file format another program reads, an API you don't control). It keeps asking until the scope is tight enough, then writes testable statements.</td></tr>
+        <tr><td>6</td><td><b>Testing checks the screen itself</b></td>
+            <td class="wrapfirst"><code>workflow.live_dom_uat: true</code><br><span class="fw-chip req">automatic</span> during build and test</td>
+            <td>With a browser tool connected (Claude in Chrome or Chrome DevTools), GSD opens the app, checks what it can see, and only asks you about the parts that need human judgement.</td></tr>
+        <tr><td>7</td><td><b>Codebase map</b></td>
+            <td class="wrapfirst"><code>/gsd-map-codebase</code> once<br><code>workflow.plan_drift_precheck: true</code></td>
+            <td>Writes a set of documents describing the code (structure, conventions, concerns) that planners read. The drift check warns before planning when the map has gone stale.</td></tr>
+        <tr><td>8</td><td><b>UI review</b></td>
+            <td class="wrapfirst"><code>workflow.ui_review: true</code><br><span class="fw-chip req">automatic</span> after testing</td>
+            <td>A visual audit of the screens against the phase's design spec, scored across six areas, on any phase that built UI.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="fw-note"><b>Make them the default for every new project.</b> GSD reads <code>~/.gsd/defaults.json</code> when it creates a project, so settings put there apply from day one. Mine:</div>
+    <div class="fw-term">
+      <div class="bar"><i></i><i></i><i></i><span>~/.gsd/defaults.json</span></div>
+<pre>{
+  "workflow": {
+    "security_enforcement": true,
+    "code_review_command": "python3 /Users/you/.claude/scripts/gsd_cross_ai_review.py --model gemini-4-argon-high",
+    "plan_review_convergence": true,
+    "live_dom_uat": true,
+    "ui_review": true,
+    "plan_drift_precheck": true
+  },
+  "review": {
+    "models": { "cursor": "gemini-4-argon-high", "codex": "gpt-6.1-sol", "gemini": "gemini-3.5-flash" },
+    "default_reviewers": ["cursor"]
+  },
+  "model_overrides": { "gsd-plan-checker": "sonnet" }
+}</pre>
+    </div>
+    <p class="fw-hint">For a project that already exists, set the same keys with /gsd-config, or edit .planning/config.json. Use an absolute path in code_review_command: /gsd-ship does not expand ~.</p>
+
+    <!-- 10 -->
+    <div class="fw-sub" id="s10">10 &middot; Starting your own project <a class="back" href="#contents">&uarr; contents</a></div>
     <div class="fw-steps">
       <div class="fw-step"><b>Install into the repo.</b> <code>npx -y @opengsd/gsd-core@latest --claude --local</code>. Commands appear in Claude Code as <code>/gsd-&hellip;</code>.</div>
       <div class="fw-step"><b>Describe the project.</b> <code>/gsd-new-project</code> for a fresh idea, or <code>/gsd-onboard</code> if there's already code. Answer the questions properly: this is where most of the value is.</div>
       <div class="fw-step"><b>Run the first phase:</b> <code>/gsd-discuss-phase 1</code> &rarr; <code>/gsd-plan-phase 1</code> &rarr; <code>/gsd-execute-phase 1</code> &rarr; <code>/gsd-verify-work 1</code>.</div>
       <div class="fw-step"><b>Add a second AI before the phase that matters.</b> Install Codex, Gemini or Cursor's CLI, set <code>review.default_reviewers</code>, and run <code>/gsd-review</code> between plan and execute. For a trading tool, that's the phase where the maths or the money logic gets written.</div>
+      <div class="fw-step"><b>Switch on the extra checks.</b> Copy the <code>defaults.json</code> from section 09 before running <code>/gsd-new-project</code>, and every project starts with security review, second-AI code review and the rest already on.</div>
       <div class="fw-step"><b>Lost? <code>/gsd-progress</code> or <code>/gsd-next</code>.</b> Both read the files on disc and tell you the next command. After a <code>/clear</code> or a new session, start here.</div>
     </div>
 
-    <!-- 10 -->
-    <div class="fw-sub" id="s10">10 &middot; Command quick reference <a class="back" href="#contents">&uarr; contents</a></div>
+    <!-- 11 -->
+    <div class="fw-sub" id="s11">11 &middot; Command quick reference <a class="back" href="#contents">&uarr; contents</a></div>
     <div class="fw-tablewrap">
     <table class="fw-table">
       <thead><tr><th style="width:30%">Command</th><th>Use it when</th></tr></thead>
@@ -697,6 +777,10 @@
         <tr><td><code>/gsd-review --phase N</code></td><td>Second-AI review of the plans</td></tr>
         <tr><td><code>/gsd-plan-review-convergence N</code></td><td>Review &rarr; revise &rarr; review, until clean</td></tr>
         <tr><td><code>/gsd-code-review N --fix</code></td><td>Review the built code and apply the fixes</td></tr>
+        <tr><td><code>/gsd-secure-phase N</code></td><td>Check the plan's security risks were really handled</td></tr>
+        <tr><td><code>/gsd-extract-learnings N</code></td><td>Carry a finished phase's lessons into the next</td></tr>
+        <tr><td><code>/gsd-spec-phase N</code></td><td>Tie down "done" before planning a contract-bound phase</td></tr>
+        <tr><td><code>/gsd-map-codebase</code></td><td>Write the codebase map planners read</td></tr>
         <tr><td><code>/gsd-capture</code></td><td>Park an idea without derailing the current phase</td></tr>
         <tr><td><code>/gsd-config</code></td><td>Turn checks on and off; pick which model runs each agent</td></tr>
         <tr><td><code>/gsd-help --full</code></td><td>Every command, every flag</td></tr>
