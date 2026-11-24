@@ -1,5 +1,5 @@
 ---
-name: ship
+name: ship-verified
 title: Ship — Verified PR Ship Procedure
 scope: global
 category: workflow
@@ -19,13 +19,13 @@ checks:
 description: Verified PR ship workflow — tests, lint, commit, push, open PR, then VERIFY merge before claiming done. Triggers on 'ship this', 'ship it', 'push and PR', 'wrap up and ship', 'open a PR and merge', 'ready to ship'. Use when a branch is ready for production and the user wants a single-command procedure. Do NOT use for WIP pushes, draft PRs, or exploratory commits.
 ---
 
-# /ship — Verified ship procedure
+# /ship-verified — Verified ship procedure
 
 This skill terminates the "claimed merged but wasn't" failure mode. It is a procedure, not a script. Follow the steps in order; never skip the verification step at the end.
 
 ## Runner announcement
 
-Before step 1, state: `Runner: Claude — /ship procedure`. If the user has already delegated implementation to Codex for this branch, announce the switch: `Runner: Codex finished the build; Claude running /ship from here.`
+Before step 1, state: `Runner: Claude — /ship-verified procedure`. If the user has already delegated implementation to Codex for this branch, announce the switch: `Runner: Codex finished the build; Claude running /ship-verified from here.`
 
 ## Procedure
 
@@ -60,7 +60,7 @@ Before step 1, state: `Runner: Claude — /ship procedure`. If the user has alre
 
 - `verification-before-completion` — required for step 6. This skill does not re-implement that logic.
 - `git-conventions` — owns the commit message format for step 3.
-- `tdd-first` — should already have shipped tests alongside the implementation. `/ship` does not write new tests.
+- `tdd-first` — should already have shipped tests alongside the implementation. `/ship-verified` does not write new tests.
 
 ## Why this skill exists
 
